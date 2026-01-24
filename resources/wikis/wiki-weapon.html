@@ -1,0 +1,65 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/wikis/wiki-weapon.css" />
+{{/block}} {{block 'body-class'}}theme-weapon-{{type}}{{/block}} {{block 'main'}}
+<div class="wiki-panel glass-panel">
+  <div class="glow-top"></div>
+  <div class="header">
+    <div class="header-left">
+      <div class="header-icon-circle">
+        <img
+          src="{{wavesResMap.weapon}}/{{id}}.webp"
+          onerror="this.src='{{wavesResMap.weapon}}/{{id}}.png'"
+        />
+      </div>
+      <div class="header-bg-watermark">{{name}}</div>
+    </div>
+    <div class="header-right">
+      <div class="mode-badge" data-text="WEAPON">武器图鉴</div>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <!-- 基础属性 -->
+    <div class="wiki-item">
+      <div class="item-top">
+        <div class="item-info">
+          <div class="item-name">基础属性 (Lv.90)</div>
+          <div class="base-stats">
+            {{each stats stat}}
+            <div class="stat-item">
+              <div class="stat-label">{{stat.name}}</div>
+              <div class="stat-value">{{stat.value}}</div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 被动技能 -->
+    {{if skill}}
+    <div class="wiki-item">
+      <div class="item-top">
+        <div class="item-info">
+          <div class="item-name">{{skill.name}}</div>
+          <div class="item-desc">{{@skill.desc}}</div>
+        </div>
+      </div>
+      <!-- Table removed -->
+    </div>
+    {{/if}}
+
+    <!-- 描述 (可选) -->
+    {{if desc}}
+    <div class="wiki-item">
+      <div class="item-top">
+        <div class="item-info">
+          <div class="item-name">简介</div>
+          <div class="item-desc">{{desc}}</div>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+{{/block}}

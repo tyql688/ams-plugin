@@ -1,0 +1,19 @@
+{
+  "name": "ams-plugin",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "tyql688",
+  "license": "MIT",
+  "dependencies": {
+    "cros": "^1.1.0",
+    "express": "^5.2.1",
+    "https-proxy-agent": "^7.0.6",
+    "ky": "^1.8.1",
+    "node-fetch": "^3.3.2",
+    "sharp": "^0.34.5",
+    "socks-proxy-agent": "^8.0.5"
+  }
+}

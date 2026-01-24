@@ -1,0 +1,240 @@
+/* ==================== 变量定义 ==================== */
+:root {
+  --glass-border: rgba(56, 189, 248, 0.15);
+  --accent-cyan: #22d3ee;
+  --accent-purple: #a855f7;
+  --bg-card: rgba(13, 14, 20, 0.98);
+  --text-dim: rgba(255, 255, 255, 0.5);
+  --text-secondary: rgba(255, 255, 255, 0.8);
+}
+
+/* ==================== 全局布局 ==================== */
+body {
+  width: 900px;
+  padding: 40px 0;
+  margin: 0;
+}
+
+.container.slash-style {
+  width: 860px;
+  margin: 0 auto;
+  position: relative;
+  background-color: var(--bg-card); /* Fallback */
+  background-size: cover;
+  background-position: center;
+  /* 磨砂玻璃效果 */
+  backdrop-filter: blur(25px) saturate(160%);
+  -webkit-backdrop-filter: blur(25px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  border-radius: 40px;
+  padding: 50px;
+  box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+/* 顶部光效 */
+.glow-top {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+  box-shadow: 0 0 35px var(--accent-cyan);
+  z-index: 10;
+}
+
+/* ==================== 头部样式 ==================== */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 35px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brand {
+  font-family: var(--font-number);
+  font-size: 14px;
+  letter-spacing: 4px;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.title {
+  font-family: var(--font-art);
+  font-size: 48px;
+  font-weight: bold;
+  background: linear-gradient(180deg, #fff 20%, #7dd3fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.uid {
+  font-family: var(--font-number);
+  font-size: 16px;
+  color: #fff;
+  background: rgba(34, 211, 238, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  letter-spacing: 1px;
+}
+
+.count {
+  font-size: 14px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+/* ==================== 角色列表网格 ==================== */
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr); /* 8 columns */
+  gap: 20px 10px;
+  margin-bottom: 30px;
+}
+
+/* 角色卡片 (Removed Box Style and Hover Effects) */
+.role-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+/* Avatar Wrapper */
+.role-avatar-wrapper {
+  width: 70px; /* Slightly smaller for 8 cols */
+  height: 70px;
+  position: relative;
+  margin-bottom: 6px;
+  border-radius: 50%;
+}
+
+.role-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center 15%;
+  border: 2px solid rgba(255, 255, 255, 0.15); /* Default gray border */
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Star Rarity Borders */
+.role-card.star-5 .role-img {
+  border-color: #ffd700;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.2);
+}
+
+.role-card.star-4 .role-img {
+  border-color: #a855f7;
+  box-shadow: 0 0 5px rgba(168, 85, 247, 0.2);
+}
+
+/* Info Row (Name + Cons) */
+.role-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.role-name {
+  font-family: var(--font-number), "Microsoft YaHei", sans-serif;
+  font-size: 13px; /* Smaller font */
+  font-weight: bold;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 55px;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Cons Tag - Inline Style */
+.cons-tag {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-number);
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: #334155;
+}
+
+/* 命座颜色 */
+.cons-tag.c-0 {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.4);
+}
+.cons-tag.c-1 {
+  background: #22c55e;
+}
+.cons-tag.c-2 {
+  background: #06b6d4;
+}
+.cons-tag.c-3 {
+  background: #3b82f6;
+}
+.cons-tag.c-4 {
+  background: #a855f7;
+}
+.cons-tag.c-5 {
+  background: #f59e0b;
+}
+.cons-tag.c-6 {
+  background: #ef4444;
+  box-shadow: 0 0 4px #ef4444;
+}
+
+/* Footer Tip */
+.footer-tip {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 13px;
+  margin-top: 20px;
+  opacity: 0.6;
+}
+
+.footer-tip::before {
+  content: "💡";
+  margin-right: 6px;
+  filter: grayscale(1);
+}
+
+.footer-tip .cmd {
+  color: var(--accent-cyan);
+  font-family: var(--font-number);
+  font-weight: bold;
+  margin: 0 3px;
+  background: rgba(34, 211, 238, 0.1);
+  padding: 0 5px;
+  border-radius: 4px;
+}

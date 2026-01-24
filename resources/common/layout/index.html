@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{block 'title'}}ams-plugin{{/block}}</title>
+    <link rel="stylesheet" type="text/css" href="{{@sys.resourcesPath}}/common/style/index.css">
+    <link rel="stylesheet" type="text/css" href="{{@sys.resourcesPath}}/common/layout/index.css" />
+    {{block 'css'}}{{/block}}
+  </head>
+
+  <body {{@sys.scale}} class="{{block 'body-class'}}{{/block}}">
+    <div class="container" id="container" {{if customBg}}style="background-image:url({{customBg}})"{{/if}}>
+      {{block 'main'}}{{/block}}
+      <div class="copyright">{{@sys.copyright}}</div>
+    </div>
+  </body>
+
+</html>

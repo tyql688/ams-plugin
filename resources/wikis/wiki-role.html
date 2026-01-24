@@ -1,0 +1,91 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/wikis/wiki-role.css" />
+{{/block}} {{block 'body-class'}}theme-element-{{element}}{{/block}} {{block 'main'}}
+<div class="wiki-panel glass-panel">
+  <div class="glow-top"></div>
+  <div class="header">
+    <div class="header-left">
+      <div class="char-avatar-circle">
+        <img src="{{wavesResMap.roleAvatar}}/{{roleId}}.webp" />
+      </div>
+      <div class="header-bg-watermark">{{name}}</div>
+    </div>
+    <div class="header-right">
+      <div class="mode-badge" data-text="{{mode === 'talent' ? 'TALENT' : 'CHAIN'}}">
+        {{modeTitle}}
+      </div>
+    </div>
+  </div>
+
+  {{if mode === 'talent'}}
+  <div class="content-section">
+    {{each talents talent}}
+    <div class="talent-item">
+      <div class="talent-top">
+        <div class="talent-icon-wrapper">
+          <div
+            class="talent-icon"
+            style="background-image:url({{wavesResMap.roleSkill}}/{{roleId}}/{{talent.id}}.webp)"
+          ></div>
+          <div class="talent-type">{{talent.type}}</div>
+        </div>
+        <div class="item-info">
+          <div class="item-name">{{talent.name}}</div>
+          <div class="item-desc">{{@talent.desc}}</div>
+        </div>
+      </div>
+
+      {{if talent.params && talent.params.length > 0}}
+      <div class="talent-params">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="col-attr">属性 \ 等级</th>
+              <th>Lv.6</th>
+              <th>Lv.7</th>
+              <th>Lv.8</th>
+              <th>Lv.9</th>
+              <th>Lv.10</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{each talent.params param}}
+            <tr>
+              <td class="col-attr-name">{{param.name}}</td>
+              <td>{{param.values[5]}}</td>
+              <td>{{param.values[6]}}</td>
+              <td>{{param.values[7]}}</td>
+              <td>{{param.values[8]}}</td>
+              <td>{{param.values[9]}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      {{/if}}
+    </div>
+    {{/each}}
+  </div>
+  {{/if}} {{if mode === 'chain'}}
+  <div class="content-section">
+    {{each chains chain}}
+    <div class="chain-item">
+      <div class="chain-top">
+        <div class="chain-icon-wrapper">
+          <div
+            class="chain-icon"
+            style="background-image:url({{wavesResMap.roleChain}}/{{roleId}}/{{chain.id}}.webp)"
+          ></div>
+          <div class="chain-index">{{chain.id}}</div>
+        </div>
+        <div class="item-info">
+          <div class="item-name">{{chain.name}}</div>
+          <div class="item-desc">{{@chain.desc}}</div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+</div>
+{{/block}}

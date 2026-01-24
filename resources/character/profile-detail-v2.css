@@ -1,0 +1,688 @@
+body {
+  width: 1000px;
+}
+
+.container {
+  width: 1000px;
+  padding: 20px;
+  background-image: url("../common/bg/bg.png");
+}
+
+.card {
+  background: rgba(12, 12, 16, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.02);
+  position: relative;
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+}
+/* 去掉旧的浮夸装饰 */
+.card::before,
+.card::after {
+  display: none !important;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  padding: 10px 16px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.card-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 25%;
+  bottom: 25%;
+  width: 2px;
+  background: var(--element-primary);
+  box-shadow: 0 0 8px var(--element-primary);
+}
+
+.title-uid {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: normal;
+}
+
+/* ==================== 核心布局 ==================== */
+.main-content {
+  display: flex;
+  height: 620px;
+  gap: 15px;
+}
+.left-column {
+  flex: 1;
+  position: relative; /* 恢复相对定位 */
+  min-width: 0;
+}
+.right-column {
+  width: 430px; /* 恢复原始宽度 */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+
+/* ==================== 左侧：角色立绘 ==================== */
+.pile-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.role-pile {
+  width: 130%; /* 宽度溢出，打破框感 */
+  height: 108%;
+  position: absolute;
+  left: -20px; /* 溢出到容器外 */
+  top: -20px;
+  background-size: cover;
+  background-position: center 25%;
+  /* 核心改动：底部和右侧的双重羽化，让立绘与背景、右侧数据完美融合 */
+  -webkit-mask-image:
+    linear-gradient(to right, #000 65%, transparent 90%),
+    linear-gradient(to bottom, #000 85%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, #000 65%, transparent 90%),
+    linear-gradient(to bottom, #000 85%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  z-index: 1;
+}
+
+.role-info-group {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 5;
+}
+
+.role-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+.role-name {
+  font-size: 54px;
+  font-weight: 900;
+  font-family: var(--font-art);
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -1px;
+  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+.role-meta {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+.role-level {
+  background: var(--element-primary);
+  color: #000;
+  padding: 2px 8px;
+  font-weight: 700;
+  border-radius: 4px;
+}
+/* 共鸣链文字标签样式已移至 style/index.css */
+.role-elem {
+  border: 1px solid var(--element-primary);
+  color: var(--element-primary);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+/* Pile Chains */
+.pile-chains {
+  position: absolute;
+  bottom: 10px;
+  right: 0; /* 恢复贴边 */
+  display: flex;
+  gap: 6px;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+  padding: 6px 12px;
+  border-radius: 20px 0 0 20px;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: none;
+  z-index: 5;
+}
+
+.chain-icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 3px;
+}
+.chain-icon-circle.on {
+  border-color: var(--element-primary);
+  background: var(--element-bg);
+  box-shadow: 0 0 5px var(--element-shadow);
+}
+.chain-icon-circle.off .icon-img {
+  filter: grayscale(1) brightness(0.6);
+  opacity: 0.6;
+}
+
+.icon-img {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ==================== 右侧：属性列表 ==================== */
+.attribute-card {
+  flex: 0 0 auto;
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.attr-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 6px 8px;
+  gap: 2px 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+}
+
+.attr-row {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  background: transparent;
+  border-radius: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  position: relative;
+  min-height: 32px;
+}
+
+.attr-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.015); /* 静态区分奇数行 */
+}
+
+.attr-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+.attr-icon img {
+  width: 100%;
+  height: 100%;
+}
+
+.attr-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+.attr-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-left: 6px;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.3px;
+  font-family: var(--font-number);
+}
+
+/* ==================== 右侧：武器卡片 ==================== */
+.weapon-card {
+  height: 205px; /* 620 - 280(属性) - 115(技能) - 10(gap) - 10(gap) = 205 */
+  display: flex;
+  flex-direction: column;
+}
+
+.weapon-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  gap: 10px;
+}
+
+.weapon-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  flex-shrink: 0;
+  padding: 5px;
+}
+
+.weapon-bg {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 1;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.6));
+  z-index: 1;
+}
+
+.weapon-details {
+  flex: 1;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 6px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.weapon-head {
+  display: flex;
+  align-items: center;
+}
+.weapon-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.weapon-name .tag-reson,
+.weapon-name .tag-lv {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.2;
+}
+/* 武器精炼等级颜色样式已移至 style/index.css */
+.tag-lv {
+  background: linear-gradient(135deg, var(--element-bg), rgba(0, 0, 0, 0.3));
+  color: var(--element-primary);
+  border: 1px solid var(--element-primary);
+  box-shadow: 0 0 6px var(--element-shadow);
+}
+
+.weapon-props-simple {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  align-items: center;
+}
+
+.wp-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #fff;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  white-space: nowrap;
+  width: 100%;
+  justify-content: space-between;
+}
+.wp-item .wp-name {
+  color: var(--weapon-prop-gold);
+  font-weight: 600;
+  text-shadow: 0 0 6px var(--weapon-prop-gold-shadow);
+  flex: 1;
+}
+.wp-item .wp-value {
+  color: #fff;
+  font-weight: 700;
+  margin-left: auto;
+}
+.wp-item img {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
+}
+
+.weapon-desc {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  border-left: 2px solid var(--element-primary);
+  margin-top: auto;
+  overflow: hidden;
+  max-height: 85px;
+}
+
+/* ==================== 右侧：技能 ==================== */
+.skills-card-wide {
+  height: 115px;
+  display: flex;
+  flex-direction: column;
+}
+
+.skills-list {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px;
+  gap: 3px;
+}
+
+/* 技能胶囊 */
+.skill-item-capsule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60px;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.skill-icon-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 2px;
+  margin-bottom: 3px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.skill-icon-circle .icon-img {
+  width: 100%;
+  height: 100%;
+  background-size: 75%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+}
+
+/* 恢复的圆圈等级角标样式 */
+.circle-lv {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: var(--element-primary);
+  color: #000;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 5px;
+  line-height: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  z-index: 3;
+  white-space: nowrap;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  font-family: var(--font-number);
+}
+
+/* 技能类型文字 */
+.skill-name {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: center;
+  margin-top: 1px;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  position: relative;
+  z-index: 1;
+  line-height: 1.2;
+}
+
+/* ==================== 底部：声骸列表 (一行5个) ==================== */
+.echo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-family: var(--font-art);
+  color: var(--element-primary);
+  text-shadow: 0 0 5px var(--element-shadow);
+  padding-left: 5px;
+  margin-bottom: 5px;
+  border-left: 3px solid var(--element-primary);
+  line-height: 1;
+}
+
+.echo-list {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.echo-card {
+  width: 187px;
+  background: rgba(15, 15, 20, 0.45); /* 降低透明度 */
+  border-radius: 8px;
+  overflow: visible;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.echo-head {
+  height: 64px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 12px;
+  padding-right: 70px;
+  /* 背景调淡：从 0.9 降至 0.4，让玻璃通透起来 */
+  background: linear-gradient(to right, rgba(20, 20, 28, 0.4) 55%, transparent 100%);
+  /* 阴影大幅减弱：压缩扩散半径，改用更淡的 shadow 变量 */
+  box-shadow: inset -20px 10px 25px -20px var(--element-shadow);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 1;
+}
+
+.echo-icon {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  top: -10px;
+  left: auto;
+  right: 1px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 10;
+  filter: none;
+  -webkit-mask: radial-gradient(circle at 90% 10%, #000 20%, transparent 100%);
+  mask: radial-gradient(circle at 90% 10%, #000 20%, transparent 100%);
+}
+
+.echo-icon::after {
+  display: none;
+}
+
+.echo-title-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+  position: relative;
+  z-index: 2;
+}
+
+.echo-cost {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 2px;
+  text-shadow: none;
+  font-weight: normal;
+  line-height: 1.2;
+}
+
+.group-icon-inline {
+  width: 18px;
+  height: 18px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 4px;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.8));
+  background-color: transparent;
+  flex-shrink: 0;
+}
+
+.echo-name {
+  font-size: 13px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0px;
+  line-height: 1.3;
+}
+
+.echo-lv {
+  position: absolute;
+  right: 4px;
+  left: auto;
+  bottom: 0px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0 4px;
+  border-radius: 4px;
+  font-size: 10px;
+  color: var(--text-primary);
+  z-index: 20;
+  margin: 0;
+}
+
+.echo-props {
+  background: transparent; /* 移除深色背景块，保持通透感 */
+  padding: 8px 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.prop-row {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  height: 20px;
+}
+
+.prop-row.main {
+  background: transparent;
+  margin-bottom: 2px; /* 减小间距，保持紧凑 */
+  padding: 0;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.prop-row.main .p-icon {
+  width: 13px;
+  height: 13px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.prop-row.main .p-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.prop-row.main .p-name {
+  color: #fff;
+  font-weight: 700;
+}
+
+.prop-row.main .p-val {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 800;
+  font-family: var(--font-number);
+}
+
+.prop-row.sub {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  padding: 0; /* 恢复原始边距 */
+  height: 20px;
+}
+.prop-row.sub:last-child {
+  border-bottom: none;
+}
+
+.p-dot {
+  width: 4px; /* 稍微调大，更清晰 */
+  height: 4px;
+  border-radius: 50%;
+  margin-right: 8px;
+  background-color: #999; /* 颜色提亮，确保能看见 */
+  flex-shrink: 0;
+}
+
+.p-name {
+  flex: 1;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+}
+
+.p-val {
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: var(--font-number);
+}
+
+.p-val.max-val {
+  color: var(--grade-ss);
+}

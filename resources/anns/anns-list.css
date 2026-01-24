@@ -1,0 +1,213 @@
+:root {
+  --accent-blue: #38bdf8;
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --item-bg: rgba(255, 255, 255, 0.65);
+}
+
+body {
+  width: 1100px;
+  background-color: #fff;
+}
+
+#container {
+  width: 1100px;
+  padding: 0 20px 10px;
+}
+
+.news-glass-card {
+  width: 100%;
+  --panel-bg: var(--glass-bg);
+  --panel-border-color: var(--glass-border);
+  --panel-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  --glow-color: var(--accent-blue);
+  margin-top: 5px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 45px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding-bottom: 30px;
+}
+
+.brand {
+  font-family: var(--font-number);
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: var(--accent-blue);
+  font-weight: 800;
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+
+.title {
+  font-family: var(--font-art);
+  font-size: 44px;
+  color: var(--text-dark);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.time-box {
+  text-align: right;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 12px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.date-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.date-value {
+  font-family: var(--font-number);
+  font-size: 20px;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.news-columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 35px;
+}
+
+.column {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 28px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.col-header {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-art);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 22px;
+  gap: 12px;
+}
+
+.col-header .en {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.col-header .line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-blue), transparent);
+  opacity: 0.25;
+}
+
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.news-item {
+  background: var(--item-bg);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.item-cover {
+  height: 140px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.item-id {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  color: white;
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-family: var(--font-number);
+  font-weight: 600;
+}
+
+.item-info {
+  padding: 14px 16px;
+}
+
+.item-title {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-dark);
+  font-weight: 600;
+  height: 3em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-bottom: 10px;
+}
+
+.item-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.item-time {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-family: var(--font-number);
+  font-weight: 500;
+}
+
+.footer-hint {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-dim);
+  padding: 8px 18px;
+  margin: 10px auto 0;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 100px;
+  width: fit-content;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.footer-hint .highlight {
+  color: var(--accent-blue);
+  font-weight: 700;
+  margin: 0 4px;
+}
+
+.copyright {
+  color: #a1a1aa !important;
+  text-shadow: none !important;
+  font-size: 11px !important;
+  opacity: 0.8;
+  padding-top: 5px !important;
+  margin: 0 !important;
+}
+
+.copyright .highlight {
+  color: var(--accent-blue) !important;
+  opacity: 0.9;
+}

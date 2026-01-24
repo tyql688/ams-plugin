@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>公告详情</title>
+    <link rel="stylesheet" type="text/css" href="{{_res_path}}/common/style/index.css" />
+    <link rel="stylesheet" type="text/css" href="{{_res_path}}/common/layout/index.css" />
+    <link rel="stylesheet" type="text/css" href="{{_res_path}}/anns/anns-detail.css" />
+  </head>
+  <body>
+    <div id="container">
+      <div class="news-detail-card glass-panel">
+        <div class="glow-top"></div>
+
+        <div class="header">
+          <div class="brand">AMS OFFICIAL FEED</div>
+          <div class="title">{{data.postTitle}}</div>
+          <div class="meta-row">
+            <span class="author">
+              <span class="icon">✦</span>
+              {{data.userName}}
+            </span>
+            <span class="divider">/</span>
+            <span class="ip">📍 {{data.ipRegion}}</span>
+          </div>
+        </div>
+
+        <div class="publish-info">
+          <div class="publish-label">PUBLISH TIME</div>
+          <div class="publish-time">{{data.postTime}}</div>
+        </div>
+
+        <div class="article-content">{{@data.content}}</div>
+      </div>
+      {{if sys && sys.copyright}}
+      <div class="copyright">{{@sys.copyright}}</div>
+      {{/if}}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>ams-plugin</title>
+    <link
+      rel="icon"
+      href="https://web-static.kurobbs.com/resource/prod/icon.ico"
+      type="image/x-icon"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://static.geetest.com/v4/gt4.js"></script>
+
+    <style>
+      :root {
+        --terminal-bg: #0a0b0d;
+        --terminal-card: rgba(20, 22, 26, 0.9);
+        --accent: #ffcc00;
+        --accent-muted: rgba(255, 204, 0, 0.1);
+        --text-main: #e2e2e2;
+        --text-dim: #6b7280;
+        --border-color: #2a2d35;
+        --font-mono: "JetBrains Mono", "Cascadia Code", "Fira Code", monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: var(--font-mono);
+        background-color: var(--terminal-bg);
+        color: var(--text-main);
+        overflow: hidden;
+      }
+
+      body {
+        background-image: url("https://prod-alicdn-community.kurobbs.com/forum/aedfaaaf7fe64e668af1505c0de5f09c20260116.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at center,
+          rgba(0, 0, 0, 0.4) 0%,
+          rgba(0, 0, 0, 0.85) 100%
+        );
+        z-index: 0;
+      }
+
+      .scanline {
+        position: fixed;
+        inset: 0;
+        background:
+          linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+          linear-gradient(
+            90deg,
+            rgba(255, 0, 0, 0.02),
+            rgba(0, 255, 0, 0.01),
+            rgba(0, 0, 255, 0.02)
+          );
+        background-size:
+          100% 4px,
+          3px 100%;
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      .grid-bg {
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--border-color) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+        background-size: 40px 40px;
+        mask-image: radial-gradient(circle at center, black, transparent 85%);
+        opacity: 0.15;
+        z-index: 1;
+      }
+
+      .terminal-wrapper {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 16px;
+      }
+
+      .tactical-card {
+        width: 100%;
+        max-width: 440px;
+        background: var(--terminal-card);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        position: relative;
+        padding: 40px;
+        transition: padding 0.3s ease;
+        clip-path: polygon(
+          0 20px,
+          20px 0,
+          calc(100% - 20px) 0,
+          100% 20px,
+          100% calc(100% - 20px),
+          calc(100% - 20px) 100%,
+          20px 100%,
+          0 calc(100% - 20px)
+        );
+      }
+
+      .header-module {
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 20px;
+      }
+
+      .avatar-frame {
+        width: 52px;
+        height: 52px;
+        position: relative;
+        padding: 2px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border-color);
+        flex-shrink: 0;
+      }
+
+      .avatar-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .avatar-frame::after {
+        content: "";
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid var(--accent);
+        border-left: 2px solid var(--accent);
+      }
+
+      .header-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .header-top-line {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 2px;
+      }
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--accent);
+        border-radius: 50%;
+        box-shadow: 0 0 6px var(--accent);
+        animation: blink 2s infinite;
+      }
+
+      @keyframes blink {
+        50% {
+          opacity: 0.2;
+        }
+      }
+
+      .protocol-tag {
+        font-size: 10px;
+        color: var(--accent);
+        letter-spacing: 1px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .main-title {
+        font-size: 1.2rem;
+        font-weight: 800;
+        margin: 0;
+        color: #fff;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .sub-title {
+        font-size: 9px;
+        color: var(--text-dim);
+        margin-top: 2px;
+        font-family: var(--font-mono);
+      }
+
+      .form-field {
+        margin-bottom: 24px;
+      }
+
+      .field-label {
+        font-size: 10px;
+        color: var(--text-dim);
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        font-weight: 600;
+      }
+
+      .input-wrapper {
+        position: relative;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid var(--border-color);
+        transition: all 0.25s;
+      }
+
+      .input-wrapper:focus-within {
+        border-color: var(--accent);
+        background: rgba(255, 204, 0, 0.03);
+      }
+
+      input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        padding: 14px;
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        outline: none;
+      }
+
+      input::placeholder {
+        color: #3a3f4b;
+      }
+
+      .v-code-layout {
+        display: flex;
+        gap: 8px;
+      }
+
+      #getCodeBtn {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        padding: 0 12px;
+        font-size: 11px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-weight: 700;
+        min-width: 100px;
+      }
+
+      #getCodeBtn:hover:not(:disabled) {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: var(--accent-muted);
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 16px;
+        background: var(--accent);
+        color: #000;
+        border: none;
+        font-weight: 900;
+        font-size: 1rem;
+        cursor: pointer;
+        clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .submit-btn:active:not(:disabled) {
+        transform: scale(0.98);
+        filter: brightness(0.9);
+      }
+
+      .submit-btn:disabled {
+        background: #2a2d35;
+        color: #555;
+        cursor: not-allowed;
+      }
+
+      .footer-meta {
+        margin-top: 25px;
+        font-size: 9px;
+        color: var(--text-dim);
+        display: flex;
+        justify-content: space-between;
+      }
+
+      #toast-container {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 48px);
+        max-width: 360px;
+        z-index: 1000;
+      }
+
+      .toast {
+        background: var(--terminal-card);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--accent);
+        padding: 12px 20px;
+        margin-top: 8px;
+        font-size: 11px;
+        color: var(--accent);
+        animation: slideUp 0.3s ease-out;
+        text-align: center;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .tactical-card {
+          padding: 30px 20px;
+          clip-path: polygon(
+            0 15px,
+            15px 0,
+            calc(100% - 15px) 0,
+            100% 15px,
+            100% calc(100% - 15px),
+            calc(100% - 15px) 100%,
+            15px 100%,
+            0 calc(100% - 15px)
+          );
+        }
+        .main-title {
+          font-size: 1.1rem;
+        }
+        .header-module {
+          gap: 12px;
+          margin-bottom: 24px;
+        }
+        .avatar-frame {
+          width: 44px;
+          height: 44px;
+        }
+        input {
+          font-size: 0.95rem;
+          padding: 12px;
+        }
+        #getCodeBtn {
+          min-width: 90px;
+          font-size: 10px;
+        }
+      }
+
+      #success-overlay {
+        position: fixed;
+        inset: 0;
+        background: var(--terminal-bg);
+        z-index: 2000;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #success-overlay.active {
+        display: flex;
+      }
+
+      .loading-bar {
+        width: 180px;
+        height: 1px;
+        background: var(--border-color);
+        margin-top: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .loading-bar::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 40%;
+        background: var(--accent);
+        animation: progress 1.5s infinite linear;
+      }
+
+      @keyframes progress {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(250%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scanline"></div>
+    <div class="grid-bg"></div>
+
+    <div class="terminal-wrapper">
+      <div class="tactical-card">
+        <header class="header-module">
+          <div class="avatar-frame">
+            <img src="https://s2.loli.net/2026/01/24/9mdkxHtoE1cgDSL.webp" alt="AMS Icon" />
+          </div>
+          <div class="header-info">
+            <div class="header-top-line">
+              <div class="status-dot"></div>
+              <span class="protocol-tag">爱弥斯 // AMS-PLUGIN</span>
+            </div>
+            <h1 class="main-title">库街区数据同步</h1>
+            <div class="sub-title">WUTHERING_WAVES // CONNECTION_READY</div>
+          </div>
+        </header>
+
+        <form id="terminalForm">
+          <div class="form-field">
+            <label class="field-label">
+              <span>手机号</span>
+              <span>MOBILE_ID</span>
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="tel"
+                id="phone"
+                maxlength="11"
+                placeholder="请输入手机号"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label">
+              <span>共鸣验证码</span>
+              <span>AUTH_TOKEN</span>
+            </label>
+            <div class="v-code-layout">
+              <div class="input-wrapper" style="flex: 1">
+                <input
+                  type="text"
+                  id="vCode"
+                  maxlength="6"
+                  placeholder="输入验证码"
+                  autocomplete="off"
+                />
+              </div>
+              <button type="button" id="getCodeBtn" disabled>发送验证码</button>
+            </div>
+          </div>
+
+          <button type="submit" id="submitBtn" class="submit-btn" disabled>开启数据链路</button>
+        </form>
+
+        <footer class="footer-meta">
+          <span>UID: {{ userId }}</span>
+          <span>SECURED BY KUROBBS_TERMINAL</span>
+        </footer>
+      </div>
+    </div>
+
+    <div id="success-overlay">
+      <h2 style="letter-spacing: 4px; color: var(--accent); font-size: 1.2rem">链路已建立</h2>
+      <p style="font-size: 11px; color: var(--text-dim); margin-top: 8px">同步共鸣数据中...</p>
+      <div class="loading-bar"></div>
+      <div style="margin-top: 15px; font-size: 14px; font-weight: 800" id="timer">03</div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script>
+      function toast(msg) {
+        const $t = $('<div class="toast">').text(`>> ${msg}`)
+        $("#toast-container").append($t)
+        setTimeout(() => $t.fadeOut(() => $t.remove()), 3000)
+      }
+
+      $(function () {
+        const $phone = $("#phone")
+        const $vCode = $("#vCode")
+        const $getBtn = $("#getCodeBtn")
+        const $submitBtn = $("#submitBtn")
+        const $successOverlay = $("#success-overlay")
+        const $timer = $("#timer")
+
+        function validate() {
+          const p = $phone.val() && $phone.val().length === 11
+          const c = $vCode.val() && $vCode.val().length >= 4
+          $getBtn.prop("disabled", !p)
+          $submitBtn.prop("disabled", !(p && c))
+        }
+
+        $phone.on("input", validate)
+        $vCode.on("input", validate)
+
+        const devcode = Math.random().toString(16).slice(2)
+        const captchaId = "ec4aa4174277d822d73f2442a165a2cd"
+
+        const startGeetest = () => {
+          if (typeof initGeetest4 !== "function") {
+            setTimeout(startGeetest, 1000)
+            return
+          }
+          try {
+            initGeetest4({ captchaId, product: "bind" }, function (captcha) {
+              captcha.onSuccess(() => {
+                const res = captcha.getValidate()
+                if (!res) return
+                res.captcha_id = captchaId
+                $.ajax({
+                  url: "https://api.kurobbs.com/user/getSmsCodeForH5",
+                  type: "POST",
+                  headers: { devcode, source: "h5" },
+                  data: { mobile: $phone.val(), geeTestData: JSON.stringify(res) },
+                  success: r => (r.success ? toast("验证码已注入链路") : toast(r.msg)),
+                  error: () => toast("链路连接失败"),
+                })
+              })
+
+              $getBtn.off("click").on("click", function () {
+                $(this).prop("disabled", true)
+                captcha.showBox()
+                let s = 60
+                const t = setInterval(() => {
+                  $getBtn.text(`${s--}S`)
+                  if (s < 0) {
+                    clearInterval(t)
+                    $getBtn.text("发送验证码")
+                    validate()
+                  }
+                }, 1000)
+              })
+            })
+          } catch (e) {
+            console.error(e)
+          }
+        }
+
+        startGeetest()
+
+        $("#terminalForm").on("submit", function (e) {
+          e.preventDefault()
+          const serverUrl = "{{ server_url }}"
+
+          const data = {
+            mobile: $phone.val(),
+            code: $vCode.val(),
+            auth: "{{ auth }}",
+          }
+
+          $.ajax({
+            url: serverUrl + "/waves/login",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: res => {
+              if (res.success) {
+                $successOverlay.addClass("active")
+                let j = 5
+                const jt = setInterval(() => {
+                  $timer.text(`0${--j}`)
+                  if (j <= 0) {
+                    clearInterval(jt)
+                    window.location.href = "https://github.com/tyql688/ams-plugin"
+                  }
+                }, 1000)
+              } else {
+                toast(res.msg || "链路拒绝访问")
+              }
+            },
+            error: () => toast("核心通讯异常"),
+          })
+        })
+      })
+    </script>
+  </body>
+</html>

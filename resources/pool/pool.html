@@ -1,0 +1,51 @@
+{{extend defaultLayout}} {{block 'title'}}卡池倒计时{{/block}} {{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}pool/pool.css" />
+{{/block}} {{block 'main'}}
+<div class="pool-container glass-panel">
+  <div class="glow-top"></div>
+
+  <div class="header">
+    <div class="header-left">
+      <div class="brand">AMS POOL STATS</div>
+      <div class="title">{{title || '卡池倒计时'}}</div>
+    </div>
+    <div class="header-right">
+      <div class="type-badge">
+        <span class="type-label">{{queryType}}</span>
+        <span class="star-label">{{star}}星</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-header">
+    <div class="header-avatar"></div>
+    <span class="header-name">角色</span>
+    <span class="header-count">UP次数</span>
+    <span class="header-time">未复刻时间</span>
+  </div>
+  <div class="items-list">
+    {{each items item}}
+    <div class="pool-item {{if item.isCurrentUp}}current-up{{/if}}">
+      <div class="item-avatar">
+        {{if queryType === '角色'}}
+        <img
+          src="{{wavesResMap.roleAvatar}}/{{item.id}}.webp"
+          onerror="this.style.display = 'none'"
+          alt="{{item.name}}"
+        />
+        {{else}}
+        <img
+          src="{{wavesResMap.weapon}}/{{item.id}}.webp"
+          onerror="this.style.display = 'none'"
+          alt="{{item.name}}"
+        />
+        {{/if}}
+      </div>
+      <span class="item-name">{{item.name}}</span>
+      <span class="up-count">{{item.upCount}}</span>
+      <span class="time-text {{if item.isCurrentUp}}current{{/if}}">{{item.timeText}}</span>
+    </div>
+    {{/each}}
+  </div>
+</div>
+{{/block}}

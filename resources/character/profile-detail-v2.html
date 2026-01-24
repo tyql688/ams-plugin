@@ -1,0 +1,171 @@
+{{extend defaultLayout}} {{block 'title'}}鸣潮角色面板{{/block}} {{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/character/profile-detail-v2.css" />
+{{/block}} {{block 'body-class'}}elem-{{elem}} theme-element-{{data.attributeId}}{{/block}} {{block
+'main'}}
+<div class="main-content">
+  <div class="left-column">
+    <div class="pile-card">
+      <div
+        class="role-pile"
+        style="background-image:url({{customPile || wavesResMap.rolePile + '/' + data.charId + '.webp'}})"
+      ></div>
+
+      <div class="role-info-group">
+        <div class="role-badge">
+          <div class="role-name">{{data.name}}</div>
+          <div class="role-meta">
+            <span class="role-level">Lv.{{data.level}}</span>
+            <span class="role-chain chain-{{data.chainUnlockNum}}">{{data.chainUnlockNum}}链</span>
+            <span class="role-elem">{{data.attributeName}}</span>
+          </div>
+        </div>
+      </div>
+
+      {{if data.chainList}}
+      <div class="pile-chains">
+        {{each data.chainList chain index}}
+        <div class="chain-icon-circle {{chain.unlocked?'on':'off'}}">
+          <div
+            class="icon-img"
+            style="background-image:url({{wavesResMap.roleChain}}/{{data.charId}}/{{chain.id}}.webp)"
+          ></div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="right-column">
+    {{if data.roleAttributeList && data.roleAttributeList.length > 0}}
+    <div class="card attribute-card">
+      <div class="card-title">
+        <span>角色属性</span>
+        <span class="title-uid">UID: {{uid}}</span>
+      </div>
+      <div class="attr-grid">
+        {{each data.roleAttributeList attribute}}
+        <div class="attr-row">
+          <div class="attr-icon">
+            <img src="{{wavesResMap.prop}}/{{attribute.name}}.webp" alt="{{attribute.name}}" />
+          </div>
+          <div class="attr-label {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}">
+            {{attribute.name}}
+          </div>
+          <div class="attr-val {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}">
+            {{attribute.value}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}} {{if data.skillList}}
+    <div class="card skills-card-wide">
+      <div class="card-title">技能等级</div>
+      <div class="skills-list">
+        {{each data.skillList skill}}
+        <div class="skill-item-capsule">
+          <div class="skill-icon-circle">
+            <div
+              class="icon-img"
+              style="background-image:url({{wavesResMap.roleSkill}}/{{data.charId}}/{{skill.id}}.webp)"
+            ></div>
+            <div class="circle-lv">{{skill.level}}</div>
+          </div>
+          <div class="skill-name">{{skill.type}}</div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}} {{if data.weapon && data.weapon.name}}
+    <div class="card weapon-card">
+      <div class="card-title">武器装备</div>
+      <div class="weapon-content">
+        <div class="weapon-left">
+          <div class="weapon-rarity-frame rarity-{{data.weapon.rarity}}">
+            <div
+              class="weapon-bg"
+              style="background-image:url({{wavesResMap.weapon}}/{{data.weapon.id}}.webp)"
+            ></div>
+            <div class="weapon-rarity-bar rarity-{{data.weapon.rarity}}"></div>
+          </div>
+          {{if data.weapon.mainPropList}}
+          <div class="weapon-props-simple">
+            {{each data.weapon.mainPropList mainProp}}
+            <div class="wp-item">
+              <img src="{{wavesResMap.prop}}/{{mainProp.attributeName}}.webp" />
+              <span class="wp-name">{{mainProp.attributeName}}</span>
+              <span class="wp-value">+{{mainProp.attributeValue}}</span>
+            </div>
+            {{/each}}
+          </div>
+          {{/if}}
+        </div>
+        <div class="weapon-details">
+          <div class="weapon-head">
+            <div class="weapon-name">
+              {{data.weapon.name}}
+              <span class="tag-reson reson-{{data.weapon.resonLevel}}"
+                >精{{data.weapon.resonLevel}}</span
+              >
+              <span class="tag-lv">Lv.{{data.weapon.level}}</span>
+            </div>
+          </div>
+
+          <div class="weapon-desc">{{data.weapon.effect}}</div>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+
+{{if data.equipPhantomList && data.equipPhantomList.length > 0}}
+<div class="echo-section">
+  <div class="section-title">声骸装备</div>
+  <div class="echo-list">
+    {{each data.equipPhantomList phantom}} {{if phantom && phantom.name}}
+    <div class="echo-card">
+      <div class="echo-head">
+        <div
+          class="echo-icon"
+          style="background-image:url({{wavesResMap.echo}}/{{phantom.id}}.webp)"
+        ></div>
+        <span class="echo-lv">+{{phantom.level}}</span>
+        <div class="echo-title-row">
+          {{if phantom.groupId}}
+          <div
+            class="group-icon-inline"
+            style="background-image:url({{wavesResMap.group}}/{{phantom.groupId}}.webp)"
+          ></div>
+          {{/if}}
+          <div class="echo-name">{{phantom.name}}</div>
+        </div>
+        <div class="echo-cost">Cost {{phantom.cost}}</div>
+      </div>
+
+      <div class="echo-props">
+        {{if phantom.mainPropList}} {{each phantom.mainPropList mainProp}}
+        <div class="prop-row main">
+          <div class="p-icon">
+            <img src="{{wavesResMap.prop}}/{{mainProp.attributeName}}.webp" />
+          </div>
+          <div class="p-name">{{mainProp.attributeName}}</div>
+          <div class="p-val">{{mainProp.attributeValue}}</div>
+        </div>
+        {{/each}} {{/if}} {{if phantom.subPropList}} {{each phantom.subPropList subProp}} {{if
+        subProp.attributeName}}
+        <div class="prop-row sub">
+          <div class="p-dot"></div>
+          <div class="p-name {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}">
+            {{subProp.attributeName}}
+          </div>
+          <div class="p-val {{if subProp.isMax}}max-val{{/if}}">{{subProp.attributeValue}}</div>
+        </div>
+        {{/if}} {{/each}} {{/if}}
+      </div>
+    </div>
+    {{/if}} {{/each}}
+  </div>
+</div>
+{{/if}} {{/block}}

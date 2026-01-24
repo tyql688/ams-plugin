@@ -1,0 +1,450 @@
+/* 冥歌海墟特定颜色覆盖 */
+:root {
+  --glass-border: rgba(56, 189, 248, 0.15);
+  --accent-purple: #a855f7;
+}
+
+body {
+  padding: 40px 0;
+  min-height: 100vh;
+}
+
+#container {
+  width: 900px;
+  align-items: center;
+}
+
+.slash-container {
+  width: 860px;
+  margin: 0 auto;
+  background-size: cover;
+  background-position: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 50px;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 15px;
+}
+
+.brand {
+  font-family: var(--font-number);
+  font-size: 14px;
+  letter-spacing: 6px;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: var(--font-art);
+  font-size: 44px;
+  background: linear-gradient(180deg, #fff 40%, #7dd3fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.uid {
+  font-family: var(--font-number);
+  font-size: 15px;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-top: 10px;
+}
+
+.season-info {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 12px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(34, 211, 238, 0.15);
+  text-align: right;
+  backdrop-filter: blur(10px);
+}
+
+.season-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.season-time {
+  font-family: var(--font-number);
+  font-size: 22px;
+  color: var(--accent-cyan);
+}
+
+/* 总评分 */
+.score-info {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 45px;
+}
+
+.total-score-card {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(10, 10, 10, 0.7) 100%);
+  padding: 12px 50px;
+  border-radius: 100px;
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+}
+
+.score-label {
+  font-family: var(--font-art);
+  font-size: 24px;
+  color: var(--text-secondary);
+}
+
+.total-count {
+  font-family: var(--font-number);
+  font-size: 52px;
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+}
+
+.total-count .current {
+  color: #fff;
+  text-shadow: 0 0 25px rgba(34, 211, 238, 0.4);
+}
+
+.total-count .divider {
+  color: var(--text-dim);
+  font-size: 32px;
+}
+
+.total-count .max {
+  color: var(--text-dim);
+  font-size: 36px;
+}
+
+/* 挑战 */
+.challenge-group {
+  margin-bottom: 40px;
+}
+
+.challenge-group:last-child {
+  margin-bottom: 0;
+}
+
+.challenge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.challenge-name {
+  font-family: var(--font-art);
+  font-size: 30px;
+  color: #f1f5f9;
+}
+
+.challenge-line {
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-cyan) 0%, transparent 100%);
+  width: 250px;
+  opacity: 0.3;
+  margin-top: 8px;
+}
+
+.challenge-rank-badge {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 24px;
+  border-radius: 16px;
+}
+
+.challenge-rank-badge .label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.challenge-rank-badge .rank-value {
+  font-family: var(--font-number);
+  font-size: 44px;
+  color: var(--grade-other);
+  font-weight: 800;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.challenge-rank-badge .rank-value.color-sss,
+.challenge-rank-badge .rank-value.color-ss,
+.challenge-rank-badge .rank-value.color-s {
+  color: var(--grade-s);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.challenge-rank-badge .rank-value.color-a {
+  color: var(--grade-a);
+  text-shadow: 0 0 20px rgba(156, 39, 176, 0.4);
+}
+
+.challenge-rank-badge .rank-value.color-b {
+  color: var(--grade-b);
+  text-shadow: 0 0 20px rgba(65, 125, 235, 0.4);
+}
+
+.challenge-rank-badge .rank-value.color-c {
+  color: var(--grade-c);
+  text-shadow: 0 0 20px rgba(50, 235, 124, 0.4);
+}
+
+.challenge-rank-badge .score-value {
+  font-family: var(--font-number);
+  font-size: 20px;
+  color: var(--accent-cyan);
+  padding-left: 10px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 阶段卡片 */
+.halfs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.half-item {
+  height: 180px;
+  background: rgba(13, 14, 20, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 32px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 装饰背景横幅 */
+.half-bg-banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 70%;
+  background-size: cover;
+  background-position: center left;
+  background-repeat: no-repeat;
+  mask-image: linear-gradient(to left, #000 20%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, #000 20%, transparent 100%);
+  opacity: 0.45;
+  filter: brightness(0.8) contrast(1.1);
+  z-index: 1;
+}
+
+/* 增强的水印分数 */
+.score-watermark {
+  position: absolute;
+  left: 50px;
+  bottom: -20px;
+  font-family: var(--font-number);
+  font-size: 150px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.05); /* 提升透明度 */
+  pointer-events: none;
+  z-index: 0;
+  line-height: 1;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.half-main {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 50px;
+  gap: 40px;
+}
+
+/* 左侧：信息 */
+.half-info-box {
+  width: 140px;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.phase-tag {
+  font-family: var(--font-number);
+  font-size: 13px;
+  color: var(--text-dim);
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.phase-score .label {
+  display: block;
+  font-family: var(--font-number);
+  font-size: 11px;
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+.phase-score .value {
+  font-family: var(--font-number);
+  font-size: 36px;
+  color: #fff;
+  font-weight: 800;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+/* 中间：队伍 */
+.half-team-box {
+  flex: 1;
+}
+
+.team-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.phase-team-icon {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 0 5px var(--accent-cyan));
+}
+
+.team-label {
+  font-family: var(--font-number);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+.role-list {
+  display: flex;
+  gap: 18px;
+}
+
+.role-avatar-wrapper.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.8);
+  overflow: hidden;
+  padding: 0;
+}
+
+.role-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* 右侧：BUFF 新样式 */
+.half-buff-box-new {
+  width: 140px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.buff-name-mini {
+  font-family: var(--font-art);
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 120px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+  opacity: 0.8;
+}
+
+.buff-rarity-frame {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.buff-icon-box {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buff-img-new {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.buff-rarity-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  z-index: 2;
+}
+
+/* 根据品质渲染 Bar 和光辉 */
+.buff-rarity-bar.rarity-1 {
+  background: linear-gradient(to top, #9e9e9e, transparent);
+  box-shadow: 0 -4px 12px #9e9e9e;
+}
+.buff-rarity-bar.rarity-2 {
+  background: linear-gradient(to top, #4caf50, transparent);
+  box-shadow: 0 -4px 12px #4caf50;
+}
+.buff-rarity-bar.rarity-3 {
+  background: linear-gradient(to top, #2196f3, transparent);
+  box-shadow: 0 -4px 12px #2196f3;
+}
+.buff-rarity-bar.rarity-4 {
+  background: linear-gradient(to top, #9c27b0, transparent);
+  box-shadow: 0 -4px 12px #9c27b0;
+}
+.buff-rarity-bar.rarity-5 {
+  background: linear-gradient(to top, #ffd700, transparent);
+  box-shadow: 0 -4px 20px #ffd700;
+}
+
+.no-lineup {
+  color: var(--text-dim);
+  font-size: 14px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  opacity: 0.5;
+}
+
+.empty-state {
+  padding: 100px 0;
+  text-align: center;
+}

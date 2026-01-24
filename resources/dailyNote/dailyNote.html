@@ -1,0 +1,136 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}dailyNote/dailyNote.css" />
+{{/block}}
+
+{{block 'main'}}
+<div class="daily-note-container glass-panel">
+  <div class="glow-top"></div>
+  <img class="card-sticker" src="{{pluResPath}}dailyNote/imgs/left.png" />
+
+  <div class="header">
+        <div class="header-left">
+          <div class="brand">Daily Note</div>
+          <div class="title">数据日报</div>
+          <div class="uid">UID: {{roleId}}</div>
+        </div>
+
+        <div class="header-right">
+          <div class="date-box">
+            <div class="date-label">Today</div>
+            <div class="date-value">{{currTime}}</div>
+          </div>
+
+
+          <div class="sign-in-tip" style="color: {{if !hasSignIn}}#ef4444{{else}}#aab8c9{{/if}}">
+            今日签到福利{{if hasSignIn}}已{{else}}尚未{{/if}}领取
+          </div>
+        </div>
+      </div>
+
+      <div class="content-wrapper">
+
+        <div class="left-column">
+
+          <div class="data-card waveplate-card">
+            <div class="card-bg-icon">
+              <img src="{{pluResPath}}dailyNote/imgs/energy.webp" />
+            </div>
+            <div class="card-info">
+          <div class="card-title">
+            结晶波片
+            {{if energyData.refreshTimeStr}}
+            <span class="refill-time">预计回满 {{energyData.refreshTimeStr}}</span>
+            {{else}}
+            <span class="refill-time" style="color: #4ade80">已全部恢复</span>
+            {{/if}}
+          </div>
+              <div class="card-num">
+                <strong
+                  style="color: {{if energyData.refreshTimeStr}}#facc15{{else}}#4ade80{{/if}};"
+                  >{{energyData.cur}}</strong
+                >/{{energyData.total}}
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="data-card solvent-card">
+            <div class="card-bg-icon">
+              <img src="{{pluResPath}}dailyNote/imgs/storeEnergy.webp" />
+            </div>
+            <div class="card-info">
+              <div class="card-title">结晶单质</div>
+              <div class="card-num">
+                <strong style="color: #facc15">{{storeEnergyData.cur}}</strong
+                >/{{storeEnergyData.total}}
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="list-card">
+          <div class="list-item">
+            <img class="item-icon" src="{{pluResPath}}dailyNote/imgs/liveness.webp" />
+            <div class="item-content">
+              <div class="item-title">活跃度</div>
+              <div class="item-val">
+                <span class="cur">{{livenessData.cur}}</span>
+                <span class="max">/{{livenessData.total}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="list-item">
+            <img class="item-icon" src="{{pluResPath}}dailyNote/imgs/weekly.webp" />
+            <div class="item-content">
+              <div class="item-title">战歌重奏</div>
+              <div class="item-val">
+                <span class="cur">{{weeklyData.cur}}</span>
+                <span class="max">/{{weeklyData.total}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="list-item">
+            <img class="item-icon" src="{{pluResPath}}dailyNote/imgs/tower.webp" />
+            <div class="item-content">
+              <div class="item-title">逆境深塔</div>
+              <div class="item-val">
+                <span class="cur">{{towerData.cur}}</span>
+                <span class="max">/{{towerData.total}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="list-item">
+            <img class="item-icon" src="{{pluResPath}}dailyNote/imgs/rouge.webp" />
+            <div class="item-content">
+              <div class="item-title">千道门扉的异想</div>
+              <div class="item-val">
+                <span class="cur">{{weeklyRougeData.cur}}</span>
+                <span class="max">/{{weeklyRougeData.total}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="list-item">
+            <img class="item-icon" src="{{pluResPath}}dailyNote/imgs/shenhai.webp" />
+            <div class="item-content">
+              <div class="item-title">冥歌海墟</div>
+              <div class="item-val">
+                <span class="cur">{{slashTowerData.cur}}</span>
+                <span class="max">/{{slashTowerData.total}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  </div>
+</div>
+{{/block}}

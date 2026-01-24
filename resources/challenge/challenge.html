@@ -1,0 +1,80 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/challenge/challenge.css" />
+{{/block}} {{block 'main'}}
+
+<div class="tower-container glass-panel">
+  <div class="glow-top"></div>
+
+  <div class="header">
+    <div class="header-left">
+      <div class="brand">Tactical Hologram</div>
+      <div class="title">战术全息 · 挑战记录</div>
+      <div class="uid">UID: {{uid}}</div>
+    </div>
+  </div>
+
+  <!-- 参考 Slash 风格的总览卡片 -->
+  <div class="summary-wrapper">
+    <div class="sl-summary-card">
+      <div class="sl-label">战术全息总览</div>
+      <div class="sl-values">
+        <div class="sl-item highlight big-left">
+          <span class="val">{{fullClearCount}}</span>
+          <span class="sub">PERFECT</span>
+        </div>
+        <div class="sl-divider"></div>
+        <div class="sl-item">
+          <span class="val">{{totalBosses}}</span>
+          <span class="sub">BOSS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="boss-list">
+    {{each bossList boss}}
+    <div class="boss-card {{if boss.isFullyCleared}}cleared{{/if}}">
+      <div class="boss-card-bg" style="background-image: url('{{boss.bossIconUrl}}')"></div>
+
+      <!-- 卡片内容：采用绝对定位布局 -->
+      <div class="boss-content">
+        <!-- 左上：Boss 名字与等级 -->
+        <div class="pos-top-left">
+          <div class="boss-name">{{boss.bossName}}</div>
+          <div class="boss-tag {{if boss.isFullyCleared}}max{{else}}normal{{/if}}">
+            {{if boss.isFullyCleared}}MAX{{else}}LV.{{boss.maxDifficulty || 0}}{{/if}}
+          </div>
+        </div>
+
+        {{if boss.maxDifficulty > 0}} {{set fileterdDiffs = boss.challenges.filter(c => c.difficulty
+        === boss.maxDifficulty)}} {{if fileterdDiffs.length > 0}} {{set bestRecord =
+        fileterdDiffs[0]}}
+
+        <!-- 左下：超大时间 -->
+        <div class="pos-bottom-left">
+          <div class="time-label">BEST RECORD</div>
+          <div class="big-time">{{bestRecord.passTime}}<span class="unit">s</span></div>
+        </div>
+
+        <!-- 右下：角色列表 -->
+        <div class="pos-bottom-right">
+          <div class="team-group">
+            {{each bestRecord.roles role}}
+            <div class="team-role-circle">
+              <img
+                src="{{wavesResMap.roleAvatar}}/{{role.roleName}}.png"
+                onerror="this.src='{{role.roleHeadIcon}}';this.onerror=null;"
+              />
+            </div>
+            {{/each}}
+          </div>
+        </div>
+        {{/if}} {{else}}
+        <div class="pos-center-empty">NO RECORD</div>
+        {{/if}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+{{/block}}

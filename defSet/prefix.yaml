@@ -1,0 +1,8 @@
+# 前缀列表
+prefixes:
+  - "鸣潮"
+  - "mc"
+  - "ams"
+
+# 是否允许空前缀
+allowEmptyPrefix: false

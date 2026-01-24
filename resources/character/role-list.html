@@ -1,0 +1,41 @@
+{{extend defaultLayout}} {{block 'title'}}角色面板列表{{/block}} {{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/character/role-list.css" />
+{{/block}} {{block 'main'}}
+<div class="container slash-style" id="container">
+  <!-- 顶部光效 -->
+  <div class="glow-top"></div>
+
+  <!-- 头部信息 -->
+  <div class="header">
+    <div class="header-left">
+      <div class="brand">AMS ROLE LIST</div>
+      <div class="title">共鸣者档案</div>
+      <div class="header-meta">
+        <span class="uid">UID: {{uid}}</span>
+        <span class="count">收录 {{roles.length}} 名角色</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 角色列表 -->
+  <div class="role-grid">
+    {{each roles role}}
+    <div class="role-card star-{{role.starLevel}}">
+      <div class="role-avatar-wrapper">
+        <div
+          class="role-img"
+          style="background-image: url({{wavesResMap.roleAvatar}}/{{role.roleId}}.webp)"
+        ></div>
+      </div>
+
+      <div class="role-info-row">
+        <div class="role-name">{{role.roleName}}</div>
+        <div class="cons-tag c-{{role.chainUnlockNum || 0}}">{{role.chainUnlockNum || 0}}</div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+  <div class="footer-tip">您可以发送 <span class="cmd">{{command}}</span> 查看详情</div>
+</div>
+{{/block}}

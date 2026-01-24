@@ -1,0 +1,93 @@
+{{extend defaultLayout}} {{block 'title'}}鸣潮简讯{{/block}} {{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}anns/anns-list.css" />
+{{/block}} {{block 'main'}}
+<div class="news-glass-card glass-panel">
+  <div class="glow-top"></div>
+
+  <div class="header">
+    <div class="header-left">
+      <div class="brand">{{brand || 'AMS NEWS FEED'}}</div>
+      <div class="title">{{title || '鸣潮公告简讯'}}</div>
+    </div>
+    <div class="header-right">
+      <div class="time-box">
+        <div class="date-label">REPORT DATE</div>
+        <div class="date-value">{{reportDate}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="news-columns">
+    <div class="column activity-col">
+      <div class="col-header">
+        <span class="icon">✦</span> 活动 <span class="en">ACTIVITY</span>
+        <div class="line"></div>
+      </div>
+      <div class="item-list">
+        {{each groupedData.activity item}}
+        <div class="news-item">
+          <div class="item-cover" style="background-image: url('{{item.coverUrl}}')">
+            <div class="item-id">#{{item.shortId}}</div>
+          </div>
+          <div class="item-info">
+            <div class="item-title">{{item.postTitle}}</div>
+            <div class="item-footer">
+              <span class="item-time">{{item.time}}</span>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="column ann-col">
+      <div class="col-header">
+        <span class="icon">✦</span> 公告 <span class="en">NOTICE</span>
+        <div class="line"></div>
+      </div>
+      <div class="item-list">
+        {{each groupedData.ann item}}
+        <div class="news-item">
+          <div class="item-cover" style="background-image: url('{{item.coverUrl}}')">
+            <div class="item-id">#{{item.shortId}}</div>
+          </div>
+          <div class="item-info">
+            <div class="item-title">{{item.postTitle}}</div>
+            <div class="item-footer">
+              <span class="item-time">{{item.time}}</span>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="column info-col">
+      <div class="col-header">
+        <span class="icon">✦</span> 资讯 <span class="en">NEWS</span>
+        <div class="line"></div>
+      </div>
+      <div class="item-list">
+        {{each groupedData.info item}}
+        <div class="news-item">
+          <div class="item-cover" style="background-image: url('{{item.coverUrl}}')">
+            <div class="item-id">#{{item.shortId}}</div>
+          </div>
+          <div class="item-info">
+            <div class="item-title">{{item.postTitle}}</div>
+            <div class="item-footer">
+              <span class="item-time">{{item.time}}</span>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-hint">
+    使用 【#公告 <span class="highlight">短ID</span>】 查看详细内容，例如：#公告
+    {{groupedData.ann[0]?.shortId || '4392'}}
+  </div>
+</div>
+{{/block}}

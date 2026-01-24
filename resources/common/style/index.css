@@ -1,0 +1,336 @@
+@font-face {
+  font-family: "Number";
+  src:
+    url("../font/tttgbnumber.woff") format("woff"),
+    url("../font/tttgbnumber.ttf") format("truetype");
+}
+@font-face {
+  font-family: "YS";
+  src:
+    url("../font/HYWH-65W.woff") format("woff"),
+    url("../font/HYWH-65W.ttf") format("truetype");
+}
+@font-face {
+  font-family: "NZBZ";
+  src:
+    url("../font/NZBZ.woff") format("woff"),
+    url("../font/NZBZ.ttf") format("truetype");
+}
+
+/* ==================== 通用变量配置 ==================== */
+:root {
+  /* === 字体配置 === */
+  --font-number: "Number", sans-serif;
+  --font-normal: "YS", sans-serif;
+  --font-art: "NZBZ", sans-serif;
+
+  /* === 文本颜色 === */
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-dim: #64748b;
+  --text-dark: #000;
+  --color-text-main: #ffffff;
+
+  /* === 背景颜色 === */
+  --bg-body: #050508;
+  --bg-body-dark: #000;
+
+  /* === 玻璃形态 === */
+  --glass-bg: rgba(16, 18, 23, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --card-bg: rgba(255, 255, 255, 0.05);
+
+  /* === 强调色(Accent Colors) === */
+  --accent-blue: #38bdf8;
+  --accent-cyan: #22d3ee;
+  --accent-gold: #facc15;
+
+  /* === 元素主题色（默认值） === */
+  --element-primary: #00f0ff;
+  --element-bg: rgba(0, 240, 255, 0.08);
+  --element-shadow: rgba(0, 240, 255, 0.2);
+
+  /* === 评级等级 === */
+  --grade-c: #32eb7c;
+  --grade-b: #417deb;
+  --grade-a: #9c27b0;
+  --grade-s: #ffd700;
+  --grade-ss: #ffd700;
+  --grade-sss: #ffd700;
+  --grade-other: #9e9e9e;
+
+  /* === 武器品质等级 === */
+  --rarity-1: #9e9e9e;
+  --rarity-2: #32eb7c;
+  --rarity-3: #2196f3;
+  --rarity-4: #9c27b0;
+  --rarity-5: #ffd700;
+
+  /* === 共鸣链颜色 === */
+  --chain-0: #9e9e9e;
+  --chain-1: #32eb7c;
+  --chain-2: #2196f3;
+  --chain-3: #9c27b0;
+  --chain-4: #ff9800;
+  --chain-5: #f44336;
+  --chain-6: #ffd700;
+
+  /* === 武器属性值金色 === */
+  --weapon-prop-gold: #ffd700;
+  --weapon-prop-gold-shadow: rgba(255, 215, 0, 0.5);
+}
+
+/* ==================== 通用容器与装饰 ==================== */
+.glass-panel {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: var(--panel-bg, rgba(16, 18, 23, 0.92));
+  border: 1px solid var(--panel-border-color, rgba(255, 255, 255, 0.1));
+  border-radius: var(--panel-radius, 40px);
+  padding: var(--panel-padding, 60px 60px 35px);
+  -webkit-backdrop-filter: blur(var(--panel-blur, 20px)) saturate(var(--panel-saturate, 150%));
+  backdrop-filter: blur(var(--panel-blur, 20px)) saturate(var(--panel-saturate, 150%));
+  box-shadow: var(
+    --panel-shadow,
+    0 40px 80px -15px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.05)
+  );
+}
+
+.glow-top {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--glow-width, 500px);
+  height: var(--glow-height, 2px);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--glow-color, var(--accent-blue)),
+    transparent
+  );
+  box-shadow: 0 0 var(--glow-blur, 30px) var(--glow-color, var(--accent-blue));
+  z-index: 10;
+  opacity: var(--glow-opacity, 1);
+}
+
+/* ==================== 武器稀有度样式 ==================== */
+.weapon-rarity-frame {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.weapon-rarity-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 0 0 2px 2px;
+  z-index: 2;
+}
+
+.weapon-rarity-bar.rarity-1 {
+  background: linear-gradient(to top, var(--rarity-1), transparent);
+  box-shadow: 0 -4px 12px var(--rarity-1);
+  opacity: 0.6;
+}
+.weapon-rarity-bar.rarity-2 {
+  background: linear-gradient(to top, var(--rarity-2), transparent);
+  box-shadow: 0 -4px 12px var(--rarity-2);
+  opacity: 0.6;
+}
+.weapon-rarity-bar.rarity-3 {
+  background: linear-gradient(to top, var(--rarity-3), transparent);
+  box-shadow: 0 -4px 12px var(--rarity-3);
+  opacity: 0.6;
+}
+.weapon-rarity-bar.rarity-4 {
+  background: linear-gradient(to top, var(--rarity-4), transparent);
+  box-shadow: 0 -4px 12px var(--rarity-4);
+  opacity: 0.7;
+}
+.weapon-rarity-bar.rarity-5 {
+  background: linear-gradient(to top, var(--rarity-5), transparent);
+  box-shadow: 0 -4px 16px var(--rarity-5);
+  opacity: 0.8;
+}
+
+/* ==================== 元素主题配色 ==================== */
+.theme-element-1 {
+  --element-primary: #22d3ee;
+  --element-bg: rgba(8, 51, 68, 0.5);
+  --element-shadow: rgba(34, 211, 238, 0.2);
+}
+.theme-element-2 {
+  --element-primary: #ef4444;
+  --element-bg: rgba(69, 10, 10, 0.5);
+  --element-shadow: rgba(239, 68, 68, 0.2);
+}
+.theme-element-3 {
+  --element-primary: #a855f7;
+  --element-bg: rgba(59, 7, 100, 0.5);
+  --element-shadow: rgba(168, 85, 247, 0.2);
+}
+.theme-element-4 {
+  --element-primary: #34d399;
+  --element-bg: rgba(2, 44, 34, 0.5);
+  --element-shadow: rgba(52, 211, 153, 0.2);
+}
+.theme-element-5 {
+  --element-primary: #facc15;
+  --element-bg: rgba(66, 32, 6, 0.5);
+  --element-shadow: rgba(250, 204, 21, 0.2);
+}
+.theme-element-6 {
+  --element-primary: #e649a6;
+  --element-bg: rgba(80, 7, 36, 0.5);
+  --element-shadow: rgba(219, 39, 119, 0.2);
+}
+
+/* ==================== 共鸣链等级颜色样式 ==================== */
+.role-chain {
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--chain-0);
+  padding: 2px 8px;
+  font-weight: 700;
+  border-radius: 4px;
+  border: 1px solid var(--chain-0);
+}
+.role-chain.chain-0 {
+  color: var(--chain-0);
+  border-color: var(--chain-0);
+}
+.role-chain.chain-1 {
+  color: var(--chain-1);
+  border-color: var(--chain-1);
+  box-shadow: 0 0 4px var(--chain-1);
+}
+.role-chain.chain-2 {
+  color: var(--chain-2);
+  border-color: var(--chain-2);
+  box-shadow: 0 0 4px var(--chain-2);
+}
+.role-chain.chain-3 {
+  color: var(--chain-3);
+  border-color: var(--chain-3);
+  box-shadow: 0 0 4px var(--chain-3);
+}
+.role-chain.chain-4 {
+  color: var(--chain-4);
+  border-color: var(--chain-4);
+  box-shadow: 0 0 4px var(--chain-4);
+}
+.role-chain.chain-5 {
+  color: var(--chain-5);
+  border-color: var(--chain-5);
+  box-shadow: 0 0 4px var(--chain-5);
+}
+.role-chain.chain-6 {
+  color: var(--chain-6);
+  border-color: var(--chain-6);
+  box-shadow: 0 0 6px var(--chain-6);
+}
+
+/* ==================== 武器精炼等级标签颜色 ==================== */
+.tag-reson {
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--chain-0);
+  border: 1px solid var(--chain-0);
+}
+.tag-reson.reson-0 {
+  color: var(--chain-0);
+  border-color: var(--chain-0);
+}
+.tag-reson.reson-1 {
+  color: var(--chain-1);
+  border-color: var(--chain-1);
+  box-shadow: 0 0 4px var(--chain-1);
+}
+.tag-reson.reson-2 {
+  color: var(--chain-2);
+  border-color: var(--chain-2);
+  box-shadow: 0 0 4px var(--chain-2);
+}
+.tag-reson.reson-3 {
+  color: var(--chain-3);
+  border-color: var(--chain-3);
+  box-shadow: 0 0 4px var(--chain-3);
+}
+.tag-reson.reson-4 {
+  color: var(--chain-4);
+  border-color: var(--chain-4);
+  box-shadow: 0 0 4px var(--chain-4);
+}
+.tag-reson.reson-5 {
+  color: var(--chain-5);
+  border-color: var(--chain-5);
+  box-shadow: 0 0 4px var(--chain-5);
+}
+.tag-reson.reson-6 {
+  color: var(--chain-6);
+  border-color: var(--chain-6);
+  box-shadow: 0 0 6px var(--chain-6);
+}
+
+/* === 声骸品质颜色 (Intensity) === */
+/* Mapping: 0->chain-1(Green), 1->chain-2(Blue), 2->chain-3(Purple), 3->chain-4(Gold) */
+.theme-echo-0 {
+  --element-primary: var(--chain-1);
+  --element-bg: rgba(50, 235, 124, 0.1);
+  --element-shadow: rgba(50, 235, 124, 0.3);
+}
+.theme-echo-1 {
+  --element-primary: var(--chain-2);
+  --element-bg: rgba(33, 150, 243, 0.1);
+  --element-shadow: rgba(33, 150, 243, 0.3);
+}
+.theme-echo-2 {
+  --element-primary: var(--chain-3);
+  --element-bg: rgba(156, 39, 176, 0.1);
+  --element-shadow: rgba(156, 39, 176, 0.3);
+}
+.theme-echo-3 {
+  --element-primary: var(--chain-4);
+  --element-bg: rgba(255, 152, 0, 0.1);
+  --element-shadow: rgba(255, 152, 0, 0.3);
+}
+
+/* === 武器类型主题 (Weapon Type) === */
+/* 1: 迅刀 (Sword) - Cyan/Blue */
+.theme-weapon-1 {
+  --element-primary: var(--accent-cyan);
+  --element-bg: rgba(34, 211, 238, 0.1);
+  --element-shadow: rgba(34, 211, 238, 0.3);
+}
+/* 2: 长刃 (Broadblade) - Red */
+.theme-weapon-2 {
+  --element-primary: var(--chain-5);
+  --element-bg: rgba(244, 67, 54, 0.1);
+  --element-shadow: rgba(244, 67, 54, 0.3);
+}
+/* 3: 配枪 (Pistols) - Gold/Orange */
+.theme-weapon-3 {
+  --element-primary: var(--chain-4);
+  --element-bg: rgba(255, 152, 0, 0.1);
+  --element-shadow: rgba(255, 152, 0, 0.3);
+}
+/* 4: 臂铠 (Gauntlets) - Green */
+.theme-weapon-4 {
+  --element-primary: var(--chain-1);
+  --element-bg: rgba(50, 235, 124, 0.1);
+  --element-shadow: rgba(50, 235, 124, 0.3);
+}
+/* 5: 音感仪 (Rectifier) - Purple */
+.theme-weapon-5 {
+  --element-primary: var(--chain-3);
+  --element-bg: rgba(156, 39, 176, 0.1);
+  --element-shadow: rgba(156, 39, 176, 0.3);
+}

@@ -1,0 +1,99 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/tower/tower.css" />
+{{/block}} {{block 'main'}}
+<div class="tower-container glass-panel">
+  <div class="glow-top"></div>
+
+  <div class="header">
+    <div class="header-left">
+      <div class="brand">Tower of Adversity</div>
+      <div class="title">逆境深塔 · {{diffiname}}</div>
+      <div class="uid">UID: {{uid}}</div>
+    </div>
+    {{if showSeason}}
+    <div class="season-info">
+      <div class="season-label">距离深塔结束</div>
+      <div class="season-time">{{seasonEndTime}}</div>
+    </div>
+    {{/if}}
+  </div>
+
+  <div class="summary">
+    {{if diffData}}
+    <div class="stars-info">
+      <div class="total-stars-card">
+        <div class="star-icon-wrapper">
+          <img src="{{_res_path}}/tower/imgs/star.png" class="big-star" />
+        </div>
+        <div class="total-count">
+          <span class="current">{{diffData.totalStar || 0}}</span>
+          <span class="divider">/</span>
+          <span class="max">{{diffData.totalMaxStar || 0}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="areas">
+      {{each diffData.towerAreaList area}}
+      <div class="area-group">
+        <div class="area-header">
+          <div class="area-name-box">
+            <span class="area-name">{{area.areaName}}</span>
+            <div class="area-line"></div>
+          </div>
+          <div class="area-star-badge">
+            <img src="{{_res_path}}/tower/imgs/star.png" class="mini-star" />
+            <span class="count">{{area.star || 0}}/{{area.maxStar || 0}}</span>
+          </div>
+        </div>
+
+        <div class="floors-grid">
+          {{if area.floorList}} {{each area.floorList floor}}
+          <div class="floor-item">
+            <div
+              class="floor-bg"
+              style="background-image: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%), url('{{floor.picUrl}}')"
+            ></div>
+
+            <div class="floor-content">
+              <div class="floor-main-info">
+                <div class="floor-number">第 {{floor.floor}} 层</div>
+                <div class="floor-stars-list">
+                  {{set stars = floor.star || 0}} {{each [0, 1, 2] val}}
+                  <img
+                    src="{{_res_path}}/tower/imgs/star.png"
+                    class="floor-star-img {{val < stars ? 'active' : 'inactive'}}"
+                  />
+                  {{/each}}
+                </div>
+              </div>
+
+              <div class="floor-team">
+                {{if floor.roleList && floor.roleList.length > 0}} {{each floor.roleList role}}
+                <div class="team-role">
+                  <div class="role-avatar-hex">
+                    <img
+                      src="{{wavesResMap.roleAvatar}}/{{role.roleId}}.png"
+                      onerror="this.src='{{role.iconUrl}}'; this.onerror=null;"
+                    />
+                  </div>
+                </div>
+                {{/each}} {{else}}
+                <div class="no-lineup">暂无记录</div>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+          {{/each}} {{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <div class="empty-state">
+      <div class="empty-text">暂无 {{diffiname}} 挑战数据</div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+{{/block}}

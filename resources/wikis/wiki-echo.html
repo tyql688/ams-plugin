@@ -1,0 +1,65 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/wikis/wiki-echo.css" />
+{{/block}} {{block 'body-class'}}theme-echo-{{intensity}}{{/block}} {{block 'main'}}
+<!-- Echo doesn't strictly have 'element', default to spectro or let app pass a theme -->
+<div class="wiki-panel glass-panel">
+  <div class="glow-top"></div>
+  <div class="header">
+    <div class="header-left">
+      <div class="header-icon-wrapper">
+        <div class="header-icon-circle">
+          <img
+            src="{{wavesResMap.echo}}/{{id}}.webp"
+            onerror="this.src='{{wavesResMap.echo}}/{{id}}.png'"
+          />
+        </div>
+        <div class="cost-badge">{{cost}}</div>
+      </div>
+      <div class="header-bg-watermark">{{name}}</div>
+    </div>
+    <div class="header-right">
+      <div class="mode-badge" data-text="ECHO">声骸图鉴</div>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <!-- 技能 -->
+    {{if skill}}
+    <div class="wiki-item">
+      <div class="item-top">
+        <div class="item-info">
+          <div class="item-name">声骸技能</div>
+          <div class="item-desc">{{@skill.desc}}</div>
+        </div>
+      </div>
+      <!-- Echo params usually simple, integrated in desc, or we can list if needed. 
+           Sample showed params: ["48%...", "8"]. 
+           If desc has placeholders, apps/wiki.js should fill them or we assume simple desc. 
+           The sample logic in wiki.js handles placeholders. -->
+    </div>
+    {{/if}}
+
+    <!-- 合鸣效果 (Sets) -->
+    {{if sonatas && sonatas.length > 0}}
+    <div class="wiki-item">
+      <div class="item-top">
+        <div class="item-info">
+          <div class="item-name">合鸣效果</div>
+          <div class="sonata-list">
+            {{each sonatas sonata}}
+            <div class="sonata-item">
+              <div
+                class="sonata-icon"
+                style="background-image: url({{wavesResMap.group}}/{{sonata.id}}.webp)"
+              ></div>
+              <div class="sonata-name">{{sonata.name}}</div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+{{/block}}

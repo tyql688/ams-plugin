@@ -1,0 +1,123 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/slash/slash.css" />
+{{/block}} {{block 'main'}}
+<div class="slash-container glass-panel">
+  <div class="glow-top"></div>
+
+  <div class="header">
+    <div class="header-left">
+      <div class="brand">Whimpering Wastes</div>
+      <div class="title">冥歌海墟 · {{diffiname}}</div>
+      <div class="uid">UID: {{uid}}</div>
+    </div>
+    <div class="header-right">
+      {{if showSeason}}
+      <div class="season-info">
+        <div class="season-label">距离挑战结束</div>
+        <div class="season-time">{{seasonEndTime}}</div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="summary">
+    {{if diffData}}
+    <div class="score-info">
+      <div class="total-score-card">
+        <div class="score-label">总评分</div>
+        <div class="total-count">
+          <span class="current">{{diffData.allScore || 0}}</span>
+          {{if diffData.maxScore}}
+          <span class="divider">/</span>
+          <span class="max">{{diffData.maxScore}}</span>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
+    <div class="challenges">
+      {{each diffData.challengeList challenge}}
+      <div class="challenge-group">
+        <div class="challenge-header">
+          <div class="challenge-name-box">
+            <span class="challenge-name"
+              >{{if challenge.challengeId != 12}}{{challenge.challengeId}}层 -
+              {{/if}}{{challenge.challengeName}}</span
+            >
+            <div class="challenge-line"></div>
+          </div>
+          <div class="challenge-rank-badge">
+            <span class="label">评级</span>
+            <span class="rank-value color-{{challenge.rank.toLowerCase()}}"
+              >{{challenge.rank}}</span
+            >
+            <span class="score-value">{{challenge.score}}</span>
+          </div>
+        </div>
+
+        <div class="halfs-grid">
+          {{if challenge.halfList}} {{each challenge.halfList half i}}
+          <div class="half-item">
+            <div
+              class="half-bg-banner"
+              style="background-image: url('{{challenge.detailPageBG}}')"
+            ></div>
+            <div class="score-watermark">{{half.score}}</div>
+
+            <div class="half-main">
+              <div class="half-info-box">
+                <div class="phase-tag">PHASE {{i + 1}}</div>
+                <div class="phase-score">
+                  <span class="label">SCORE</span>
+                  <span class="value">{{half.score}}</span>
+                </div>
+              </div>
+
+              <div class="half-team-box">
+                <div class="team-header">
+                  {{if challenge.teamIcon}}
+                  <img src="{{challenge.teamIcon}}" class="phase-team-icon" />
+                  {{/if}}
+                  <span class="team-label">CHALLENGE TEAM</span>
+                </div>
+                <div class="role-list">
+                  {{if half.roleList && half.roleList.length > 0}} {{each half.roleList role}}
+                  <div class="role-avatar-wrapper circle">
+                    <img
+                      src="{{wavesResMap.roleAvatar}}/{{role.roleId}}.png"
+                      class="role-avatar"
+                      onerror="this.src='{{role.iconUrl}}'; this.onerror=null;"
+                    />
+                  </div>
+                  {{/each}} {{else}}
+                  <div class="no-lineup">NO DATA</div>
+                  {{/if}}
+                </div>
+              </div>
+
+              <div class="half-buff-box-new">
+                {{if half.buffIcon}}
+                <div class="buff-rarity-frame">
+                  <div class="buff-icon-box">
+                    <img src="{{half.buffIcon}}" class="buff-img-new" />
+                  </div>
+                  <div class="buff-rarity-bar rarity-{{half.buffQuality || 3}}"></div>
+                </div>
+                <div class="buff-name-mini">{{half.buffName}}</div>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+          {{/each}} {{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <div class="empty-state">
+      <div class="empty-text">暂无 {{diffiname}} 挑战数据</div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+{{/block}}

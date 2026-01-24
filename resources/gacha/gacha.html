@@ -1,0 +1,145 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/gacha/gacha.css" />
+{{/block}} {{block 'main'}}
+<div class="gacha-wrapper glass-panel">
+  <div class="glow-top"></div>
+
+  <!-- Brand Header -->
+  <div class="header">
+    <div class="brand">BLACK SHORES</div>
+    <div class="title">SIGNAL SEARCH ANALYSIS</div>
+    <div class="header-meta">
+      <div class="uid">UID: {{data.playerId}}</div>
+      <div class="count">{{sys.time}}</div>
+    </div>
+  </div>
+
+  <div class="main-content" style="display: flex; gap: 20px">
+    {{if data.upCharPool}}
+    <div class="column">
+      <!-- UP Char Pool Content -->
+      <div class="user">
+        <div class="user-uid">角色UP池</div>
+        <div class="user-cost">总计: {{data.upCharPool.info.total}} 抽</div>
+      </div>
+      <div class="box">
+        <div class="box-overview">
+          <!-- Stats -->
+          <div>
+            <span class="value">{{data.upCharPool.info.no5Star}}</span>
+            <div class="key">垫抽</div>
+          </div>
+          <div>
+            <span class="value">{{data.upCharPool.info.fiveStar}}</span>
+            <div class="key">五星数</div>
+          </div>
+          <div>
+            <span class="value">{{data.upCharPool.info.avg5Star}}</span>
+            <div class="key">五星均</div>
+          </div>
+          <div>
+            <span class="value">{{data.upCharPool.info.minPit}}%</span>
+            <div class="key">不歪率</div>
+          </div>
+          <div>
+            <span class="value">{{data.upCharPool.info.worstLuck}}</span>
+            <div class="key">最非</div>
+          </div>
+          <div>
+            <span class="value">{{data.upCharPool.info.bestLuck}}</span>
+            <div class="key">最欧</div>
+          </div>
+          <div>
+            <span class="value">{{data.upCharPool.info.avgUP}}</span>
+            <div class="key">UP均</div>
+          </div>
+          <div>
+            <span class="value">{{data.upCharPool.info.upCost}}W</span>
+            <div class="key">UP花费</div>
+          </div>
+        </div>
+        <div class="box-time">
+          {{if data.upCharPool.info.time[0]}} {{data.upCharPool.info.time[0]}} ~
+          {{data.upCharPool.info.time[1]}} {{else}} 暂无数据 {{/if}}
+        </div>
+        <div class="box-rolelist">
+          {{each data.upCharPool.pool role}}
+          <div class="role-box">
+            {{if role.isUp}}
+            <div class="isup">UP</div>
+            {{/if}}
+            <div
+              class="role-img"
+              style="background-image:url({{role.type == 'role' ? wavesResMap.roleAvatar + '/' + role.id + '.webp' : wavesResMap.weapon + '/' + role.id + '.webp'}})"
+            ></div>
+            <div class="gacha-time" style="background-color: {{role.color}};">{{role.times}}</div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    {{/if}} {{if data.upWpnPool}}
+    <div class="column">
+      <div class="user">
+        <div class="user-uid">武器UP池</div>
+        <div class="user-cost">总计: {{data.upWpnPool.info.total}} 抽</div>
+      </div>
+      <div class="box">
+        <div class="box-overview">
+          <div>
+            <span class="value">{{data.upWpnPool.info.no5Star}}</span>
+            <div class="key">垫抽</div>
+          </div>
+          <div>
+            <span class="value">{{data.upWpnPool.info.fiveStar}}</span>
+            <div class="key">五星数</div>
+          </div>
+          <div>
+            <span class="value">{{data.upWpnPool.info.avg5Star}}</span>
+            <div class="key">五星均</div>
+          </div>
+          <div>
+            <span class="value">{{data.upWpnPool.info.minPit}}%</span>
+            <div class="key">不歪率</div>
+          </div>
+          <div>
+            <span class="value">{{data.upWpnPool.info.worstLuck}}</span>
+            <div class="key">最非</div>
+          </div>
+          <div>
+            <span class="value">{{data.upWpnPool.info.bestLuck}}</span>
+            <div class="key">最欧</div>
+          </div>
+          <div>
+            <span class="value">{{data.upWpnPool.info.avgUP}}</span>
+            <div class="key">UP均</div>
+          </div>
+          <div>
+            <span class="value">{{data.upWpnPool.info.upCost}}W</span>
+            <div class="key">UP花费</div>
+          </div>
+        </div>
+        <div class="box-time">
+          {{if data.upWpnPool.info.time[0]}} {{data.upWpnPool.info.time[0]}} ~
+          {{data.upWpnPool.info.time[1]}} {{else}} 暂无数据 {{/if}}
+        </div>
+        <div class="box-rolelist">
+          {{each data.upWpnPool.pool role}}
+          <div class="role-box">
+            {{if role.isUp}}
+            <div class="isup">UP</div>
+            {{/if}}
+            <div
+              class="role-img"
+              style="background-image:url({{role.type == 'role' ? wavesResMap.roleAvatar + '/' + role.id + '.webp' : wavesResMap.weapon + '/' + role.id + '.webp'}})"
+            ></div>
+            <div class="gacha-time" style="background-color: {{role.color}};">{{role.times}}</div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+{{/block}}

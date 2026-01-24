@@ -1,0 +1,215 @@
+:root {
+  --accent-blue: #38bdf8;
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --item-bg: rgba(255, 255, 255, 0.65);
+}
+
+body {
+  width: 600px;
+  background-color: #fff;
+}
+
+#container {
+  width: 600px;
+  padding: 0 10px 10px;
+}
+
+.pool-container {
+  width: 100%;
+  --panel-bg: var(--glass-bg);
+  --panel-border-color: var(--glass-border);
+  --panel-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  --glow-color: var(--accent-blue);
+  margin-top: 5px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 35px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding-bottom: 25px;
+}
+
+.brand {
+  font-family: var(--font-number);
+  font-size: 13px;
+  letter-spacing: 5px;
+  color: var(--accent-blue);
+  font-weight: 800;
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+
+.title {
+  font-family: var(--font-art);
+  font-size: 44px;
+  color: var(--text-dark);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.type-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.type-label {
+  font-family: var(--font-art);
+  font-size: 16px;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.star-label {
+  font-family: var(--font-number);
+  font-size: 16px;
+  color: var(--accent-gold);
+  font-weight: 700;
+  padding: 4px 10px;
+  background: rgba(250, 204, 21, 0.15);
+  border-radius: 8px;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 75px 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  column-gap: 20px;
+  padding: 12px 10px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  font-family: var(--font-number);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.header-avatar {
+  width: 70px;
+}
+
+.header-name {
+  font-family: var(--font-art);
+}
+
+.header-count,
+.header-time {
+  text-align: right;
+}
+
+.header-time {
+  min-width: 140px;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pool-item {
+  display: grid;
+  grid-template-columns: 75px 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  column-gap: 20px;
+  background: var(--item-bg);
+  border-radius: 12px;
+  padding: 10px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.pool-item:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.pool-item.current-up {
+  /* 移除背景和边框，只保留文字颜色 */
+}
+
+.item-avatar {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.item-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-info {
+  display: contents;
+}
+
+.item-name {
+  font-family: var(--font-art);
+  font-size: 16px;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.pool-item.current-up .item-name {
+  color: var(--accent-gold);
+}
+
+.up-count {
+  color: var(--text-dark);
+  font-weight: 700;
+  font-size: 16px;
+  font-family: var(--font-number);
+  text-align: right;
+}
+
+.pool-item.current-up .up-count {
+  color: var(--accent-gold);
+}
+
+.time-text {
+  color: var(--text-dark);
+  font-weight: 700;
+  font-size: 16px;
+  font-family: var(--font-number);
+  text-align: right;
+  min-width: 140px;
+}
+
+.time-text.current {
+  color: var(--accent-gold);
+}
+
+.copyright {
+  color: #a1a1aa !important;
+  text-shadow: none !important;
+  font-size: 11px !important;
+  opacity: 0.8;
+  padding-top: 5px !important;
+  margin: 0 !important;
+}
+
+.copyright .highlight {
+  color: var(--accent-blue) !important;
+  opacity: 0.9;
+}

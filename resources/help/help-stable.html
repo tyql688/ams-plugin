@@ -1,0 +1,46 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/help/help-stable.css" />
+{{/block}} {{block 'main'}}
+<div class="head-box">
+  <div class="head-bg" style="background-image: url('{{titleImage}}')"></div>
+  <div class="head-mask"></div>
+  <div class="head-content">
+    <div class="head-title">{{title}}</div>
+    <div class="head-desc">{{desc}}</div>
+  </div>
+</div>
+
+<div class="content-box">
+  {{each groups group}}
+  <div class="group-box">
+    <div class="group-title-bar">
+      <span class="group-icon">◆</span>
+      <span class="group-name">{{group.name}}</span>
+      {{if group.desc}}
+      <span class="group-desc">{{group.desc}}</span>
+      {{/if}}
+    </div>
+
+    <div class="cmd-grid">
+      {{each group.commands command}}
+      <div class="cmd-card {{if command.permission == 'master'}}is-master{{/if}}">
+        <div class="cmd-icon-box">
+          <img
+            class="cmd-icon"
+            src="{{command.iconPath}}"
+            onerror="this.src='{{defaultIcon}}'"
+            loading="eager"
+            decoding="sync"
+          />
+        </div>
+        <div class="cmd-info">
+          <div class="cmd-name">{{command.displayCmd}}</div>
+          <div class="cmd-detail">{{command.desc}}</div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{/block}}

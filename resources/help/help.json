@@ -1,0 +1,239 @@
+{
+  "title": "Ams帮助",
+  "desc": "我会消灭，意图毁灭的恶。",
+  "images": {
+    "bg": "bg.webp",
+    "title": "title.webp"
+  },
+  "groups": [
+    {
+      "name": "账号管理",
+      "desc": "在执行查询之前请绑定账号",
+      "permission": "user",
+      "commands": [
+        {
+          "icon": "T_15.png",
+          "cmd": "登录",
+          "desc": "绑定库街区账号（支持网页/验证码/Token）",
+          "example": "登录 13800000000 123456"
+        },
+        {
+          "icon": "B_04.png",
+          "cmd": "登出",
+          "desc": "删除当前账号"
+        },
+        {
+          "icon": "M_02.png",
+          "cmd": "查看uid",
+          "desc": "查看已绑定的UID列表"
+        },
+        {
+          "icon": "E_02.png",
+          "cmd": "切换uid",
+          "desc": "切换当前活跃UID",
+          "example": "切换uid 123456789"
+        },
+        {
+          "icon": "S_15.png",
+          "cmd": "我的token",
+          "desc": "查看当前Token（仅私聊）",
+          "example": "token"
+        }
+      ]
+    },
+    {
+      "name": "日常与体力",
+      "permission": "user",
+      "commands": [
+        {
+          "icon": "P_13.png",
+          "cmd": "体力",
+          "desc": "体力与周常数据查询"
+        },
+        {
+          "icon": "T_01.png",
+          "cmd": "签到",
+          "desc": "库街区每日签到"
+        },
+        {
+          "icon": "N_08.png",
+          "cmd": "开启自动签到",
+          "desc": "开启自动签到（需配置开关）"
+        },
+        {
+          "icon": "P_03.png",
+          "cmd": "关闭自动签到",
+          "desc": "关闭自动签到"
+        }
+      ]
+    },
+    {
+      "name": "数据查询",
+      "permission": "user",
+      "commands": [
+        {
+          "icon": "O_12.png",
+          "cmd": "深塔",
+          "desc": "逆境深塔挑战数据",
+          "example": "深境 / 稳定 / 实验"
+        },
+        {
+          "icon": "A_05.png",
+          "cmd": "冥海",
+          "desc": "冥歌海墟挑战数据",
+          "example": "禁忌 / 海隙 / 冥海12"
+        },
+        {
+          "icon": "Q_13.png",
+          "cmd": "全息",
+          "desc": "战术全息挑战数据",
+          "example": "全息 / 战术全息挑战"
+        },
+        {
+          "icon": "M_08.png",
+          "cmd": "面板",
+          "desc": "查看角色列表",
+          "example": "角色列表"
+        },
+        {
+          "icon": "O_15.png",
+          "cmd": "忌炎面板",
+          "desc": "查看角色详细面板",
+          "example": "忌炎面板"
+        },
+        {
+          "icon": "Q_11.png",
+          "cmd": "抽卡记录",
+          "desc": "查看抽卡分析图",
+          "example": "抽卡记录"
+        },
+        {
+          "icon": "R_16.png",
+          "cmd": "导入抽卡记录",
+          "desc": "导入链接或发送JSON文件",
+          "example": "更新抽卡记录 链接"
+        },
+        {
+          "icon": "S_06.png",
+          "cmd": "导出抽卡记录",
+          "desc": "导出本地抽卡记录文件"
+        },
+        {
+          "icon": "T_06.png",
+          "cmd": "别名列表",
+          "desc": "查看别名列表",
+          "example": "角色别名列表 忌炎"
+        },
+        {
+          "icon": "D_04.png",
+          "cmd": "未复刻卡池",
+          "desc": "查看未复刻卡池",
+          "example": "未复刻卡池"
+        },
+        {
+          "icon": "K_01.png",
+          "cmd": "兑换码",
+          "desc": "兑换码查询",
+          "example": "兑换码"
+        }
+      ]
+    },
+    {
+      "name": "公告与资讯",
+      "permission": "user",
+      "commands": [
+        {
+          "icon": "C_05.png",
+          "cmd": "公告",
+          "desc": "查看公告列表"
+        },
+        {
+          "icon": "N_18.png",
+          "cmd": "公告 1234",
+          "desc": "查看详情（短ID或postId）",
+          "example": "公告 1234"
+        }
+      ]
+    },
+    {
+      "name": "自定义素材",
+      "permission": "master",
+      "commands": [
+        {
+          "icon": "L_10.png",
+          "cmd": "上传背景图",
+          "desc": "上传角色面板背景"
+        },
+        {
+          "icon": "R_13.png",
+          "cmd": "背景图列表",
+          "desc": "查看已上传背景"
+        },
+        {
+          "icon": "F_01.png",
+          "cmd": "删除背景图",
+          "desc": "删除指定背景",
+          "example": "删除背景图 12345678"
+        },
+        {
+          "icon": "B_08.png",
+          "cmd": "上传[角色]立绘",
+          "desc": "上传自定义立绘",
+          "example": "上传忌炎立绘"
+        },
+        {
+          "icon": "C_06.png",
+          "cmd": "[角色]立绘列表",
+          "desc": "查看角色立绘",
+          "example": "忌炎立绘列表"
+        },
+        {
+          "icon": "L_03.png",
+          "cmd": "删除[角色]立绘",
+          "desc": "删除指定立绘",
+          "example": "删除忌炎立绘 12345678"
+        },
+        {
+          "icon": "P_02.png",
+          "cmd": "添加别名",
+          "desc": "添加角色/武器/声骸别名",
+          "example": "添加角色别名 忌炎 小炎"
+        },
+        {
+          "icon": "N_02.png",
+          "cmd": "删除别名",
+          "desc": "删除已有别名",
+          "example": "删除角色别名 小炎"
+        }
+      ]
+    },
+    {
+      "name": "公告推送",
+      "permission": "master",
+      "commands": [
+        {
+          "icon": "N_12.png",
+          "cmd": "开启公告推送",
+          "desc": "开启公告自动推送"
+        },
+        {
+          "icon": "K_04.png",
+          "cmd": "关闭公告推送",
+          "desc": "关闭公告自动推送"
+        }
+      ]
+    },
+    {
+      "name": "资源管理",
+      "permission": "master",
+      "commands": [
+        {
+          "icon": "N_14.png",
+          "cmd": "更新资源",
+          "desc": "更新插件资源包",
+          "example": "强制更新资源"
+        }
+      ]
+    }
+  ]
+}

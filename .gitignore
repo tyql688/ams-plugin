@@ -1,0 +1,12 @@
+config/**/*.*
+!config/.gitkeep
+
+data/*
+!data/.gitkeep
+
+node_modules
+
+.DS_Store
+
+waves-res/
+docs/
