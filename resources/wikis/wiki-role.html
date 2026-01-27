@@ -6,9 +6,14 @@
   <div class="header">
     <div class="header-left">
       <div class="char-avatar-circle">
-        <img src="{{wavesResMap.roleAvatar}}/{{roleId}}.webp" />
+        <div class="img-inner">
+          <img src="{{wavesResMap.roleAvatar}}/{{roleId}}.webp" />
+        </div>
       </div>
-      <div class="header-bg-watermark">{{name}}</div>
+      <div class="char-info-box">
+        <div class="char-name-en">CHARACTER {{mode === 'talent' ? 'SKILLS' : 'RESONANCE'}}</div>
+        <div class="char-name-zh">{{name}}</div>
+      </div>
     </div>
     <div class="header-right">
       <div class="mode-badge" data-text="{{mode === 'talent' ? 'TALENT' : 'CHAIN'}}">
@@ -27,10 +32,12 @@
             class="talent-icon"
             style="background-image:url({{wavesResMap.roleSkill}}/{{roleId}}/{{talent.id}}.webp)"
           ></div>
-          <div class="talent-type">{{talent.type}}</div>
         </div>
         <div class="item-info">
-          <div class="item-name">{{talent.name}}</div>
+          <div class="item-head">
+            <span class="talent-type">{{talent.type}}</span>
+            <span class="item-name">{{talent.name}}</span>
+          </div>
           <div class="item-desc">{{@talent.desc}}</div>
         </div>
       </div>
@@ -76,7 +83,7 @@
             class="chain-icon"
             style="background-image:url({{wavesResMap.roleChain}}/{{roleId}}/{{chain.id}}.webp)"
           ></div>
-          <div class="chain-index">{{chain.id}}</div>
+          <div class="chain-index">C{{chain.id}}</div>
         </div>
         <div class="item-info">
           <div class="item-name">{{chain.name}}</div>

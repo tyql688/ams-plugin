@@ -6,16 +6,19 @@
   <div class="glow-top"></div>
   <div class="header">
     <div class="header-left">
-      <div class="header-icon-wrapper">
-        <div class="header-icon-circle">
+      <div class="char-avatar-circle">
+        <div class="img-inner rarity-item rarity-{{rarity}}">
           <img
             src="{{wavesResMap.echo}}/{{id}}.webp"
             onerror="this.src='{{wavesResMap.echo}}/{{id}}.png'"
           />
         </div>
-        <div class="cost-badge">{{cost}}</div>
+        <div class="cost-badge">C{{cost}}</div>
       </div>
-      <div class="header-bg-watermark">{{name}}</div>
+      <div class="char-info-box">
+        <div class="char-name-en">DATABASE ECHO CORE</div>
+        <div class="char-name-zh">{{name}}</div>
+      </div>
     </div>
     <div class="header-right">
       <div class="mode-badge" data-text="ECHO">声骸图鉴</div>
@@ -32,9 +35,9 @@
           <div class="item-desc">{{@skill.desc}}</div>
         </div>
       </div>
-      <!-- Echo params usually simple, integrated in desc, or we can list if needed. 
-           Sample showed params: ["48%...", "8"]. 
-           If desc has placeholders, apps/wiki.js should fill them or we assume simple desc. 
+      <!-- Echo params usually simple, integrated in desc, or we can list if needed.
+           Sample showed params: ["48%...", "8"].
+           If desc has placeholders, apps/wiki.js should fill them or we assume simple desc.
            The sample logic in wiki.js handles placeholders. -->
     </div>
     {{/if}}

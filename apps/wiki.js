@@ -300,6 +300,7 @@ export class Wiki extends AmsPlugin {
         name: data.name,
         id: data.id,
         cost: data.cost,
+        rarity: data.cost == 4 ? 5 : data.cost == 3 ? 4 : 3,
         intensity: data.intensityCode || 0,
         sonatas: sonatas,
         skill: {

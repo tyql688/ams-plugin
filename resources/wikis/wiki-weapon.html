@@ -5,13 +5,18 @@
   <div class="glow-top"></div>
   <div class="header">
     <div class="header-left">
-      <div class="header-icon-circle">
-        <img
-          src="{{wavesResMap.weapon}}/{{id}}.webp"
-          onerror="this.src='{{wavesResMap.weapon}}/{{id}}.png'"
-        />
+      <div class="char-avatar-circle">
+        <div class="img-inner rarity-item rarity-{{rarity}}">
+          <img
+            src="{{wavesResMap.weapon}}/{{id}}.webp"
+            onerror="this.src='{{wavesResMap.weapon}}/{{id}}.png'"
+          />
+        </div>
       </div>
-      <div class="header-bg-watermark">{{name}}</div>
+      <div class="char-info-box">
+        <div class="char-name-en">DATABASE WEAPON CORE</div>
+        <div class="char-name-zh">{{name}}</div>
+      </div>
     </div>
     <div class="header-right">
       <div class="mode-badge" data-text="WEAPON">武器图鉴</div>

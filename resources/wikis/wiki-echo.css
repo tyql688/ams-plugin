@@ -1,74 +1,117 @@
 /* ==================== 页面布局 ==================== */
 body {
-  width: 950px;
+  width: 1000px;
+  padding: 40px 0;
 }
 
 .wiki-panel {
-  padding: 40px;
-  gap: 30px;
-  background-color: #08080a;
-  background-image:
-    radial-gradient(circle at 80% 20%, rgba(var(--element-primary-rgb), 0.15) 0%, transparent 40%),
-    radial-gradient(circle at 20% 80%, rgba(var(--element-primary-rgb), 0.05) 0%, transparent 40%);
-  background-attachment: fixed;
+  padding: 50px 60px;
+  background-color: var(--bg-body);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 装饰性背景光晕 */
+.wiki-panel::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--element-shadow) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding-bottom: 25px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  align-items: flex-end;
+  padding-bottom: 30px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 40px;
   position: relative;
-  height: 120px;
-  width: 100%;
+  z-index: 10;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  position: relative;
+  gap: 20px;
 }
 
-.header-icon-circle {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 3px solid var(--element-primary);
-  background: #000;
-  box-shadow:
-    0 0 20px var(--element-shadow),
-    inset 0 0 10px var(--element-shadow);
-  overflow: hidden;
-  position: relative;
-  z-index: 10;
-  flex-shrink: 0;
+.char-info-box {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 }
 
-.header-icon-circle img {
+.char-name-en {
+  font-family: var(--font-number);
+  font-size: 14px;
+  color: var(--element-primary);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+
+.char-name-zh {
+  font-family: var(--font-art);
+  font-size: 54px;
+  font-weight: 900;
+  line-height: 1;
+  color: #fff;
+  background: linear-gradient(180deg, #fff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.char-avatar-circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #000;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  overflow: visible; /* 为了角标不被剪裁 */
+  position: relative;
+  padding: 4px;
+}
+
+.char-avatar-circle .img-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--rarity-item-bg, #111);
+}
+
+.char-avatar-circle img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transform: scale(1.1);
 }
 
-.header-bg-watermark {
-  font-family: var(--font-art);
-  font-size: 100px;
-  line-height: 1;
-  color: rgba(255, 255, 255, 0.05);
-  white-space: nowrap;
-  font-style: italic;
+.cost-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #fff;
+  color: #000;
   font-weight: 900;
-  letter-spacing: -2px;
-  margin-left: -25px;
-  z-index: 5;
-  position: relative;
-  top: 5px;
-  text-shadow: none;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-number);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+  z-index: 20;
 }
 
 .header-right {
@@ -103,25 +146,23 @@ body {
 .content-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
   width: 100%;
 }
 
 .wiki-item {
   width: 100%;
-  background: linear-gradient(145deg, rgba(30, 30, 35, 0.7), rgba(20, 20, 25, 0.8));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 4px solid var(--element-primary);
-  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.5),
-    -2px 0 15px -2px var(--element-shadow);
-  box-sizing: border-box;
+    0 20px 40px -10px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
 }
 
 .wiki-item::before {
@@ -129,19 +170,19 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, var(--element-primary), transparent);
-  opacity: 0.5;
+  bottom: 0;
+  width: 6px;
+  background: linear-gradient(to bottom, var(--element-primary), var(--element-shadow));
+  box-shadow: 2px 0 15px var(--element-shadow);
 }
 
 .item-top {
   width: 100%;
   display: flex;
   gap: 25px;
-  padding: 18px 25px;
+  padding: 25px 30px;
   align-items: flex-start;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.03), transparent);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
   box-sizing: border-box;
 }
 
@@ -150,128 +191,63 @@ body {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  word-wrap: break-word;
+  gap: 12px;
 }
 
 .item-name {
-  font-size: 20px;
-  font-weight: 700;
-  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--element-primary);
   font-family: var(--font-normal);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  letter-spacing: 1px;
 }
 
 .item-desc {
-  font-size: 14px;
+  font-size: 15px;
   color: rgba(255, 255, 255, 0.85);
-  line-height: 1.6;
+  line-height: 1.8;
   text-align: justify;
 }
 
 .item-desc nobr {
   color: var(--element-primary);
-  font-weight: 700;
-  padding: 0 3px;
-  border-bottom: 1px dashed var(--element-primary);
-}
-
-.wiki-params {
-  width: 100%;
-  margin-top: 5px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-  table-layout: fixed;
-  word-wrap: break-word;
-}
-
-.data-table th,
-.data-table td {
-  padding: 10px 12px;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  word-break: break-all;
-}
-
-.data-table thead th {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--element-primary);
-  font-weight: 700;
+  font-weight: 800;
   font-family: var(--font-number);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  text-shadow: 0 0 5px var(--element-shadow);
+  padding: 0 2px;
 }
 
-.data-table td {
-  color: #fff;
-  font-family: var(--font-number);
-  font-weight: 500;
-}
-
-/* Echo Specifics */
+/* ==================== 声骸特有：合鸣效果 ==================== */
 .sonata-list {
   display: flex;
+  flex-direction: row;
   gap: 15px;
   flex-wrap: wrap;
+  margin-top: 5px;
 }
+
 .sonata-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 5px 10px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.sonata-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-size: cover;
-}
-.cost-badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background: var(--element-primary);
-  color: #000;
-  font-weight: 800;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #fff;
-  z-index: 20;
-  font-family: var(--font-number);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-}
-.sonata-name {
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
 }
 
-.header-icon-wrapper {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  flex-shrink: 0;
-  z-index: 10;
+.sonata-icon {
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
-/* overwrite circle to fit wrapper */
-.header-icon-circle {
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  /* remove margins/flex props if they conflict, but here it's fine */
+
+.sonata-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
 }
