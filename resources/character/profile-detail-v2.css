@@ -282,6 +282,13 @@ body {
   padding: 5px;
 }
 
+.weapon-left .rarity-frame {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
 .weapon-bg {
   width: 100%;
   height: 100%;

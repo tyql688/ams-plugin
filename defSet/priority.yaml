@@ -8,3 +8,10 @@ task: 110 # 自动签到
 custom: 110 # 自定义素材
 res: 110 # 资源管理
 help: 110 # 帮助
+anns: 110 # 公告
+daily: 110 # 体力
+exchange: 110 # 兑换码
+gacha: 110 # 抽卡
+pool: 110 # 卡池统计
+wiki: 110 # 图鉴
+challenge: 110 # 战术全息

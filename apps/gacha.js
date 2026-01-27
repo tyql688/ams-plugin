@@ -34,115 +34,102 @@ export class Gacha extends AmsPlugin {
   }
 
   async gachaLog(e) {
-    try {
-      const user = await this.getWavesUser()
-      if (!user) {
-        return e.reply(`❌ 请先绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-      }
+    const user = await this.getWavesUser()
+    if (!user) {
+      return e.reply(`❌ 请先绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
+    }
 
-      const record = new GachaRecord(user.gameUid)
-      const data = record.data
+    const record = new GachaRecord(user.gameUid)
+    const data = record.data
 
-      if (!data.data_time) {
-        return e.reply(
-          `❌ 暂无抽卡记录，请先使用【${config.exampleCommond("更新抽卡记录 链接")}】导入数据。`,
-        )
-      }
+    if (!data.data_time) {
+      return e.reply(
+        `❌ 暂无抽卡记录，请先使用【${config.exampleCommond("更新抽卡记录 链接")}】导入数据。`,
+      )
+    }
 
-      await e.reply("🎨 正在生成抽卡分析图...")
+    await e.reply("🎨 正在生成抽卡分析图...")
 
-      // 准备渲染数据
-      // 将本地扭蛋类型映射为内部键
-      const renderPools = {
-        upCharPool: record.getStatData(GACHA_TYPES[1]), // 角色精准
-        upWpnPool: record.getStatData(GACHA_TYPES[2]), // 武器精准
-        // stdCharPool: record.getStatData(GACHA_TYPES[3]), // 常驻角色
-        // stdWpnPool: record.getStatData(GACHA_TYPES[4]), // 常驻武器
-        // otherPool: record.getStatData(GACHA_TYPES[5]) // 新手池？暂时忽略，如果需要后续添加
-      }
+    // 准备渲染数据
+    // 将本地扭蛋类型映射为内部键
+    const renderPools = {
+      upCharPool: record.getStatData(GACHA_TYPES[1]), // 角色精准
+      upWpnPool: record.getStatData(GACHA_TYPES[2]), // 武器精准
+    }
 
-      const renderData = {
-        playerId: user.gameUid,
-        ...renderPools,
-      }
+    const renderData = {
+      playerId: user.gameUid,
+      ...renderPools,
+    }
 
-      const img = await this.render("gacha/gacha", { data: renderData })
-      if (img) {
-        await e.reply(img)
-      } else {
-        await e.reply("❌ 绘图失败")
-      }
-    } catch (error) {
-      logger.error(`[ams] gachaLog: ${error}`)
-      return e.reply("❌ 查看抽卡记录失败，请查看日志")
+    const img = await this.render("gacha/gacha", { data: renderData })
+    if (img) {
+      await e.reply(img)
+    } else {
+      await e.reply("❌ 绘图失败")
     }
   }
 
   async updateGachaLog(e) {
-    try {
-      const user = await this.getWavesUser()
-      if (!user) {
-        return e.reply(`❌ 请先绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-      }
+    const user = await this.getWavesUser()
+    if (!user) {
+      return e.reply(`❌ 请先绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
+    }
 
-      const uid = user.gameUid
-      const record = new GachaRecord(uid)
+    const uid = user.gameUid
+    const record = new GachaRecord(uid)
 
-      // 解析文本内容的容器
-      let text = (e.msg || "").replace(/["\n\t ]+/g, "")
+    // 解析文本内容的容器
+    let text = (e.msg || "").replace(/["\n\t ]+/g, "")
 
-      // === 场景1：处理引用消息中的文本链接 ===
-      if (e.source) {
-        const sourceMsg = await this.getSourceMessage(e)
-        if (sourceMsg && Array.isArray(sourceMsg.message)) {
-          let sourceText = ""
-          for (const msg of sourceMsg.message) {
-            if (msg.type === "text") sourceText += msg.text
-          }
-          if (sourceText) {
-            text += " " + sourceText.replace(/["\n\t ]+/g, "")
-          }
+    // === 场景1：处理引用消息中的文本链接 ===
+    if (e.source) {
+      const sourceMsg = await this.getSourceMessage(e)
+      if (sourceMsg && Array.isArray(sourceMsg.message)) {
+        let sourceText = ""
+        for (const msg of sourceMsg.message) {
+          if (msg.type === "text") sourceText += msg.text
+        }
+        if (sourceText) {
+          text += " " + sourceText.replace(/["\n\t ]+/g, "")
         }
       }
-
-      // === 场景2：URL或文本导入 (此时 text 可能来自当前消息，也可能来自引用消息) ===
-      let matchRecordId = null
-      let matchPlayerId = null
-
-      if (text.includes("https://")) {
-        matchRecordId = text.match(/record_id=([a-zA-Z0-9]+)/)
-        matchPlayerId = text.match(/player_id=(\d+)/)
-      } else if (text.includes("{")) {
-        matchRecordId = text.match(/"?recordId"?\s*[:=]\s*"?([a-zA-Z0-9]+)"?/)
-        matchPlayerId = text.match(/"?playerId"?\s*[:=]\s*"?(\d+)"?/)
-      } else if (text.includes("recordId=")) {
-        matchRecordId = text.match(/recordId=([a-zA-Z0-9]+)/)
-        matchPlayerId = text.match(/playerId=(\d+)/)
-      } else {
-        // 尝试直接匹配 recordId
-        matchRecordId = ("recordId=" + text).match(/recordId=([a-zA-Z0-9]+)/)
-        matchPlayerId = null
-      }
-
-      const recordId = matchRecordId && matchRecordId[1].length === 32 ? matchRecordId[1] : null
-
-      // 如果没有提取到 recordId，说明用户可能想进行文件导入，但没有在命令中附带文件/链接
-      if (!recordId) {
-        // 当没发送任何东西时，也要支持链接也就是 `URL或文本导入`; 暂时去掉文件导入
-        this.setContext("handleLinkImport")
-        return e.reply("💡 请发送您的抽卡记录链接或文本")
-      }
-
-      const urlUid = matchPlayerId ? matchPlayerId[1] : null
-      if (urlUid && urlUid !== uid) {
-        return e.reply(`❌ 链接中的UID (${urlUid}) 与当前绑定UID (${uid}) 不一致！`)
-      }
-
-      await this.doFetch(e, record, recordId)
-    } catch (error) {
-      logger.error(`[ams] updateGachaLog: ${error}`)
-      return e.reply("❌ 更新抽卡记录失败，请查看日志")
     }
+
+    // === 场景2：URL或文本导入 (此时 text 可能来自当前消息，也可能来自引用消息) ===
+    let matchRecordId = null
+    let matchPlayerId = null
+
+    if (text.includes("https://")) {
+      matchRecordId = text.match(/record_id=([a-zA-Z0-9]+)/)
+      matchPlayerId = text.match(/player_id=(\d+)/)
+    } else if (text.includes("{")) {
+      matchRecordId = text.match(/"?recordId"?\s*[:=]\s*"?([a-zA-Z0-9]+)"?/)
+      matchPlayerId = text.match(/"?playerId"?\s*[:=]\s*"?(\d+)"?/)
+    } else if (text.includes("recordId=")) {
+      matchRecordId = text.match(/recordId=([a-zA-Z0-9]+)/)
+      matchPlayerId = text.match(/playerId=(\d+)/)
+    } else {
+      // 尝试直接匹配 recordId
+      matchRecordId = ("recordId=" + text).match(/recordId=([a-zA-Z0-9]+)/)
+      matchPlayerId = null
+    }
+
+    const recordId = matchRecordId && matchRecordId[1].length === 32 ? matchRecordId[1] : null
+
+    // 如果没有提取到 recordId，说明用户可能想进行文件导入，但没有在命令中附带文件/链接
+    if (!recordId) {
+      // 当没发送任何东西时，也要支持链接也就是 `URL或文本导入`; 暂时去掉文件导入
+      this.setContext("handleLinkImport")
+      return e.reply("💡 请发送您的抽卡记录链接或文本")
+    }
+
+    const urlUid = matchPlayerId ? matchPlayerId[1] : null
+    if (urlUid && urlUid !== uid) {
+      return e.reply(`❌ 链接中的UID (${urlUid}) 与当前绑定UID (${uid}) 不一致！`)
+    }
+
+    await this.doFetch(e, record, recordId)
   }
 
   // 辅助：获取引用消息对象
@@ -240,26 +227,21 @@ export class Gacha extends AmsPlugin {
   async doFetch(e, record, recordId) {
     await e.reply("⏳ 正在获取抽卡记录，可能需要几十秒，请稍候...")
 
-    try {
-      const { code, totalNew, newCounts } = await record.fetchAndMerge(recordId)
+    const { code, totalNew, newCounts } = await record.fetchAndMerge(recordId)
 
-      if (code !== 0) {
-        return e.reply("❌ 获取失败，链接可能已失效。")
-      }
-
-      if (totalNew === 0) {
-        return e.reply("✅ 抽卡记录已是最新，无新增数据。")
-      }
-
-      const msg = [`✅ 更新成功！新增 ${totalNew} 条记录：`]
-      for (const [name, count] of Object.entries(newCounts)) {
-        if (count > 0) msg.push(`- ${name}: +${count}`)
-      }
-      await e.reply(msg.join("\n"))
-    } catch (err) {
-      logger.error(`[ams] Update error: ${err}`)
-      await e.reply("❌ 更新过程中发生错误，请查看日志。")
+    if (code !== 0) {
+      return e.reply("❌ 获取失败，链接可能已失效。")
     }
+
+    if (totalNew === 0) {
+      return e.reply("✅ 抽卡记录已是最新，无新增数据。")
+    }
+
+    const msg = [`✅ 更新成功！新增 ${totalNew} 条记录：`]
+    for (const [name, count] of Object.entries(newCounts)) {
+      if (count > 0) msg.push(`- ${name}: +${count}`)
+    }
+    await e.reply(msg.join("\n"))
   }
 
   async handleJsonImport() {
@@ -318,41 +300,36 @@ export class Gacha extends AmsPlugin {
   }
 
   async exportGachaLog(e) {
-    try {
-      const user = await this.getWavesUser()
-      if (!user) {
-        return e.reply(`❌ 请先绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-      }
-
-      const record = new GachaRecord(user.gameUid)
-      if (!record.data.data_time) {
-        return e.reply("❌ 暂无抽卡记录可导出。")
-      }
-
-      const exportData = {
-        info: {
-          uid: record.data.uid,
-          lang: "zh-cn",
-          export_app: "ams-plugin",
-          export_app_version: version.version,
-          version: "v2.0",
-          export_time: formatDataTime(new Date()),
-        },
-        list: [],
-      }
-
-      for (const [poolName, logs] of Object.entries(record.data.data)) {
-        exportData.list.push(...logs)
-      }
-
-      record.export(exportData)
-
-      // 发送文件
-      const filePayload = segment.file(record.exportPath)
-      await e.reply([filePayload])
-    } catch (error) {
-      logger.error(`[ams] exportGachaLog: ${error}`)
-      return e.reply("❌ 导出抽卡记录失败，请查看日志")
+    const user = await this.getWavesUser()
+    if (!user) {
+      return e.reply(`❌ 请先绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
     }
+
+    const record = new GachaRecord(user.gameUid)
+    if (!record.data.data_time) {
+      return e.reply("❌ 暂无抽卡记录可导出。")
+    }
+
+    const exportData = {
+      info: {
+        uid: record.data.uid,
+        lang: "zh-cn",
+        export_app: "ams-plugin",
+        export_app_version: version.version,
+        version: "v2.0",
+        export_time: formatDataTime(new Date()),
+      },
+      list: [],
+    }
+
+    for (const [poolName, logs] of Object.entries(record.data.data)) {
+      exportData.list.push(...logs)
+    }
+
+    record.export(exportData)
+
+    // 发送文件
+    const filePayload = segment.file(record.exportPath)
+    await e.reply([filePayload])
   }
 }

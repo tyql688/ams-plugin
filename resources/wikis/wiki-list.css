@@ -1,0 +1,150 @@
+/* ==================== 页面全局样式 ==================== */
+body {
+  width: 1000px;
+  padding: 40px 0;
+}
+
+.container {
+  width: 1000px;
+}
+
+.wiki-list-container {
+  width: 1000px;
+}
+
+/* ==================== 头部样式 ==================== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 35px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 25px;
+}
+
+.brand {
+  font-family: var(--font-number);
+  font-size: 14px;
+  letter-spacing: 4px;
+  color: var(--accent-blue);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.title-main {
+  font-family: var(--font-art);
+  font-size: 54px;
+  font-weight: 800;
+  background: linear-gradient(180deg, #fff 30%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+
+.count {
+  font-family: var(--font-number);
+  font-size: 18px;
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+/* ==================== 分组样式 ==================== */
+.group-section {
+  margin-bottom: 40px;
+}
+
+.group-section:last-child {
+  margin-bottom: 0;
+}
+
+.group-label {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.label-text {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: NZBZ;
+  color: var(--label-color, var(--accent-blue));
+  letter-spacing: 1px;
+}
+
+.group-section[class*="theme-"] .label-text {
+  --label-color: var(--element-primary);
+}
+
+.label-line {
+  flex-grow: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--line-color, rgba(56, 189, 248, 0.3)) 0%,
+    transparent 100%
+  );
+}
+
+.group-section[class*="theme-"] .label-line {
+  --line-color: var(--element-shadow);
+}
+
+/* ==================== 列表网格 ==================== */
+.list-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+}
+
+.item-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.item-icon-wrapper {
+  aspect-ratio: 1/1;
+  /* 基础样式继承自 .rarity-item */
+}
+
+.item-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.item-info {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 40px;
+}
+
+.item-name {
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+/* ==================== 稀有度颜色边框 ==================== */
+.item-card.rarity-5 {
+  border-bottom: 2px solid var(--rarity-5);
+}
+.item-card.rarity-4 {
+  border-bottom: 2px solid var(--rarity-4);
+}
+.item-card.rarity-3 {
+  border-bottom: 2px solid var(--rarity-3);
+}

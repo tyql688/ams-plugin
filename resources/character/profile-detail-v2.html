@@ -82,12 +82,12 @@
       <div class="card-title">武器装备</div>
       <div class="weapon-content">
         <div class="weapon-left">
-          <div class="weapon-rarity-frame rarity-{{data.weapon.rarity}}">
+          <div class="rarity-frame rarity-{{data.weapon.rarity}}">
             <div
               class="weapon-bg"
               style="background-image:url({{wavesResMap.weapon}}/{{data.weapon.id}}.webp)"
             ></div>
-            <div class="weapon-rarity-bar rarity-{{data.weapon.rarity}}"></div>
+            <div class="rarity-glow rarity-{{data.weapon.rarity}}"></div>
           </div>
           {{if data.weapon.mainPropList}}
           <div class="weapon-props-simple">

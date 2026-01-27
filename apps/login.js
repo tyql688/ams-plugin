@@ -132,20 +132,15 @@ export class Login extends AmsPlugin {
   }
 
   async loginWithCode(e, mobile, code) {
-    try {
-      const kuroApi = this.getKuroApi()
-      const devCode = crypto.randomUUID()
-      const loginRes = await kuroApi.login(mobile, code, devCode)
+    const kuroApi = this.getKuroApi()
+    const devCode = crypto.randomUUID()
+    const loginRes = await kuroApi.login(mobile, code, devCode)
 
-      if (!loginRes.status) {
-        return e.reply(`❌ 登录失败：${loginRes.msg || "接口错误"}`)
-      }
-
-      await this._processRoleBinding(e, loginRes.data.token, devCode)
-    } catch (error) {
-      logger.error(`[ams] LoginWithCode Error: ${error}`)
-      await e.reply("❌ 登录异常，请检查日志")
+    if (!loginRes.status) {
+      return e.reply(`❌ 登录失败：${loginRes.msg || "接口错误"}`)
     }
+
+    await this._processRoleBinding(e, loginRes.data.token, devCode)
   }
 
   async loginWithToken(e, token, devCode = "") {

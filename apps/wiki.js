@@ -2,7 +2,11 @@ import _ from "lodash"
 import DataLoader from "../lib/core/data_loader.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
-import { ELE_NAME_MAP } from "../model/panel/const.js"
+import {
+  ELE_ID_MAP,
+  ELE_NAME_MAP,
+  WEAPON_TYPE_ID_MAP,
+} from "../resources/waves-res/core/constants.js"
 
 export class Wiki extends AmsPlugin {
   constructor() {
@@ -24,6 +28,10 @@ export class Wiki extends AmsPlugin {
           // e.g. "千嶂武器图鉴", "无妄者声骸图鉴"
           reg: config.fixCommond("(.+?)(武器|声骸)?图鉴$"),
           fnc: "showWiki",
+        },
+        {
+          reg: config.fixCommond("(角色|武器|声骸)列表$"),
+          fnc: "wikiList",
         },
       ],
     })
@@ -112,48 +120,131 @@ export class Wiki extends AmsPlugin {
   }
 
   async showWiki(e) {
-    try {
-      const match = e.msg.match(this.rule[2].reg)
-      if (!match) return false
+    const match = e.msg.match(this.rule[2].reg)
+    if (!match) return false
 
-      const name = match[1] ? match[1].trim() : ""
-      const type = match[2] // "武器" or "声骸" or undefined
+    const name = match[1] ? match[1].trim() : ""
+    const type = match[2] // "武器" or "声骸" or undefined
 
-      if (!name) return e.reply("请输入名称")
+    if (!name) return e.reply("请输入名称")
 
-      let id = null
-      let mode = null // "weapon" or "echo"
+    let id = null
+    let mode = null // "weapon" or "echo"
 
-      // 1. Explicit Type
-      if (type === "武器") {
-        id = await DataLoader.getWeaponId(name)
-        if (id) mode = "weapon"
-      } else if (type === "声骸") {
+    // 1. Explicit Type
+    if (type === "武器") {
+      id = await DataLoader.getWeaponId(name)
+      if (id) mode = "weapon"
+    } else if (type === "声骸") {
+      id = await DataLoader.getEchoId(name)
+      if (id) mode = "echo"
+    } else {
+      // 2. Auto Detect (Priority: Weapon > Echo)
+      id = await DataLoader.getWeaponId(name)
+      if (id) {
+        mode = "weapon"
+      } else {
         id = await DataLoader.getEchoId(name)
         if (id) mode = "echo"
-      } else {
-        // 2. Auto Detect (Priority: Weapon > Echo)
-        id = await DataLoader.getWeaponId(name)
-        if (id) {
-          mode = "weapon"
-        } else {
-          id = await DataLoader.getEchoId(name)
-          if (id) mode = "echo"
+      }
+    }
+
+    if (!id || !mode) {
+      return e.reply(`❌ 未找到${type || "相关"}数据：${name}`)
+    }
+
+    if (mode === "weapon") {
+      return await this._renderWeapon(e, id)
+    } else {
+      return await this._renderEcho(e, id)
+    }
+  }
+
+  async wikiList(e) {
+    const match = e.msg.match(this.rule[3].reg)
+    const type = match[1]
+
+    let list = []
+    let title = ""
+    let mode = ""
+
+    if (type === "角色") {
+      list = DataLoader.loadCharacters()
+      title = "角色图鉴列表"
+      mode = "role"
+    } else if (type === "武器") {
+      list = DataLoader.loadWeapons()
+      title = "武器图鉴列表"
+      mode = "weapon"
+    } else if (type === "声骸") {
+      list = DataLoader.loadEchoes()
+      title = "声骸图鉴列表"
+      mode = "echo"
+    }
+
+    // 5. 分组逻辑
+    let groups = []
+    if (mode === "role") {
+      const grouped = _.groupBy(list, "element")
+      // 按 ID 排序属性
+      Object.keys(ELE_ID_MAP).forEach(key => {
+        const items = grouped[key]
+        if (items && items.length > 0) {
+          groups.push({
+            label: ELE_ID_MAP[key],
+            theme: "element-" + key,
+            list: items
+              .sort((a, b) => b.rarity - a.rarity || a.id - b.id)
+              .map(item => ({
+                ...item,
+              })),
+          })
         }
-      }
+      })
+    } else if (mode === "weapon") {
+      const grouped = _.groupBy(list, "type")
+      Object.keys(WEAPON_TYPE_ID_MAP).forEach(key => {
+        const items = grouped[key]
+        if (items && items.length > 0) {
+          groups.push({
+            label: WEAPON_TYPE_ID_MAP[key],
+            theme: "weapon-" + key,
+            list: items
+              .sort((a, b) => b.rarity - a.rarity || a.id - b.id)
+              .map(item => ({
+                ...item,
+              })),
+          })
+        }
+      })
+    } else if (mode === "echo") {
+      const grouped = _.groupBy(list, "cost")
+      const costs = Object.keys(grouped).sort((a, b) => b - a)
+      costs.forEach(cost => {
+        groups.push({
+          label: `Cost ${cost}`,
+          list: grouped[cost]
+            .sort((a, b) => a.id - b.id)
+            .map(item => ({
+              ...item,
+              rarity: item.cost == 4 ? 5 : item.cost == 3 ? 4 : 3,
+            })),
+        })
+      })
+    }
 
-      if (!id || !mode) {
-        return e.reply(`❌ 未找到${type || "相关"}数据：${name}`)
-      }
+    const renderData = {
+      title,
+      mode,
+      groups,
+      count: list.length,
+    }
 
-      if (mode === "weapon") {
-        return await this._renderWeapon(e, id)
-      } else {
-        return await this._renderEcho(e, id)
-      }
-    } catch (err) {
-      logger.error(`[ams] showWiki: ${err}`)
-      return e.reply("❌ 查询失败")
+    const img = await this.render("wikis/wiki-list", renderData)
+    if (img) {
+      return e.reply(img)
+    } else {
+      return e.reply("❌ 绘图失败")
     }
   }
 

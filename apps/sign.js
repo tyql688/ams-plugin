@@ -81,15 +81,10 @@ export class Sign extends AmsPlugin {
       }
 
       // 4. 执行签到
-      try {
-        const service = new SignService(wavesApi)
-        const result = await service.doSign(user)
-        messages.push(`${prefix}: ${result.summary}`)
-        successCount++
-      } catch (err) {
-        logger.error(`[ams] Sign error for ${user.gameUid}: ${err}`)
-        messages.push(`${prefix}: ❌ 执行出错`)
-      }
+      const service = new SignService(wavesApi)
+      const result = await service.doSign(user)
+      messages.push(`${prefix}: ${result.summary}`)
+      successCount++
 
       // 避免并发过快，稍微 sleep 一下？
       await new Promise(resolve => setTimeout(resolve, 1000))
@@ -152,48 +147,41 @@ export class Sign extends AmsPlugin {
         return
       }
 
-      try {
-        const wavesApi = new WavesApi(user.gameUid, user.token, {
-          devCode: user.devCode,
-          bat: user.bat,
-          did: user.did,
-        })
-        wavesApi.dbUser = user
+      const wavesApi = new WavesApi(user.gameUid, user.token, {
+        devCode: user.devCode,
+        bat: user.bat,
+        did: user.did,
+      })
+      wavesApi.dbUser = user
 
-        const service = new SignService(wavesApi)
+      const service = new SignService(wavesApi)
 
-        // 1. 优先检查本地状态
-        if (service.checkLocalDone(user)) {
-          logger.mark(`[ams] 用户 ${user.userId} (UID:${user.gameUid}) 今日已完成，跳过`)
-          successCount++
-          return
-        }
+      // 1. 优先检查本地状态
+      if (service.checkLocalDone(user)) {
+        logger.mark(`[ams] 用户 ${user.userId} (UID:${user.gameUid}) 今日已完成，跳过`)
+        successCount++
+        return
+      }
 
-        // 随机延迟 (仅在确实需要请求时)
-        // 并发模式下，每个worker独立延迟，避免瞬间并发请求
-        await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 5000))
+      // 随机延迟 (仅在确实需要请求时)
+      // 并发模式下，每个worker独立延迟，避免瞬间并发请求
+      await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 5000))
 
-        // 2. 检查token有效性
-        const loginStatus = await wavesApi.loginStatusCheck()
-        if (!loginStatus) {
-          logger.warn(`[ams] 用户 ${user.userId} (UID:${user.gameUid}) Token已失效，跳过`)
-          failCount++
-          return
-        }
+      // 2. 检查token有效性
+      const loginStatus = await wavesApi.loginStatusCheck()
+      if (!loginStatus?.status) {
+        logger.warn(`[ams] 用户 ${user.userId} (UID:${user.gameUid}) Token已失效，跳过`)
+        failCount++
+        return
+      }
 
-        const result = await service.doSign(user)
+      const result = await service.doSign(user)
 
-        if (result.success) {
-          logger.mark(`[ams] 用户 ${user.userId} (UID:${user.gameUid}) 签到成功`)
-          successCount++
-        } else {
-          logger.warn(
-            `[ams] 用户 ${user.userId} (UID:${user.gameUid}) 签到失败: ${result.msg}`,
-          )
-          failCount++
-        }
-      } catch (error) {
-        logger.error(`[ams] 用户 ${user.userId} 自动签到异常: ${error}`)
+      if (result.success) {
+        logger.mark(`[ams] 用户 ${user.userId} (UID:${user.gameUid}) 签到成功`)
+        successCount++
+      } else {
+        logger.warn(`[ams] 用户 ${user.userId} (UID:${user.gameUid}) 签到失败: ${result.msg}`)
         failCount++
       }
     }

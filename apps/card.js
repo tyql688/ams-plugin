@@ -22,7 +22,7 @@ export class Card extends AmsPlugin {
           fnc: "characterPanel",
         },
         {
-          reg: config.fixCommond("(角色列表|面板|角色面板)$"),
+          reg: config.fixCommond("(刷新面板|面板|角色面板)$"),
           fnc: "roleList",
         },
       ],

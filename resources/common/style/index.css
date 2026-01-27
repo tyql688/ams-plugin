@@ -116,51 +116,69 @@
   opacity: var(--glow-opacity, 1);
 }
 
-/* ==================== 武器稀有度样式 ==================== */
-.weapon-rarity-frame {
+/* ==================== 通用稀有度组件 (Rarity UI) ==================== */
+.rarity-frame,
+.rarity-item {
   position: relative;
-  width: 100px;
-  height: 100px;
+  overflow: hidden;
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin-bottom: 8px;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-.weapon-rarity-bar {
+/* Rarity Background Radial Gradients */
+.rarity-frame.rarity-5 {
+  background: radial-gradient(circle, rgba(124, 45, 18, 0.45) 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+.rarity-frame.rarity-4 {
+  background: radial-gradient(circle, rgba(88, 28, 135, 0.45) 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+.rarity-frame.rarity-3 {
+  background: radial-gradient(circle, rgba(30, 58, 138, 0.45) 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+.rarity-frame.rarity-2 {
+  background: radial-gradient(circle, rgba(20, 83, 45, 0.45) 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+.rarity-frame.rarity-1 {
+  background: radial-gradient(circle, rgba(50, 50, 50, 0.45) 0%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+/* Bottom Rarity Glow Bar */
+.rarity-glow {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: 4px;
-  border-radius: 0 0 2px 2px;
   z-index: 2;
+  border-radius: 0 0 2px 2px;
 }
 
-.weapon-rarity-bar.rarity-1 {
+.rarity-glow.rarity-1 {
   background: linear-gradient(to top, var(--rarity-1), transparent);
   box-shadow: 0 -4px 12px var(--rarity-1);
   opacity: 0.6;
 }
-.weapon-rarity-bar.rarity-2 {
+.rarity-glow.rarity-2 {
   background: linear-gradient(to top, var(--rarity-2), transparent);
   box-shadow: 0 -4px 12px var(--rarity-2);
-  opacity: 0.6;
-}
-.weapon-rarity-bar.rarity-3 {
-  background: linear-gradient(to top, var(--rarity-3), transparent);
-  box-shadow: 0 -4px 12px var(--rarity-3);
-  opacity: 0.6;
-}
-.weapon-rarity-bar.rarity-4 {
-  background: linear-gradient(to top, var(--rarity-4), transparent);
-  box-shadow: 0 -4px 12px var(--rarity-4);
   opacity: 0.7;
 }
-.weapon-rarity-bar.rarity-5 {
-  background: linear-gradient(to top, var(--rarity-5), transparent);
-  box-shadow: 0 -4px 16px var(--rarity-5);
+.rarity-glow.rarity-3 {
+  background: linear-gradient(to top, var(--rarity-3), transparent);
+  box-shadow: 0 -4px 12px var(--rarity-3);
   opacity: 0.8;
+}
+.rarity-glow.rarity-4 {
+  background: linear-gradient(to top, var(--rarity-4), transparent);
+  box-shadow: 0 -4px 14px var(--rarity-4);
+  opacity: 0.85;
+}
+.rarity-glow.rarity-5 {
+  background: linear-gradient(to top, var(--rarity-5), transparent);
+  box-shadow: 0 -4px 18px var(--rarity-5);
+  opacity: 0.95;
 }
 
 /* ==================== 元素主题配色 ==================== */

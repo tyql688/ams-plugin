@@ -1,0 +1,43 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/wikis/wiki-list.css" />
+{{/block}} {{block 'main'}}
+<div class="wiki-list-container glass-panel">
+  <div class="glow-top"></div>
+
+  <div class="header">
+    <div class="header-left">
+      <div class="brand">AMS WIKI INDEX</div>
+      <div class="title-main">{{title}}</div>
+    </div>
+    <div class="header-right">
+      <div class="count">共 {{count}} 个</div>
+    </div>
+  </div>
+
+  {{each groups group}}
+  <div class="group-section theme-{{group.theme}}">
+    <div class="group-label">
+      <span class="label-text">{{group.label}}</span>
+      <span class="label-line"></span>
+    </div>
+    <div class="list-grid mode-{{mode}}">
+      {{each group.list item}}
+      <div class="item-card rarity-{{item.rarity}}">
+        <div class="item-icon-wrapper rarity-item rarity-{{item.rarity}}">
+          <img
+            class="item-icon"
+            src="{{if mode == 'role'}}{{wavesResMap.roleAvatar}}/{{item.id}}.webp{{else if mode == 'weapon'}}{{wavesResMap.weapon}}/{{item.id}}.webp{{else}}{{wavesResMap.echo}}/{{item.id}}.webp{{/if}}"
+            alt="{{item.name}}"
+          />
+          <div class="rarity-glow rarity-{{item.rarity}}"></div>
+        </div>
+        <div class="item-info">
+          <div class="item-name">{{item.name}}</div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{/block}}
