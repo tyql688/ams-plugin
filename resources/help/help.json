@@ -125,16 +125,58 @@
           "example": "角色别名列表 忌炎"
         },
         {
+          "icon": "K_01.png",
+          "cmd": "兑换码",
+          "desc": "兑换码查询",
+          "example": "兑换码"
+        }
+      ]
+    },
+    {
+      "name": "wiki",
+      "permission": "user",
+      "commands": [
+        {
+          "icon": "S_02.png",
+          "cmd": "日历",
+          "desc": "查看活动日程表",
+          "example": "日历"
+        },
+        {
           "icon": "D_04.png",
           "cmd": "未复刻卡池",
           "desc": "查看未复刻卡池",
           "example": "未复刻卡池"
         },
         {
-          "icon": "K_01.png",
-          "cmd": "兑换码",
-          "desc": "兑换码查询",
-          "example": "兑换码"
+          "icon": "M_13.png",
+          "cmd": "角色列表",
+          "desc": "查看WIKI角色图鉴",
+          "example": "角色列表"
+        },
+        {
+          "icon": "J_03.png",
+          "cmd": "武器列表",
+          "desc": "查看WIKI武器图鉴",
+          "example": "武器列表"
+        },
+        {
+          "icon": "R_07.png",
+          "cmd": "声骸列表",
+          "desc": "查看WIKI声骸图鉴",
+          "example": "声骸列表"
+        },
+        {
+          "icon": "G_02.png",
+          "cmd": "角色天赋",
+          "desc": "查看角色技能天赋",
+          "example": "忌炎天赋"
+        },
+        {
+          "icon": "L_05.png",
+          "cmd": "角色共鸣链",
+          "desc": "查看角色共鸣链",
+          "example": "忌炎共鸣链"
         }
       ]
     },

@@ -1,0 +1,191 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/calendar/calendar.css" />
+{{/block}} {{block 'main'}}
+<div class="calendar-container glass-panel">
+  <!-- 动态光效 -->
+  <div class="glow-top"></div>
+
+  <!-- 头部：HUD 风格 -->
+  <div class="header">
+    <div class="header-left">
+      <div class="title-cn">鸣潮日历</div>
+      <div class="title-en">CALENDAR DATABASE</div>
+      <div class="header-line"></div>
+    </div>
+    <div class="current-time">
+      <span class="label">SYSTEM TIME</span>
+      <span class="value">{{now}}</span>
+    </div>
+  </div>
+
+  <!-- 版本Banner -->
+  {{if bannerUrl}}
+  <div class="version-banner">
+    <div class="banner-inner">
+      <img src="{{bannerUrl}}" class="banner-img" />
+      <div class="banner-overlay"></div>
+    </div>
+  </div>
+  {{/if}}
+
+  <!-- 唤取部分 -->
+  <div class="gacha-section">
+    <!-- 角色活动 -->
+    {{if modules.role && modules.role.list && modules.role.list.length > 0}}
+    <div class="gacha-group">
+      <div class="group-header">
+        <div class="gh-icon">✦</div>
+        <div class="gh-info">
+          <div class="gh-title">{{modules.role.title}}</div>
+          <div class="gh-subtitle">{{modules.role.subTitle}}</div>
+        </div>
+        {{if modules.role.time}}
+        <div class="gh-timer {{modules.role.time.cssClass}}">
+          <div class="timer-dot"></div>
+          <div class="timer-text urgent-{{modules.role.time.urgentLevel}}">
+            {{if modules.role.time.cssClass === 'ended'}} 已结束 {{else if
+            modules.role.time.cssClass === 'future'}} {{modules.role.time.start}} 开启 {{else}}
+            {{modules.role.time.duration}} {{/if}}
+          </div>
+        </div>
+        {{/if}}
+      </div>
+
+      <div class="gacha-content">
+        <!-- 5星 UP 区域 -->
+        <div class="up-zone">
+          {{each modules.role.list item}} {{if item.is5Star}}
+          <div class="char-card rarity-5">
+            <div class="card-img-box">
+              <img src="{{item.icon}}" />
+            </div>
+          </div>
+          {{/if}} {{/each}}
+        </div>
+
+        <!-- 4星 陪跑 区域 -->
+        <div class="sub-zone">
+          {{each modules.role.list item}} {{if !item.is5Star}}
+          <div class="char-card rarity-4">
+            <div class="card-img-box">
+              <img src="{{item.icon}}" />
+            </div>
+          </div>
+          {{/if}} {{/each}}
+        </div>
+        </div>
+
+        {{if modules.role.time && modules.role.time.percent > 0 && modules.role.time.percent < 100}}
+        <div class="group-progress">
+          <div class="prog-bar" style="width: {{modules.role.time.percent}}%"></div>
+        </div>
+        {{/if}}
+      </div>
+      {{/if}}
+
+      <!-- 武器活动 -->
+      {{if modules.weapon && modules.weapon.list && modules.weapon.list.length > 0}}
+      <div class="gacha-group">
+        <div class="group-header">
+          <div class="gh-icon">⚔</div>
+          <div class="gh-info">
+            <div class="gh-title">{{modules.weapon.title}}</div>
+            <div class="gh-subtitle">{{modules.weapon.subTitle}}</div>
+          </div>
+          {{if modules.weapon.time}}
+          <div class="gh-timer {{modules.weapon.time.cssClass}}">
+            <div class="timer-dot"></div>
+            <div class="timer-text urgent-{{modules.weapon.time.urgentLevel}}">
+              {{if modules.weapon.time.cssClass === 'ended'}} 已结束 {{else if
+              modules.weapon.time.cssClass === 'future'}} {{modules.weapon.time.start}} 开启
+              {{else}} {{modules.weapon.time.duration}} {{/if}}
+            </div>
+          </div>
+          {{/if}}
+        </div>
+
+        <div class="gacha-content">
+          <!-- 5星 UP 区域 -->
+          <div class="up-zone">
+            {{each modules.weapon.list item}} {{if item.is5Star}}
+            <div class="char-card rarity-5">
+              <div class="card-img-box">
+                <img src="{{item.icon}}" />
+              </div>
+            </div>
+          {{/if}} {{/each}}
+        </div>
+
+        <!-- 4星 陪跑 区域 -->
+        <div class="sub-zone">
+          {{each modules.weapon.list item}} {{if !item.is5Star}}
+          <div class="char-card rarity-4">
+            <div class="card-img-box">
+              <img src="{{item.icon}}" />
+            </div>
+          </div>
+          {{/if}} {{/each}}
+        </div>
+          </div>
+
+          {{if modules.weapon.time && modules.weapon.time.percent > 0 && modules.weapon.time.percent
+          < 100}}
+          <div class="group-progress">
+            <div class="prog-bar" style="width: {{modules.weapon.time.percent}}%"></div>
+          </div>
+          {{/if}}
+        </div>
+        {{/if}}
+      </div>
+
+      <!-- 活动列表 -->
+      {{if modules.activity && modules.activity.data.length > 0}}
+      <div class="activity-section">
+        <div class="section-title">
+          <span class="icon">❖</span>
+          <span class="text">版本活动 / EVENTS</span>
+        </div>
+
+        <div class="event-grid">
+          {{each modules.activity.data event}}
+          <div class="event-card {{event.time.cssClass}}">
+            <div class="event-cover">
+              {{if event.isLocal}}
+              <img src="{{_res_path}}/common/imgs/{{event.icon}}" />
+              {{else}}
+              <img src="{{event.icon}}" />
+              {{/if}}
+              <div class="cover-mask"></div>
+            </div>
+
+            <div class="event-content">
+              <div class="ec-top">
+                <div class="ec-title">{{event.title}}</div>
+                <div class="ec-status-tag {{event.time.cssClass}}">{{event.time.status}}</div>
+              </div>
+
+              <div class="ec-date">{{event.time.start}} ~ {{event.time.end}}</div>
+
+              <div class="ec-progress">
+                <div class="ec-bar" style="width:{{event.time.percent}}%"></div>
+              </div>
+
+              <div class="ec-footer">
+                {{if event.time.cssClass === 'ongoing'}}
+                <span class="remain-time">剩余 {{event.time.duration}}</span>
+                {{else if event.time.cssClass === 'future'}}
+                <span class="start-time">即将开启</span>
+                {{else}}
+                <span class="end-time">活动结束</span>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      {{/if}}
+    </div>
+    {{/block}}
+  </div>
+</div>
