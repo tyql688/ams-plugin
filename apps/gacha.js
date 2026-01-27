@@ -202,28 +202,6 @@ export class Gacha extends AmsPlugin {
     return e.reply(forwardMsg)
   }
 
-  async makeMsg(msg) {
-    const nickname = Bot.nickname
-    const id = Bot.uin
-    const userInfo = {
-      user_id: id,
-      nickname: nickname,
-    }
-
-    const forwardMsg = msg.map(v => {
-      return {
-        ...userInfo,
-        message: v,
-      }
-    })
-
-    if (this.e.isGroup) {
-      return await this.e.group.makeForwardMsg(forwardMsg)
-    } else {
-      return await this.e.friend.makeForwardMsg(forwardMsg)
-    }
-  }
-
   async doFetch(e, record, recordId) {
     await e.reply("⏳ 正在获取抽卡记录，可能需要几十秒，请稍候...")
 

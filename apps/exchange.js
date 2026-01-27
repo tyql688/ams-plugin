@@ -48,7 +48,7 @@ export class Exchange extends AmsPlugin {
     }
 
     if (msgList.length > 3) {
-      const forwardMsg = await this.makeMsg(msgList, e)
+      const forwardMsg = await this.makeMsg(msgList)
       return e.reply(forwardMsg)
     } else {
       return e.reply(msgList.join("\n\n"))
@@ -121,27 +121,5 @@ export class Exchange extends AmsPlugin {
     }
 
     return now > expireDate
-  }
-
-  async makeMsg(msgList, e) {
-    const nickname = Bot.nickname
-    const id = Bot.uin
-    const userInfo = {
-      user_id: id,
-      nickname: nickname,
-    }
-
-    const forwardMsg = msgList.map(v => {
-      return {
-        ...userInfo,
-        message: v,
-      }
-    })
-
-    if (e.isGroup) {
-      return await e.group.makeForwardMsg(forwardMsg)
-    } else {
-      return await e.friend.makeForwardMsg(forwardMsg)
-    }
   }
 }

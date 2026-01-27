@@ -1,5 +1,8 @@
 import _ from "lodash"
 import moment from "moment"
+import WavesApi from "../lib/api/waves.js"
+import { GAMES } from "../lib/constants.js"
+import { User } from "../lib/db/index.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
 
@@ -9,7 +12,7 @@ export class DailyNote extends AmsPlugin {
       name: "ams-体力",
       dsc: "鸣潮体力查询",
       event: "message",
-      priority: _.get(config.getConfig("priority"), "daily", 100),
+      priority: _.get(config.getConfig("priority"), "daily", 110),
       rule: [
         {
           reg: config.fixCommond("体力"),
@@ -20,32 +23,57 @@ export class DailyNote extends AmsPlugin {
   }
 
   async dailyNote() {
-    // 1. 获取用户信息
-    const user = await this.getWavesUser()
-    if (!user) {
-      this.e.reply("请先绑定鸣潮账号，发送【#鸣潮登录】")
+    const cfg = config.getConfig("config")
+    const multiDaily = _.get(cfg, "multi_daily", false)
+    const forwardLimit = _.get(cfg, "multi_daily_forward", 3)
+
+    // 1. 获取目标用户列表
+    let userList = []
+    if (multiDaily) {
+      const { userId } = this.getUserIdentity()
+      userList = await User.getAllValid(userId, GAMES.waves.id)
+    } else {
+      const user = await this.getWavesUser()
+      if (user) userList.push(user)
+    }
+
+    if (_.isEmpty(userList)) {
+      this.e.reply(`请先绑定鸣潮账号，发送【${config.exampleCommond("登录")}】`)
       return false
     }
 
-    // 2. 初始化 API
-    const api = await this.getWavesApi()
-    if (!api) return false // getWavesApi 内部已处理错误回复
+    const msgList = []
 
-    // 3. 获取数据
-    const res = await api.getWidgetRefresh()
+    // 2. 遍历查询
+    for (const user of userList) {
+      const wavesApi = new WavesApi(user.gameUid, user.token, {
+        devCode: user.devCode,
+        bat: user.bat,
+      })
 
-    if (!res.status) {
-      if (res.msg.includes("登录")) {
-        this.e.reply("Token已过期，请重新登录")
-      } else {
-        this.e.reply(`查询失败: ${res.msg}`)
+      const res = await wavesApi.getWidgetRefresh()
+      if (!res.status) {
+        msgList.push(`账号[${user.gameUid}] 查询每日体力失败: ${res.msg}`)
+        continue
       }
-      return false
+
+      const data = this.processDailyData(res.data, user)
+      const img = await this.render("dailyNote/dailyNote.html", data)
+      if (img) msgList.push(img)
     }
 
-    const data = res.data
+    if (_.isEmpty(msgList)) return
 
-    // 4. 数据处理
+    // 3. 发送消息
+    if (msgList.length >= forwardLimit) {
+      const forwardMsg = await this.makeMsg(msgList)
+      await this.reply(forwardMsg)
+    } else {
+      await this.reply(msgList)
+    }
+  }
+
+  processDailyData(data, user) {
     const now = moment()
 
     // 辅助函数：处理进度和百分比
@@ -89,15 +117,11 @@ export class DailyNote extends AmsPlugin {
       }
     }
 
-    // 渲染数据
-    const renderData = {
+    return {
       ...data,
       currTime: now.format("YYYY-MM-DD HH:mm:ss"),
       roleId: user.gameUid,
       roleName: data.roleName || user.roleName || "漂泊者",
     }
-
-    // 5. 截图
-    await this.reply(await this.render("dailyNote/dailyNote.html", renderData))
   }
 }
