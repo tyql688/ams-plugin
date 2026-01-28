@@ -23,7 +23,6 @@ body {
 }
 
 .brand {
-  font-family: var(--font-number);
   font-size: 14px;
   letter-spacing: 4px;
   color: var(--accent-blue);
@@ -44,7 +43,6 @@ body {
 }
 
 .count {
-  font-family: var(--font-number);
   font-size: 18px;
   color: var(--accent-blue);
   font-weight: 600;
@@ -69,7 +67,7 @@ body {
 .label-text {
   font-size: 22px;
   font-weight: 700;
-  font-family: NZBZ;
+  font-family: var(--font-art);
   color: var(--label-color, var(--accent-blue));
   letter-spacing: 1px;
 }

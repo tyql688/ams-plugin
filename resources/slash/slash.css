@@ -36,7 +36,6 @@ body {
 }
 
 .brand {
-  font-family: var(--font-number);
   font-size: 14px;
   letter-spacing: 6px;
   color: var(--accent-cyan);
@@ -55,7 +54,6 @@ body {
 }
 
 .uid {
-  font-family: var(--font-number);
   font-size: 15px;
   color: var(--text-dim);
   letter-spacing: 2px;
@@ -78,7 +76,6 @@ body {
 }
 
 .season-time {
-  font-family: var(--font-number);
   font-size: 22px;
   color: var(--accent-cyan);
 }
@@ -108,7 +105,6 @@ body {
 }
 
 .total-count {
-  font-family: var(--font-number);
   font-size: 52px;
   display: flex;
   align-items: baseline;
@@ -175,7 +171,6 @@ body {
 }
 
 .challenge-rank-badge .rank-value {
-  font-family: var(--font-number);
   font-size: 44px;
   color: var(--grade-other);
   font-weight: 800;
@@ -205,7 +200,6 @@ body {
 }
 
 .challenge-rank-badge .score-value {
-  font-family: var(--font-number);
   font-size: 20px;
   color: var(--accent-cyan);
   padding-left: 10px;
@@ -251,7 +245,6 @@ body {
   position: absolute;
   left: 50px;
   bottom: -20px;
-  font-family: var(--font-number);
   font-size: 150px;
   font-weight: 900;
   color: rgba(255, 255, 255, 0.05); /* 提升透明度 */
@@ -279,7 +272,6 @@ body {
 }
 
 .phase-tag {
-  font-family: var(--font-number);
   font-size: 13px;
   color: var(--text-dim);
   font-weight: 700;
@@ -289,14 +281,12 @@ body {
 
 .phase-score .label {
   display: block;
-  font-family: var(--font-number);
   font-size: 11px;
   color: var(--text-secondary);
   opacity: 0.6;
 }
 
 .phase-score .value {
-  font-family: var(--font-number);
   font-size: 36px;
   color: #fff;
   font-weight: 800;
@@ -322,7 +312,6 @@ body {
 }
 
 .team-label {
-  font-family: var(--font-number);
   font-size: 11px;
   color: var(--text-dim);
   letter-spacing: 1.5px;

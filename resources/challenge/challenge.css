@@ -23,7 +23,6 @@ body {
 }
 
 .brand {
-  font-family: var(--font-number);
   font-size: 13px;
   letter-spacing: 4px;
   color: #38bdf8;
@@ -45,7 +44,6 @@ body {
 }
 
 .uid {
-  font-family: var(--font-number);
   font-size: 14px;
   color: rgba(255, 255, 255, 0.4);
   letter-spacing: 1px;
@@ -92,7 +90,6 @@ body {
 }
 
 .sl-item .val {
-  font-family: var(--font-number);
   font-size: 32px;
   color: #fff;
   font-weight: bold;
@@ -197,7 +194,6 @@ body {
 }
 
 .boss-tag {
-  font-family: var(--font-number);
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 0.5px;
@@ -226,13 +222,11 @@ body {
 .time-label {
   font-size: 10px;
   color: rgba(255, 255, 255, 0.3);
-  font-family: var(--font-number);
   letter-spacing: 1px;
   margin-bottom: -2px;
 }
 
 .big-time {
-  font-family: var(--font-number);
   font-size: 44px; /* 超大时间 */
   font-weight: 800;
   color: #38bdf8;
@@ -294,7 +288,6 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: var(--font-number);
   color: rgba(255, 255, 255, 0.08);
   font-size: 20px;
   font-weight: bold;

@@ -34,7 +34,6 @@ body {
 }
 
 .brand {
-  font-family: var(--font-number);
   font-size: 13px;
   letter-spacing: 5px;
   color: var(--accent-blue);
@@ -67,7 +66,6 @@ body {
 }
 
 .date-value {
-  font-family: var(--font-number);
   font-size: 20px;
   color: var(--text-dark);
   font-weight: 700;
@@ -146,7 +144,6 @@ body {
   font-size: 10px;
   padding: 4px 10px;
   border-radius: 8px;
-  font-family: var(--font-number);
   font-weight: 600;
 }
 
@@ -176,7 +173,6 @@ body {
 .item-time {
   font-size: 11px;
   color: var(--text-dim);
-  font-family: var(--font-number);
   font-weight: 500;
 }
 
@@ -188,7 +184,8 @@ body {
   margin: 10px auto 0;
   background: rgba(0, 0, 0, 0.03);
   border-radius: 100px;
-  width: fit-content;
+  width: auto;
+  display: table; /* Alternative to fit-content to allow centering with margin auto */
   border: 1px solid rgba(0, 0, 0, 0.03);
 }
 

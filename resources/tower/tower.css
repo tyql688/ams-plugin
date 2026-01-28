@@ -1,4 +1,5 @@
 body {
+  width: 900px;
   padding: 40px 0;
   min-height: 100vh;
 }
@@ -20,7 +21,6 @@ body {
 }
 
 .brand {
-  font-family: var(--font-number);
   font-size: 14px;
   letter-spacing: 5px;
   color: var(--accent-blue);
@@ -40,7 +40,6 @@ body {
 }
 
 .uid {
-  font-family: var(--font-number);
   font-size: 16px;
   color: var(--text-dim);
   letter-spacing: 2px;
@@ -57,7 +56,6 @@ body {
 }
 
 .season-label {
-  font-family: var(--font-normal);
   font-size: 12px;
   color: var(--text-secondary);
   margin-bottom: 6px;
@@ -68,7 +66,6 @@ body {
 }
 
 .season-time {
-  font-family: var(--font-number);
   font-size: 24px;
   color: var(--accent-blue);
   text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
@@ -99,7 +96,6 @@ body {
 }
 
 .total-count {
-  font-family: var(--font-number);
   font-size: 48px;
   display: flex;
   align-items: baseline;
@@ -139,7 +135,7 @@ body {
 .area-name {
   font-family: var(--font-art);
   font-size: 28px;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .area-line {
@@ -156,7 +152,6 @@ body {
 }
 
 .area-star-badge {
-  font-family: var(--font-number);
   background: rgba(255, 255, 255, 0.05);
   padding: 8px 18px;
   border-radius: 14px;
@@ -216,7 +211,7 @@ body {
 .floor-number {
   font-family: var(--font-art);
   font-size: 32px;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 10px;
   text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
 }
@@ -265,7 +260,6 @@ body {
 }
 
 .no-lineup {
-  font-family: var(--font-normal);
   color: var(--text-dim);
   font-size: 16px;
   letter-spacing: 2px;

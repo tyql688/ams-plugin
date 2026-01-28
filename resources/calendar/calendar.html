@@ -2,10 +2,8 @@
 <link rel="stylesheet" href="{{_res_path}}/calendar/calendar.css" />
 {{/block}} {{block 'main'}}
 <div class="calendar-container glass-panel">
-  <!-- 动态光效 -->
   <div class="glow-top"></div>
 
-  <!-- 头部：HUD 风格 -->
   <div class="header">
     <div class="header-left">
       <div class="title-cn">鸣潮日历</div>
@@ -18,7 +16,6 @@
     </div>
   </div>
 
-  <!-- 版本Banner -->
   {{if bannerUrl}}
   <div class="version-banner">
     <div class="banner-inner">
@@ -28,9 +25,7 @@
   </div>
   {{/if}}
 
-  <!-- 唤取部分 -->
   <div class="gacha-section">
-    <!-- 角色活动 -->
     {{if modules.role && modules.role.list && modules.role.list.length > 0}}
     <div class="gacha-group">
       <div class="group-header">

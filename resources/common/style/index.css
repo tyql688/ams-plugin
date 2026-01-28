@@ -182,31 +182,37 @@
 }
 
 /* ==================== 元素主题配色 ==================== */
+/* 1: 冷凝 (Glacio) */
 .theme-element-1 {
   --element-primary: #22d3ee;
   --element-bg: rgba(8, 51, 68, 0.5);
   --element-shadow: rgba(34, 211, 238, 0.2);
 }
+/* 2: 热熔 (Fusion) */
 .theme-element-2 {
   --element-primary: #ef4444;
   --element-bg: rgba(69, 10, 10, 0.5);
   --element-shadow: rgba(239, 68, 68, 0.2);
 }
+/* 3: 导电 (Electro) */
 .theme-element-3 {
   --element-primary: #a855f7;
   --element-bg: rgba(59, 7, 100, 0.5);
   --element-shadow: rgba(168, 85, 247, 0.2);
 }
+/* 4: 气动 (Aero) */
 .theme-element-4 {
   --element-primary: #34d399;
   --element-bg: rgba(2, 44, 34, 0.5);
   --element-shadow: rgba(52, 211, 153, 0.2);
 }
+/* 5: 衍射 (Spectro) */
 .theme-element-5 {
   --element-primary: #facc15;
   --element-bg: rgba(66, 32, 6, 0.5);
   --element-shadow: rgba(250, 204, 21, 0.2);
 }
+/* 6: 湮灭 (Havoc) */
 .theme-element-6 {
   --element-primary: #e649a6;
   --element-bg: rgba(80, 7, 36, 0.5);

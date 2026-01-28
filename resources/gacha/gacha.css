@@ -31,7 +31,6 @@ body {
 }
 
 .brand {
-  font-family: var(--font-number);
   font-size: 12px;
   letter-spacing: 4px;
   color: var(--accent-cyan);
@@ -61,7 +60,6 @@ body {
 }
 
 .uid {
-  font-family: var(--font-number);
   font-size: 14px;
   color: #fff;
   background: rgba(34, 211, 238, 0.1);
@@ -114,7 +112,6 @@ body {
 }
 
 .user-cost {
-  font-family: var(--font-number);
   font-size: 13px;
   color: #22d3ee;
   opacity: 1;
@@ -152,7 +149,6 @@ body {
   font-weight: 800;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   line-height: 1;
-  font-family: var(--font-number);
 }
 
 .key {
@@ -231,5 +227,4 @@ body {
   border-radius: 10px;
   white-space: nowrap;
   z-index: 2;
-  font-family: var(--font-number);
 }

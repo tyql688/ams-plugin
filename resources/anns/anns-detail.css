@@ -30,7 +30,6 @@ body {
 }
 
 .brand {
-  font-family: var(--font-number);
   font-size: 13px;
   letter-spacing: 4px;
   color: var(--accent-blue);
@@ -89,7 +88,6 @@ body {
 }
 
 .publish-time {
-  font-family: var(--font-number);
   font-size: 16px;
   color: var(--text-dark);
   font-weight: 600;

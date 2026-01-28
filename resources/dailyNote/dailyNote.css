@@ -10,6 +10,8 @@ body {
   min-height: 400px;
   display: flex;
   flex-direction: column;
+  --color-success: #4ade80;
+  --color-danger: #ef4444;
 }
 
 .header {
@@ -27,7 +29,6 @@ body {
 }
 
 .brand {
-  font-family: var(--font-number);
   font-size: 14px;
   letter-spacing: 6px;
   color: var(--accent-blue);
@@ -51,7 +52,6 @@ body {
 }
 
 .uid {
-  font-family: var(--font-number);
   font-size: 16px;
   color: var(--text-dim);
   letter-spacing: 2px;
@@ -71,7 +71,6 @@ body {
 }
 
 .date-label {
-  font-family: var(--font-normal);
   font-size: 12px;
   color: var(--text-dim);
   text-transform: uppercase;
@@ -80,7 +79,6 @@ body {
 }
 
 .date-value {
-  font-family: var(--font-number);
   font-size: 22px;
   color: var(--text-secondary);
   font-weight: bold;
@@ -88,7 +86,6 @@ body {
 }
 
 .sign-in-tip {
-  font-family: var(--font-normal);
   font-size: 13px;
   background: rgba(0, 0, 0, 0.5);
   padding: 6px 14px;
@@ -156,7 +153,7 @@ body {
 
 .card-title {
   font-size: 18px;
-  color: #fff;
+  color: var(--text-primary);
   font-weight: 600;
   font-family: var(--font-art);
   margin-bottom: 2px;
@@ -169,15 +166,13 @@ body {
 
 .refill-time {
   font-size: 14px;
-  color: #ef4444;
-  font-family: var(--font-number);
+  color: var(--color-danger);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .card-num {
-  font-family: var(--font-number);
   font-size: 42px;
-  color: #fff;
+  color: var(--text-primary);
   margin-top: 5px;
   line-height: 1;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -211,7 +206,6 @@ body {
 
 .status-row .val {
   color: var(--accent-gold);
-  font-family: var(--font-number);
   font-weight: bold;
   letter-spacing: 0.5px;
 }
@@ -277,13 +271,12 @@ body {
 }
 
 .item-val {
-  font-family: var(--font-number);
   font-size: 26px;
   text-align: right;
 }
 
 .item-val .cur {
-  color: #fff;
+  color: var(--text-primary);
   font-weight: 700;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }

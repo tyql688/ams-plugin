@@ -47,7 +47,6 @@ body {
 }
 
 .char-name-en {
-  font-family: var(--font-number);
   font-size: 14px;
   color: var(--element-primary);
   letter-spacing: 3px;
@@ -101,7 +100,6 @@ body {
 }
 
 .mode-badge {
-  font-family: var(--font-number);
   font-size: 42px;
   font-weight: 900;
   color: rgba(255, 255, 255, 0.08);
@@ -179,7 +177,6 @@ body {
   font-size: 18px;
   font-weight: 800;
   color: var(--element-primary);
-  font-family: var(--font-normal);
   letter-spacing: 1px;
 }
 
@@ -193,7 +190,6 @@ body {
 .item-desc nobr {
   color: var(--element-primary);
   font-weight: 800;
-  font-family: var(--font-number);
   text-shadow: 0 0 5px var(--element-shadow);
   padding: 0 2px;
 }
@@ -224,7 +220,6 @@ body {
 
 .stat-value {
   font-size: 24px;
-  font-family: var(--font-number);
   color: #fff;
   font-weight: 800;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);

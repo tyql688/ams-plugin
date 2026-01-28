@@ -34,7 +34,6 @@ body {
 }
 
 .brand {
-  font-family: var(--font-number);
   font-size: 13px;
   letter-spacing: 5px;
   color: var(--accent-blue);
@@ -69,7 +68,6 @@ body {
 }
 
 .star-label {
-  font-family: var(--font-number);
   font-size: 16px;
   color: var(--accent-gold);
   font-weight: 700;
@@ -88,7 +86,6 @@ body {
   background: rgba(0, 0, 0, 0.03);
   border-radius: 12px;
   margin-bottom: 8px;
-  font-family: var(--font-number);
   font-size: 13px;
   font-weight: 700;
   color: var(--text-dim);
@@ -179,7 +176,6 @@ body {
   color: var(--text-dark);
   font-weight: 700;
   font-size: 16px;
-  font-family: var(--font-number);
   text-align: right;
 }
 
@@ -191,7 +187,6 @@ body {
   color: var(--text-dark);
   font-weight: 700;
   font-size: 16px;
-  font-family: var(--font-number);
   text-align: right;
   min-width: 140px;
 }

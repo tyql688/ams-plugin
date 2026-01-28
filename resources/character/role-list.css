@@ -56,7 +56,6 @@ body {
 }
 
 .brand {
-  font-family: var(--font-number);
   font-size: 14px;
   letter-spacing: 4px;
   color: var(--accent-cyan);
@@ -85,7 +84,6 @@ body {
 }
 
 .uid {
-  font-family: var(--font-number);
   font-size: 16px;
   color: #fff;
   background: rgba(34, 211, 238, 0.1);
@@ -162,7 +160,6 @@ body {
 }
 
 .role-name {
-  font-family: var(--font-number), "Microsoft YaHei", sans-serif;
   font-size: 13px; /* Smaller font */
   font-weight: bold;
   color: #fff;
@@ -182,7 +179,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-number);
   font-size: 11px;
   font-weight: 700;
   color: #fff;
@@ -231,7 +227,6 @@ body {
 
 .footer-tip .cmd {
   color: var(--accent-cyan);
-  font-family: var(--font-number);
   font-weight: bold;
   margin: 0 3px;
   background: rgba(34, 211, 238, 0.1);

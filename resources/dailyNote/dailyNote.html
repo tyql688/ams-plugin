@@ -37,17 +37,17 @@
               <img src="{{pluResPath}}dailyNote/imgs/energy.webp" />
             </div>
             <div class="card-info">
-          <div class="card-title">
-            结晶波片
-            {{if energyData.refreshTimeStr}}
-            <span class="refill-time">预计回满 {{energyData.refreshTimeStr}}</span>
-            {{else}}
-            <span class="refill-time" style="color: #4ade80">已全部恢复</span>
-            {{/if}}
-          </div>
+            <div class="card-title">
+              结晶波片
+              {{if energyData.refreshTimeStr}}
+              <span class="refill-time">预计回满 {{energyData.refreshTimeStr}}</span>
+              {{else}}
+              <span class="refill-time" style="color: var(--color-success)">已全部恢复</span>
+              {{/if}}
+            </div>
               <div class="card-num">
                 <strong
-                  style="color: {{if energyData.refreshTimeStr}}#facc15{{else}}#4ade80{{/if}};"
+                  style="color: {{if energyData.refreshTimeStr}}var(--accent-gold){{else}}var(--color-success){{/if}};"
                   >{{energyData.cur}}</strong
                 >/{{energyData.total}}
               </div>
@@ -63,7 +63,7 @@
             <div class="card-info">
               <div class="card-title">结晶单质</div>
               <div class="card-num">
-                <strong style="color: #facc15">{{storeEnergyData.cur}}</strong
+                <strong style="color: var(--accent-gold)">{{storeEnergyData.cur}}</strong
                 >/{{storeEnergyData.total}}
               </div>
 
