@@ -3,7 +3,7 @@ import _ from "lodash"
 import path from "path"
 import DataLoader from "../lib/core/data_loader.js"
 import { User } from "../lib/db/index.js"
-import { customBgPath, customPilePath } from "../lib/path.js"
+import { customBgPath, customPilePath, resourcePath, wavesResMap } from "../lib/path.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
 import { PanelBuilder } from "../model/panel/builder.js"
@@ -141,6 +141,23 @@ export class Card extends AmsPlugin {
       customBg,
       customPile,
     })
-    return img ? e.reply(img) : e.reply("❌ 面板绘图失败")
+    const res = await (img ? e.reply(img) : e.reply("❌ 面板绘图失败"))
+    if (res && res.message_id) {
+      const messageIds = Array.isArray(res.message_id) ? res.message_id : [res.message_id]
+      for (const msgId of messageIds) {
+        // 存储立绘：优先自定义，否则存储默认
+        const pilePath =
+          customPile ||
+          `file://${path.join(wavesResMap.rolePile, `${roleId}.webp`).replace(/\\/g, "/")}`
+        await redis.set(`ams:original-picture:${msgId}`, pilePath, { EX: 3600 * 3 })
+
+        // 存储背景：优先自定义，否则存储默认
+        const bgPath =
+          customBg ||
+          `file://${path.join(resourcePath, "common", "bg", "bg.png").replace(/\\/g, "/")}`
+        await redis.set(`ams:original-background:${msgId}`, bgPath, { EX: 3600 * 3 })
+      }
+    }
+    return true
   }
 }

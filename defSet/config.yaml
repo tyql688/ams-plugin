@@ -18,3 +18,6 @@ anns_push: false # 公告推送开关
 # 其他配置
 multi_daily: true # 多角色体力开关
 multi_daily_forward: 3 # 几个角色以上查询体力转发
+
+yuantu_pile: true # 立绘原图
+yuantu_bg: true # 背景原图

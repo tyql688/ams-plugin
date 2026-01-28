@@ -202,6 +202,12 @@
       "permission": "master",
       "commands": [
         {
+          "icon": "P_05.png",
+          "cmd": "原图",
+          "desc": "获取立绘/背景原图",
+          "example": "原图"
+        },
+        {
           "icon": "L_10.png",
           "cmd": "上传背景图",
           "desc": "上传角色面板背景"

@@ -46,6 +46,10 @@ export class Custom extends AmsPlugin {
           fnc: "deletePile",
           permission: "master",
         },
+        {
+          reg: config.fixCommond("(背景)?原图$"),
+          fnc: "getOriginalPicture",
+        },
       ],
     })
 
@@ -181,5 +185,71 @@ export class Custom extends AmsPlugin {
 
     fs.unlinkSync(path.join(charDir, targetFile))
     return e.reply(`✅ 已成功删除 ${name} 立绘: ${input}`)
+  }
+
+  /** 获取面板原图 **/
+  async getOriginalPicture(e) {
+    let source
+    if (e.reply_id) {
+      source = { message_id: e.reply_id }
+    } else {
+      if (!e.hasReply && !e.source) return false
+      if (e.source.user_id !== e.self_id) return false
+      try {
+        source = e.group?.getChatHistory
+          ? (await e.group.getChatHistory(e.source.seq, 1)).pop()
+          : e.friend?.getChatHistory
+            ? (await e.friend.getChatHistory(e.source.time, 1)).pop()
+            : null
+      } catch (err) {}
+
+      if (!source) source = { message_id: e.source.message_id, message: e.source.message }
+
+      if (
+        source?.message?.[0]?.type === "image" &&
+        source.message[1]?.type === "text" &&
+        !source.message[1].data?.text
+      ) {
+        source.message = [source.message[0]]
+      }
+
+      if (
+        !(source?.message?.length === 1 && source.message[0]?.type === "image") &&
+        !source.message_id
+      )
+        return false
+    }
+
+    const msgId = source.message_id
+    if (!msgId) return false
+
+    const isBg = e.msg.includes("背景")
+    const cfg = config.getConfig("config")
+    if (isBg && !cfg.yuantu_bg) return e.reply("已禁止获取背景原图")
+    if (!isBg && !cfg.yuantu_pile) return e.reply("已禁止获取立绘原图")
+
+    const key = isBg ? `ams:original-background:${msgId}` : `ams:original-picture:${msgId}`
+    const imgPath = await redis.get(key)
+    if (!imgPath) return e.reply("❌ 未找到对应的原图，该消息可能已过期")
+
+    const realPath = imgPath.replace("file://", "")
+    if (!fs.existsSync(realPath)) return e.reply("❌ 原图文件已被删除或不存在")
+
+    let text = ""
+    if (imgPath.includes("/custom/")) {
+      const id = imgPath.split("/").pop().split(".")[0]
+      text = `\nID: ${id}`
+      if (!isBg) {
+        const charId = imgPath.split("/").slice(-2, -1)[0]
+        const charName = DataLoader.getCharacterById(charId)?.name
+        if (charName) text += ` (${charName})`
+      }
+    }
+
+    try {
+      return e.reply([segment.image(imgPath), text])
+    } catch (err) {
+      return e.reply("❌ 原图发送失败")
+    }
   }
 }
