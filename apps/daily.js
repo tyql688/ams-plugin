@@ -44,9 +44,6 @@ export class DailyNote extends AmsPlugin {
 
     const msgList = []
 
-    // 获取头像 (主要用于单用户场景，多用户暂复用或需进一步优化)
-    await this.getAvatarUrl()
-
     // 2. 遍历查询
     for (const user of userList) {
       const wavesApi = new WavesApi(user.gameUid, user.token, {
@@ -59,6 +56,8 @@ export class DailyNote extends AmsPlugin {
         msgList.push(`账号[${user.gameUid}] 查询每日体力失败: ${res.msg}`)
         continue
       }
+      // 都随机头像框
+      await this.getAvatarUrl()
 
       const data = this.processDailyData(res.data, user)
       const img = await this.render("dailyNote/dailyNote.html", data)
