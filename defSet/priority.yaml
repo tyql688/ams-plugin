@@ -15,3 +15,4 @@ gacha: 110 # 抽卡
 pool: 110 # 卡池统计
 wiki: 110 # 图鉴
 challenge: 110 # 战术全息
+explore: 110 # 探索度

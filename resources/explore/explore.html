@@ -1,0 +1,67 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}explore/explore.css" />
+{{/block}} {{block 'main'}}
+<div class="explore-container glass-panel">
+  <div class="glow-top"></div>
+
+  <div class="header">
+    <div class="header-content">
+      <div class="title">世界探索</div>
+      <div class="subtitle">World Exploration</div>
+    </div>
+    <div class="user-info">
+      <span class="uid">UID: {{uid}}</span>
+    </div>
+  </div>
+
+  <div class="country-list">
+    {{each exploreList countryInfo}}
+    <div class="country-section">
+      <div
+        class="country-header"
+        style="background-image: url('{{countryInfo.country.detailPagePic || countryInfo.country.homePageImage}}'); --country-color: {{countryInfo.country.bgColor}};"
+      >
+        <div class="country-mask"></div>
+        <div class="country-info-box">
+          <div class="country-text">
+            <div class="country-name" style="color: #fff">{{countryInfo.country.countryName}}</div>
+            <div class="country-progress-val" style="color: #fff">
+              {{countryInfo.countryProgress}}%
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="area-grid">
+        {{each countryInfo.areaInfoList area}}
+        <div class="area-card">
+          <div class="area-bg" style="background-image: url('{{area.areaPic}}')"></div>
+          <div class="area-mask"></div>
+
+          <div class="area-content">
+            <div class="area-header">
+              <div class="area-name">{{area.areaName}}</div>
+              <div class="area-progress">{{area.areaProgress}}%</div>
+            </div>
+
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width: {{area.areaProgress}}%;"></div>
+            </div>
+
+            <div class="area-items">
+              {{each area.itemList item}}
+              <div class="item-pill">
+                <img class="item-icon" src="{{item.icon}}" />
+                <span class="item-text">{{item.progress}}%</span>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+{{/block}}
