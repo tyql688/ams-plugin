@@ -69,6 +69,9 @@ export class Slash extends AmsPlugin {
     const wavesApi = await this.getWavesApi()
     if (!wavesApi) return false
 
+    // 2.1 获取头像
+    await this.getAvatarUrl()
+
     // 3. 获取数据
     const slashRes = await wavesApi.getSlashData()
     if (!slashRes.status) {

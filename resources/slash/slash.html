@@ -5,16 +5,25 @@
   <div class="glow-top"></div>
 
   <div class="header">
-    <div class="header-left">
-      <div class="brand">Whimpering Wastes</div>
-      <div class="title">冥歌海墟 · {{diffiname}}</div>
-      <div class="uid">UID: {{uid}}</div>
+    {{if userAvatar}}
+    <div class="user-profile">
+      <div class="user-avatar-box">
+        <img class="user-avatar" src="{{userAvatar}}" />
+        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+      </div>
+      <div class="user-meta">
+        <span class="user-uid">UID: {{uid}}</span>
+      </div>
     </div>
-    <div class="header-right">
+    {{/if}}
+
+    <div class="head-title">
+      <div class="brand">Whimpering Wastes</div>
+      <div class="title-main">冥歌海墟</div>
       {{if showSeason}}
-      <div class="season-info">
-        <div class="season-label">距离挑战结束</div>
-        <div class="season-time">{{seasonEndTime}}</div>
+      <div class="season-info-sub">
+        <span class="season-label">本期结束还剩</span>
+        <span class="season-time">{{seasonEndTime}}</span>
       </div>
       {{/if}}
     </div>

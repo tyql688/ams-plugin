@@ -24,60 +24,55 @@ body {
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 50px;
 }
 
-.header-right {
+.head-title {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: flex-end;
-  gap: 15px;
+  text-align: right;
+  margin-left: auto;
 }
 
 .brand {
-  font-size: 14px;
-  letter-spacing: 6px;
+  font-size: 12px;
+  letter-spacing: 4px;
   color: var(--accent-cyan);
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   text-transform: uppercase;
 }
 
-.title {
+.title-main {
   font-family: var(--font-art);
   font-size: 44px;
   background: linear-gradient(180deg, #fff 40%, #7dd3fc 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+  margin-bottom: 8px;
 }
 
-.uid {
-  font-size: 15px;
-  color: var(--text-dim);
-  letter-spacing: 2px;
-  margin-top: 10px;
-}
-
-.season-info {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 12px 24px;
+.season-info-sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 4px 12px;
   border-radius: 20px;
   border: 1px solid rgba(34, 211, 238, 0.15);
-  text-align: right;
-  backdrop-filter: blur(10px);
-}
-
-.season-label {
-  font-size: 11px;
-  color: var(--text-secondary);
-  margin-bottom: 4px;
 }
 
 .season-time {
-  font-size: 22px;
-  color: var(--accent-cyan);
+  font-family: var(--font-number);
+  color: var(--accent-gold);
+  font-size: 16px;
 }
 
 /* 总评分 */
