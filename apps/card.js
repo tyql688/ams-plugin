@@ -63,6 +63,9 @@ export class Card extends AmsPlugin {
       )
     }
 
+    // 获取头像
+    await this.getAvatarUrl()
+
     const img = await this.render("character/role-list", {
       roles: roleList,
       uid: wavesApi.wavesId,

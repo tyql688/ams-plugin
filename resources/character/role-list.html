@@ -7,12 +7,25 @@
 
   <!-- 头部信息 -->
   <div class="header">
-    <div class="header-left">
-      <div class="brand">AMS ROLE LIST</div>
-      <div class="title">共鸣者档案</div>
-      <div class="header-meta">
-        <span class="uid">UID: {{uid}}</span>
-        <span class="count">收录 {{roles.length}} 名角色</span>
+    {{if userAvatar}}
+    <div class="user-profile">
+      <div class="user-avatar-box">
+        <img class="user-avatar" src="{{userAvatar}}" />
+        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+      </div>
+      <div class="user-meta">
+        <span class="user-uid">UID: {{uid}}</span>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="head-title">
+      <div class="brand">RESONATOR ARCHIVE</div>
+      <div class="title-main">共鸣者档案</div>
+      <div class="season-info-sub">
+        <span>已收录</span>
+        <span class="season-time">{{roles.length}}</span>
+        <span>名角色</span>
       </div>
     </div>
   </div>

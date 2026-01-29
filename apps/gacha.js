@@ -57,6 +57,9 @@ export class Gacha extends AmsPlugin {
       upWpnPool: record.getStatData(GACHA_TYPES[2]), // 武器精准
     }
 
+    // 获取头像
+    await this.getAvatarUrl()
+
     const renderData = {
       playerId: user.gameUid,
       ...renderPools,

@@ -6,10 +6,21 @@
   <div class="glow-top"></div>
 
   <div class="header">
-    <div class="header-left">
-      <div class="brand">Tactical Hologram</div>
-      <div class="title">战术全息 · 挑战记录</div>
-      <div class="uid">UID: {{uid}}</div>
+    {{if userAvatar}}
+    <div class="user-profile">
+      <div class="user-avatar-box">
+        <img class="user-avatar" src="{{userAvatar}}" />
+        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+      </div>
+      <div class="user-meta">
+        <span class="user-uid">UID: {{uid}}</span>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="head-title">
+      <div class="brand">TACTICAL HOLOGRAM</div>
+      <div class="title-main">战术全息</div>
     </div>
   </div>
 

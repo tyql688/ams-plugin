@@ -48,55 +48,58 @@ body {
 /* ==================== 头部样式 ==================== */
 .header {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 35px;
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.head-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: right;
+  margin-left: auto;
+}
+
 .brand {
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 4px;
   color: var(--accent-cyan);
   font-weight: 700;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   text-transform: uppercase;
-  opacity: 0.9;
 }
 
-.title {
+.title-main {
   font-family: var(--font-art);
-  font-size: 48px;
-  font-weight: bold;
-  background: linear-gradient(180deg, #fff 20%, #7dd3fc 100%);
+  font-size: 44px;
+  background: linear-gradient(180deg, #fff 40%, var(--accent-cyan) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  line-height: 1.2;
-  margin-bottom: 12px;
+  line-height: 1.1;
+  margin-bottom: 8px;
 }
 
-.header-meta {
+.season-info-sub {
   display: flex;
   align-items: center;
-  gap: 15px;
-}
-
-.uid {
-  font-size: 16px;
-  color: #fff;
-  background: rgba(34, 211, 238, 0.1);
-  padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid rgba(34, 211, 238, 0.2);
-  letter-spacing: 1px;
-}
-
-.count {
+  gap: 8px;
   font-size: 14px;
-  color: var(--text-dim);
-  letter-spacing: 1px;
+  color: var(--text-secondary);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.season-time {
+  font-family: var(--font-number);
+  color: var(--accent-cyan);
+  font-size: 16px;
 }
 
 /* ==================== 角色列表网格 ==================== */

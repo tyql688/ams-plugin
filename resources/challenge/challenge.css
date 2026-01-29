@@ -16,38 +16,39 @@ body {
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 30px;
   position: relative;
   z-index: 5;
 }
 
-.brand {
-  font-size: 13px;
-  letter-spacing: 4px;
-  color: #38bdf8;
-  font-weight: 700;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+.head-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: right;
+  margin-left: auto;
 }
 
-.title {
+.brand {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--accent-blue);
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.title-main {
   font-family: var(--font-art);
-  font-size: 46px;
-  background: linear-gradient(180deg, #fff 30%, #94a3b8 100%);
+  font-size: 44px;
+  background: linear-gradient(180deg, #fff 40%, var(--accent-blue) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-style: italic;
-  font-weight: bold;
-}
-
-.uid {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 1px;
-  margin-top: 10px;
+  line-height: 1.1;
+  margin-bottom: 8px;
 }
 
 /* Summary Wrapper (类似 Slash) */

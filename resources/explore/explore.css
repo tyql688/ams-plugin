@@ -18,10 +18,10 @@ body {
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   padding-bottom: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .head-title {
@@ -33,19 +33,24 @@ body {
   margin-left: auto;
 }
 
-.title-main {
-  font-family: var(--font-normal);
-  font-size: 32px;
-  color: var(--text-primary);
-  font-weight: bold;
-  line-height: 1.2;
+.brand {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--accent-blue);
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
 }
 
-.title-sub {
-  font-family: var(--font-normal);
-  font-size: 16px;
-  color: var(--text-secondary);
-  opacity: 0.6;
+.title-main {
+  font-family: var(--font-art);
+  font-size: 44px;
+  background: linear-gradient(180deg, #fff 40%, var(--accent-blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+  margin-bottom: 8px;
 }
 
 /* Country Section */

@@ -6,11 +6,21 @@
 
   <!-- Brand Header -->
   <div class="header">
-    <div class="brand">BLACK SHORES</div>
-    <div class="title">SIGNAL SEARCH ANALYSIS</div>
-    <div class="header-meta">
-      <div class="uid">UID: {{data.playerId}}</div>
-      <div class="count">{{sys.time}}</div>
+    {{if userAvatar}}
+    <div class="user-profile">
+      <div class="user-avatar-box">
+        <img class="user-avatar" src="{{userAvatar}}" />
+        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+      </div>
+      <div class="user-meta">
+        <span class="user-uid">UID: {{data.playerId}}</span>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="head-title">
+      <div class="brand">SIGNAL SEARCH</div>
+      <div class="title-main">唤取分析</div>
     </div>
   </div>
 
@@ -18,9 +28,10 @@
     {{if data.upCharPool}}
     <div class="column">
       <!-- UP Char Pool Content -->
-      <div class="user">
-        <div class="user-uid">角色UP池</div>
-        <div class="user-cost">总计: {{data.upCharPool.info.total}} 抽</div>
+      <!-- UP Char Pool Content -->
+      <div class="pool-header">
+        <div class="pool-title">角色UP池</div>
+        <div class="pool-cost">总计: {{data.upCharPool.info.total}} 抽</div>
       </div>
       <div class="box">
         <div class="box-overview">
@@ -80,9 +91,9 @@
     </div>
     {{/if}} {{if data.upWpnPool}}
     <div class="column">
-      <div class="user">
-        <div class="user-uid">武器UP池</div>
-        <div class="user-cost">总计: {{data.upWpnPool.info.total}} 抽</div>
+      <div class="pool-header">
+        <div class="pool-title">武器UP池</div>
+        <div class="pool-cost">总计: {{data.upWpnPool.info.total}} 抽</div>
       </div>
       <div class="box">
         <div class="box-overview">

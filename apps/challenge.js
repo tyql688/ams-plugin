@@ -30,6 +30,9 @@ export class Challenge extends AmsPlugin {
       const wavesApi = await this.getWavesApi()
       if (!wavesApi) return false
 
+      // 2.1 获取头像
+      await this.getAvatarUrl()
+
       // 3. 获取数据
       const res = await wavesApi.getChallengeDetail()
       if (!res || res.code !== 200) {
