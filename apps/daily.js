@@ -44,6 +44,9 @@ export class DailyNote extends AmsPlugin {
 
     const msgList = []
 
+    // 获取头像 (主要用于单用户场景，多用户暂复用或需进一步优化)
+    await this.getAvatarUrl()
+
     // 2. 遍历查询
     for (const user of userList) {
       const wavesApi = new WavesApi(user.gameUid, user.token, {
@@ -121,7 +124,7 @@ export class DailyNote extends AmsPlugin {
       ...data,
       currTime: now.format("YYYY-MM-DD HH:mm:ss"),
       roleId: user.gameUid,
-      roleName: data.roleName || user.roleName || "漂泊者",
+      roleName: data.roleName || "漂泊者",
     }
   }
 }

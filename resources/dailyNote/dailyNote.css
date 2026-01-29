@@ -17,84 +17,85 @@ body {
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 15px;
+  align-items: center;
+  margin-bottom: 25px;
   position: relative;
   z-index: 2;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 15px;
 }
 
-.header-left {
+.head-title {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: right;
+  margin-left: auto;
 }
 
 .brand {
-  font-size: 14px;
-  letter-spacing: 6px;
+  font-size: 12px;
+  letter-spacing: 4px;
   color: var(--accent-blue);
   font-weight: 700;
-  margin-bottom: 10px;
-  opacity: 0.9;
+  margin-bottom: 4px;
   text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
 }
 
-.title {
+.title-main {
   font-family: var(--font-art);
-  font-size: 48px;
-  background: linear-gradient(180deg, #fff 30%, #aab8c9 100%);
+  font-size: 44px;
+  background: linear-gradient(180deg, #fff 40%, var(--accent-blue) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   line-height: 1.1;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.uid {
-  font-size: 16px;
-  color: var(--text-dim);
-  letter-spacing: 2px;
-  padding-left: 2px;
-}
-
-.header-right {
+.head-title {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: flex-end;
-  gap: 12px;
-  margin-right: 110px;
-}
-
-.date-box {
   text-align: right;
+  margin-left: auto;
+  position: relative;
+  z-index: 5; /* 确保文字在彩蛋上方 */
 }
 
-.date-label {
-  font-size: 12px;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 4px;
-}
-
-.date-value {
-  font-size: 22px;
+/* Info Pill */
+.season-info-sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
   color: var(--text-secondary);
-  font-weight: bold;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.sign-in-tip {
-  font-size: 13px;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 4px 12px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 4px;
 }
 
+.season-info-sub.warn {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: rgba(239, 68, 68, 0.9);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.season-time {
+  font-family: var(--font-number);
+  color: var(--accent-blue);
+  font-size: 16px;
+}
+
+.season-info-sub.warn .season-time {
+  color: #ef4444;
+}
+
+/* Main Content Area - Restored */
 .content-wrapper {
   display: flex;
   gap: 25px;
@@ -225,14 +226,16 @@ body {
 
 .card-sticker {
   position: absolute;
-  top: 35px;
-  right: 40px;
-  width: 75px;
+  top: auto;
+  bottom: -5px;
+  right: auto;
+  left: -10px;
+  width: 100px;
   height: auto;
   z-index: 20;
   filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
-  transform: rotate(10deg);
-  opacity: 1;
+  transform: scaleX(-1) rotate(-10deg);
+  opacity: 0.85;
 }
 
 .list-item {

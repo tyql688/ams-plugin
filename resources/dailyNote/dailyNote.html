@@ -9,24 +9,28 @@
   <img class="card-sticker" src="{{pluResPath}}dailyNote/imgs/left.png" />
 
   <div class="header">
-        <div class="header-left">
-          <div class="brand">Daily Note</div>
-          <div class="title">{{roleName}}</div>
-          <div class="uid">UID: {{roleId}}</div>
-        </div>
-
-        <div class="header-right">
-          <div class="date-box">
-            <div class="date-label">Today</div>
-            <div class="date-value">{{currTime}}</div>
-          </div>
-
-
-          <div class="sign-in-tip" style="color: {{if !hasSignIn}}#ef4444{{else}}#aab8c9{{/if}}">
-            今日签到福利{{if hasSignIn}}已{{else}}尚未{{/if}}领取
-          </div>
-        </div>
+    {{if userAvatar}}
+    <div class="user-profile">
+      <div class="user-avatar-box">
+        <img class="user-avatar" src="{{userAvatar}}" />
+        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
       </div>
+      <div class="user-meta">
+        <div class="user-name">{{roleName}}</div>
+        <span class="user-uid">UID: {{roleId}}</span>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="head-title">
+      <div class="brand">DAILY NOTE</div>
+      <div class="title-main">实时便笺</div>
+      <div class="season-info-sub {{if !hasSignIn}}warn{{/if}}">
+        <span>今日签到</span>
+        <span class="season-time">{{if hasSignIn}}已领取{{else}}未领取{{/if}}</span>
+      </div>
+    </div>
+  </div>
 
       <div class="content-wrapper">
 
