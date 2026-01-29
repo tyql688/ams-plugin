@@ -9,31 +9,34 @@ body {
 }
 
 .card {
-  background: rgba(12, 12, 16, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
+  background: var(--panel-bg, rgba(13, 14, 18, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
   overflow: hidden;
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.4),
-    inset 0 0 20px rgba(255, 255, 255, 0.02);
   position: relative;
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
+  clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 0 100%);
 }
-/* 去掉旧的浮夸装饰 */
-.card::before,
-.card::after {
-  display: none !important;
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(255, 255, 255, 0.015) 50%);
+  background-size: 100% 4px;
 }
 
 .card-title {
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 800;
   color: #fff;
   padding: 10px 16px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  letter-spacing: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  letter-spacing: 1.5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -83,19 +86,18 @@ body {
 }
 
 .role-pile {
-  width: 130%; /* 宽度溢出，打破框感 */
+  width: 130%;
   height: 108%;
   position: absolute;
-  left: -20px; /* 溢出到容器外 */
+  left: -60px;
   top: -20px;
   background-size: cover;
   background-position: center 25%;
-  /* 核心改动：底部和右侧的双重羽化，让立绘与背景、右侧数据完美融合 */
   -webkit-mask-image:
-    linear-gradient(to right, #000 65%, transparent 90%),
+    linear-gradient(to right, #000 70%, transparent 90%),
     linear-gradient(to bottom, #000 85%, transparent 100%);
   mask-image:
-    linear-gradient(to right, #000 65%, transparent 90%),
+    linear-gradient(to right, #000 70%, transparent 90%),
     linear-gradient(to bottom, #000 85%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
@@ -153,7 +155,7 @@ body {
 .pile-chains {
   position: absolute;
   bottom: 10px;
-  right: 0; /* 恢复贴边 */
+  right: 0;
   display: flex;
   gap: 6px;
   background: linear-gradient(to left, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
@@ -178,7 +180,7 @@ body {
 .chain-icon-circle.on {
   border-color: var(--element-primary);
   background: var(--element-bg);
-  box-shadow: 0 0 5px var(--element-shadow);
+  box-shadow: 0 0 10px var(--element-shadow);
 }
 .chain-icon-circle.off .icon-img {
   filter: grayscale(1) brightness(0.6);
@@ -504,8 +506,8 @@ body {
 
 .echo-card {
   width: 187px;
-  background: rgba(15, 15, 20, 0.45); /* 降低透明度 */
-  border-radius: 8px;
+  background: rgba(15, 15, 20, 0.45);
+  border-radius: 2px;
   overflow: visible;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
@@ -516,6 +518,16 @@ body {
   backdrop-filter: blur(12px);
 }
 
+.echo-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(255, 255, 255, 0.01) 50%);
+  background-size: 100% 4px;
+}
+
 .echo-head {
   height: 64px;
   position: relative;
@@ -524,9 +536,7 @@ body {
   justify-content: center;
   padding-left: 12px;
   padding-right: 70px;
-  /* 背景调淡：从 0.9 降至 0.4，让玻璃通透起来 */
   background: linear-gradient(to right, rgba(20, 20, 28, 0.4) 55%, transparent 100%);
-  /* 阴影大幅减弱：压缩扩散半径，改用更淡的 shadow 变量 */
   box-shadow: inset -20px 10px 25px -20px var(--element-shadow);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   z-index: 1;
@@ -546,6 +556,10 @@ body {
   filter: none;
   -webkit-mask: radial-gradient(circle at 90% 10%, #000 20%, transparent 100%);
   mask: radial-gradient(circle at 90% 10%, #000 20%, transparent 100%);
+}
+
+.echo-card:hover .echo-icon {
+  transform: translateY(-5px) scale(1.05);
 }
 
 .echo-icon::after {
