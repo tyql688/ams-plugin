@@ -5,17 +5,28 @@
   <div class="glow-top"></div>
 
   <div class="header">
-    <div class="header-left">
-      <div class="brand">Tower of Adversity</div>
-      <div class="title">逆境深塔 · {{diffiname}}</div>
-      <div class="uid">UID: {{uid}}</div>
-    </div>
-    {{if showSeason}}
-    <div class="season-info">
-      <div class="season-label">距离深塔结束</div>
-      <div class="season-time">{{seasonEndTime}}</div>
+    {{if userAvatar}}
+    <div class="user-profile">
+      <div class="user-avatar-box">
+        <img class="user-avatar" src="{{userAvatar}}" />
+        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+      </div>
+      <div class="user-meta">
+        <span class="user-uid">UID: {{uid}}</span>
+      </div>
     </div>
     {{/if}}
+
+    <div class="head-title">
+      <div class="brand">Tower of Adversity</div>
+      <div class="title-main">深塔 · {{diffiname}}</div>
+      {{if showSeason}}
+      <div class="season-info-sub">
+        <span class="season-label">本期结束还剩</span>
+        <span class="season-time">{{seasonEndTime}}</span>
+      </div>
+      {{/if}}
+    </div>
   </div>
 
   <div class="summary">

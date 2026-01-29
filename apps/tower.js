@@ -34,6 +34,9 @@ export class Tower extends AmsPlugin {
     const wavesApi = await this.getWavesApi()
     if (!wavesApi) return false
 
+    // 3.1 获取头像
+    await this.getAvatarUrl()
+
     // 3. 获取深塔数据
     const towerRes = await wavesApi.getTowerData()
     if (!towerRes.status) {

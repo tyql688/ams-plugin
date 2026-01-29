@@ -16,59 +16,57 @@ body {
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 50px;
 }
 
-.brand {
-  font-size: 14px;
-  letter-spacing: 5px;
-  color: var(--accent-blue);
-  font-weight: 700;
-  margin-bottom: 12px;
-  opacity: 0.8;
+.head-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: right;
+  margin-left: auto;
 }
 
-.title {
+.brand {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--accent-blue);
+  font-weight: 700;
+  margin-bottom: 4px;
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+
+.title-main {
   font-family: var(--font-art);
   font-size: 48px;
   background: linear-gradient(180deg, #fff 30%, #aab8c9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* 截图环境下 text-shadow 更稳定 */
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  line-height: 1.1;
+  margin-bottom: 8px;
 }
 
-.uid {
-  font-size: 16px;
-  color: var(--text-dim);
-  letter-spacing: 2px;
-  margin-top: 10px;
-}
-
-.season-info {
-  background: rgba(0, 0, 0, 0.4);
-  padding: 15px 25px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  text-align: right;
-  backdrop-filter: blur(10px);
-}
-
-.season-label {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-bottom: 6px;
+.season-info-sub {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .season-time {
-  font-size: 24px;
-  color: var(--accent-blue);
-  text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+  font-family: var(--font-number);
+  color: var(--accent-gold);
+  font-size: 16px;
 }
 
 /* 总星数 */
