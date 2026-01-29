@@ -358,3 +358,79 @@
   --element-bg: rgba(156, 39, 176, 0.1);
   --element-shadow: rgba(156, 39, 176, 0.3);
 }
+/* ==================== 通用头像组件 ==================== */
+.user-avatar-box {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+.user-avatar {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.avatar-frame-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* === 通用用户信息铭牌组件 (User Badge) === */
+.user-profile {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.user-meta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: -50px;
+  padding: 8px 30px 8px 60px;
+
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-left: none;
+  border-radius: 0 24px 24px 0;
+
+  backdrop-filter: blur(5px);
+  z-index: 1;
+  height: 48px;
+}
+
+.user-uid {
+  font-family: var(--font-number);
+  font-size: 26px;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  font-style: italic;
+  line-height: 1;
+}
+
+.user-meta::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 40px;
+  right: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  opacity: 0.6;
+}

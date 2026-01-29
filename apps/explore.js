@@ -50,6 +50,9 @@ export class Explore extends AmsPlugin {
       roleId: user.roleId,
     }
 
+    // 获取头像
+    await this.getAvatarUrl()
+
     const img = await this.render("explore/explore", renderData)
     if (img) {
       await e.reply(img)

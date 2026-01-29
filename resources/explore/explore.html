@@ -5,12 +5,20 @@
   <div class="glow-top"></div>
 
   <div class="header">
-    <div class="header-content">
-      <div class="title">世界探索</div>
-      <div class="subtitle">World Exploration</div>
+    {{if userAvatar}}
+    <div class="user-profile">
+      <div class="user-avatar-box">
+        <img class="user-avatar" src="{{userAvatar}}" />
+        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+      </div>
+      <div class="user-meta">
+        <span class="user-uid">UID: {{uid}}</span>
+      </div>
     </div>
-    <div class="user-info">
-      <span class="uid">UID: {{uid}}</span>
+    {{/if}}
+    <div class="head-title">
+      <div class="title-main">世界探索</div>
+      <div class="title-sub">World Exploration</div>
     </div>
   </div>
 

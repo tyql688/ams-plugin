@@ -1,4 +1,3 @@
-import fs from "fs"
 import _ from "lodash"
 import path from "path"
 import DataLoader from "../lib/core/data_loader.js"
@@ -6,6 +5,7 @@ import { User } from "../lib/db/index.js"
 import { customBgPath, customPilePath, resourcePath, wavesResMap } from "../lib/path.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
+import { randomFiles } from "../lib/utils.js"
 import { PanelBuilder } from "../model/panel/builder.js"
 import { ELE_NAME_MAP } from "../model/panel/const.js"
 import { Waves2RoleCard } from "../model/roleCard.js"
@@ -76,29 +76,9 @@ export class Card extends AmsPlugin {
    */
   getCustomAssets(charId) {
     let res = {
-      customBg: null,
-      customPile: null,
+      customBg: randomFiles(customBgPath),
+      customPile: randomFiles(path.join(customPilePath, String(charId))),
     }
-
-    // 1. 获取背景图 (从 custom/bg 随机取)
-    if (fs.existsSync(customBgPath)) {
-      let files = fs.readdirSync(customBgPath).filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f))
-      if (files.length > 0) {
-        const randomFile = files[Math.floor(Math.random() * files.length)]
-        res.customBg = `file://${path.join(customBgPath, randomFile).replace(/\\/g, "/")}`
-      }
-    }
-
-    // 2. 获取立绘图 (从 custom/pile/id 随机取)
-    let charPileDir = path.join(customPilePath, String(charId))
-    if (fs.existsSync(charPileDir)) {
-      let files = fs.readdirSync(charPileDir).filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f))
-      if (files.length > 0) {
-        const randomFile = files[Math.floor(Math.random() * files.length)]
-        res.customPile = `file://${path.join(charPileDir, randomFile).replace(/\\/g, "/")}`
-      }
-    }
-
     return res
   }
 
