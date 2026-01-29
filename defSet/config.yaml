@@ -16,6 +16,7 @@ anns_push: false # 公告推送开关
 
 # --------------------------------------------------------
 # 其他配置
+signin_switch: true # 签到开关
 multi_daily: true # 多角色体力开关
 multi_daily_forward: 3 # 几个角色以上查询体力转发
 

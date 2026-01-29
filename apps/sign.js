@@ -38,9 +38,9 @@ export class Sign extends AmsPlugin {
   }
 
   async sign(e) {
-    const autoSign = _.get(config.getConfig("config"), "auto_signin", false)
-    if (!autoSign) {
-      logger.mark("[ams] 自动签到功能未开启")
+    const signinSwitch = _.get(config.getConfig("config"), "signin_switch", false)
+    if (!signinSwitch) {
+      logger.mark("[ams] 签到功能未开启")
       return false
     }
 
@@ -116,6 +116,11 @@ export class Sign extends AmsPlugin {
   }
 
   async autoSignIn() {
+    const autoSign = _.get(config.getConfig("config"), "auto_signin", false)
+    if (!autoSign) {
+      logger.mark("[ams] 自动签到功能未开启")
+      return false
+    }
     logger.mark("[ams] 开始执行自动签到任务...")
 
     const users = await User.findAll({
