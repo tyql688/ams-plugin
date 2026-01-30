@@ -22,3 +22,5 @@ multi_daily_forward: 3 # 几个角色以上查询体力转发
 
 yuantu_pile: true # 立绘原图
 yuantu_bg: true # 背景原图
+
+panel_version: 1 # 面板版本: 1 或 2

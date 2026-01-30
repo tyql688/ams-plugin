@@ -1,0 +1,713 @@
+body {
+  width: 680px;
+}
+
+.container {
+  width: 680px;
+  padding: 15px; /* Reduced padding for tighter layout */
+  background-image: url("../common/bg/bg.png");
+}
+
+/* ... Card styles ... */
+/* ... */
+
+/* ==================== 核心布局 ==================== */
+.main-content {
+  display: flex;
+  flex-direction: column; /* Changed to column to stack top (char+stats) and bottom (gears) */
+  gap: 15px;
+  position: relative; /* Context for absolute positioning (UID) */
+}
+
+/* UID Display - Top Right */
+/* UID Display - Subtle Pill Style */
+.uid-display {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-number);
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 4px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  z-index: 10;
+  text-shadow: none;
+  letter-spacing: 0.5px;
+}
+.uid-display .label {
+  display: none; /* Hide label if present */
+}
+.uid-display .value {
+  color: inherit;
+}
+
+/* ... Card styles ... */
+
+/* Top Area: Character Art + Attributes + Skills */
+.top-area {
+  display: flex;
+  min-height: 500px;
+  height: auto;
+  gap: 15px;
+  position: relative; /* Context for absolute layers */
+}
+
+/* Layer 1: Background Pile Card */
+.pile-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none; /* Let clicks pass through to content */
+}
+
+.role-pile {
+  /* Standard Pile Behavior */
+  width: 65%; /* Restrict to left side by default */
+  height: 108%;
+  position: absolute;
+  left: -20px;
+  top: -20px;
+  background-size: cover;
+  background-position: center 25%;
+  -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 85%, transparent 100%);
+  z-index: 1;
+}
+
+/* Custom Pile - Full Fill with Bottom Feathering */
+.role-pile.is-custom {
+  width: 680px; /* Full Body Width */
+  height: calc(100% + 15px); /* fill top padding */
+  left: -15px; /* offset container padding */
+  top: -15px; /* offset container padding */
+  background-size: cover;
+  background-position: top center;
+  /* Feather bottom only */
+  -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
+}
+
+.left-column {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+  z-index: 2; /* Sit above background */
+}
+
+.right-column {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* Tighten all gaps in right column */
+  margin-top: 20px; /* Moves entire column up */
+  padding-bottom: 30px; /* Leave space at bottom */
+  position: relative;
+  z-index: 2; /* Sit above background */
+}
+
+/* ==================== 角色信息头部 (Right Column Top) ==================== */
+.role-info-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Right align everything */
+  margin-bottom: 0; /* No extra margin */
+  z-index: 5;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.role-name {
+  font-size: 52px;
+  font-weight: 900;
+  font-family: var(--font-art);
+  color: #fff;
+  line-height: 1;
+  text-align: right;
+  margin-bottom: 8px;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.role-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.meta-tag {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 14px; /* Reduced slightly for box look */
+  font-weight: 700;
+  font-family: var(--font-number);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.uid-tag {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.level-tag {
+  background: var(--element-primary);
+  color: #000; /* Contrast color for element bg */
+  padding: 4px 8px; /* Match meta-tag height */
+}
+
+.cons-tag {
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--element-primary);
+  border: 1px solid var(--element-primary);
+  padding: 3px 9px; /* Adjust for border */
+  box-shadow: 0 0 5px var(--element-shadow);
+}
+
+/* ==================== 命座链 (Bottom Left) ==================== */
+.pile-chains {
+  position: absolute;
+  top: auto;
+  bottom: 20px;
+  left: 20px;
+  right: auto;
+  display: flex;
+  flex-direction: row; /* Horizontal */
+  gap: 6px;
+  z-index: 5;
+}
+
+.chain-icon-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.chain-icon-circle.on {
+  border-color: var(--element-primary);
+  background: rgba(0, 0, 0, 0.6); /* Revert to dark bg with colored border */
+  box-shadow: 0 0 8px var(--element-shadow);
+}
+.chain-icon-circle.on .icon-img {
+  opacity: 1;
+}
+.chain-icon-circle .icon-img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.4; /* Dim inactive */
+}
+
+/* Connect line hidden for horizontal or simplified */
+.chain-icon-circle::after {
+  display: none;
+}
+
+/* Clean up old UID */
+.uid-display {
+  display: none;
+}
+
+/* ==================== 底部：武器 (Miao-Plugin Style) ==================== */
+
+.bottom-area {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.weapon-card {
+  height: 240px;
+  grid-column: span 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.weapon-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column; /* Stack content vertically inside card */
+  overflow: hidden;
+  gap: 0;
+  position: relative;
+}
+
+/* Weapon Image - Large Background */
+.weapon-left {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  z-index: 0;
+}
+
+.weapon-left .rarity-frame {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.2) 0%, rgba(13, 14, 18, 0.95) 100%);
+  margin: 0;
+}
+.weapon-left .rarity-glow {
+  opacity: 0.3;
+}
+
+.weapon-bg {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: scale(0.9) translateY(10px); /* Adjust positioning */
+}
+
+/* Weapon Info Overlay */
+.weapon-details {
+  position: relative;
+  z-index: 2;
+  padding: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.6) 0%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+.weapon-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.weapon-name {
+  font-size: 16px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  position: relative;
+  z-index: 5;
+}
+
+/* ==================== 右侧：技能 ==================== */
+.skills-card-wide {
+  height: 90px; /* Condensed height */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0; /* Touch attributes */
+}
+
+.skills-list {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px;
+  gap: 3px;
+}
+
+/* 技能胶囊 */
+.skill-item-capsule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60px;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.skill-icon-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 2px;
+  margin-bottom: 3px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.skill-icon-circle .icon-img {
+  width: 100%;
+  height: 100%;
+  background-size: 75%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+}
+
+/* 恢复的圆圈等级角标样式 */
+.circle-lv {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: var(--element-primary);
+  color: #000;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 5px;
+  line-height: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  z-index: 3;
+  white-space: nowrap;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+/* 技能类型文字 */
+.skill-name {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: center;
+  margin-top: 1px;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  position: relative;
+  z-index: 1;
+  line-height: 1.2;
+}
+
+/* ==================== 右侧：属性列表 ==================== */
+.attribute-card {
+  flex: 1; /* Fill remaining space in right column */
+  height: auto; /* Dynamic height */
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  /* Card Styling Removed - Layout Only */
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  margin-top: 0; /* Push down significantly */
+}
+
+.attr-grid {
+  display: flex; /* Changed from grid to flex column for better vertical control */
+  flex-direction: column;
+  padding: 0; /* Remove padding as rows will have their own spacing */
+  gap: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+}
+
+.attr-row {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px; /* Restore comfortable padding */
+  /* Individual Row Styling - More Transparent */
+  background: rgba(0, 0, 0, 0.1); /* Extremely subtle */
+  backdrop-filter: blur(2px); /* Slight blur */
+  -webkit-backdrop-filter: blur(2px);
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 0px; /* No gap */
+  min-height: 32px;
+}
+
+.attr-row:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.attr-row:last-child {
+  border-bottom: none;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  margin-bottom: 0;
+}
+
+.attr-row:nth-child(even) {
+  background: rgba(0, 0, 0, 0.05); /* Very light background for even rows */
+}
+
+.attr-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+.attr-icon img {
+  width: 100%;
+  height: 100%;
+}
+
+.attr-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9); /* Strong shadow for readability */
+}
+
+/* Attibute Values Aligned Right */
+.attr-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-left: auto;
+  text-align: right;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.3px;
+}
+
+.weapon-props-simple {
+  margin-top: auto; /* Push to bottom */
+  margin-bottom: 8px;
+  width: 100%;
+  gap: 4px;
+}
+
+.wp-item {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3px 8px;
+}
+
+.weapon-desc {
+  display: none; /* Hide desc in compact mode if needed, or overlay it */
+}
+
+/* ==================== 声骸卡片 ==================== */
+.echo-card {
+  width: 210px; /* Fixed width: (680 - 30 - 20) / 3 */
+  background: rgba(15, 15, 20, 0.45);
+  border-radius: 2px;
+  overflow: visible;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  z-index: 1; /* Establish stacking context */
+  height: 240px;
+}
+
+.echo-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(255, 255, 255, 0.01) 50%);
+  background-size: 100% 4px;
+}
+
+.echo-head {
+  height: 64px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 12px;
+  padding-right: 70px;
+  background: linear-gradient(to right, rgba(20, 20, 28, 0.4) 55%, transparent 100%);
+  box-shadow: inset -20px 10px 25px -20px var(--element-shadow);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 1;
+}
+
+.echo-icon {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  top: -10px;
+  left: auto;
+  right: 1px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 10;
+  filter: none;
+  -webkit-mask: radial-gradient(circle at 90% 10%, #000 20%, transparent 100%);
+  mask: radial-gradient(circle at 90% 10%, #000 20%, transparent 100%);
+}
+
+.echo-card:hover .echo-icon {
+  transform: translateY(-5px) scale(1.05);
+}
+
+.echo-icon::after {
+  display: none;
+}
+
+.echo-title-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+  position: relative;
+  z-index: 2;
+}
+
+.echo-cost {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 2px;
+  text-shadow: none;
+  font-weight: normal;
+  line-height: 1.2;
+}
+
+.group-icon-inline {
+  width: 18px;
+  height: 18px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 4px;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.8));
+  background-color: transparent;
+  flex-shrink: 0;
+}
+
+.echo-name {
+  font-size: 13px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0px;
+  line-height: 1.3;
+}
+
+.echo-lv {
+  position: absolute;
+  right: 4px;
+  left: auto;
+  bottom: 0px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0 4px;
+  border-radius: 4px;
+  font-size: 10px;
+  color: var(--text-primary);
+  z-index: 20;
+  margin: 0;
+}
+
+.echo-props {
+  background: transparent; /* 移除深色背景块，保持通透感 */
+  padding: 8px 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.prop-row {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  height: 20px;
+}
+
+.prop-row.main {
+  background: transparent;
+  margin-bottom: 2px; /* 减小间距，保持紧凑 */
+  padding: 0;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.prop-row.main .p-icon {
+  width: 13px;
+  height: 13px;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.prop-row.main .p-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.prop-row.main .p-name {
+  color: #fff;
+  font-weight: 700;
+}
+
+.prop-row.main .p-val {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.prop-row.sub {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  padding: 0; /* 恢复原始边距 */
+  height: 20px;
+}
+.prop-row.sub:last-child {
+  border-bottom: none;
+}
+
+.p-dot {
+  width: 4px; /* 稍微调大，更清晰 */
+  height: 4px;
+  border-radius: 50%;
+  margin-right: 8px;
+  background-color: #999; /* 颜色提亮，确保能看见 */
+  flex-shrink: 0;
+}
+
+.p-name {
+  flex: 1;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+}
+
+.p-val {
+  color: var(--text-primary);
+  font-size: 12px;
+}
+
+.p-val.max-val {
+  color: var(--grade-ss);
+}

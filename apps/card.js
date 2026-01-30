@@ -117,7 +117,13 @@ export class Card extends AmsPlugin {
     if (!panelData) return e.reply("❌ 面板数据构建失败")
 
     const { customBg, customPile } = this.getCustomAssets(roleId)
-    const img = await this.render("character/profile-detail-v2", {
+
+    // 获取面板版本配置
+    const panelVersion = _.get(config.getConfig("config"), "panel_version", 1)
+    const templatePath =
+      panelVersion === 2 ? "character/profile-detail-v2" : "character/profile-detail-v1"
+
+    const img = await this.render(templatePath, {
       data: panelData,
       uid: wavesApi.wavesId,
       elem: ELE_NAME_MAP[panelData.attributeId],

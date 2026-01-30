@@ -1,0 +1,185 @@
+{{extend defaultLayout}} {{block 'title'}}鸣潮角色面板{{/block}} {{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/character/profile-detail-v1.css" />
+{{/block}} {{block 'body-class'}}elem-{{elem}} theme-element-{{data.attributeId}}{{/block}} {{block
+'main'}}
+<!-- TOP AREA: Character Art + Stats/Skills -->
+<div class="top-area">
+  <!-- Layer 1: Pile Background (Absolute) -->
+  <div class="pile-card">
+    <div
+      class="role-pile {{if customPile}}is-custom{{/if}}"
+      style="background-image:url({{customPile || wavesResMap.rolePile + '/' + data.charId + '.webp'}})"
+    ></div>
+  </div>
+
+  <!-- Layer 2: Left Content -->
+  <div class="left-column">
+    {{if data.chainList}}
+    <div class="pile-chains">
+      {{each data.chainList chain index}}
+      <div class="chain-icon-circle {{chain.unlocked?'on':'off'}}">
+        <div
+          class="icon-img"
+          style="background-image:url({{wavesResMap.roleChain}}/{{data.charId}}/{{chain.id}}.webp)"
+        ></div>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+  </div>
+
+  <div class="right-column">
+    <!-- 1. Header: Name & Info -->
+    <div class="role-info-group right-aligned">
+      <div class="role-name">{{data.name}}</div>
+      <div class="role-meta-row">
+        <span class="meta-tag uid-tag">UID {{uid}}</span>
+        <span class="meta-tag level-tag">Lv.{{data.level}}</span>
+        <span class="meta-tag cons-tag">{{data.chainUnlockNum}}命</span>
+      </div>
+    </div>
+
+    <!-- 2. Skills -->
+    {{if data.skillList}}
+    <div class="card skills-card-wide">
+      <div class="skills-list">
+        {{each data.skillList skill}}
+        <div class="skill-item-capsule">
+          <div class="skill-icon-circle">
+            <div
+              class="icon-img"
+              style="background-image:url({{wavesResMap.roleSkill}}/{{data.charId}}/{{skill.id}}.webp)"
+            ></div>
+            <div class="circle-lv">{{skill.level}}</div>
+          </div>
+          <!-- <div class="skill-name">{{skill.type}}</div> - Optional, maybe remove to save space if needed, or keep for clarity -->
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- 3. Attributes -->
+    {{if data.roleAttributeList && data.roleAttributeList.length > 0}}
+    <div class="card attribute-card">
+      <div class="attr-grid">
+        {{each data.roleAttributeList attribute}}
+        <div class="attr-row">
+          <div class="attr-icon">
+            <img src="{{wavesResMap.prop}}/{{attribute.name}}.webp" alt="{{attribute.name}}" />
+          </div>
+          <div class="attr-label {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}">
+            {{attribute.name}}
+          </div>
+          <div class="attr-val {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}">
+            {{attribute.value}}
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+
+<!-- BOTTOM AREA: Weapon + Echoes Grid (3 Columns) -->
+<div class="bottom-area">
+  <!-- Slot 1: Weapon -->
+  {{if data.weapon && data.weapon.name}}
+  <div class="echo-card weapon-card-style">
+    <div class="echo-head">
+      <div
+        class="echo-icon"
+        style="background-image:url({{wavesResMap.weapon}}/{{data.weapon.id}}.webp)"
+      ></div>
+      <span class="echo-lv">Lv.{{data.weapon.level}}</span>
+      <div class="echo-title-row">
+        <div class="echo-name" style="max-width: 100%">
+          {{data.weapon.name}}
+          <span
+            style="
+              font-size: 10px;
+              background: rgba(255, 193, 7, 0.2);
+              color: #ffc107;
+              padding: 0 3px;
+              border-radius: 2px;
+              margin-left: 4px;
+            "
+            >精{{data.weapon.resonLevel}}</span
+          >
+        </div>
+      </div>
+      <div class="echo-cost">Rarity {{data.weapon.rarity}}</div>
+    </div>
+
+    <div class="echo-props">
+      {{if data.weapon.mainPropList}} {{each data.weapon.mainPropList mainProp}}
+      <div class="prop-row main">
+        <div class="p-icon">
+          <img src="{{wavesResMap.prop}}/{{mainProp.attributeName}}.webp" />
+        </div>
+        <div class="p-name">{{mainProp.attributeName}}</div>
+        <div class="p-val">{{mainProp.attributeValue}}</div>
+      </div>
+      {{/each}} {{/if}}
+      <!-- Optional: Show effect name or short desc if space allows, using subprop style -->
+      <div
+        class="prop-row sub"
+        style="height: auto; min-height: 20px; align-items: flex-start; margin-top: 4px"
+      >
+        <div class="p-dot" style="margin-top: 6px"></div>
+        <div class="p-name" style="white-space: normal; line-height: 1.2">
+          {{data.weapon.effect}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  <div class="echo-card empty"></div>
+  {{/if}}
+
+  <!-- Slot 2-6: Echoes -->
+  {{if data.equipPhantomList}} {{each data.equipPhantomList phantom}} {{if phantom && phantom.name}}
+  <div class="echo-card">
+    <div class="echo-head">
+      <div
+        class="echo-icon"
+        style="background-image:url({{wavesResMap.echo}}/{{phantom.id}}.webp)"
+      ></div>
+      <span class="echo-lv">+{{phantom.level}}</span>
+      <div class="echo-title-row">
+        {{if phantom.groupId}}
+        <div
+          class="group-icon-inline"
+          style="background-image:url({{wavesResMap.group}}/{{phantom.groupId}}.webp)"
+        ></div>
+        {{/if}}
+        <div class="echo-name">{{phantom.name}}</div>
+      </div>
+      <div class="echo-cost">Cost {{phantom.cost}}</div>
+    </div>
+
+    <div class="echo-props">
+      {{if phantom.mainPropList}} {{each phantom.mainPropList mainProp}}
+      <div class="prop-row main">
+        <div class="p-icon">
+          <img src="{{wavesResMap.prop}}/{{mainProp.attributeName}}.webp" />
+        </div>
+        <div class="p-name">{{mainProp.attributeName}}</div>
+        <div class="p-val">{{mainProp.attributeValue}}</div>
+      </div>
+      {{/each}} {{/if}} {{if phantom.subPropList}} {{each phantom.subPropList subProp}} {{if
+      subProp.attributeName}}
+      <div class="prop-row sub">
+        <div class="p-dot"></div>
+        <div class="p-name {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}">
+          {{subProp.attributeName}}
+        </div>
+        <div class="p-val {{if subProp.isMax}}max-val{{/if}}">{{subProp.attributeValue}}</div>
+      </div>
+      {{/if}} {{/each}} {{/if}}
+    </div>
+  </div>
+  {{/if}} {{/each}} {{/if}}
+</div>
+{{/block}}
