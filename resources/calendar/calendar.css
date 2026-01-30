@@ -1,15 +1,14 @@
 /* 严格遵循 LAYOUT_STANDARD.md */
 
-/* 严格遵循 LAYOUT_STANDARD.md */
-
 body {
   width: 900px;
 }
 
 .calendar-container {
   width: 900px;
-  /* 使用变量定义面板样式 */
-  --panel-bg: rgba(16, 18, 23, 0.95);
+  /* Wuthering Waves Style Variables - Local Override */
+  --glass-border: var(--panel-border-color);
+
   display: flex;
   flex-direction: column;
   gap: 30px;

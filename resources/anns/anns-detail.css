@@ -5,13 +5,13 @@
 }
 
 body {
-  width: 850px;
+  width: 980px;
   background-color: #fff;
 }
 
 #container {
-  width: 850px;
-  padding: 0 20px 10px;
+  width: 980px;
+  padding: 0 10px 10px;
 }
 
 .news-detail-card {
@@ -19,6 +19,7 @@ body {
   --panel-bg: var(--glass-bg);
   --panel-border-color: var(--glass-border);
   --panel-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.08);
+  --panel-padding: 40px 30px 40px; /* Tighter side padding */
   --glow-color: var(--accent-blue);
   margin-top: 5px;
 }

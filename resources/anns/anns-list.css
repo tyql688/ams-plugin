@@ -6,13 +6,13 @@
 }
 
 body {
-  width: 1100px;
+  width: 980px;
   background-color: #fff;
 }
 
 #container {
-  width: 1100px;
-  padding: 0 20px 10px;
+  width: 980px;
+  padding: 0 10px 10px; /* Reduced side padding */
 }
 
 .news-glass-card {
@@ -20,6 +20,7 @@ body {
   --panel-bg: var(--glass-bg);
   --panel-border-color: var(--glass-border);
   --panel-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  --panel-padding: 30px 20px 20px; /* Even tighter side padding */
   --glow-color: var(--accent-blue);
   margin-top: 5px;
 }
@@ -75,7 +76,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 24px;
+  gap: 12px; /* Reduced gap from 24px */
   margin-bottom: 35px;
 }
 
