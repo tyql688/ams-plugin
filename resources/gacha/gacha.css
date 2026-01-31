@@ -1,31 +1,26 @@
-/* Body & Container */
 body {
   width: 850px;
-  padding: 40px;
 }
 
-.container {
+.gacha-container {
   width: 850px;
-  padding: 0;
-}
+  --glass-border: var(--panel-border-color);
 
-.gacha-wrapper {
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 30px;
-  min-height: auto;
 }
 
-/* Header Section */
+/* === Header === */
 .header {
-  width: 100%;
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
+  margin-bottom: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   padding-bottom: 14px;
-  margin-bottom: 14px;
 }
 
 .head-title {
@@ -57,7 +52,7 @@ body {
   margin-bottom: 8px;
 }
 
-/* Main Content Area */
+/* === Main Content === */
 .main-content {
   display: flex;
   flex-direction: row;
@@ -73,9 +68,7 @@ body {
   gap: 12px;
 }
 
-/* User/Pool Info Section */
 .pool-header {
-  /* Remove fixed height and bg, make it simpler header for column */
   height: auto;
   background: transparent;
   padding: 0 6px;
@@ -83,7 +76,6 @@ body {
   border-radius: 0;
 }
 
-/* Restored User Styles */
 .pool-title {
   font-family: var(--font-art);
   font-size: 20px;
@@ -95,12 +87,12 @@ body {
 
 .pool-cost {
   font-size: 13px;
-  color: #22d3ee;
+  color: var(--accent-cyan);
   opacity: 1;
   font-weight: bold;
 }
 
-/* Data Box */
+/* === Data Box === */
 .box {
   background: rgba(20, 25, 35, 0.8);
   border: 1px solid rgba(34, 211, 238, 0.2);
@@ -141,7 +133,7 @@ body {
   font-weight: 400;
 }
 
-/* Time Range */
+/* === Time Range === */
 .box-time {
   margin: 12px 0;
   padding: 6px 10px;
@@ -152,7 +144,7 @@ body {
   text-align: center;
 }
 
-/* Role List in Gacha */
+/* === Role List === */
 .box-rolelist {
   display: grid;
   grid-template-columns: repeat(6, 1fr);

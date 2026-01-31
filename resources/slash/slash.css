@@ -1,31 +1,29 @@
-/* 冥歌海墟特定颜色覆盖 */
 :root {
   --glass-border: rgba(56, 189, 248, 0.15);
   --accent-purple: #a855f7;
 }
 
 body {
-  padding: 40px 0;
-  min-height: 100vh;
-}
-
-#container {
   width: 900px;
-  align-items: center;
 }
 
 .slash-container {
-  width: 860px;
-  margin: 0 auto;
-  background-size: cover;
-  background-position: center;
+  width: 900px;
+  --glass-border: var(--panel-border-color);
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
+/* === Header === */
 .header {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 50px;
+  align-items: flex-end;
+  margin-bottom: 10px;
 }
 
 .head-title {
@@ -49,7 +47,7 @@ body {
 .title-main {
   font-family: var(--font-art);
   font-size: 44px;
-  background: linear-gradient(180deg, #fff 40%, #7dd3fc 100%);
+  background: linear-gradient(180deg, #fff 40%, var(--accent-cyan) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -57,25 +55,25 @@ body {
   margin-bottom: 8px;
 }
 
-.season-info-sub {
+.info-pill {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  color: var(--text-secondary);
-  background: rgba(0, 0, 0, 0.4);
   padding: 4px 12px;
   border-radius: 20px;
-  border: 1px solid rgba(34, 211, 238, 0.15);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--glass-border);
+  font-size: 14px;
+  color: var(--text-secondary);
 }
 
-.season-time {
+.info-pill .info-data {
   font-family: var(--font-number);
   color: var(--accent-gold);
   font-size: 16px;
 }
 
-/* 总评分 */
+/* === 总评分 === */
 .score-info {
   display: flex;
   justify-content: center;
@@ -121,7 +119,7 @@ body {
   font-size: 36px;
 }
 
-/* 挑战 */
+/* === 挑战 === */
 .challenge-group {
   margin-bottom: 40px;
 }
@@ -201,7 +199,7 @@ body {
   border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* 阶段卡片 */
+/* === 阶段卡片 === */
 .halfs-grid {
   display: flex;
   flex-direction: column;
@@ -211,14 +209,13 @@ body {
 .half-item {
   height: 180px;
   background: rgba(13, 14, 20, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
   border-radius: 32px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* 装饰背景横幅 */
 .half-bg-banner {
   position: absolute;
   top: 0;
@@ -235,14 +232,13 @@ body {
   z-index: 1;
 }
 
-/* 增强的水印分数 */
 .score-watermark {
   position: absolute;
   left: 50px;
   bottom: -20px;
   font-size: 150px;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.05); /* 提升透明度 */
+  color: rgba(255, 255, 255, 0.05);
   pointer-events: none;
   z-index: 0;
   line-height: 1;
@@ -259,7 +255,6 @@ body {
   gap: 40px;
 }
 
-/* 左侧：信息 */
 .half-info-box {
   width: 140px;
   flex-shrink: 0;
@@ -288,7 +283,6 @@ body {
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
-/* 中间：队伍 */
 .half-team-box {
   flex: 1;
 }
@@ -335,7 +329,6 @@ body {
   border-radius: 50%;
 }
 
-/* 右侧：BUFF 新样式 */
 .half-buff-box-new {
   width: 140px;
   flex-shrink: 0;
@@ -398,23 +391,26 @@ body {
   z-index: 2;
 }
 
-/* 根据品质渲染 Bar 和光辉 */
 .buff-rarity-bar.rarity-1 {
   background: linear-gradient(to top, #9e9e9e, transparent);
   box-shadow: 0 -4px 12px #9e9e9e;
 }
+
 .buff-rarity-bar.rarity-2 {
   background: linear-gradient(to top, #4caf50, transparent);
   box-shadow: 0 -4px 12px #4caf50;
 }
+
 .buff-rarity-bar.rarity-3 {
   background: linear-gradient(to top, #2196f3, transparent);
   box-shadow: 0 -4px 12px #2196f3;
 }
+
 .buff-rarity-bar.rarity-4 {
   background: linear-gradient(to top, #9c27b0, transparent);
   box-shadow: 0 -4px 12px #9c27b0;
 }
+
 .buff-rarity-bar.rarity-5 {
   background: linear-gradient(to top, #ffd700, transparent);
   box-shadow: 0 -4px 20px #ffd700;

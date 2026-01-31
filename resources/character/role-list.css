@@ -1,4 +1,3 @@
-/* ==================== 变量定义 ==================== */
 :root {
   --glass-border: rgba(56, 189, 248, 0.15);
   --accent-cyan: #22d3ee;
@@ -8,51 +7,27 @@
   --text-secondary: rgba(255, 255, 255, 0.8);
 }
 
-/* ==================== 全局布局 ==================== */
 body {
   width: 900px;
-  padding: 40px 0;
-  margin: 0;
 }
 
-.container.slash-style {
-  width: 860px;
-  margin: 0 auto;
-  position: relative;
-  background-color: var(--bg-card); /* Fallback */
-  background-size: cover;
-  background-position: center;
-  /* 磨砂玻璃效果 */
-  backdrop-filter: blur(25px) saturate(160%);
-  -webkit-backdrop-filter: blur(25px) saturate(160%);
-  border: 1px solid var(--glass-border);
-  border-radius: 40px;
-  padding: 50px;
-  box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.8);
-  overflow: hidden;
+.role-list-container {
+  width: 900px;
+  --glass-border: var(--panel-border-color);
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
-/* 顶部光效 */
-.glow-top {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
-  box-shadow: 0 0 35px var(--accent-cyan);
-  z-index: 10;
-}
-
-/* ==================== 头部样式 ==================== */
+/* === Header === */
 .header {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 35px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  align-items: flex-end;
+  margin-bottom: 10px;
 }
 
 .head-title {
@@ -84,33 +59,32 @@ body {
   margin-bottom: 8px;
 }
 
-.season-info-sub {
+.info-pill {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  color: var(--text-secondary);
-  background: rgba(0, 0, 0, 0.4);
   padding: 4px 12px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--glass-border);
+  font-size: 14px;
+  color: var(--text-secondary);
 }
 
-.season-time {
+.info-pill .info-data {
   font-family: var(--font-number);
   color: var(--accent-cyan);
   font-size: 16px;
 }
 
-/* ==================== 角色列表网格 ==================== */
+/* === Role Grid === */
 .role-grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr); /* 8 columns */
+  grid-template-columns: repeat(8, 1fr);
   gap: 20px 10px;
   margin-bottom: 30px;
 }
 
-/* 角色卡片 (Removed Box Style and Hover Effects) */
 .role-card {
   display: flex;
   flex-direction: column;
@@ -122,9 +96,8 @@ body {
   overflow: visible;
 }
 
-/* Avatar Wrapper */
 .role-avatar-wrapper {
-  width: 70px; /* Slightly smaller for 8 cols */
+  width: 70px;
   height: 70px;
   position: relative;
   margin-bottom: 6px;
@@ -137,23 +110,21 @@ body {
   border-radius: 50%;
   background-size: cover;
   background-position: center 15%;
-  border: 2px solid rgba(255, 255, 255, 0.15); /* Default gray border */
+  border: 2px solid rgba(255, 255, 255, 0.15);
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* Star Rarity Borders */
 .role-card.star-5 .role-img {
-  border-color: #ffd700;
-  box-shadow: 0 0 5px rgba(255, 215, 0, 0.2);
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 5px rgba(250, 204, 21, 0.2);
 }
 
 .role-card.star-4 .role-img {
-  border-color: #a855f7;
+  border-color: var(--accent-purple);
   box-shadow: 0 0 5px rgba(168, 85, 247, 0.2);
 }
 
-/* Info Row (Name + Cons) */
 .role-info-row {
   display: flex;
   align-items: center;
@@ -163,7 +134,7 @@ body {
 }
 
 .role-name {
-  font-size: 13px; /* Smaller font */
+  font-size: 13px;
   font-weight: bold;
   color: #fff;
   white-space: nowrap;
@@ -174,7 +145,6 @@ body {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
-/* Cons Tag - Inline Style */
 .cons-tag {
   width: 16px;
   height: 16px;
@@ -188,32 +158,36 @@ body {
   background: #334155;
 }
 
-/* 命座颜色 */
 .cons-tag.c-0 {
   background: rgba(255, 255, 255, 0.15);
   color: rgba(255, 255, 255, 0.4);
 }
+
 .cons-tag.c-1 {
   background: #22c55e;
 }
+
 .cons-tag.c-2 {
   background: #06b6d4;
 }
+
 .cons-tag.c-3 {
   background: #3b82f6;
 }
+
 .cons-tag.c-4 {
   background: #a855f7;
 }
+
 .cons-tag.c-5 {
   background: #f59e0b;
 }
+
 .cons-tag.c-6 {
   background: #ef4444;
   box-shadow: 0 0 4px #ef4444;
 }
 
-/* Footer Tip */
 .footer-tip {
   text-align: center;
   color: var(--text-dim);

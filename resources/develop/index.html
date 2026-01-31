@@ -1,172 +1,175 @@
 {{extend defaultLayout}} {{block 'css'}}
 <link rel="stylesheet" href="{{_res_path}}/develop/index.css" />
 {{/block}} {{block 'main'}}
-<div class="develop-header glass-panel">
+<div class="develop-container glass-panel">
   <div class="glow-top"></div>
-  <div class="user-profile">
-    <div class="user-avatar-box">
-      <img class="user-avatar" src="{{userAvatar}}" />
-      <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
-    </div>
-    <div class="user-meta">
-      <span class="user-uid">UID: {{uid}}</span>
-    </div>
-  </div>
-  <div class="header-title">
-    <div class="brand">Character Development Plan</div>
-    <div class="title-main">角色养成计算</div>
-  </div>
-</div>
 
-{{each costList cost}}
-<div class="role-section glass-panel theme-element-{{onlineRoleMap[cost.roleId].attributeId}}">
-  <div class="role-header">
-    <div class="role-portrait">
-      <div class="rarity-frame rarity-{{onlineRoleMap[cost.roleId].starLevel}}">
-        <img src="{{wavesResMap.roleAvatar}}/{{cost.roleId}}.webp" />
-        <div class="rarity-glow rarity-{{onlineRoleMap[cost.roleId].starLevel}}"></div>
+  <div class="develop-header">
+    <div class="user-profile">
+      <div class="user-avatar-box">
+        <img class="user-avatar" src="{{userAvatar}}" />
+        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
       </div>
-      <div class="role-meta">
-        <div class="role-name">{{onlineRoleMap[cost.roleId].roleName}}</div>
-        <div class="lvl-tag">
-          Lv.{{contentMap[cost.roleId].roleStartLevel}} → {{contentMap[cost.roleId].roleEndLevel}}
+      <div class="user-meta">
+        <span class="user-uid">UID: {{uid}}</span>
+      </div>
+    </div>
+    <div class="header-title">
+      <div class="brand">Character Development Plan</div>
+      <div class="title-main">角色养成计算</div>
+    </div>
+  </div>
+
+  {{each costList cost}}
+  <div class="role-section theme-element-{{onlineRoleMap[cost.roleId].attributeId}}">
+    <div class="role-header">
+      <div class="role-portrait">
+        <div class="rarity-frame rarity-{{onlineRoleMap[cost.roleId].starLevel}}">
+          <img src="{{wavesResMap.roleAvatar}}/{{cost.roleId}}.webp" />
+          <div class="rarity-glow rarity-{{onlineRoleMap[cost.roleId].starLevel}}"></div>
+        </div>
+        <div class="role-meta">
+          <div class="role-name">{{onlineRoleMap[cost.roleId].roleName}}</div>
+          <div class="lvl-tag">
+            Lv.{{contentMap[cost.roleId].roleStartLevel}} → {{contentMap[cost.roleId].roleEndLevel}}
+          </div>
         </div>
       </div>
-    </div>
 
-    {{if contentMap[cost.roleId].weaponId}}
-    <div class="weapon-portrait">
-      <div
-        class="rarity-frame rarity-{{onlineWeaponMap[contentMap[cost.roleId].weaponId].weaponStarLevel}}"
-      >
-        <img src="{{wavesResMap.weapon}}/{{contentMap[cost.roleId].weaponId}}.webp" />
+      {{if contentMap[cost.roleId].weaponId}}
+      <div class="weapon-portrait">
         <div
-          class="rarity-glow rarity-{{onlineWeaponMap[contentMap[cost.roleId].weaponId].weaponStarLevel}}"
-        ></div>
+          class="rarity-frame rarity-{{onlineWeaponMap[contentMap[cost.roleId].weaponId].weaponStarLevel}}"
+        >
+          <img src="{{wavesResMap.weapon}}/{{contentMap[cost.roleId].weaponId}}.webp" />
+          <div
+            class="rarity-glow rarity-{{onlineWeaponMap[contentMap[cost.roleId].weaponId].weaponStarLevel}}"
+          ></div>
+        </div>
+        <div class="weapon-meta">
+          <div class="weapon-name">
+            {{onlineWeaponMap[contentMap[cost.roleId].weaponId].weaponName}}
+          </div>
+          <div class="lvl-tag">
+            Lv.{{contentMap[cost.roleId].weaponStartLevel}} →
+            {{contentMap[cost.roleId].weaponEndLevel}}
+          </div>
+        </div>
       </div>
-      <div class="weapon-meta">
-        <div class="weapon-name">
-          {{onlineWeaponMap[contentMap[cost.roleId].weaponId].weaponName}}
+      {{/if}}
+    </div>
+
+    <div class="target-info">
+      <div class="section-label">技能目标</div>
+      <div class="skill-grid">
+        {{each contentMap[cost.roleId].skillLevelUpList skill idx}}
+        <div class="skill-item">
+          <span class="sk-name">{{['普攻', '技能', '爆发', '变奏', '回路'][idx]}}</span>
+          <span class="sk-lvl">{{skill.startLevel}} → {{skill.endLevel}}</span>
         </div>
-        <div class="lvl-tag">
-          Lv.{{contentMap[cost.roleId].weaponStartLevel}} →
-          {{contentMap[cost.roleId].weaponEndLevel}}
-        </div>
+        {{/each}}
       </div>
     </div>
-    {{/if}}
-  </div>
 
-  <div class="target-info">
-    <div class="section-label">技能目标</div>
-    <div class="skill-grid">
-      {{each contentMap[cost.roleId].skillLevelUpList skill idx}}
-      <div class="skill-item">
-        <span class="sk-name">{{['普攻', '技能', '爆发', '变奏', '回路'][idx]}}</span>
-        <span class="sk-lvl">{{skill.startLevel}} → {{skill.endLevel}}</span>
+    <div class="categories-container">
+      {{if cost.missingRoleCost && cost.missingRoleCost.length > 0}}
+      <div class="material-group">
+        <div class="section-label">角色升级</div>
+        <div class="mat-grid">
+          {{each cost.missingRoleCost mat}}
+          <div class="mat-card rarity-{{mat.quality}}">
+            <div class="mat-icon-wrapper">
+              <img
+                src="{{wavesResMap.item}}/{{mat.id}}.webp"
+                onerror="this.parentElement.classList.add('no-img')"
+              />
+              <div class="mat-num">{{mat.num}}</div>
+            </div>
+            <div class="mat-info"><span class="mat-name">{{mat.name}}</span></div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      {{/if}} {{if cost.missingSkillCost && cost.missingSkillCost.length > 0}}
+      <div class="material-group">
+        <div class="section-label">技能升级</div>
+        <div class="mat-grid">
+          {{each cost.missingSkillCost mat}}
+          <div class="mat-card rarity-{{mat.quality}}">
+            <div class="mat-icon-wrapper">
+              <img
+                src="{{wavesResMap.item}}/{{mat.id}}.webp"
+                onerror="this.parentElement.classList.add('no-img')"
+              />
+              <div class="mat-num">{{mat.num}}</div>
+            </div>
+            <div class="mat-info"><span class="mat-name">{{mat.name}}</span></div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      {{/if}} {{if cost.missingWeaponCost && cost.missingWeaponCost.length > 0}}
+      <div class="material-group">
+        <div class="section-label">武器升级</div>
+        <div class="mat-grid">
+          {{each cost.missingWeaponCost mat}}
+          <div class="mat-card rarity-{{mat.quality}}">
+            <div class="mat-icon-wrapper">
+              <img
+                src="{{wavesResMap.item}}/{{mat.id}}.webp"
+                onerror="this.parentElement.classList.add('no-img')"
+              />
+              <div class="mat-num">{{mat.num}}</div>
+            </div>
+            <div class="mat-info"><span class="mat-name">{{mat.name}}</span></div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      {{/if}} {{if cost.allCost && cost.allCost.length > 0}}
+      <div class="material-group">
+        <div class="section-label">所需材料总览</div>
+        <div class="mat-grid">
+          {{each cost.allCost mat}}
+          <div class="mat-card rarity-{{mat.quality}}">
+            <div class="mat-icon-wrapper">
+              <img
+                src="{{wavesResMap.item}}/{{mat.id}}.webp"
+                onerror="this.parentElement.classList.add('no-img')"
+              />
+              <div class="mat-num">{{mat.num}}</div>
+            </div>
+            <div class="mat-info"><span class="mat-name">{{mat.name}}</span></div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+  {{/each}} {{if preview && preview.allCost && preview.allCost.length > 0 && costList.length > 1}}
+  <div class="total-summary">
+    <div class="summary-header">
+      <div class="brand">Total Materials Summary</div>
+      <div class="title-main">全部养成材料汇总</div>
+    </div>
+    <div class="mat-grid">
+      {{each preview.allCost mat}}
+      <div class="mat-card rarity-{{mat.quality}}">
+        <div class="mat-icon-wrapper">
+          <img
+            src="{{wavesResMap.item}}/{{mat.id}}.webp"
+            onerror="this.parentElement.classList.add('no-img')"
+          />
+          <div class="mat-num">{{mat.num}}</div>
+        </div>
+        <div class="mat-info">
+          <span class="mat-name">{{mat.name}}</span>
+        </div>
       </div>
       {{/each}}
     </div>
   </div>
-
-  <div class="categories-container">
-    {{if cost.missingRoleCost && cost.missingRoleCost.length > 0}}
-    <div class="material-group">
-      <div class="section-label">角色升级</div>
-      <div class="mat-grid">
-        {{each cost.missingRoleCost mat}}
-        <div class="mat-card rarity-{{mat.quality}}">
-          <div class="mat-icon-wrapper">
-            <img
-              src="{{wavesResMap.item}}/{{mat.id}}.webp"
-              onerror="this.parentElement.classList.add('no-img')"
-            />
-            <div class="mat-num">{{mat.num}}</div>
-          </div>
-          <div class="mat-info"><span class="mat-name">{{mat.name}}</span></div>
-        </div>
-        {{/each}}
-      </div>
-    </div>
-    {{/if}} {{if cost.missingSkillCost && cost.missingSkillCost.length > 0}}
-    <div class="material-group">
-      <div class="section-label">技能升级</div>
-      <div class="mat-grid">
-        {{each cost.missingSkillCost mat}}
-        <div class="mat-card rarity-{{mat.quality}}">
-          <div class="mat-icon-wrapper">
-            <img
-              src="{{wavesResMap.item}}/{{mat.id}}.webp"
-              onerror="this.parentElement.classList.add('no-img')"
-            />
-            <div class="mat-num">{{mat.num}}</div>
-          </div>
-          <div class="mat-info"><span class="mat-name">{{mat.name}}</span></div>
-        </div>
-        {{/each}}
-      </div>
-    </div>
-    {{/if}} {{if cost.missingWeaponCost && cost.missingWeaponCost.length > 0}}
-    <div class="material-group">
-      <div class="section-label">武器升级</div>
-      <div class="mat-grid">
-        {{each cost.missingWeaponCost mat}}
-        <div class="mat-card rarity-{{mat.quality}}">
-          <div class="mat-icon-wrapper">
-            <img
-              src="{{wavesResMap.item}}/{{mat.id}}.webp"
-              onerror="this.parentElement.classList.add('no-img')"
-            />
-            <div class="mat-num">{{mat.num}}</div>
-          </div>
-          <div class="mat-info"><span class="mat-name">{{mat.name}}</span></div>
-        </div>
-        {{/each}}
-      </div>
-    </div>
-    {{/if}} {{if cost.allCost && cost.allCost.length > 0}}
-    <div class="material-group">
-      <div class="section-label">所需材料总览</div>
-      <div class="mat-grid">
-        {{each cost.allCost mat}}
-        <div class="mat-card rarity-{{mat.quality}}">
-          <div class="mat-icon-wrapper">
-            <img
-              src="{{wavesResMap.item}}/{{mat.id}}.webp"
-              onerror="this.parentElement.classList.add('no-img')"
-            />
-            <div class="mat-num">{{mat.num}}</div>
-          </div>
-          <div class="mat-info"><span class="mat-name">{{mat.name}}</span></div>
-        </div>
-        {{/each}}
-      </div>
-    </div>
-    {{/if}}
-  </div>
+  {{/if}}
 </div>
-{{/each}} {{if preview && preview.allCost && preview.allCost.length > 0 && costList.length > 1}}
-<div class="total-summary glass-panel">
-  <div class="glow-top"></div>
-  <div class="summary-header">
-    <div class="brand">Total Materials Summary</div>
-    <div class="title-main">全部养成材料汇总</div>
-  </div>
-  <div class="mat-grid">
-    {{each preview.allCost mat}}
-    <div class="mat-card rarity-{{mat.quality}}">
-      <div class="mat-icon-wrapper">
-        <img
-          src="{{wavesResMap.item}}/{{mat.id}}.webp"
-          onerror="this.parentElement.classList.add('no-img')"
-        />
-        <div class="mat-num">{{mat.num}}</div>
-      </div>
-      <div class="mat-info">
-        <span class="mat-name">{{mat.name}}</span>
-      </div>
-    </div>
-    {{/each}}
-  </div>
-</div>
-{{/if}} {{/block}}
+{{/block}}

@@ -1,7 +1,7 @@
 {{extend defaultLayout}} {{block 'title'}}角色面板列表{{/block}} {{block 'css'}}
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/character/role-list.css" />
 {{/block}} {{block 'main'}}
-<div class="container slash-style" id="container">
+<div class="role-list-container glass-panel" id="container">
   <!-- 顶部光效 -->
   <div class="glow-top"></div>
 
@@ -22,9 +22,9 @@
     <div class="head-title">
       <div class="brand">RESONATOR ARCHIVE</div>
       <div class="title-main">共鸣者档案</div>
-      <div class="season-info-sub">
+      <div class="info-pill">
         <span>已收录</span>
-        <span class="season-time">{{roles.length}}</span>
+        <span class="info-data">{{roles.length}}</span>
         <span>名角色</span>
       </div>
     </div>

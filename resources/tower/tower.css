@@ -1,23 +1,24 @@
 body {
   width: 900px;
-  padding: 40px 0;
-  min-height: 100vh;
 }
 
-#container {
-  width: 900px;
-  align-items: center;
-}
 .tower-container {
-  width: 860px;
-  margin: 0 auto;
+  width: 900px;
+  --glass-border: var(--panel-border-color);
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
+/* === Header === */
 .header {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 50px;
+  align-items: flex-end;
+  margin-bottom: 10px;
 }
 
 .head-title {
@@ -32,7 +33,7 @@ body {
 .brand {
   font-size: 12px;
   letter-spacing: 4px;
-  color: var(--accent-blue);
+  color: var(--accent-cyan);
   font-weight: 700;
   margin-bottom: 4px;
   text-transform: uppercase;
@@ -40,8 +41,8 @@ body {
 
 .title-main {
   font-family: var(--font-art);
-  font-size: 48px;
-  background: linear-gradient(180deg, #fff 40%, #7dd3fc 100%);
+  font-size: 44px;
+  background: linear-gradient(180deg, #fff 40%, var(--accent-blue) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -49,25 +50,25 @@ body {
   margin-bottom: 8px;
 }
 
-.season-info-sub {
+.info-pill {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  color: var(--text-secondary);
-  background: rgba(0, 0, 0, 0.3);
   padding: 4px 12px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--glass-border);
+  font-size: 14px;
+  color: var(--text-secondary);
 }
 
-.season-time {
+.info-pill .info-data {
   font-family: var(--font-number);
   color: var(--accent-gold);
   font-size: 16px;
 }
 
-/* 总星数 */
+/* === 总星数 === */
 .stars-info {
   display: flex;
   justify-content: center;
@@ -101,17 +102,19 @@ body {
 .total-count .current {
   color: var(--accent-gold);
 }
+
 .total-count .divider {
   color: var(--text-dim);
   font-size: 32px;
   font-weight: 300;
 }
+
 .total-count .max {
   color: var(--text-secondary);
   font-size: 36px;
 }
 
-/* 区域 */
+/* === 区域 === */
 .area-group {
   margin-bottom: 40px;
 }
@@ -160,12 +163,13 @@ body {
   width: 22px;
   height: 22px;
 }
+
 .area-star-badge .count {
   font-size: 20px;
   color: var(--accent-gold);
 }
 
-/* 楼层 */
+/* === 楼层 === */
 .floors-grid {
   display: flex;
   flex-direction: column;
@@ -177,7 +181,7 @@ body {
   position: relative;
   border-radius: 24px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
   background: #000;
 }
 
@@ -265,10 +269,12 @@ body {
   border-radius: 12px;
 }
 
+/* === 空状态 === */
 .empty-state {
   padding: 120px 0;
   text-align: center;
 }
+
 .empty-text {
   font-family: var(--font-art);
   font-size: 24px;

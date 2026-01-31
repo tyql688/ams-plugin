@@ -1,15 +1,25 @@
 body {
   width: 900px;
-  background-color: var(--bg-body);
-  padding: 40px 0;
 }
 
-/* === Header (Left User - Right Title) === */
+.develop-container {
+  width: 900px;
+  --glass-border: var(--panel-border-color);
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* === Header === */
 .develop-header {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 30px 60px;
+  align-items: flex-end;
+  margin-bottom: 10px;
+  padding: 30px 40px;
 }
 
 .header-title {
@@ -20,7 +30,7 @@ body {
 }
 
 .brand {
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 4px;
   color: var(--accent-cyan);
   font-weight: 700;
@@ -44,7 +54,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  margin-top: 30px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
 }
 
 .role-header {
@@ -103,7 +115,7 @@ body {
   width: fit-content;
 }
 
-/* === Sub Sections (Grouped Materials) === */
+/* === Sub Sections === */
 .section-label {
   font-size: 18px;
   color: var(--text-secondary);
@@ -147,7 +159,7 @@ body {
 
 .sk-name {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-dim);
 }
 
 .sk-lvl {
@@ -165,7 +177,7 @@ body {
 }
 
 .mat-card {
-  width: 145px; /* 收紧宽度 */
+  width: 145px;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 16px;
   padding: 12px 10px;
@@ -178,8 +190,8 @@ body {
 }
 
 .mat-icon-wrapper {
-  width: 90px; /* 宽度减小 */
-  height: 90px; /* 高度减小 */
+  width: 90px;
+  height: 90px;
   background: rgba(0, 0, 0, 0.25);
   border-radius: 12px;
   position: relative;
@@ -206,7 +218,7 @@ body {
   background: rgba(0, 0, 0, 0.85);
   color: var(--accent-gold);
   font-family: var(--font-number);
-  font-size: 18px; /* 数字略微调小 */
+  font-size: 18px;
   padding: 1px 8px;
   border-radius: 8px 0 8px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -214,7 +226,7 @@ body {
 }
 
 .mat-name {
-  font-size: 13px; /* 字体微调 */
+  font-size: 13px;
   color: var(--text-primary);
   text-align: center;
   width: 100%;
@@ -231,6 +243,7 @@ body {
   border-color: rgba(250, 204, 21, 0.3);
   background: rgba(250, 204, 21, 0.05);
 }
+
 .mat-card.rarity-4 {
   border-color: rgba(168, 85, 247, 0.3);
   background: rgba(168, 85, 247, 0.05);
@@ -241,10 +254,17 @@ body {
   padding: 50px 40px;
   margin-top: 30px;
   margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
 }
 
 .summary-header {
   margin-bottom: 30px;
+}
+
+.summary-header .brand {
+  margin-bottom: 8px;
 }
 
 .total-summary .title-main {
