@@ -30,7 +30,7 @@ export class Wiki extends AmsPlugin {
           fnc: "showWiki",
         },
         {
-          reg: config.fixCommond("(角色|武器|声骸)列表$"),
+          reg: config.fixCommond("(角色|武器|声骸|套装)列表$"),
           fnc: "wikiList",
         },
       ],
@@ -180,6 +180,10 @@ export class Wiki extends AmsPlugin {
       list = DataLoader.loadEchoes()
       title = "声骸图鉴列表"
       mode = "echo"
+    } else if (type === "套装") {
+      list = DataLoader.loadEchoGroups()
+      title = "声骸套装列表"
+      mode = "group"
     }
 
     // 5. 分组逻辑
@@ -231,6 +235,21 @@ export class Wiki extends AmsPlugin {
             })),
         })
       })
+    } else if (mode === "group") {
+      groups.push({
+        label: "全部套装",
+        list: list
+          .sort((a, b) => Number(b.id) - Number(a.id))
+          .map(item => ({
+            ...item,
+            rarity: 5,
+            effects: item.effects.map(e => ({
+              ...e,
+              desc: this._formatDesc(e.desc), // 注入富文本高亮
+            })),
+            theme: this._getSetTheme(item) || "default", // 识别套装主题并提供默认值
+          })),
+      })
     }
 
     const renderData = {
@@ -240,7 +259,8 @@ export class Wiki extends AmsPlugin {
       count: list.length,
     }
 
-    const img = await this.render("wikis/wiki-list", renderData)
+    const template = mode === "group" ? "wikis/wiki-group" : "wikis/wiki-list"
+    const img = await this.render(template, renderData)
     if (img) {
       return e.reply(img)
     } else {
@@ -396,10 +416,13 @@ export class Wiki extends AmsPlugin {
       })
     }
 
+    // Highlighting: 只高亮带百分比的数值或带有单位的数值，避免误伤普通 ID 编号
     return formatted
       .replace(/\\n/g, "<br>")
       .replace(/\n/g, "<br>")
-      .replace(/(\d+\.?\d*%?)/g, "<nobr>$1</nobr>") // Highlighting
+      .replace(/<|&lt;/g, "&lt;")
+      .replace(/>|&gt;/g, "&gt;")
+      .replace(/(\d+\.?\d*%?)/g, "<nobr>$1</nobr>")
   }
 
   /**
@@ -445,5 +468,29 @@ export class Wiki extends AmsPlugin {
       }
       return { name: s.name, value: displayVal }
     })
+  }
+
+  /**
+   * 识别套装主题配色
+   */
+  _getSetTheme(item) {
+    if (!item.effects || item.effects.length === 0) return "default"
+    // 取所有效果的合集进行匹配，增加准确度
+    const fullDesc = item.effects.map(e => e.desc).join("|")
+
+    // 优先匹配元素属性（通常是2件套效果）
+    if (fullDesc.includes("冷凝")) return "glacio"
+    if (fullDesc.includes("热熔")) return "fusion"
+    if (fullDesc.includes("导电")) return "electro"
+    if (fullDesc.includes("气动")) return "aero"
+    if (fullDesc.includes("衍射")) return "spectro"
+    if (fullDesc.includes("湮灭")) return "havoc"
+
+    // 其次匹配功能性属性
+    if (fullDesc.includes("治疗")) return "heal"
+    if (fullDesc.includes("效率")) return "energy"
+    if (fullDesc.includes("攻击")) return "atk"
+
+    return "default"
   }
 }

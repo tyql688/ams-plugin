@@ -78,6 +78,19 @@
   /* === 武器属性值金色 === */
   --weapon-prop-gold: #ffd700;
   --weapon-prop-gold-shadow: rgba(255, 215, 0, 0.5);
+
+  /* === 标准元素配色 === */
+  --color-glacio: #22d3ee;
+  --color-fusion: #ef4444;
+  --color-electro: #a855f7;
+  --color-aero: #34d399;
+  --color-spectro: #facc15;
+  --color-havoc: #e649a6;
+
+  /* === 标准功能配色 === */
+  --color-heal: #10b981;
+  --color-energy: #22d3ee;
+  --color-atk: #94a3b8;
 }
 
 /* ==================== 通用容器与装饰 ==================== */
@@ -215,42 +228,65 @@
   opacity: 0.95;
 }
 
-/* ==================== 元素主题配色 ==================== */
+/* 语义化主题与数字主题别名 */
 /* 1: 冷凝 (Glacio) */
+.theme-glacio,
 .theme-element-1 {
-  --element-primary: #22d3ee;
+  --element-primary: var(--color-glacio);
   --element-bg: rgba(8, 51, 68, 0.5);
   --element-shadow: rgba(34, 211, 238, 0.2);
 }
 /* 2: 热熔 (Fusion) */
+.theme-fusion,
 .theme-element-2 {
-  --element-primary: #ef4444;
+  --element-primary: var(--color-fusion);
   --element-bg: rgba(69, 10, 10, 0.5);
   --element-shadow: rgba(239, 68, 68, 0.2);
 }
+
 /* 3: 导电 (Electro) */
+.theme-electro,
 .theme-element-3 {
-  --element-primary: #a855f7;
+  --element-primary: var(--color-electro);
   --element-bg: rgba(59, 7, 100, 0.5);
   --element-shadow: rgba(168, 85, 247, 0.2);
 }
 /* 4: 气动 (Aero) */
+.theme-aero,
 .theme-element-4 {
-  --element-primary: #34d399;
+  --element-primary: var(--color-aero);
   --element-bg: rgba(2, 44, 34, 0.5);
   --element-shadow: rgba(52, 211, 153, 0.2);
 }
 /* 5: 衍射 (Spectro) */
+.theme-spectro,
 .theme-element-5 {
-  --element-primary: #facc15;
+  --element-primary: var(--color-spectro);
   --element-bg: rgba(66, 32, 6, 0.5);
   --element-shadow: rgba(250, 204, 21, 0.2);
 }
 /* 6: 湮灭 (Havoc) */
+.theme-havoc,
 .theme-element-6 {
-  --element-primary: #e649a6;
+  --element-primary: var(--color-havoc);
   --element-bg: rgba(80, 7, 36, 0.5);
   --element-shadow: rgba(219, 39, 119, 0.2);
+}
+
+/* 治疗 (Heal) */
+.theme-heal {
+  --element-primary: var(--color-heal);
+  --element-bg: rgba(16, 185, 129, 0.15);
+}
+/* 共鸣效率 (Energy) */
+.theme-energy {
+  --element-primary: var(--color-energy);
+  --element-bg: rgba(34, 211, 238, 0.15);
+}
+/* 攻击 (ATK) */
+.theme-atk {
+  --element-primary: var(--color-atk);
+  --element-bg: rgba(148, 163, 184, 0.15);
 }
 
 /* ==================== 共鸣链等级颜色样式 ==================== */

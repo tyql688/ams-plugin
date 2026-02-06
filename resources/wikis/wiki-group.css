@@ -1,0 +1,168 @@
+body {
+  width: 1000px;
+  padding: 40px 0;
+}
+
+.wiki-group-container {
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* ==================== Header ==================== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 20px;
+}
+
+.brand {
+  font-size: 14px;
+  letter-spacing: 4px;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.title-main {
+  font-family: var(--font-art);
+  font-size: 48px;
+  background: linear-gradient(180deg, #fff 40%, var(--accent-cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+
+.count {
+  font-size: 16px;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+/* ==================== 套装列表 ==================== */
+.sets-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+/* ==================== Theme Colors ==================== */
+.set-card {
+  --accent-theme: var(--accent-gold);
+}
+
+.set-card.theme-glacio,
+.set-card.theme-fusion,
+.set-card.theme-electro,
+.set-card.theme-aero,
+.set-card.theme-spectro,
+.set-card.theme-havoc,
+.set-card.theme-heal,
+.set-card.theme-energy,
+.set-card.theme-atk {
+  --accent-theme: var(--element-primary);
+}
+
+.set-card.theme-default {
+  --accent-theme: #475569;
+}
+
+.set-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.set-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent-theme);
+  opacity: 0.6;
+}
+
+.set-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.set-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.set-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.set-name {
+  font-family: var(--font-art);
+  font-size: 20px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.set-id {
+  margin-left: auto;
+  font-family: var(--font-number);
+  font-size: 14px;
+  color: var(--text-dim);
+  opacity: 0.5;
+}
+
+/* ==================== 属性条目 ==================== */
+.set-effects {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 5px;
+}
+
+.effect-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.effect-pieces {
+  background: var(--accent-theme);
+  color: #000;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 900;
+  min-width: 42px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.effect-content {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.set-card .effect-content nobr {
+  color: var(--accent-theme);
+  font-weight: 700;
+}

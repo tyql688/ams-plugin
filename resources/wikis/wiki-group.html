@@ -1,0 +1,41 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/wikis/wiki-group.css" />
+{{/block}} {{block 'main'}}
+<div class="wiki-group-container glass-panel">
+  <div class="glow-top"></div>
+
+  <div class="header">
+    <div class="header-left">
+      <div class="brand">AMS SONATA EFFECTS INDEX</div>
+      <div class="title-main">{{title}}</div>
+    </div>
+    <div class="header-right">
+      <div class="count">共 {{count}} 个套装</div>
+    </div>
+  </div>
+
+  <div class="sets-list">
+    {{each groups group}} {{each group.list item}}
+    <div class="set-card theme-{{item.theme}}">
+      <div class="set-header">
+        <div class="set-icon-box rarity-item rarity-5">
+          <img class="set-icon" src="{{wavesResMap.group}}/{{item.id}}.webp" alt="{{item.name}}" />
+          <div class="rarity-glow rarity-5"></div>
+        </div>
+        <div class="set-name">{{item.name}}</div>
+        <div class="set-id">#{{item.id}}</div>
+      </div>
+
+      <div class="set-effects">
+        {{each item.effects effect}}
+        <div class="effect-item">
+          <div class="effect-pieces">{{effect.pieces}}件套</div>
+          <div class="effect-content">{{@ effect.desc}}</div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{/each}} {{/each}}
+  </div>
+</div>
+{{/block}}
