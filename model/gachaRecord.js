@@ -16,6 +16,24 @@ export const GACHA_TYPES = {
   9: "武器新旅唤取",
 }
 
+export const RESIDENT_LIST = [
+  "凌阳",
+  "安可",
+  "卡卡罗",
+  "鉴心",
+  "维里奈",
+  "千古洑流",
+  "停驻之烟",
+  "擎渊怒涛",
+  "漪澜浮录",
+  "浩境粼光",
+  "镭射切变",
+  "源能机锋",
+  "相位涟漪",
+  "脉冲协臂",
+  "玻色星仪",
+]
+
 export const GACHA_TYPES_REVERSE = Object.fromEntries(
   Object.entries(GACHA_TYPES).map(([k, v]) => [v, k]),
 )
@@ -183,12 +201,9 @@ export default class GachaRecord {
     const total = sortedLogs.length
     const fiveStarLogs = sortedLogs.filter(i => i.qualityLevel === 5)
     // 常驻角色（常驻五星角色）
-    // 暂时硬编码，或者移到常量中
-    const resident = ["鉴心", "卡卡罗", "安可", "维里奈", "凌阳"]
-
     const fiveStarCount = fiveStarLogs.length
     const fourStarCount = sortedLogs.filter(i => i.qualityLevel === 4).length
-    const std5StarCount = fiveStarLogs.filter(i => resident.includes(i.name)).length
+    const std5StarCount = fiveStarLogs.filter(i => RESIDENT_LIST.includes(i.name)).length
 
     const no5Star = (idx => (idx === -1 ? total : idx))(
       sortedLogs.findIndex(item => item.qualityLevel === 5),
@@ -203,13 +218,14 @@ export default class GachaRecord {
       fiveStarCount - std5StarCount !== 0
         ? Math.round((total - no5Star) / (fiveStarCount - std5StarCount))
         : 0
-    const minPit = ((fiveStar, std5Star) =>
+    let minPit = ((fiveStar, std5Star) =>
       fiveStar === std5Star
         ? 0.0
         : (((fiveStar - std5Star * 2) / (fiveStar - std5Star)) * 100).toFixed(1))(
-      (resident.includes(fiveStarLogs[0]?.name) ? 1 : 0) + fiveStarCount,
+      (RESIDENT_LIST.includes(fiveStarLogs[0]?.name) ? 1 : 0) + fiveStarCount,
       std5StarCount,
     )
+    if (minPit < 0) minPit = 0
     const upCost = ((avgUP * 160) / 10000).toFixed(2)
 
     const fiveStarIndices = sortedLogs
@@ -254,7 +270,7 @@ export default class GachaRecord {
       poolList.push({
         name: item.name,
         times: cost,
-        isUp: typeName.includes("角色") && !resident.includes(item.name),
+        isUp: !RESIDENT_LIST.includes(item.name),
         id,
         type: itemType,
         color,

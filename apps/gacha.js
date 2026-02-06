@@ -51,10 +51,29 @@ export class Gacha extends AmsPlugin {
     await e.reply("🎨 正在生成抽卡分析图...")
 
     // 准备渲染数据
-    // 将本地扭蛋类型映射为内部键
-    const renderPools = {
-      upCharPool: record.getStatData(GACHA_TYPES[1]), // 角色精准
-      upWpnPool: record.getStatData(GACHA_TYPES[2]), // 武器精准
+    // 聚合所有池子的五星记录，并格式化为 V2 需要的结构
+    const pools = {}
+    for (const [typeId, typeName] of Object.entries(GACHA_TYPES)) {
+      const stat = record.getStatData(typeName)
+      if (stat && stat.pool && stat.pool.length > 0) {
+        pools[typeName] = {
+          info: {
+            ...stat.info,
+            name: typeName,
+          },
+          // 转换 logs 格式以适配 v2.html 中的循环
+          logs: stat.pool.map((item, idx) => {
+            // 从 sortedLogs 中找回对应的日期 (通过 index 对应)
+            const logEntry = record.data.data[typeName]
+              .filter(i => i.qualityLevel === 5)
+              .sort((a, b) => new Date(b.time) - new Date(a.time))[idx]
+            return {
+              ...item,
+              date: logEntry ? logEntry.time.split(" ")[0] : "",
+            }
+          }),
+        }
+      }
     }
 
     // 获取头像
@@ -62,10 +81,10 @@ export class Gacha extends AmsPlugin {
 
     const renderData = {
       playerId: user.gameUid,
-      ...renderPools,
+      pools: pools,
     }
 
-    const img = await this.render("gacha/gacha", { data: renderData })
+    const img = await this.render("gacha/gacha-v2", { data: renderData })
     if (img) {
       await e.reply(img)
     } else {

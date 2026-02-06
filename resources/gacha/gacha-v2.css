@@ -1,0 +1,291 @@
+body {
+  width: 900px;
+}
+
+.gacha-container {
+  width: 900px;
+  padding: 30px 40px;
+  --glass-border: var(--panel-border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* === Header === */
+.header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 20px;
+}
+
+.head-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.brand {
+  font-size: 14px;
+  letter-spacing: 4px;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.title-main {
+  font-family: var(--font-art);
+  font-size: 48px;
+  background: linear-gradient(180deg, #fff 40%, var(--accent-cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+
+/* === Pool Section === */
+.pool-section {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.pool-header-v2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pool-title {
+  font-family: var(--font-art);
+  font-size: 32px;
+  color: #fff;
+  line-height: 1;
+}
+
+.pool-subtitle {
+  font-size: 14px;
+  color: var(--accent-cyan);
+  opacity: 0.8;
+  margin-top: 4px;
+  letter-spacing: 2px;
+}
+
+.pool-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 400px;
+}
+
+.stat-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s;
+}
+
+.stat-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-cyan);
+}
+
+.stat-pill span {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  font-family: var(--font-number);
+}
+
+/* === Gacha List === */
+.gacha-list-v2 {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gacha-item-v2 {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.2s;
+  padding: 0 15px;
+}
+
+.gacha-item-v2:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Timeline Date */
+.item-date {
+  width: 140px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+.dot-v2 {
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+.dot-v2::before {
+  content: "";
+  position: absolute;
+  top: -48px;
+  left: 2.5px;
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.1)
+  );
+  z-index: 1;
+}
+
+.dot-v2.first::before {
+  display: none;
+}
+
+.date-text {
+  font-family: var(--font-number);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9); /* Changed from 0.4 to 0.9 for white text */
+}
+
+/* Icon Box */
+.item-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  margin: 0 15px;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #111;
+  overflow: hidden;
+}
+
+.icon-inner {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.up-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ffc107;
+  color: #000;
+  font-size: 9px;
+  font-weight: 900;
+  padding: 0 4px;
+  border-radius: 0 0 0 4px;
+}
+
+/* Name Box */
+.item-name-box {
+  width: 120px;
+  text-align: right;
+  padding-right: 15px;
+}
+
+.item-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gacha-item-v2.up .item-name {
+  color: #ffc107;
+}
+
+.gacha-item-v2.wai .item-name {
+  color: #94a3b8;
+}
+
+/* Progress Bar */
+.item-progress {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 24px; /* Increased height for better weight */
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0; /* Strict right-angle */
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.progress-fill-wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 0;
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.progress-bar-fill.gold {
+  background: #f59e0b;
+}
+.progress-bar-fill.good {
+  background: #10b981;
+}
+.progress-bar-fill.normal {
+  background: #6366f1;
+}
+.progress-bar-fill.bad {
+  background: #ef4444;
+}
+
+.count-num {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-number);
+  font-weight: 900;
+  font-size: 12px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  z-index: 3;
+}
