@@ -437,16 +437,16 @@
   justify-content: center;
   align-items: flex-start;
   margin-left: -50px;
-  padding: 6px 30px 6px 75px;
+  padding: 10px 48px 10px 92px;
 
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.35) 100%);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-left: none;
-  border-radius: 0 50px 50px 0;
+  border-radius: 0 76px 76px 0;
 
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
   z-index: 1;
-  min-height: 48px;
+  min-height: 76px;
   height: auto;
 }
 
@@ -485,8 +485,8 @@
   content: "";
   position: absolute;
   bottom: 0;
-  left: 40px;
-  right: 20px;
+  left: 50px;
+  right: 25px;
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
   opacity: 0.6;
