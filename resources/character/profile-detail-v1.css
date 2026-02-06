@@ -75,15 +75,22 @@ body {
 
 .role-pile {
   /* Standard Pile Behavior */
-  width: 65%; /* Restrict to left side by default */
+  width: 80%; /* Increased from 65% to allow more space for the character */
   height: 108%;
   position: absolute;
-  left: -20px;
+  left: -50px; /* Restored to default while keeping masks */
   top: -20px;
-  background-size: cover;
-  background-position: center 25%;
-  -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 85%, transparent 100%);
+  background-size: contain; /* Changed from cover to ensure the whole art is visible */
+  background-repeat: no-repeat;
+  background-position: left center;
+  -webkit-mask-image:
+    linear-gradient(to right, #000 70%, transparent 100%),
+    linear-gradient(to bottom, #000 85%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, #000 70%, transparent 100%),
+    linear-gradient(to bottom, #000 85%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
   z-index: 1;
 }
 
@@ -431,32 +438,25 @@ body {
 .attr-row {
   display: flex;
   align-items: center;
-  padding: 6px 10px; /* Restore comfortable padding */
-  /* Individual Row Styling - More Transparent */
-  background: rgba(0, 0, 0, 0.1); /* Extremely subtle */
-  backdrop-filter: blur(2px); /* Slight blur */
-  -webkit-backdrop-filter: blur(2px);
-  border-radius: 0;
+  padding: 0 15px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: 0px;
+  height: 28px; /* Further reduced for extra compactness */
   border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  margin-bottom: 0px; /* No gap */
-  min-height: 32px;
-}
-
-.attr-row:first-child {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
 }
 
 .attr-row:last-child {
-  border-bottom: none;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
   margin-bottom: 0;
 }
 
+.attr-row:nth-child(odd) {
+  background-image: url("../common/cont/prop_bar1.png");
+}
+
 .attr-row:nth-child(even) {
-  background: rgba(0, 0, 0, 0.05); /* Very light background for even rows */
+  background-image: url("../common/cont/prop_bar2.png");
 }
 
 .attr-icon {
@@ -471,24 +471,24 @@ body {
 }
 
 .attr-label {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+  color: var(--text-primary);
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 500;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9); /* Strong shadow for readability */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.85);
 }
 
 /* Attibute Values Aligned Right */
 .attr-val {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text-primary);
   margin-left: auto;
   text-align: right;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.85);
   letter-spacing: 0.3px;
 }
 
