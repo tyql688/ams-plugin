@@ -1,0 +1,123 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/period/period.css" />
+{{/block}} {{block 'main'}}
+<div class="period-container glass-panel">
+  <div class="glow-top"></div>
+
+  <div class="header">
+    <!-- 左侧用户信息 -->
+    {{if userAvatar}}
+    <div class="user-profile">
+      <div class="user-avatar-box">
+        <img class="user-avatar" src="{{userAvatar}}" />
+        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+      </div>
+      <div class="user-meta">
+        <div class="user-name">{{roleName}}</div>
+        <div class="user-uid">UID: {{roleId}}</div>
+      </div>
+    </div>
+    {{/if}}
+
+    <!-- 右侧标题区域 -->
+    <div class="head-title">
+      <div class="brand">RESOURCE BRIEFING TERMINAL</div>
+      <h1 class="title-main">资源简报</h1>
+      <div class="period-tag">{{periodNode.title}}</div>
+    </div>
+  </div>
+
+  <div class="content-body">
+    <!-- 核心资源网格 -->
+    <div class="resource-grid">
+      <div class="res-card res-star">
+        <div class="res-icon">
+          <img src="{{_res_path}}/period/imgs/1.png" />
+        </div>
+        <div class="res-info">
+          <div class="res-label">星声</div>
+          <div class="res-value">{{periodDetail.resources.star || 0}}</div>
+        </div>
+      </div>
+
+      <div class="res-card res-radiant">
+        <div class="res-icon">
+          <img src="{{_res_path}}/period/imgs/6.png" />
+        </div>
+        <div class="res-info">
+          <div class="res-label">浮金 & 铸潮</div>
+          <div class="res-value">{{periodDetail.resources.radiant || 0}}</div>
+        </div>
+      </div>
+
+      <div class="res-card res-lustrous">
+        <div class="res-icon">
+          <img src="{{_res_path}}/period/imgs/2.png" />
+        </div>
+        <div class="res-info">
+          <div class="res-label">唤声涡纹</div>
+          <div class="res-value">{{periodDetail.resources.lustrous || 0}}</div>
+        </div>
+      </div>
+
+      <div class="res-card res-coin">
+        <div class="res-icon">
+          <img src="{{_res_path}}/period/imgs/3.png" />
+        </div>
+        <div class="res-info">
+          <div class="res-label">贝币</div>
+          <div class="res-value">{{periodDetail.resources.coin || 0}}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 图表统计区域 -->
+    <div class="stats-section">
+      <div class="section-header">
+        <div class="section-title">获取来源分析 (星声)</div>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="analysis-container">
+        <!-- 图例列表 -->
+        <div class="legend-list">
+          {{each periodDetail.starList item}}
+          <div class="legend-item">
+            <div class="legend-color" style="--item-color: {{item.color || '#fff'}}"></div>
+            <div class="legend-text">
+              <span class="legend-name">{{item.type}}</span>
+              <span class="legend-val">{{item.num}}</span>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+
+        <!-- 饼图 -->
+        <div class="chart-box">
+          <div
+            class="pie-chart"
+            style="background: conic-gradient(
+            {{each periodDetail.starList item index}}
+              {{item.color}} {{item.startPer}}%,
+              {{item.color}} {{item.endPer}}%{{if index < periodDetail.starList.length - 1}},{{/if}}
+            {{/each}}
+          );"
+          >
+            <div class="pie-center">
+              <div class="total-label">星声</div>
+              <div class="total-val">{{periodDetail.totalStar || 0}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部文案 -->
+    {{if periodDetail.copyWriting}}
+    <div class="period-desc">
+      <p>『 {{periodDetail.copyWriting}} 』</p>
+    </div>
+    {{/if}}
+  </div>
+</div>
+{{/block}}
