@@ -1,0 +1,162 @@
+/* === 基础设置 === */
+body {
+  width: 900px;
+}
+
+/* === 容器定义 === */
+.settings-container {
+  width: 900px;
+  --panel-padding: 60px 50px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* === Header 区域 === */
+.header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.head-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.brand {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.title-main {
+  font-family: var(--font-art);
+  font-size: 44px;
+  background: linear-gradient(180deg, #fff 40%, var(--accent-gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+
+/* === 设置列表 === */
+.settings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setting-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: 4px;
+}
+
+.setting-item.active {
+  background: rgba(250, 204, 21, 0.03);
+  border-left: 4px solid var(--accent-gold);
+}
+
+.item-icon {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--text-dim);
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.setting-item.active .item-icon {
+  border-color: var(--accent-gold);
+  background: var(--accent-gold);
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.item-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.item-example {
+  font-size: 11px;
+  color: var(--accent-gold);
+  opacity: 0.6;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 8px;
+  display: inline-block;
+  border-radius: 2px;
+  font-family: var(--font-number);
+}
+
+/* === 状态控制 === */
+.item-status {
+  min-width: 120px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.status-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-family: var(--font-number);
+}
+
+.status-toggle.on {
+  background: rgba(50, 235, 124, 0.1);
+  color: #32eb7c;
+  border: 1px solid rgba(50, 235, 124, 0.3);
+}
+
+.status-toggle.off {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.toggle-dot {
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  border-radius: 50%;
+}
+
+.status-value {
+  background: var(--accent-gold);
+  color: black;
+  padding: 4px 14px;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 2px;
+  font-family: var(--font-number);
+}

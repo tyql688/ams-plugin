@@ -1,0 +1,39 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/settings/settings.css" />
+{{/block}} {{block 'main'}}
+<div class="settings-container glass-panel">
+  <div class="glow-top"></div>
+
+  <div class="header">
+    <div class="head-title">
+      <div class="brand">CONFIGURATION TERMINAL</div>
+      <div class="title-main">插件设置</div>
+    </div>
+  </div>
+
+  <div class="settings-grid">
+    {{each settings item}}
+    <div class="setting-item {{item.value ? 'active' : ''}}">
+      <div class="item-icon">
+        <div class="icon-inner"></div>
+      </div>
+      <div class="item-info">
+        <div class="item-name">{{item.name}}</div>
+        <div class="item-desc">{{item.desc}}</div>
+        <div class="item-example">{{item.example}}</div>
+      </div>
+      <div class="item-status">
+        {{if item.type === 'switch'}}
+        <div class="status-toggle {{item.value ? 'on' : 'off'}}">
+          <div class="toggle-dot"></div>
+          <span>{{item.value ? 'ENABLE' : 'DISABLE'}}</span>
+        </div>
+        {{else}}
+        <div class="status-value">{{item.value}}</div>
+        {{/if}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+{{/block}}
