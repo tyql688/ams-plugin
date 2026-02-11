@@ -4,7 +4,7 @@ import {
   PHANTOM_SUB_VALUE,
   SKILL_ID_MAP,
   WEAPON_TYPE_ID_MAP,
-} from "../../resources/waves-res/core/constants.js"
+} from "#waves.core"
 
 export { ELE_ID_MAP, ELE_NAME_MAP, PHANTOM_SUB_VALUE, SKILL_ID_MAP, WEAPON_TYPE_ID_MAP }
 

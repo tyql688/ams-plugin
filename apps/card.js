@@ -1,3 +1,4 @@
+import { ROVER_ID } from "#waves.core"
 import _ from "lodash"
 import path from "path"
 import DataLoader from "../lib/core/data_loader.js"
@@ -9,7 +10,6 @@ import { randomFiles } from "../lib/utils.js"
 import { PanelBuilder } from "../model/panel/builder.js"
 import { ELE_NAME_MAP } from "../model/panel/const.js"
 import { Waves2RoleCard } from "../model/roleCard.js"
-import { ROVER_ID } from "../resources/waves-res/core/constants.js"
 export class Card extends AmsPlugin {
   constructor() {
     super({

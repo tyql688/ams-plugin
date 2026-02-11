@@ -1,7 +1,6 @@
+import { Calculator, STAT_MAP } from "#waves.calc"
+import { DamageManager } from "#waves.damage"
 import DataLoader from "../../lib/core/data_loader.js"
-import { Calculator } from "../../resources/waves-res/calc/Calculator.js"
-import { STAT_MAP } from "../../resources/waves-res/calc/Stats.js"
-import { DamageManager } from "../../resources/waves-res/damage/index.js"
 
 import {
   ELE_ID_MAP,

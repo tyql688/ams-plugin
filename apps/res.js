@@ -1,8 +1,8 @@
+import { BaseData } from "#waves.data"
 import _ from "lodash"
 import { AmsPlugin } from "../lib/plugin.js"
 import { updateResources } from "../lib/res.js"
 import config from "../lib/settings.js"
-import { BaseData } from "../resources/waves-res/data/index.js"
 
 export class admin extends AmsPlugin {
   constructor() {

@@ -7,6 +7,12 @@
   "keywords": [],
   "author": "tyql688",
   "license": "MIT",
+  "imports": {
+    "#waves.calc": "./resources/waves-res/calc/index.js",
+    "#waves.damage": "./resources/waves-res/damage/index.js",
+    "#waves.data": "./resources/waves-res/data/index.js",
+    "#waves.core": "./resources/waves-res/core/constants.js"
+  },
   "dependencies": {
     "cros": "^1.1.0",
     "express": "^5.2.1",

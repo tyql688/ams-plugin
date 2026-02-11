@@ -1,12 +1,8 @@
+import { ELE_ID_MAP, ELE_NAME_MAP, WEAPON_TYPE_ID_MAP } from "#waves.core"
 import _ from "lodash"
 import DataLoader from "../lib/core/data_loader.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
-import {
-  ELE_ID_MAP,
-  ELE_NAME_MAP,
-  WEAPON_TYPE_ID_MAP,
-} from "../resources/waves-res/core/constants.js"
 
 export class Wiki extends AmsPlugin {
   constructor() {
