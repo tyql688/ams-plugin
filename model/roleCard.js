@@ -1,8 +1,15 @@
 /**
+ * @typedef {Object} Branch
+ * @property {number} id - 技能分支id
+ * @property {string} name - 技能分支名称，如 "共鸣模态·震谐"
+ */
+
+/**
  * @typedef {Object} Role
  * @property {number} id - 角色id
  * @property {number} level - 等级
  * @property {number} breach - 突破阶级
+ * @property {Branch} skillBranch - 技能分支
  */
 
 /**
@@ -75,11 +82,17 @@ class Waves2RoleCard {
    * @returns {Role}
    */
   _convertRole() {
-    const { role } = this.rawData
+    const { role, skillBranchList = [], activeBranchId } = this.rawData
+
+    const activeBranch = skillBranchList.find(b => b.branchId === activeBranchId)
+
     return {
       id: role.roleId,
       level: role.level,
       breach: role.breach,
+      skillBranch: activeBranch
+        ? { id: activeBranch.branchId, name: activeBranch.branchName }
+        : null,
     }
   }
 
