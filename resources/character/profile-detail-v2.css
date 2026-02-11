@@ -703,3 +703,115 @@ body {
 .p-val.max-val {
   color: var(--grade-ss);
 }
+/* ==================== 伤害统计 (Damage Stats - Two Columns) ==================== */
+.damage-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.damage-card {
+  padding: 0;
+  background: rgba(13, 14, 18, 0.6);
+}
+
+.dmg-table-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
+  padding: 8px 30px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.th-item {
+  display: grid;
+  grid-template-columns: 150px 1fr 1fr; /* Name, Crit, Expect matching row */
+  align-items: center;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 700;
+}
+
+.th-name {
+  text-align: right;
+  padding-right: 15px;
+}
+
+.th-val {
+  text-align: center;
+}
+
+.dmg-table-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* One row two items */
+  gap: 0 40px;
+  padding: 10px 30px;
+}
+
+.dmg-table-row {
+  display: grid;
+  grid-template-columns: 150px 1fr 1fr; /* Name, Crit, Expect */
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dmg-table-row:last-child,
+.dmg-table-row:nth-last-child(2):nth-child(odd) {
+  border-bottom: none;
+}
+
+.td-name {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.td-name::before {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--element-primary);
+  margin-right: 8px;
+  box-shadow: 0 0 8px var(--element-primary);
+  flex-shrink: 0;
+}
+
+.td-val {
+  text-align: center;
+  font-family: var(--font-number);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--text-primary);
+}
+
+.td-val.crit {
+  color: #ffc107;
+  text-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
+}
+
+.td-val.expect {
+  color: #4fc3f7;
+  text-shadow: 0 0 8px rgba(79, 195, 247, 0.3);
+}
+
+/* Single value (Forced Crit, Heal, Shield) */
+.dmg-table-row.is-single-val .td-val.single {
+  grid-column: span 2;
+  text-align: center;
+  color: #ffc107;
+  font-size: 19px;
+  letter-spacing: 0.5px;
+}

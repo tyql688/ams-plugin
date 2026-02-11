@@ -1,6 +1,7 @@
 import DataLoader from "../../lib/core/data_loader.js"
 import { Calculator } from "../../resources/waves-res/calc/Calculator.js"
 import { STAT_MAP } from "../../resources/waves-res/calc/Stats.js"
+import { DamageManager } from "../../resources/waves-res/damage/index.js"
 
 import {
   ELE_ID_MAP,
@@ -53,15 +54,23 @@ export class PanelBuilder {
       // 计算站街属性
       const calculatedStats = Calculator.calculateStreetStats(this.roleCard)
 
-      logger.debug(
-        `[ams] 计算站街属性: ${JSON.stringify(calculatedStats.getHistory(), null, 2)}`,
-      )
+      logger.debug(`[ams] 计算站街属性: ${JSON.stringify(calculatedStats.getHistory(), null, 2)}`)
+
+      const damageListRaw = DamageManager.calculateAll(this.roleCard, calculatedStats)
+      const damageList = damageListRaw.map(d => ({
+        ...d,
+        crit: Math.floor(d.crit).toLocaleString(),
+        expected: Math.floor(d.expected).toLocaleString(),
+        isSingle: d.details && (d.details.forceCrit || d.details.calcType !== "Damage"),
+      }))
+      logger.debug(`[ams] 伤害计算结果: ${JSON.stringify(damageList, null, 2)}`)
 
       this.panelData = {
         ...this._buildBasicInfo(),
         ...this._buildCharacterData(),
         weapon: this._buildWeaponData(),
         ...this._buildPhantomData(),
+        damageList,
         roleAttributeList: this._formatCalculatedAttributes(calculatedStats),
         updateTime: new Date().toLocaleString("zh-CN"),
         dataSource: "库街区API",
@@ -137,7 +146,7 @@ export class PanelBuilder {
         formatValue = `${(value * 100).toFixed(1)}%`
       } else {
         // 数值属性
-        formatValue = Math.floor(value).toString()
+        formatValue = Math.floor(value).toLocaleString()
       }
 
       return { name, value: formatValue }

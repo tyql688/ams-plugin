@@ -113,6 +113,7 @@ export class Card extends AmsPlugin {
       return e.reply(`❌ 获取角色数据失败: ${apiResponse?.msg || "未知错误"}`)
 
     const roleCard = new Waves2RoleCard(apiResponse.data).toRoleCard()
+    logger.debug(`[ams] roleCard: ${JSON.stringify(roleCard)}`)
     const panelData = new PanelBuilder(roleCard).get()
     if (!panelData) return e.reply("❌ 面板数据构建失败")
 

@@ -168,4 +168,35 @@
     {{/if}} {{/each}}
   </div>
 </div>
+{{/if}} {{if data.damageList && data.damageList.length > 0}}
+<div class="damage-section">
+  <div class="section-title">伤害统计</div>
+  <div class="card damage-card">
+    <div class="dmg-table-header">
+      <div class="th-item">
+        <div class="th-name">伤害类型</div>
+        <div class="th-val">暴击伤害</div>
+        <div class="th-val">期望伤害</div>
+      </div>
+      <div class="th-item">
+        <div class="th-name">伤害类型</div>
+        <div class="th-val">暴击伤害</div>
+        <div class="th-val">期望伤害</div>
+      </div>
+    </div>
+    <div class="dmg-table-body">
+      {{each data.damageList dmg}}
+      <div class="dmg-table-row {{if dmg.isSingle}}is-single-val{{/if}}">
+        <div class="td-name">{{dmg.title}}</div>
+        {{if dmg.isSingle}}
+        <div class="td-val single">{{dmg.crit}}</div>
+        {{else}}
+        <div class="td-val crit">{{dmg.crit}}</div>
+        <div class="td-val expect">{{dmg.expected}}</div>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
 {{/if}} {{/block}}

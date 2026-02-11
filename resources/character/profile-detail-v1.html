@@ -52,7 +52,7 @@
             ></div>
             <div class="circle-lv">{{skill.level}}</div>
           </div>
-          <!-- <div class="skill-name">{{skill.type}}</div> - Optional, maybe remove to save space if needed, or keep for clarity -->
+          <!-- <div class="skill-name">{{skill.type}}</div> -->
         </div>
         {{/each}}
       </div>
@@ -122,7 +122,6 @@
         <div class="p-val">{{mainProp.attributeValue}}</div>
       </div>
       {{/each}} {{/if}}
-      <!-- Optional: Show effect name or short desc if space allows, using subprop style -->
       <div
         class="prop-row sub"
         style="height: auto; min-height: 20px; align-items: flex-start; margin-top: 4px"
@@ -134,8 +133,6 @@
       </div>
     </div>
   </div>
-  {{else}}
-  <div class="echo-card empty"></div>
   {{/if}}
 
   <!-- Slot 2-6: Echoes -->
@@ -181,5 +178,29 @@
     </div>
   </div>
   {{/if}} {{/each}} {{/if}}
+
+  <!-- DAMAGE AREA -->
+  {{if data.damageList && data.damageList.length > 0}}
+  <div class="damage-container">
+    <div class="dmg-table-header">
+      <div class="th-name">伤害类型</div>
+      <div class="th-val">暴击伤害</div>
+      <div class="th-val">期望伤害</div>
+    </div>
+    <div class="dmg-table-body">
+      {{each data.damageList dmg}}
+      <div class="dmg-table-row {{if dmg.isSingle}}is-single-val{{/if}}">
+        <div class="td-name">{{dmg.title}}</div>
+        {{if dmg.isSingle}}
+        <div class="td-val single">{{dmg.crit}}</div>
+        {{else}}
+        <div class="td-val crit">{{dmg.crit}}</div>
+        <div class="td-val expect">{{dmg.expected}}</div>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{/if}}
 </div>
 {{/block}}

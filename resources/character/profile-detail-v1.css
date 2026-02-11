@@ -711,3 +711,104 @@ body {
 .p-val.max-val {
   color: var(--grade-ss);
 }
+
+/* ==================== 伤害统计 (Damage Stats - Table Style) ==================== */
+.damage-container {
+  grid-column: span 3;
+  margin-top: 5px;
+  background: rgba(10, 10, 15, 0.7); /* Keep specific dark bg for contrast */
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Match var(--glass-border) concept but specific opacity */
+  backdrop-filter: blur(10px);
+}
+
+.dmg-table-header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Standardized fr units */
+  background: rgba(0, 0, 0, 0.4);
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 14px;
+  color: var(--text-secondary); /* Standard variable */
+  font-weight: 700;
+  align-items: center;
+}
+
+.th-name {
+  text-align: right;
+  padding-right: 40px; /* Match body padding */
+}
+
+.th-val {
+  text-align: center;
+}
+
+.dmg-table-body {
+  padding: 5px 0;
+}
+
+.dmg-table-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Standardized fr units */
+  align-items: center;
+  padding: 6px 12px;
+  /* Removed transition per LAYOUT_STANDARD.md 4.4 */
+}
+
+.dmg-table-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.td-name {
+  font-size: 14px;
+  color: var(--text-primary); /* Standard variable */
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 40px; /* Kept for visual balance */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.td-name::before {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--element-primary);
+  margin-right: 8px;
+  box-shadow: 0 0 5px var(--element-primary);
+  flex-shrink: 0;
+}
+
+.td-val {
+  text-align: center;
+  font-family: var(--font-number); /* Standard variable */
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-primary); /* Standard variable base */
+}
+
+.td-val.crit {
+  color: #ffc107;
+  text-shadow: 0 0 5px rgba(255, 193, 7, 0.2);
+}
+
+.td-val.expect {
+  color: #4fc3f7;
+  text-shadow: 0 0 5px rgba(79, 195, 247, 0.2);
+}
+
+/* Single value (Forced Crit, Heal, Shield) */
+.dmg-table-row.is-single-val .td-val.single {
+  grid-column: span 2;
+  text-align: center;
+  color: #ffc107;
+  font-size: 18px;
+}
