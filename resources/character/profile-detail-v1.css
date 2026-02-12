@@ -726,7 +726,7 @@ body {
 
 .dmg-table-header {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Standardized fr units */
+  grid-template-columns: 4fr 3fr 3fr; /* 伤害类型:暴击:期望 4:3:3 per LAYOUT_STANDARD.md fr */
   background: rgba(0, 0, 0, 0.4);
   padding: 8px 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -751,7 +751,7 @@ body {
 
 .dmg-table-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Standardized fr units */
+  grid-template-columns: 4fr 3fr 3fr; /* 伤害类型:暴击:期望 4:3:3 per LAYOUT_STANDARD.md fr */
   align-items: center;
   padding: 6px 12px;
   /* Removed transition per LAYOUT_STANDARD.md 4.4 */
