@@ -60,7 +60,7 @@ export class PanelBuilder {
         ...d,
         crit: Math.floor(d.crit).toLocaleString(),
         expected: Math.floor(d.expected).toLocaleString(),
-        isSingle: d.details && (d.details.forceCrit || d.details.calcType !== "Damage"),
+        isSingle: d.details && d.details.forceCrit,
       }))
       logger.debug(`[ams] 伤害计算结果: ${JSON.stringify(damageList, null, 2)}`)
 
