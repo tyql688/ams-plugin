@@ -6,12 +6,11 @@ body {
 
 .wiki-panel {
   padding: 50px 60px;
-  background-color: var(--bg-body);
   position: relative;
   overflow: hidden;
 }
 
-/* 装饰性背景光晕 */
+/* 装饰性背景光晕 - 纸质风格下移除 */
 .wiki-panel::before {
   content: "";
   position: absolute;
@@ -19,7 +18,7 @@ body {
   right: -10%;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, var(--element-shadow) 0%, transparent 70%);
+  background: none;
   z-index: 0;
   pointer-events: none;
 }
@@ -28,8 +27,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding-bottom: 30px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--paper-border);
   margin-bottom: 40px;
   position: relative;
   z-index: 10;
@@ -48,7 +47,7 @@ body {
 
 .char-name-en {
   font-size: 14px;
-  color: var(--element-primary);
+  color: var(--paper-accent);
   letter-spacing: 3px;
   text-transform: uppercase;
   margin-bottom: 4px;
@@ -60,20 +59,20 @@ body {
   font-size: 54px;
   font-weight: 900;
   line-height: 1;
-  color: #fff;
-  background: linear-gradient(180deg, #fff 0%, #94a3b8 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--paper-text);
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
 }
 
 .char-avatar-circle {
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #000;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--paper-border);
+  background: var(--paper-bg);
+  box-shadow: 0 2px 8px rgba(44, 36, 24, 0.08);
   overflow: hidden;
   position: relative;
   padding: 4px;
@@ -84,7 +83,7 @@ body {
   height: 100%;
   border-radius: 50%;
   overflow: hidden;
-  background: var(--rarity-item-bg, #111);
+  background: var(--rarity-item-bg, var(--paper-divider));
 }
 
 .char-avatar-circle img {
@@ -102,7 +101,7 @@ body {
 .mode-badge {
   font-size: 42px;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.08);
+  color: var(--paper-divider);
   text-transform: uppercase;
   letter-spacing: 4px;
   position: relative;
@@ -115,10 +114,10 @@ body {
   top: 50%;
   transform: translateY(-50%);
   font-size: 16px;
-  color: var(--element-primary);
+  color: var(--paper-accent);
   letter-spacing: 4px;
   font-weight: 700;
-  text-shadow: 0 0 10px var(--element-shadow);
+  text-shadow: none;
 }
 
 /* ==================== 内容区域 ==================== */
@@ -131,17 +130,15 @@ body {
 
 .wiki-item {
   width: 100%;
-  background: var(--card-bg);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--paper-card);
+  border: 1px solid var(--paper-border);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(20px);
-  box-shadow:
-    0 20px 40px -10px rgba(0, 0, 0, 0.6),
-    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: none;
+  box-shadow: 0 1px 8px rgba(44, 36, 24, 0.05);
 }
 
 .wiki-item::before {
@@ -152,7 +149,7 @@ body {
   bottom: 0;
   width: 6px;
   background: linear-gradient(to bottom, var(--element-primary), var(--element-shadow));
-  box-shadow: 2px 0 15px var(--element-shadow);
+  box-shadow: none;
 }
 
 .item-top {
@@ -161,7 +158,7 @@ body {
   gap: 25px;
   padding: 25px 30px;
   align-items: flex-start;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+  background: none;
   box-sizing: border-box;
 }
 
@@ -182,7 +179,7 @@ body {
 
 .item-desc {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--paper-text-sub);
   line-height: 1.8;
   text-align: justify;
 }
@@ -190,7 +187,7 @@ body {
 .item-desc nobr {
   color: var(--element-primary);
   font-weight: 800;
-  text-shadow: 0 0 5px var(--element-shadow);
+  text-shadow: none;
   padding: 0 2px;
 }
 
@@ -200,7 +197,7 @@ body {
   gap: 50px;
   margin-top: 10px;
   padding: 15px 20px;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--paper-bg);
   border-radius: 12px;
   width: fit-content;
 }
@@ -213,14 +210,14 @@ body {
 
 .stat-label {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--paper-text-sub);
   font-weight: 600;
   text-transform: uppercase;
 }
 
 .stat-value {
   font-size: 24px;
-  color: #fff;
+  color: var(--paper-text);
   font-weight: 800;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  text-shadow: none;
 }

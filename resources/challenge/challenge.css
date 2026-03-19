@@ -1,11 +1,11 @@
+/* ==================== 攻略册风格 · 战术全息页 ==================== */
+
 body {
   width: 900px;
 }
 
 .challenge-container {
   width: 900px;
-  --glass-border: var(--panel-border-color);
-
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -19,6 +19,8 @@ body {
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 10px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--paper-border);
 }
 
 .head-title {
@@ -31,9 +33,9 @@ body {
 }
 
 .brand {
-  font-size: 12px;
-  letter-spacing: 4px;
-  color: var(--accent-cyan);
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--paper-accent);
   font-weight: 700;
   margin-bottom: 4px;
   text-transform: uppercase;
@@ -42,13 +44,15 @@ body {
 .title-main {
   font-family: var(--font-art);
   font-size: 44px;
-  background: linear-gradient(180deg, #fff 40%, var(--accent-blue) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--paper-text);
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
   line-height: 1.1;
   margin-bottom: 8px;
 }
+
 
 /* === Summary === */
 .summary-wrapper {
@@ -58,14 +62,14 @@ body {
 }
 
 .sl-summary-card {
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(10, 10, 15, 0.8) 100%);
+  background: var(--paper-card);
   padding: 10px 40px;
   border-radius: 100px;
-  border: 1px solid rgba(56, 189, 248, 0.2);
+  border: 1px solid var(--paper-border);
   display: flex;
   align-items: center;
   gap: 30px;
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 2px 12px rgba(44, 36, 24, 0.06);
   position: relative;
   z-index: 5;
 }
@@ -73,7 +77,7 @@ body {
 .sl-label {
   font-family: var(--font-art);
   font-size: 18px;
-  color: var(--text-secondary);
+  color: var(--paper-text-sub);
   letter-spacing: 1px;
 }
 
@@ -91,7 +95,7 @@ body {
 
 .sl-item .val {
   font-size: 32px;
-  color: #fff;
+  color: var(--paper-text);
   font-weight: bold;
   line-height: 1;
 }
@@ -99,18 +103,18 @@ body {
 .sl-item .sub {
   font-size: 12px;
   font-weight: bold;
-  color: var(--text-dim);
+  color: var(--paper-text-dim);
 }
 
 .sl-item.highlight .val {
-  color: var(--accent-gold);
-  text-shadow: 0 0 15px rgba(250, 204, 21, 0.4);
+  color: var(--paper-accent);
+  text-shadow: none;
 }
 
 .sl-divider {
   width: 1px;
   height: 20px;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--paper-divider);
 }
 
 .sl-item.big-left .val {
@@ -130,17 +134,15 @@ body {
 .boss-card {
   height: 124px;
   position: relative;
-  border-radius: 16px;
-  background: #000;
-  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: var(--paper-bg);
+  border: 1px solid var(--paper-divider);
   overflow: hidden;
 }
 
 .boss-card.cleared {
-  border-color: rgba(250, 204, 21, 0.5);
-  box-shadow:
-    inset 0 0 20px rgba(250, 204, 21, 0.1),
-    0 0 15px rgba(250, 204, 21, 0.1);
+  border-color: var(--paper-accent);
+  box-shadow: none;
 }
 
 .boss-card-bg {
@@ -151,10 +153,9 @@ body {
   height: 100%;
   background-size: cover;
   background-position: center 20%;
-  opacity: 0.6;
-  filter: contrast(1.1) saturate(1.1);
-  mask-image: linear-gradient(120deg, black 30%, transparent 90%);
-  -webkit-mask-image: linear-gradient(120deg, black 30%, transparent 90%);
+  opacity: 1;
+  mask-image: linear-gradient(90deg, transparent 5%, black 40%, black 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 5%, black 40%, black 100%);
 }
 
 .boss-content {
@@ -165,9 +166,10 @@ body {
   height: 100%;
   z-index: 10;
   background: linear-gradient(
-    to top right,
-    rgba(0, 0, 0, 0.95) 0%,
-    rgba(0, 0, 0, 0.6) 40%,
+    90deg,
+    rgba(255, 253, 248, 0.97) 0%,
+    rgba(255, 253, 248, 0.85) 30%,
+    rgba(255, 253, 248, 0.1) 55%,
     transparent 100%
   );
 }
@@ -184,9 +186,9 @@ body {
 .boss-name {
   font-family: var(--font-art);
   font-size: 24px;
-  color: #fff;
+  color: var(--paper-text);
   line-height: 1;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  text-shadow: none;
 }
 
 .boss-tag {
@@ -195,19 +197,19 @@ body {
   letter-spacing: 0.5px;
   display: inline-block;
   padding: 2px 6px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 .boss-tag.max {
-  color: var(--accent-gold);
-  background: linear-gradient(90deg, rgba(250, 204, 21, 0.2), transparent);
-  border-left: 2px solid var(--accent-gold);
-  text-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
+  color: var(--paper-accent);
+  background: rgba(184, 134, 11, 0.08);
+  border-left: 2px solid var(--paper-accent);
+  text-shadow: none;
   padding-left: 8px;
 }
 
 .boss-tag.normal {
-  color: var(--text-dim);
+  color: var(--paper-text-dim);
 }
 
 .pos-bottom-left {
@@ -218,7 +220,7 @@ body {
 
 .time-label {
   font-size: 10px;
-  color: var(--text-dim);
+  color: var(--paper-text-dim);
   letter-spacing: 1px;
   margin-bottom: -2px;
 }
@@ -226,23 +228,21 @@ body {
 .big-time {
   font-size: 44px;
   font-weight: 800;
-  color: var(--accent-blue);
+  color: var(--paper-accent);
   line-height: 0.9;
   letter-spacing: -1px;
-  text-shadow:
-    0 0 15px rgba(56, 189, 248, 0.5),
-    0 0 30px rgba(56, 189, 248, 0.2);
-  background: linear-gradient(180deg, #fff 30%, var(--accent-blue) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
 }
 
 .big-time .unit {
   font-size: 18px;
   margin-left: 2px;
-  color: var(--accent-blue);
-  -webkit-text-fill-color: var(--accent-blue);
+  color: var(--paper-text-dim);
+  -webkit-text-fill-color: unset;
   font-weight: normal;
 }
 
@@ -260,13 +260,13 @@ body {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  background: #111;
+  border: 2px solid var(--paper-border);
+  background: var(--paper-divider);
   overflow: hidden;
   margin-left: -24px;
   position: relative;
   z-index: 1;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 2px 8px rgba(44, 36, 24, 0.1);
 }
 
 .team-role-circle:first-child {
@@ -284,9 +284,10 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: rgba(255, 255, 255, 0.08);
+  color: var(--paper-divider);
   font-size: 20px;
   font-weight: bold;
   letter-spacing: 2px;
   pointer-events: none;
 }
+

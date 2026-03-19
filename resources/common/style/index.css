@@ -16,42 +16,54 @@
     url("../font/NZBZ.woff") format("woff"),
     url("../font/NZBZ.ttf") format("truetype");
 }
+@font-face {
+  font-family: "LXGWWenKai";
+  src:
+    url("../font/LXGWWenKai-Medium.woff") format("woff"),
+    url("../font/LXGWWenKai-Medium.ttf") format("truetype");
+}
 
 /* ==================== 通用变量配置 ==================== */
 :root {
   /* === 字体配置 === */
   --font-number: "Number", sans-serif;
   --font-normal: "YS", sans-serif;
-  --font-art: "NZBZ", sans-serif;
+  --font-art: "LXGWWenKai", sans-serif;
 
-  /* === 文本颜色 === */
-  --text-primary: #ffffff;
-  --text-secondary: #94a3b8;
-  --text-dim: #64748b;
+  /* === 攻略册风格基础色 === */
+  --paper-bg: #f5f0e8;
+  --paper-card: #fffdf8;
+  --paper-text: #2c2418;
+  --paper-text-sub: #8c7e6a;
+  --paper-text-dim: #b5a898;
+  --paper-accent: #b8860b;
+  --paper-green: #5a7247;
+  --paper-border: #d4c8b0;
+  --paper-divider: #e8e0d0;
+  --paper-shadow: 0 2px 20px rgba(44, 36, 24, 0.08);
+
+  /* === 文本颜色（攻略册默认） === */
+  --text-primary: var(--paper-text);
+  --text-secondary: var(--paper-text-sub);
+  --text-dim: var(--paper-text-dim);
   --text-dark: #000;
-  --color-text-main: #ffffff;
+  --color-text-main: var(--paper-text);
 
   /* === 背景颜色 === */
-  --bg-body: #050508;
-  --bg-body-dark: #000;
+  --bg-body: var(--paper-bg);
 
-  /* === 玻璃形态 === */
-  --glass-bg: rgba(16, 18, 23, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --card-bg: rgba(255, 255, 255, 0.05);
-
-  /* === 强调色(Accent Colors) === */
-  --accent-blue: #38bdf8;
-  --accent-cyan: #22d3ee;
-  --accent-gold: #facc15;
+  /* === 强调色 === */
+  --accent-blue: #7c6a4e;
+  --accent-cyan: #b8860b;
+  --accent-gold: #c4841d;
 
   /* === 元素主题色（默认值） === */
-  --element-primary: #00f0ff;
-  --element-bg: rgba(0, 240, 255, 0.08);
-  --element-shadow: rgba(0, 240, 255, 0.2);
+  --element-primary: var(--paper-accent);
+  --element-bg: rgba(184, 134, 11, 0.08);
+  --element-shadow: rgba(184, 134, 11, 0.2);
 
   /* === 评级等级 === */
-  --grade-c: #32eb7c;
+  --grade-c: #5a7247;
   --grade-b: #417deb;
   --grade-a: #9c27b0;
   --grade-s: #ffd700;
@@ -61,10 +73,10 @@
 
   /* === 武器品质等级 === */
   --rarity-1: #9e9e9e;
-  --rarity-2: #32eb7c;
+  --rarity-2: #5a7247;
   --rarity-3: #2196f3;
   --rarity-4: #9c27b0;
-  --rarity-5: #ffd700;
+  --rarity-5: #b8860b;
 
   /* === 共鸣链颜色 === */
   --chain-0: #9e9e9e;
@@ -76,8 +88,8 @@
   --chain-6: #ffd700;
 
   /* === 武器属性值金色 === */
-  --weapon-prop-gold: #ffd700;
-  --weapon-prop-gold-shadow: rgba(255, 215, 0, 0.5);
+  --weapon-prop-gold: #b8860b;
+  --weapon-prop-gold-shadow: rgba(184, 134, 11, 0.5);
 
   /* === 标准元素配色 === */
   --color-glacio: #22d3ee;
@@ -88,79 +100,35 @@
   --color-havoc: #e649a6;
 
   /* === 标准功能配色 === */
-  --color-heal: #10b981;
-  --color-energy: #22d3ee;
-  --color-atk: #94a3b8;
+  --color-heal: #2d8a6e;
+  --color-energy: #1a8a9e;
+  --color-atk: #8c7e6a;
 }
 
-/* ==================== 通用容器与装饰 ==================== */
-/* ==================== 通用容器与装饰 ==================== */
+/* ==================== 通用容器（攻略册风格） ==================== */
 .glass-panel {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  /* Wuthering Waves Tech-Glass Defaults */
-  background: var(--panel-bg, rgba(10, 11, 14, 0.85));
-  border: 1px solid var(--panel-border-color, rgba(255, 255, 255, 0.08));
-  border-radius: var(--panel-radius, 12px);
-  padding: var(--panel-padding, 60px 60px 35px);
-  -webkit-backdrop-filter: blur(var(--panel-blur, 20px)) saturate(var(--panel-saturate, 150%));
-  backdrop-filter: blur(var(--panel-blur, 20px)) saturate(var(--panel-saturate, 150%));
-  box-shadow: var(
-    --panel-shadow,
-    0 20px 50px rgba(0, 0, 0, 0.8),
-    inset 0 0 60px rgba(0, 0, 0, 0.5)
-  );
-
-  /* Ensure stacking context for texturing */
+  background: var(--panel-bg, var(--paper-card));
+  border: var(--panel-border, none);
+  border-radius: var(--panel-radius, 0);
+  padding: var(--panel-padding, 50px 55px 35px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: var(--panel-shadow, var(--paper-shadow));
   isolation: isolate;
 }
 
-/* Global Texture: Tech Grid */
-.glass-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: center;
-  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-  pointer-events: none;
-  z-index: -1;
-  opacity: var(--texture-opacity, 1);
-}
-
-/* Global Texture: Scanlines */
+/* 纹理默认关闭 */
+.glass-panel::before,
 .glass-panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.2) 3px);
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: -1;
-  mix-blend-mode: overlay;
+  display: none;
 }
 
+/* 流光默认关闭 */
 .glow-top {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: var(--glow-width, 500px);
-  height: var(--glow-height, 2px);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--glow-color, var(--accent-blue)),
-    transparent
-  );
-  box-shadow: 0 0 var(--glow-blur, 30px) var(--glow-color, var(--accent-blue));
-  z-index: 10;
-  opacity: var(--glow-opacity, 1);
+  display: none;
 }
 
 /* ==================== 通用稀有度组件 (Rarity UI) ==================== */
@@ -171,127 +139,116 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--paper-divider);
 }
 
-/* Rarity Background Radial Gradients */
 .rarity-frame.rarity-5 {
-  background: radial-gradient(circle, rgba(124, 45, 18, 0.45) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: radial-gradient(circle, rgba(184, 134, 11, 0.15) 0%, var(--paper-divider) 100%);
 }
 .rarity-frame.rarity-4 {
-  background: radial-gradient(circle, rgba(88, 28, 135, 0.45) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: radial-gradient(circle, rgba(156, 39, 176, 0.15) 0%, var(--paper-divider) 100%);
 }
 .rarity-frame.rarity-3 {
-  background: radial-gradient(circle, rgba(30, 58, 138, 0.45) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: radial-gradient(circle, rgba(33, 150, 243, 0.15) 0%, var(--paper-divider) 100%);
 }
 .rarity-frame.rarity-2 {
-  background: radial-gradient(circle, rgba(20, 83, 45, 0.45) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: radial-gradient(circle, rgba(90, 114, 71, 0.15) 0%, var(--paper-divider) 100%);
 }
 .rarity-frame.rarity-1 {
-  background: radial-gradient(circle, rgba(50, 50, 50, 0.45) 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: radial-gradient(circle, rgba(158, 158, 158, 0.15) 0%, var(--paper-divider) 100%);
 }
 
-/* Bottom Rarity Glow Bar */
+/* Bottom Rarity Bar */
 .rarity-glow {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 3px;
   z-index: 2;
   border-radius: 0 0 2px 2px;
 }
 
 .rarity-glow.rarity-1 {
-  background: linear-gradient(to top, var(--rarity-1), transparent);
-  box-shadow: 0 -4px 12px var(--rarity-1);
-  opacity: 0.6;
+  background: var(--rarity-1);
+  box-shadow: none;
+  opacity: 0.5;
 }
 .rarity-glow.rarity-2 {
-  background: linear-gradient(to top, var(--rarity-2), transparent);
-  box-shadow: 0 -4px 12px var(--rarity-2);
-  opacity: 0.7;
+  background: var(--rarity-2);
+  box-shadow: none;
+  opacity: 0.6;
 }
 .rarity-glow.rarity-3 {
-  background: linear-gradient(to top, var(--rarity-3), transparent);
-  box-shadow: 0 -4px 12px var(--rarity-3);
-  opacity: 0.8;
+  background: var(--rarity-3);
+  box-shadow: none;
+  opacity: 0.7;
 }
 .rarity-glow.rarity-4 {
-  background: linear-gradient(to top, var(--rarity-4), transparent);
-  box-shadow: 0 -4px 14px var(--rarity-4);
-  opacity: 0.85;
+  background: var(--rarity-4);
+  box-shadow: none;
+  opacity: 0.8;
 }
 .rarity-glow.rarity-5 {
-  background: linear-gradient(to top, var(--rarity-5), transparent);
-  box-shadow: 0 -4px 18px var(--rarity-5);
-  opacity: 0.95;
+  background: var(--rarity-5);
+  box-shadow: none;
+  opacity: 0.9;
 }
 
-/* 语义化主题与数字主题别名 */
-/* 1: 冷凝 (Glacio) */
+/* ==================== 元素主题 ==================== */
 .theme-glacio,
 .theme-element-1 {
   --element-primary: var(--color-glacio);
-  --element-bg: rgba(8, 51, 68, 0.5);
-  --element-shadow: rgba(34, 211, 238, 0.2);
+  --element-bg: rgba(26, 138, 158, 0.08);
+  --element-shadow: rgba(26, 138, 158, 0.2);
 }
-/* 2: 热熔 (Fusion) */
 .theme-fusion,
 .theme-element-2 {
   --element-primary: var(--color-fusion);
-  --element-bg: rgba(69, 10, 10, 0.5);
-  --element-shadow: rgba(239, 68, 68, 0.2);
+  --element-bg: rgba(197, 48, 48, 0.08);
+  --element-shadow: rgba(197, 48, 48, 0.2);
 }
-
-/* 3: 导电 (Electro) */
 .theme-electro,
 .theme-element-3 {
   --element-primary: var(--color-electro);
-  --element-bg: rgba(59, 7, 100, 0.5);
-  --element-shadow: rgba(168, 85, 247, 0.2);
+  --element-bg: rgba(124, 58, 237, 0.08);
+  --element-shadow: rgba(124, 58, 237, 0.2);
 }
-/* 4: 气动 (Aero) */
 .theme-aero,
 .theme-element-4 {
   --element-primary: var(--color-aero);
-  --element-bg: rgba(2, 44, 34, 0.5);
-  --element-shadow: rgba(52, 211, 153, 0.2);
+  --element-bg: rgba(45, 138, 110, 0.08);
+  --element-shadow: rgba(45, 138, 110, 0.2);
 }
-/* 5: 衍射 (Spectro) */
 .theme-spectro,
 .theme-element-5 {
   --element-primary: var(--color-spectro);
-  --element-bg: rgba(66, 32, 6, 0.5);
-  --element-shadow: rgba(250, 204, 21, 0.2);
+  --element-bg: rgba(184, 134, 11, 0.08);
+  --element-shadow: rgba(184, 134, 11, 0.2);
 }
-/* 6: 湮灭 (Havoc) */
 .theme-havoc,
 .theme-element-6 {
   --element-primary: var(--color-havoc);
-  --element-bg: rgba(80, 7, 36, 0.5);
-  --element-shadow: rgba(219, 39, 119, 0.2);
+  --element-bg: rgba(184, 50, 128, 0.08);
+  --element-shadow: rgba(184, 50, 128, 0.2);
 }
 
-/* 治疗 (Heal) */
 .theme-heal {
   --element-primary: var(--color-heal);
-  --element-bg: rgba(16, 185, 129, 0.15);
+  --element-bg: rgba(45, 138, 110, 0.08);
 }
-/* 共鸣效率 (Energy) */
 .theme-energy {
   --element-primary: var(--color-energy);
-  --element-bg: rgba(34, 211, 238, 0.15);
+  --element-bg: rgba(26, 138, 158, 0.08);
 }
-/* 攻击 (ATK) */
 .theme-atk {
   --element-primary: var(--color-atk);
-  --element-bg: rgba(148, 163, 184, 0.15);
+  --element-bg: rgba(140, 126, 106, 0.08);
 }
 
 /* ==================== 共鸣链等级颜色样式 ==================== */
 .role-chain {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 253, 248, 0.8);
   color: var(--chain-0);
   padding: 2px 8px;
   font-weight: 700;
@@ -305,37 +262,31 @@
 .role-chain.chain-1 {
   color: var(--chain-1);
   border-color: var(--chain-1);
-  box-shadow: 0 0 4px var(--chain-1);
 }
 .role-chain.chain-2 {
   color: var(--chain-2);
   border-color: var(--chain-2);
-  box-shadow: 0 0 4px var(--chain-2);
 }
 .role-chain.chain-3 {
   color: var(--chain-3);
   border-color: var(--chain-3);
-  box-shadow: 0 0 4px var(--chain-3);
 }
 .role-chain.chain-4 {
   color: var(--chain-4);
   border-color: var(--chain-4);
-  box-shadow: 0 0 4px var(--chain-4);
 }
 .role-chain.chain-5 {
   color: var(--chain-5);
   border-color: var(--chain-5);
-  box-shadow: 0 0 4px var(--chain-5);
 }
 .role-chain.chain-6 {
   color: var(--chain-6);
   border-color: var(--chain-6);
-  box-shadow: 0 0 6px var(--chain-6);
 }
 
 /* ==================== 武器精炼等级标签颜色 ==================== */
 .tag-reson {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 253, 248, 0.8);
   color: var(--chain-0);
   border: 1px solid var(--chain-0);
 }
@@ -346,88 +297,77 @@
 .tag-reson.reson-1 {
   color: var(--chain-1);
   border-color: var(--chain-1);
-  box-shadow: 0 0 4px var(--chain-1);
 }
 .tag-reson.reson-2 {
   color: var(--chain-2);
   border-color: var(--chain-2);
-  box-shadow: 0 0 4px var(--chain-2);
 }
 .tag-reson.reson-3 {
   color: var(--chain-3);
   border-color: var(--chain-3);
-  box-shadow: 0 0 4px var(--chain-3);
 }
 .tag-reson.reson-4 {
   color: var(--chain-4);
   border-color: var(--chain-4);
-  box-shadow: 0 0 4px var(--chain-4);
 }
 .tag-reson.reson-5 {
   color: var(--chain-5);
   border-color: var(--chain-5);
-  box-shadow: 0 0 4px var(--chain-5);
 }
 .tag-reson.reson-6 {
   color: var(--chain-6);
   border-color: var(--chain-6);
-  box-shadow: 0 0 6px var(--chain-6);
 }
 
 /* === 声骸品质颜色 (Intensity) === */
-/* Mapping: 0->chain-1(Green), 1->chain-2(Blue), 2->chain-3(Purple), 3->chain-4(Gold) */
 .theme-echo-0 {
   --element-primary: var(--chain-1);
-  --element-bg: rgba(50, 235, 124, 0.1);
-  --element-shadow: rgba(50, 235, 124, 0.3);
+  --element-bg: rgba(90, 114, 71, 0.08);
+  --element-shadow: rgba(90, 114, 71, 0.2);
 }
 .theme-echo-1 {
   --element-primary: var(--chain-2);
-  --element-bg: rgba(33, 150, 243, 0.1);
-  --element-shadow: rgba(33, 150, 243, 0.3);
+  --element-bg: rgba(33, 150, 243, 0.08);
+  --element-shadow: rgba(33, 150, 243, 0.2);
 }
 .theme-echo-2 {
   --element-primary: var(--chain-3);
-  --element-bg: rgba(156, 39, 176, 0.1);
-  --element-shadow: rgba(156, 39, 176, 0.3);
+  --element-bg: rgba(156, 39, 176, 0.08);
+  --element-shadow: rgba(156, 39, 176, 0.2);
 }
 .theme-echo-3 {
   --element-primary: var(--chain-4);
-  --element-bg: rgba(255, 152, 0, 0.1);
-  --element-shadow: rgba(255, 152, 0, 0.3);
+  --element-bg: rgba(196, 132, 29, 0.08);
+  --element-shadow: rgba(196, 132, 29, 0.2);
 }
 
 /* === 武器类型主题 (Weapon Type) === */
-/* 1: 迅刀 (Sword) - Cyan/Blue */
 .theme-weapon-1 {
-  --element-primary: var(--accent-cyan);
-  --element-bg: rgba(34, 211, 238, 0.1);
-  --element-shadow: rgba(34, 211, 238, 0.3);
+  --element-primary: var(--color-glacio);
+  --element-bg: rgba(26, 138, 158, 0.08);
+  --element-shadow: rgba(26, 138, 158, 0.2);
 }
-/* 2: 长刃 (Broadblade) - Red */
 .theme-weapon-2 {
   --element-primary: var(--chain-5);
-  --element-bg: rgba(244, 67, 54, 0.1);
-  --element-shadow: rgba(244, 67, 54, 0.3);
+  --element-bg: rgba(179, 58, 42, 0.08);
+  --element-shadow: rgba(179, 58, 42, 0.2);
 }
-/* 3: 配枪 (Pistols) - Gold/Orange */
 .theme-weapon-3 {
   --element-primary: var(--chain-4);
-  --element-bg: rgba(255, 152, 0, 0.1);
-  --element-shadow: rgba(255, 152, 0, 0.3);
+  --element-bg: rgba(196, 132, 29, 0.08);
+  --element-shadow: rgba(196, 132, 29, 0.2);
 }
-/* 4: 臂铠 (Gauntlets) - Green */
 .theme-weapon-4 {
   --element-primary: var(--chain-1);
-  --element-bg: rgba(50, 235, 124, 0.1);
-  --element-shadow: rgba(50, 235, 124, 0.3);
+  --element-bg: rgba(90, 114, 71, 0.08);
+  --element-shadow: rgba(90, 114, 71, 0.2);
 }
-/* 5: 音感仪 (Rectifier) - Purple */
 .theme-weapon-5 {
   --element-primary: var(--chain-3);
-  --element-bg: rgba(156, 39, 176, 0.1);
-  --element-shadow: rgba(156, 39, 176, 0.3);
+  --element-bg: rgba(156, 39, 176, 0.08);
+  --element-shadow: rgba(156, 39, 176, 0.2);
 }
+
 /* ==================== 通用头像组件 ==================== */
 .user-avatar-box {
   position: relative;
@@ -437,7 +377,7 @@
   align-items: center;
   justify-content: center;
   z-index: 10;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 2px 6px rgba(44, 36, 24, 0.15));
 }
 
 .user-avatar {
@@ -475,12 +415,12 @@
   margin-left: -50px;
   padding: 10px 48px 10px 92px;
 
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.35) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(90deg, rgba(44, 36, 24, 0.06) 0%, rgba(44, 36, 24, 0.02) 100%);
+  border: 1px solid var(--paper-divider);
   border-left: none;
   border-radius: 0 76px 76px 0;
 
-  backdrop-filter: blur(8px);
+  backdrop-filter: none;
   z-index: 1;
   min-height: 76px;
   height: auto;
@@ -489,28 +429,26 @@
 .user-name {
   font-family: var(--font-art);
   font-size: 22px;
-  color: #fff;
+  color: var(--paper-text);
   font-weight: bold;
   line-height: 1.1;
   margin-bottom: 0;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  text-shadow: none;
 }
 
 .user-uid {
   font-family: var(--font-number);
   font-size: 26px;
-  color: #fff;
+  color: var(--paper-text);
   letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: none;
   font-style: italic;
   line-height: 1;
-  transition: all 0.3s ease;
 }
 
-/* Contextual UID: When following a name */
 .user-name + .user-uid {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--paper-text-sub);
   font-style: normal;
   margin-top: 2px;
   text-shadow: none;
@@ -524,6 +462,6 @@
   left: 50px;
   right: 25px;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--paper-accent), transparent);
   opacity: 0.6;
 }

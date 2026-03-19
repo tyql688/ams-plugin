@@ -4,8 +4,6 @@ body {
 
 .develop-container {
   width: 900px;
-  --glass-border: var(--panel-border-color);
-
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -20,6 +18,8 @@ body {
   align-items: flex-end;
   margin-bottom: 10px;
   padding: 30px 40px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--paper-border);
 }
 
 .header-title {
@@ -30,21 +30,21 @@ body {
 }
 
 .brand {
-  font-size: 12px;
-  letter-spacing: 4px;
-  color: var(--accent-cyan);
-  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--paper-accent);
+  font-weight: 800;
   margin-bottom: 4px;
   text-transform: uppercase;
+  opacity: 0.9;
 }
 
 .title-main {
   font-family: var(--font-art);
   font-size: 44px;
-  background: linear-gradient(180deg, #fff 40%, var(--accent-blue) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--paper-text);
+  font-weight: 700;
+  letter-spacing: 1px;
   line-height: 1.1;
 }
 
@@ -54,9 +54,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(44, 36, 24, 0.02);
   border-radius: 20px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--paper-border);
 }
 
 .role-header {
@@ -64,7 +64,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding-bottom: 25px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--paper-divider);
 }
 
 .role-portrait,
@@ -99,7 +99,7 @@ body {
 .weapon-name {
   font-family: var(--font-art);
   font-size: 36px;
-  color: #fff;
+  color: var(--paper-text);
   line-height: 1;
 }
 
@@ -118,7 +118,7 @@ body {
 /* === Sub Sections === */
 .section-label {
   font-size: 18px;
-  color: var(--text-secondary);
+  color: var(--paper-text-sub);
   letter-spacing: 2px;
   margin-bottom: 15px;
   display: flex;
@@ -131,7 +131,7 @@ body {
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(90deg, var(--paper-divider), transparent);
 }
 
 .categories-container {
@@ -147,25 +147,25 @@ body {
 }
 
 .skill-item {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(44, 36, 24, 0.03);
   padding: 12px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--paper-divider);
 }
 
 .sk-name {
   font-size: 13px;
-  color: var(--text-dim);
+  color: var(--paper-text-dim);
 }
 
 .sk-lvl {
   font-family: var(--font-number);
   font-size: 20px;
-  color: #fff;
+  color: var(--paper-text);
 }
 
 /* === Materials Grid === */
@@ -179,14 +179,14 @@ body {
 .mat-card {
   width: 100%;
   aspect-ratio: 1 / 1.15;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(44, 36, 24, 0.04);
   border-radius: 12px;
   padding: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--paper-divider);
   position: relative;
   overflow: hidden;
   transition: transform 0.2s ease;
@@ -200,7 +200,7 @@ body {
   left: 0;
   right: 0;
   height: 4px;
-  background: var(--rarity-color, rgba(255, 255, 255, 0.1));
+  background: var(--rarity-color, var(--paper-divider));
   box-shadow: 0 0 10px var(--rarity-color);
   opacity: 0.6;
 }
@@ -208,7 +208,7 @@ body {
 .mat-icon-wrapper {
   width: 100%;
   flex: 1;
-  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(44, 36, 24, 0.04) 0%, transparent 70%);
   border-radius: 8px;
   position: relative;
   display: flex;
@@ -221,29 +221,28 @@ body {
   width: 85%;
   height: 85%;
   object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 2px 4px rgba(44, 36, 24, 0.1));
 }
 
 .mat-num {
   position: absolute;
   bottom: 0px;
   right: 0px;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
+  background: rgba(44, 36, 24, 0.08);
+  color: var(--paper-text);
   font-family: var(--font-number);
   font-size: 14px;
   font-weight: 800;
   padding: 1px 6px;
   border-radius: 6px 0 0 0;
-  backdrop-filter: blur(4px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--paper-divider);
+  border-left: 1px solid var(--paper-divider);
   z-index: 2;
 }
 
 .mat-name {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--paper-text);
   text-align: center;
   width: 100%;
   white-space: nowrap;
@@ -257,22 +256,22 @@ body {
 /* Rarity Variations */
 .mat-card.rarity-5 {
   --rarity-color: #fab005;
-  background: linear-gradient(135deg, rgba(250, 176, 5, 0.08), rgba(0, 0, 0, 0.2));
+  background: linear-gradient(135deg, rgba(250, 176, 5, 0.08), rgba(44, 36, 24, 0.03));
   border-color: rgba(250, 176, 5, 0.2);
 }
 .mat-card.rarity-4 {
   --rarity-color: #be4bdb;
-  background: linear-gradient(135deg, rgba(190, 75, 219, 0.08), rgba(0, 0, 0, 0.2));
+  background: linear-gradient(135deg, rgba(190, 75, 219, 0.08), rgba(44, 36, 24, 0.03));
   border-color: rgba(190, 75, 219, 0.2);
 }
 .mat-card.rarity-3 {
   --rarity-color: #228be6;
-  background: linear-gradient(135deg, rgba(34, 139, 230, 0.08), rgba(0, 0, 0, 0.2));
+  background: linear-gradient(135deg, rgba(34, 139, 230, 0.08), rgba(44, 36, 24, 0.03));
   border-color: rgba(34, 139, 230, 0.2);
 }
 .mat-card.rarity-2 {
   --rarity-color: #40c057;
-  background: linear-gradient(135deg, rgba(64, 192, 87, 0.08), rgba(0, 0, 0, 0.2));
+  background: linear-gradient(135deg, rgba(64, 192, 87, 0.08), rgba(44, 36, 24, 0.03));
   border-color: rgba(64, 192, 87, 0.2);
 }
 
@@ -281,9 +280,9 @@ body {
   padding: 50px 40px;
   margin-top: 30px;
   margin-bottom: 40px;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(44, 36, 24, 0.02);
   border-radius: 20px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--paper-border);
 }
 
 .summary-header {
@@ -296,8 +295,6 @@ body {
 
 .total-summary .title-main {
   font-size: 48px;
-  background: linear-gradient(180deg, #fff 40%, var(--accent-gold) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--paper-text);
+  font-weight: 700;
 }

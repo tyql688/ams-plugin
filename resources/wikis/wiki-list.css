@@ -6,6 +6,9 @@ body {
 
 .container {
   width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .wiki-list-container {
@@ -18,14 +21,14 @@ body {
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 35px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.05);
-  padding-bottom: 25px;
+  border-bottom: 1px solid var(--paper-border);
+  padding-bottom: 18px;
 }
 
 .brand {
-  font-size: 14px;
-  letter-spacing: 4px;
-  color: var(--accent-blue);
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--paper-accent);
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 8px;
@@ -35,16 +38,17 @@ body {
   font-family: var(--font-art);
   font-size: 54px;
   font-weight: 800;
-  background: linear-gradient(180deg, #fff 30%, #94a3b8 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--paper-text);
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
   line-height: 1.1;
 }
 
 .count {
   font-size: 18px;
-  color: var(--accent-blue);
+  color: var(--paper-accent);
   font-weight: 600;
 }
 
@@ -68,7 +72,7 @@ body {
   font-size: 22px;
   font-weight: 700;
   font-family: var(--font-art);
-  color: var(--label-color, var(--accent-blue));
+  color: var(--label-color, var(--paper-accent));
   letter-spacing: 1px;
 }
 
@@ -81,7 +85,7 @@ body {
   height: 1px;
   background: linear-gradient(
     90deg,
-    var(--line-color, rgba(56, 189, 248, 0.3)) 0%,
+    var(--line-color, var(--paper-border)) 0%,
     transparent 100%
   );
 }
@@ -98,10 +102,10 @@ body {
 }
 
 .item-card {
-  background: var(--card-bg);
+  background: var(--paper-card);
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--paper-border);
   display: flex;
   flex-direction: column;
 }
@@ -132,7 +136,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--text-primary);
+  color: var(--paper-text);
   line-height: 1.2;
 }
 

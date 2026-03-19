@@ -19,8 +19,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--paper-border);
   margin-bottom: 30px;
 }
 
@@ -34,9 +34,9 @@ body {
 }
 
 .brand {
-  font-size: 12px;
-  letter-spacing: 4px;
-  color: var(--accent-blue);
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--paper-accent);
   font-weight: 700;
   margin-bottom: 4px;
   text-transform: uppercase;
@@ -45,10 +45,7 @@ body {
 .title-main {
   font-family: var(--font-art);
   font-size: 44px;
-  background: linear-gradient(180deg, #fff 40%, var(--accent-blue) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--paper-text);
   line-height: 1.1;
   margin-bottom: 8px;
 }
@@ -60,8 +57,8 @@ body {
   gap: 15px;
   border-radius: 20px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--paper-card);
+  border: 1px solid var(--paper-border);
 }
 
 .country-header {
@@ -126,11 +123,11 @@ body {
   height: 150px;
   border-radius: var(--card-radius);
   overflow: hidden;
-  background: #222;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: var(--paper-card);
+  box-shadow: 0 1px 8px rgba(44, 36, 24, 0.05);
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--paper-border);
 }
 
 .area-bg {
@@ -213,7 +210,7 @@ body {
   background: rgba(0, 0, 0, 0.6);
   padding: 3px 6px;
   border-radius: 4px;
-  backdrop-filter: blur(4px);
+  backdrop-filter: none;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 

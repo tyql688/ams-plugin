@@ -6,7 +6,6 @@ body {
 /* === 容器定义 === */
 .settings-container {
   width: 900px;
-  --panel-padding: 60px 50px 40px;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -20,6 +19,8 @@ body {
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--paper-border);
 }
 
 .head-title {
@@ -31,21 +32,21 @@ body {
 }
 
 .brand {
-  font-size: 12px;
-  letter-spacing: 4px;
-  color: var(--accent-cyan);
-  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--paper-accent);
+  font-weight: 800;
   margin-bottom: 4px;
   text-transform: uppercase;
+  opacity: 0.9;
 }
 
 .title-main {
   font-family: var(--font-art);
   font-size: 44px;
-  background: linear-gradient(180deg, #fff 40%, var(--accent-gold) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--paper-text);
+  font-weight: 700;
+  letter-spacing: 1px;
   line-height: 1.1;
 }
 
@@ -57,8 +58,8 @@ body {
 }
 
 .setting-item {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(44, 36, 24, 0.03);
+  border: 1px solid var(--paper-divider);
   padding: 20px 24px;
   display: flex;
   align-items: center;
@@ -67,14 +68,14 @@ body {
 }
 
 .setting-item.active {
-  background: rgba(250, 204, 21, 0.03);
-  border-left: 4px solid var(--accent-gold);
+  background: rgba(184, 134, 11, 0.05);
+  border-left: 4px solid var(--paper-accent);
 }
 
 .item-icon {
   width: 12px;
   height: 12px;
-  border: 1px solid var(--text-dim);
+  border: 1px solid var(--paper-text-dim);
   margin-right: 20px;
   display: flex;
   align-items: center;
@@ -82,8 +83,8 @@ body {
 }
 
 .setting-item.active .item-icon {
-  border-color: var(--accent-gold);
-  background: var(--accent-gold);
+  border-color: var(--paper-accent);
+  background: var(--paper-accent);
 }
 
 .item-info {
@@ -93,21 +94,21 @@ body {
 .item-name {
   font-size: 20px;
   font-weight: bold;
-  color: var(--text-primary);
+  color: var(--paper-text);
   margin-bottom: 4px;
 }
 
 .item-desc {
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--paper-text-sub);
   margin-bottom: 8px;
 }
 
 .item-example {
   font-size: 11px;
-  color: var(--accent-gold);
+  color: var(--paper-accent);
   opacity: 0.6;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(44, 36, 24, 0.06);
   padding: 2px 8px;
   display: inline-block;
   border-radius: 2px;
@@ -133,15 +134,15 @@ body {
 }
 
 .status-toggle.on {
-  background: rgba(50, 235, 124, 0.1);
-  color: #32eb7c;
-  border: 1px solid rgba(50, 235, 124, 0.3);
+  background: rgba(90, 114, 71, 0.1);
+  color: var(--paper-green);
+  border: 1px solid rgba(90, 114, 71, 0.3);
 }
 
 .status-toggle.off {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(180, 60, 60, 0.08);
+  color: #b43c3c;
+  border: 1px solid rgba(180, 60, 60, 0.2);
 }
 
 .toggle-dot {
@@ -152,8 +153,8 @@ body {
 }
 
 .status-value {
-  background: var(--accent-gold);
-  color: black;
+  background: var(--paper-accent);
+  color: #fffdf8;
   padding: 4px 14px;
   font-weight: bold;
   font-size: 15px;

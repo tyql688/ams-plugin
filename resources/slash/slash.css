@@ -1,16 +1,9 @@
-:root {
-  --glass-border: rgba(56, 189, 248, 0.15);
-  --accent-purple: #a855f7;
-}
-
 body {
   width: 900px;
 }
 
 .slash-container {
   width: 900px;
-  --glass-border: var(--panel-border-color);
-
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -24,6 +17,8 @@ body {
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 10px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--paper-border);
 }
 
 .head-title {
@@ -36,21 +31,21 @@ body {
 }
 
 .brand {
-  font-size: 12px;
-  letter-spacing: 4px;
-  color: var(--accent-cyan);
-  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--paper-accent);
+  font-weight: 800;
   margin-bottom: 4px;
   text-transform: uppercase;
+  opacity: 0.9;
 }
 
 .title-main {
   font-family: var(--font-art);
   font-size: 44px;
-  background: linear-gradient(180deg, #fff 40%, var(--accent-cyan) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--paper-text);
+  font-weight: 700;
+  letter-spacing: 1px;
   line-height: 1.1;
   margin-bottom: 8px;
 }
@@ -61,15 +56,15 @@ body {
   gap: 8px;
   padding: 4px 12px;
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--glass-border);
+  background: rgba(44, 36, 24, 0.06);
+  border: 1px solid var(--paper-border);
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--paper-text-sub);
 }
 
 .info-pill .info-data {
   font-family: var(--font-number);
-  color: var(--accent-gold);
+  color: var(--paper-accent);
   font-size: 16px;
 }
 
@@ -81,20 +76,20 @@ body {
 }
 
 .total-score-card {
-  background: linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(10, 10, 10, 0.7) 100%);
+  background: rgba(44, 36, 24, 0.04);
   padding: 12px 50px;
   border-radius: 100px;
-  border: 1px solid rgba(34, 211, 238, 0.3);
+  border: 1px solid var(--paper-border);
   display: flex;
   align-items: center;
   gap: 30px;
-  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 2px 12px rgba(44, 36, 24, 0.06);
 }
 
 .score-label {
   font-family: var(--font-art);
   font-size: 24px;
-  color: var(--text-secondary);
+  color: var(--paper-text-sub);
 }
 
 .total-count {
@@ -105,17 +100,17 @@ body {
 }
 
 .total-count .current {
-  color: #fff;
-  text-shadow: 0 0 25px rgba(34, 211, 238, 0.4);
+  color: var(--paper-text);
+  text-shadow: none;
 }
 
 .total-count .divider {
-  color: var(--text-dim);
+  color: var(--paper-text-dim);
   font-size: 32px;
 }
 
 .total-count .max {
-  color: var(--text-dim);
+  color: var(--paper-text-dim);
   font-size: 36px;
 }
 
@@ -138,12 +133,12 @@ body {
 .challenge-name {
   font-family: var(--font-art);
   font-size: 30px;
-  color: #f1f5f9;
+  color: var(--paper-text);
 }
 
 .challenge-line {
   height: 1px;
-  background: linear-gradient(90deg, var(--accent-cyan) 0%, transparent 100%);
+  background: linear-gradient(90deg, var(--paper-accent) 0%, transparent 100%);
   width: 250px;
   opacity: 0.3;
   margin-top: 8px;
@@ -153,50 +148,50 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(44, 36, 24, 0.04);
   padding: 10px 24px;
   border-radius: 16px;
 }
 
 .challenge-rank-badge .label {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--paper-text-sub);
 }
 
 .challenge-rank-badge .rank-value {
   font-size: 44px;
   color: var(--grade-other);
   font-weight: 800;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  text-shadow: none;
 }
 
 .challenge-rank-badge .rank-value.color-sss,
 .challenge-rank-badge .rank-value.color-ss,
 .challenge-rank-badge .rank-value.color-s {
   color: var(--grade-s);
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  text-shadow: none;
 }
 
 .challenge-rank-badge .rank-value.color-a {
   color: var(--grade-a);
-  text-shadow: 0 0 20px rgba(156, 39, 176, 0.4);
+  text-shadow: none;
 }
 
 .challenge-rank-badge .rank-value.color-b {
   color: var(--grade-b);
-  text-shadow: 0 0 20px rgba(65, 125, 235, 0.4);
+  text-shadow: none;
 }
 
 .challenge-rank-badge .rank-value.color-c {
   color: var(--grade-c);
-  text-shadow: 0 0 20px rgba(50, 235, 124, 0.4);
+  text-shadow: none;
 }
 
 .challenge-rank-badge .score-value {
   font-size: 20px;
-  color: var(--accent-cyan);
+  color: var(--paper-accent);
   padding-left: 10px;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid var(--paper-divider);
 }
 
 /* === 阶段卡片 === */
@@ -208,12 +203,12 @@ body {
 
 .half-item {
   height: 180px;
-  background: rgba(13, 14, 20, 0.98);
-  border: 1px solid var(--glass-border);
+  background: var(--paper-card);
+  border: 1px solid var(--paper-border);
   border-radius: 32px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--paper-shadow);
 }
 
 .half-bg-banner {
@@ -227,8 +222,8 @@ body {
   background-repeat: no-repeat;
   mask-image: linear-gradient(to left, #000 20%, transparent 100%);
   -webkit-mask-image: linear-gradient(to left, #000 20%, transparent 100%);
-  opacity: 0.45;
-  filter: brightness(0.8) contrast(1.1);
+  opacity: 0.25;
+  filter: brightness(1.1) contrast(0.9);
   z-index: 1;
 }
 
@@ -238,11 +233,11 @@ body {
   bottom: -20px;
   font-size: 150px;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.05);
+  color: rgba(44, 36, 24, 0.04);
   pointer-events: none;
   z-index: 0;
   line-height: 1;
-  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  text-shadow: none;
 }
 
 .half-main {
@@ -258,12 +253,12 @@ body {
 .half-info-box {
   width: 140px;
   flex-shrink: 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid var(--paper-divider);
 }
 
 .phase-tag {
   font-size: 13px;
-  color: var(--text-dim);
+  color: var(--paper-text-dim);
   font-weight: 700;
   letter-spacing: 2px;
   margin-bottom: 8px;
@@ -272,15 +267,15 @@ body {
 .phase-score .label {
   display: block;
   font-size: 11px;
-  color: var(--text-secondary);
+  color: var(--paper-text-sub);
   opacity: 0.6;
 }
 
 .phase-score .value {
   font-size: 36px;
-  color: #fff;
+  color: var(--paper-text);
   font-weight: 800;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  text-shadow: none;
 }
 
 .half-team-box {
@@ -297,12 +292,12 @@ body {
 .phase-team-icon {
   width: 24px;
   height: 24px;
-  filter: drop-shadow(0 0 5px var(--accent-cyan));
+  filter: none;
 }
 
 .team-label {
   font-size: 11px;
-  color: var(--text-dim);
+  color: var(--paper-text-dim);
   letter-spacing: 1.5px;
   font-weight: 600;
 }
@@ -316,8 +311,8 @@ body {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid var(--paper-border);
+  background: rgba(44, 36, 24, 0.04);
   overflow: hidden;
   padding: 0;
 }
@@ -342,7 +337,7 @@ body {
 .buff-name-mini {
   font-family: var(--font-art);
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--paper-text-sub);
   text-align: center;
   max-width: 120px;
   display: -webkit-box;
@@ -359,8 +354,8 @@ body {
   position: relative;
   width: 90px;
   height: 90px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(44, 36, 24, 0.04);
+  border: 1px solid var(--paper-border);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -417,7 +412,7 @@ body {
 }
 
 .no-lineup {
-  color: var(--text-dim);
+  color: var(--paper-text-dim);
   font-size: 14px;
   letter-spacing: 2px;
   font-weight: 700;

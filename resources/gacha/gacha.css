@@ -4,8 +4,6 @@ body {
 
 .gacha-container {
   width: 850px;
-  --glass-border: var(--panel-border-color);
-
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -19,8 +17,8 @@ body {
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding-bottom: 14px;
+  border-bottom: 1px solid var(--paper-border);
+  padding-bottom: 18px;
 }
 
 .head-title {
@@ -33,9 +31,9 @@ body {
 }
 
 .brand {
-  font-size: 12px;
-  letter-spacing: 4px;
-  color: var(--accent-cyan);
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: var(--paper-accent);
   font-weight: 700;
   margin-bottom: 4px;
   text-transform: uppercase;
@@ -44,10 +42,7 @@ body {
 .title-main {
   font-family: var(--font-art);
   font-size: 44px;
-  background: linear-gradient(180deg, #fff 40%, var(--accent-cyan) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--paper-text);
   line-height: 1.1;
   margin-bottom: 8px;
 }
@@ -79,26 +74,25 @@ body {
 .pool-title {
   font-family: var(--font-art);
   font-size: 20px;
-  color: #fff;
+  color: var(--paper-text);
   margin-bottom: 4px;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
   font-weight: bold;
 }
 
 .pool-cost {
   font-size: 13px;
-  color: var(--accent-cyan);
+  color: var(--paper-accent);
   opacity: 1;
   font-weight: bold;
 }
 
 /* === Data Box === */
 .box {
-  background: rgba(20, 25, 35, 0.8);
-  border: 1px solid rgba(34, 211, 238, 0.2);
+  background: var(--paper-card);
+  border: 1px solid var(--paper-border);
   border-radius: 12px;
   padding: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 8px rgba(44, 36, 24, 0.05);
 }
 
 .box-overview {
@@ -112,24 +106,23 @@ body {
   position: relative;
   padding: 10px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(44, 36, 24, 0.03);
+  border: 1px solid var(--paper-border);
 }
 
 .value {
   font-size: 22px;
   margin-bottom: 4px;
-  color: #fff;
+  color: var(--paper-text);
   font-weight: 800;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   line-height: 1;
 }
 
 .key {
   font-size: 10px;
   margin-top: 0;
-  color: #94a3b8;
-  opacity: 0.85;
+  color: var(--paper-text);
+  opacity: 0.5;
   font-weight: 400;
 }
 
@@ -139,8 +132,9 @@ body {
   padding: 6px 10px;
   font-size: 11px;
   border-radius: 8px;
-  color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.05);
+  color: var(--paper-text);
+  opacity: 0.6;
+  background: rgba(44, 36, 24, 0.04);
   text-align: center;
 }
 
@@ -157,10 +151,10 @@ body {
   position: relative;
   width: 54px;
   height: 54px;
-  background: #111;
+  background: var(--paper-card);
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--paper-border);
+  box-shadow: 0 1px 8px rgba(44, 36, 24, 0.05);
 }
 
 .role-img {
@@ -183,9 +177,8 @@ body {
   padding: 1px 5px;
   border-radius: 6px;
   z-index: 2;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 1px 4px rgba(44, 36, 24, 0.1);
+  border: 1px solid var(--paper-border);
   letter-spacing: 0.3px;
 }
 
@@ -194,11 +187,12 @@ body {
   bottom: -7px;
   left: 50%;
   transform: translateX(-50%);
-  background: #333;
-  color: #fff;
+  background: var(--paper-card);
+  color: var(--paper-text);
   font-size: 9px;
   padding: 2px 5px;
   border-radius: 10px;
   white-space: nowrap;
   z-index: 2;
+  border: 1px solid var(--paper-border);
 }

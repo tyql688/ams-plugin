@@ -4,27 +4,18 @@ body {
 
 .container {
   width: 1000px;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .card {
-  background: linear-gradient(
-    180deg,
-    rgba(20, 20, 28, 0.65) 0%,
-    rgba(14, 14, 20, 0.45) 50%,
-    rgba(10, 10, 16, 0.55) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--paper-card);
+  border: 1px solid var(--paper-border);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
-    0 0 40px rgba(0, 0, 0, 0.5) inset,
-    0 2px 4px rgba(0, 0, 0, 0.3) inset;
+  box-shadow: var(--paper-shadow);
   position: relative;
-  -webkit-backdrop-filter: blur(2px);
-  backdrop-filter: blur(2px);
 }
 
 .card::before {
@@ -33,53 +24,35 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 1px;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.25),
-    #fbbf24,
-    rgba(255, 255, 255, 0.25),
+    var(--paper-border),
+    var(--paper-accent),
+    var(--paper-border),
     transparent
   );
   opacity: 0.6;
 }
 
 .card::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 12px;
-  border: 1px solid #fbbf24;
-  box-shadow: 0 0 20px rgba(251, 191, 36, 0.3) inset;
-  background: linear-gradient(135deg, transparent, rgba(251, 191, 36, 0.1) 50%, transparent);
-  opacity: 0.08;
+  display: none;
 }
 
 .card-title {
   font-size: 14px;
   font-weight: 800;
   font-family: var(--font-art);
-  color: #fbbf24;
+  color: var(--paper-accent);
   padding: 12px 16px;
-  background: linear-gradient(
-    135deg,
-    rgba(251, 191, 36, 0.15) 0%,
-    rgba(0, 0, 0, 0.4) 50%,
-    transparent 100%
-  );
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(44, 36, 24, 0.04);
+  border-bottom: 1px solid var(--paper-divider);
   letter-spacing: 1.5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  text-shadow:
-    0 0 12px rgba(251, 191, 36, 0.5),
-    0 0 20px rgba(251, 191, 36, 0.3),
-    0 2px 4px rgba(0, 0, 0, 0.9);
+  text-shadow: none;
   position: relative;
   text-transform: uppercase;
 }
@@ -91,10 +64,8 @@ body {
   top: 0;
   bottom: 0;
   width: 4px;
-  background: linear-gradient(180deg, #fbbf24 0%, transparent 100%);
-  box-shadow:
-    0 0 10px #fbbf24,
-    0 0 20px rgba(251, 191, 36, 0.5);
+  background: linear-gradient(180deg, var(--paper-accent) 0%, transparent 100%);
+  box-shadow: none;
   opacity: 0.9;
 }
 
@@ -105,13 +76,13 @@ body {
   right: 0;
   bottom: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #fbbf24 20%, #fbbf24 80%, transparent);
-  opacity: 0.4;
+  background: linear-gradient(90deg, transparent, var(--paper-accent) 20%, var(--paper-accent) 80%, transparent);
+  opacity: 0.2;
 }
 
 .title-uid {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--paper-text-sub);
   font-weight: normal;
 }
 
@@ -119,10 +90,10 @@ body {
   width: 100%;
   height: 320px;
   position: relative;
-  background: #1e293b;
+  background: var(--paper-bg);
   margin-bottom: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 10px rgba(44, 36, 24, 0.06);
+  border-bottom: 1px solid var(--paper-border);
   overflow: hidden;
 }
 
@@ -142,8 +113,8 @@ body {
   height: 100%;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.9) 0%,
-    rgba(0, 0, 0, 0.2) 60%,
+    rgba(245, 240, 232, 0.95) 0%,
+    rgba(245, 240, 232, 0.4) 60%,
     transparent 100%
   );
 }
@@ -159,16 +130,16 @@ body {
   font-size: 48px;
   font-weight: 700;
   font-family: var(--font-art);
-  color: #fff;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+  color: var(--paper-text);
+  text-shadow: none;
   margin-bottom: 8px;
   letter-spacing: 2px;
 }
 
 .head-desc {
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.8);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  color: var(--paper-text-sub);
+  text-shadow: none;
   font-weight: 400;
 }
 
@@ -180,36 +151,26 @@ body {
 }
 
 .group-box {
-  background: linear-gradient(
-    180deg,
-    rgba(20, 20, 28, 0.65) 0%,
-    rgba(14, 14, 20, 0.45) 50%,
-    rgba(10, 10, 16, 0.55) 100%
-  );
+  background: var(--paper-card);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--paper-border);
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--paper-shadow);
   position: relative;
 }
 
 .group-title-bar {
   min-height: 50px;
-  background: linear-gradient(
-    135deg,
-    rgba(251, 191, 36, 0.15) 0%,
-    rgba(0, 0, 0, 0.4) 50%,
-    transparent 100%
-  );
+  background: rgba(44, 36, 24, 0.04);
   display: flex;
   align-items: center;
   padding: 12px 20px;
-  border-left: 4px solid #fbbf24;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 4px solid var(--paper-accent);
+  border-bottom: 1px solid var(--paper-divider);
 }
 
 .group-icon {
-  color: #fbbf24;
+  color: var(--paper-accent);
   font-size: 14px;
   margin-right: 10px;
   flex-shrink: 0;
@@ -218,13 +179,13 @@ body {
 .group-name {
   font-size: 18px;
   font-weight: bold;
-  color: #fff;
+  color: var(--paper-text);
 }
 
 .group-desc {
   margin-left: auto;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--paper-text-dim);
   flex-shrink: 0;
 }
 
@@ -240,24 +201,20 @@ body {
 .cmd-card {
   width: 100%;
   min-height: 84px;
-  background: rgba(40, 45, 60, 0.6);
+  background: rgba(44, 36, 24, 0.03);
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--paper-divider);
   display: flex;
   align-items: center;
   padding: 12px;
   gap: 12px;
-  transition: all 0.2s;
   box-sizing: border-box;
   overflow: hidden;
-  will-change: auto;
-  transform: translateZ(0);
-  backface-visibility: hidden;
 }
 
 .cmd-card.is-master {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(0, 0, 0, 0));
-  border-color: rgba(251, 191, 36, 0.2);
+  background: rgba(184, 134, 11, 0.06);
+  border-color: rgba(184, 134, 11, 0.25);
 }
 
 .cmd-icon-box {
@@ -284,7 +241,7 @@ body {
 .cmd-name {
   font-size: 15px;
   font-weight: bold;
-  color: #fff;
+  color: var(--paper-text);
   margin-bottom: 4px;
   line-height: 1.4;
   word-break: break-word;
@@ -292,7 +249,7 @@ body {
 
 .cmd-detail {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--paper-text-dim);
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
