@@ -585,8 +585,8 @@ body {
 }
 
 .echo-name {
-  font-size: 13px;
-  color: var(--text-primary);
+  font-size: 15px;
+  color: #fff;
   white-space: nowrap;
   overflow: visible;
   text-overflow: clip;
@@ -596,6 +596,15 @@ body {
   line-height: 1.3;
 }
 
+.echo-cost {
+  font-size: 12px;
+  color: var(--element-primary);
+  margin-top: 2px;
+  text-shadow: none;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
 .echo-lv {
   position: absolute;
   right: 4px;
@@ -603,12 +612,13 @@ body {
   bottom: 0px;
   background: rgba(0, 0, 0, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 0 4px;
+  padding: 1px 6px;
   border-radius: 4px;
-  font-size: 10px;
-  color: var(--text-primary);
+  font-size: 11px;
+  color: #fff;
   z-index: 20;
   margin: 0;
+  font-family: var(--font-number);
 }
 
 .echo-props {
@@ -793,4 +803,60 @@ body {
   text-align: center;
   color: #ffc107;
   font-size: 18px;
+}
+
+/* ==================== 有效词条高亮 ==================== */
+.attr-label.grade-s,
+.attr-label.grade-ss,
+.attr-label.grade-sss {
+  color: #ffd700;
+}
+.attr-val.grade-s,
+.attr-val.grade-ss,
+.attr-val.grade-sss {
+  color: #ffd700;
+}
+
+.attr-label.grade-a {
+  color: #c084fc;
+}
+.attr-val.grade-a {
+  color: #c084fc;
+}
+
+.attr-label.grade-b {
+  color: #60a5fa;
+}
+.attr-val.grade-b {
+  color: #60a5fa;
+}
+
+.attr-label.grade-c {
+  color: #4ade80;
+}
+.attr-val.grade-c {
+  color: #4ade80;
+}
+
+/* 声骸副词条有效高亮 */
+.p-name.grade-s,
+.p-name.grade-ss,
+.p-name.grade-sss {
+  color: #ffd700;
+  font-weight: 600;
+}
+
+.p-name.grade-a {
+  color: #c084fc;
+  font-weight: 600;
+}
+
+.p-name.grade-b {
+  color: #60a5fa;
+  font-weight: 600;
+}
+
+.p-name.grade-c {
+  color: #4ade80;
+  font-weight: 600;
 }
