@@ -1,0 +1,90 @@
+/* ==================== 角色面板暗色主题覆盖 ==================== */
+/* 覆盖全局攻略册变量，恢复原始暗色风格 */
+
+:root {
+  /* === 文本颜色 === */
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-dim: #64748b;
+  --color-text-main: #ffffff;
+
+  /* === 背景颜色 === */
+  --bg-body: #050508;
+
+  /* === 强调色 === */
+  --accent-blue: #38bdf8;
+  --accent-cyan: #22d3ee;
+  --accent-gold: #facc15;
+
+  /* === 元素主题色 === */
+  --element-primary: #00f0ff;
+  --element-bg: rgba(0, 240, 255, 0.08);
+  --element-shadow: rgba(0, 240, 255, 0.2);
+
+  /* === 评级等级 === */
+  --grade-c: #32eb7c;
+  --grade-s: #ffd700;
+  --grade-ss: #ffd700;
+  --grade-sss: #ffd700;
+
+  /* === 武器品质 === */
+  --rarity-2: #32eb7c;
+  --rarity-5: #ffd700;
+
+  /* === 武器属性 === */
+  --weapon-prop-gold: #ffd700;
+  --weapon-prop-gold-shadow: rgba(255, 215, 0, 0.5);
+
+  /* === 元素配色（原始鲜艳色） === */
+  --color-glacio: #22d3ee;
+  --color-fusion: #ef4444;
+  --color-electro: #a855f7;
+  --color-aero: #34d399;
+  --color-spectro: #facc15;
+  --color-havoc: #e649a6;
+}
+
+/* 恢复版权暗色样式 */
+.copyright {
+  color: #797979;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.copyright .highlight {
+  color: #fff;
+}
+
+.copyright .highlight .version {
+  color: #d3bc8e;
+}
+
+/* 恢复用户铭牌暗色样式 */
+.user-meta {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.35) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-left: none;
+  backdrop-filter: blur(8px);
+}
+
+.user-name {
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.user-uid {
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.user-name + .user-uid {
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: none;
+}
+
+.user-meta::after {
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+
+.user-avatar-box {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
