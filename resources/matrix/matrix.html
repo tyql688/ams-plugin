@@ -1,0 +1,139 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{_res_path}}/matrix/matrix.css" />
+{{/block}} {{block 'main'}}
+<div class="matrix-container glass-panel">
+  <div class="glow-top"></div>
+
+  <div class="header">
+    {{if userAvatar}}
+    <div class="user-profile">
+      <div class="user-avatar-box">
+        <img class="user-avatar" src="{{userAvatar}}" />
+        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+      </div>
+      <div class="user-meta">
+        <span class="user-uid">UID: {{uid}}</span>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="head-title">
+      <div class="brand">Terminal Matrix</div>
+      <div class="title-main">终焉矩阵</div>
+      {{if showSeason}}
+      <div class="info-pill">
+        <span class="season-label">本期结束还剩</span>
+        <span class="info-data">{{seasonEndTime}}</span>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="summary">
+    {{if partialNote}}
+    <div class="matrix-hint">部分模式仅含概要信息，无队伍明细。</div>
+    {{/if}}
+
+    <div class="modes">
+      {{each modeList mode}}
+      <section class="mode-group">
+        <div class="mode-score-info">
+          <div class="mode-total-card">
+            <div class="mode-total-seg">
+              <span class="mode-total-cap">得分</span>
+              <span class="mode-total-num mode-total-num--score">{{mode.score}}</span>
+            </div>
+            <div class="mode-total-seg">
+              <span class="mode-total-cap">评级</span>
+              <span class="mode-rank-num">{{mode.rank}}</span>
+            </div>
+            {{if mode.hasRound}}
+            <div class="mode-total-seg">
+              <span class="mode-total-cap">轮次</span>
+              <span class="mode-total-num mode-total-num--round">{{mode.round}}</span>
+            </div>
+            {{/if}} {{if mode.hasBossProgress}}
+            <div class="mode-total-seg mode-total-seg--boss">
+              <span class="mode-total-cap">首领</span>
+              <span class="mode-boss-num">{{mode.passBoss}}/{{mode.bossCount}}</span>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+        <div class="mode-challenge-head">
+          <div class="mode-name-box">
+            <span class="mode-name">{{mode.modeName}}</span>
+            <div class="mode-challenge-line"></div>
+          </div>
+        </div>
+
+        {{if mode.hasTeams}}
+        <div class="teams">
+          {{each mode.teams team}}
+          <div class="team-card">
+            <div class="team-score-watermark">{{team.score}}</div>
+            <div class="team-bg-faint"></div>
+            <div class="team-main">
+              <div class="team-info-box">
+                <div class="team-phase-tag">第 {{team.round}} 队</div>
+                <div class="team-score-block">
+                  <span class="label">得分</span>
+                  <span class="value">{{team.score}}</span>
+                </div>
+              </div>
+              <div class="team-center-box">
+                <div class="team-header">
+                  <span class="team-label">阵容</span>
+                </div>
+                <div class="role-list">
+                  {{if team.roleList && team.roleList.length}} {{each team.roleList role}}
+                  <div class="role-avatar-wrapper circle">
+                    <img
+                      class="role-avatar"
+                      src="{{wavesResMap.roleAvatar}}/{{role.roleId}}.png"
+                      onerror="this.src='{{role.iconUrl}}'; this.onerror=null;"
+                    />
+                  </div>
+                  {{/each}} {{else if team.roleIcons && team.roleIcons.length}} {{each
+                  team.roleIcons icon}}
+                  <div class="role-avatar-wrapper circle">
+                    <img class="role-avatar" src="{{icon}}" alt="" />
+                  </div>
+                  {{/each}} {{else}}
+                  <span class="no-lineup">暂无阵容</span>
+                  {{/if}}
+                </div>
+              </div>
+              <div class="team-buff-box">
+                {{if team.buffs && team.buffs.length}} {{each team.buffs buff}}
+                <div class="matrix-buff-slot">
+                  <div class="matrix-buff-frame">
+                    <div class="matrix-buff-icon-wrap">
+                      {{if buff.buffIcon}}
+                      <img src="{{buff.buffIcon}}" class="matrix-buff-img" alt="" />
+                      {{/if}}
+                    </div>
+                  </div>
+                  <div class="matrix-buff-name">{{buff.buffName}}</div>
+                </div>
+                {{/each}} {{else}}
+                <div class="matrix-buff-slot matrix-buff-slot--empty">
+                  <span class="buff-empty-label">无增益</span>
+                </div>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+        {{else}}
+        <div class="mode-empty">
+          <div class="mode-empty-text">暂无队伍明细（概要数据）</div>
+        </div>
+        {{/if}}
+      </section>
+      {{/each}}
+    </div>
+  </div>
+</div>
+{{/block}}

@@ -4,6 +4,7 @@ sign: 110 # 签到
 alias: 110 # 别名
 slash: 110 # 冥歌海墟
 tower: 110 # 逆境深塔
+matrix: 110 # 终焉矩阵
 task: 110 # 自动签到
 custom: 110 # 自定义素材
 res: 110 # 资源管理
