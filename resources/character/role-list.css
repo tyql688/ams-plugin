@@ -8,16 +8,23 @@
 }
 
 body {
-  width: 900px;
+  width: 940px;
+}
+
+.container {
+  width: 940px;
+  padding: 20px;
+  background-image: url("../common/bg/bg.png");
 }
 
 .role-list-container {
-  width: 900px;
-  --glass-border: var(--panel-border-color);
+  width: 100%;
+  --glass-border: var(--paper-divider);
+  --panel-padding: 34px 38px 26px;
 
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 26px;
 }
 
 /* === Header === */
@@ -26,8 +33,9 @@ body {
   z-index: 1;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 10px;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--paper-divider);
 }
 
 .head-title {
@@ -46,26 +54,28 @@ body {
   font-weight: 700;
   margin-bottom: 4px;
   text-transform: uppercase;
+  opacity: 0.88;
 }
 
 .title-main {
   font-family: var(--font-art);
   font-size: 44px;
-  background: linear-gradient(180deg, #fff 40%, var(--accent-cyan) 100%);
+  background: linear-gradient(180deg, #fff 30%, rgba(34, 211, 238, 0.82) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1.1;
   margin-bottom: 8px;
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.1);
 }
 
 .info-pill {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 12px;
+  padding: 5px 13px;
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--glass-border);
   font-size: 14px;
   color: var(--text-secondary);
@@ -136,7 +146,7 @@ body {
 .role-name {
   font-size: 13px;
   font-weight: bold;
-  color: #fff;
+  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -146,46 +156,60 @@ body {
 }
 
 .cons-tag {
-  width: 16px;
+  min-width: 16px;
   height: 16px;
+  padding: 0 4px;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-number);
   font-size: 11px;
   font-weight: 700;
   color: #fff;
-  background: #334155;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .cons-tag.c-0 {
-  background: rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--chain-0);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .cons-tag.c-1 {
-  background: #22c55e;
+  background: var(--chain-1);
+  color: #04130b;
+  border-color: transparent;
 }
 
 .cons-tag.c-2 {
-  background: #06b6d4;
+  background: var(--chain-2);
+  color: #04111c;
+  border-color: transparent;
 }
 
 .cons-tag.c-3 {
-  background: #3b82f6;
+  background: var(--chain-3);
+  border-color: transparent;
 }
 
 .cons-tag.c-4 {
-  background: #a855f7;
+  background: var(--chain-4);
+  color: #241300;
+  border-color: transparent;
 }
 
 .cons-tag.c-5 {
-  background: #f59e0b;
+  background: var(--chain-5);
+  border-color: transparent;
 }
 
 .cons-tag.c-6 {
-  background: #ef4444;
-  box-shadow: 0 0 4px #ef4444;
+  background: var(--chain-6);
+  color: #2b2100;
+  border-color: transparent;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
 }
 
 .footer-tip {
@@ -206,7 +230,8 @@ body {
   color: var(--accent-cyan);
   font-weight: bold;
   margin: 0 3px;
-  background: rgba(34, 211, 238, 0.1);
+  background: rgba(34, 211, 238, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.16);
   padding: 0 5px;
   border-radius: 4px;
 }

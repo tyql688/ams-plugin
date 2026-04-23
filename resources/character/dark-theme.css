@@ -2,6 +2,17 @@
 /* 覆盖全局攻略册变量，恢复原始暗色风格 */
 
 :root {
+  /* === 覆盖攻略册纸张变量，恢复 character 页暗色体系 === */
+  --paper-bg: #050508;
+  --paper-card: rgba(13, 14, 20, 0.98);
+  --paper-text: #ffffff;
+  --paper-text-sub: #94a3b8;
+  --paper-text-dim: #64748b;
+  --paper-accent: #22d3ee;
+  --paper-border: rgba(255, 255, 255, 0.15);
+  --paper-divider: rgba(255, 255, 255, 0.08);
+  --paper-shadow: 0 24px 48px rgba(0, 0, 0, 0.42);
+
   /* === 文本颜色 === */
   --text-primary: #ffffff;
   --text-secondary: #94a3b8;
@@ -15,6 +26,12 @@
   --accent-blue: #38bdf8;
   --accent-cyan: #22d3ee;
   --accent-gold: #facc15;
+
+  /* === 暗色面板变量 === */
+  --panel-bg: linear-gradient(180deg, rgba(8, 10, 15, 0.95) 0%, rgba(13, 14, 20, 0.98) 100%);
+  --panel-border: 1px solid rgba(255, 255, 255, 0.08);
+  --panel-shadow: var(--paper-shadow);
+  --panel-radius: 18px;
 
   /* === 元素主题色 === */
   --element-primary: #00f0ff;
