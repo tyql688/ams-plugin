@@ -22,6 +22,11 @@
     url("../font/LXGWWenKai-Medium.woff") format("woff"),
     url("../font/LXGWWenKai-Medium.ttf") format("truetype");
 }
+@font-face {
+  font-family: "FangXinShu";
+  src: url("../font/FangXinShu.ttf") format("truetype");
+  font-display: swap;
+}
 
 /* ==================== 通用变量配置 ==================== */
 :root {
@@ -29,6 +34,7 @@
   --font-number: "Number", sans-serif;
   --font-normal: "YS", sans-serif;
   --font-art: "LXGWWenKai", sans-serif;
+  --font-game: "FangXinShu", "LXGWWenKai", sans-serif;
 
   /* === 攻略册风格基础色 === */
   --paper-bg: #f5f0e8;

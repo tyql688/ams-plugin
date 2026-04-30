@@ -4,137 +4,153 @@
 {{/block}}
 
 {{block 'main'}}
-<div class="daily-note-container glass-panel">
-  <div class="glow-top"></div>
-  <img class="card-sticker" src="{{pluResPath}}dailyNote/imgs/left.png" />
+<div class="daily-panel">
+  <!-- 右侧立绘 -->
+  {{if pileImage}}
+  <img class="pile-art" src="{{pileImage}}" alt="" />
+  {{/if}}
 
-  <div class="header">
-    {{if userAvatar}}
-    <div class="user-profile">
-      <div class="user-avatar-box">
-        <img class="user-avatar" src="{{userAvatar}}" />
-        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+  <!-- 主内容区（右半） -->
+  <div class="main-area">
+    <!-- Hero 标题 -->
+    <div class="hero-banner">
+      <div class="hb-stack">
+        <div class="hb-en">DAILY · NOTE</div>
+        <div class="hb-cn">实时便笺</div>
       </div>
-      <div class="user-meta">
-        <div class="user-name">{{roleName}}</div>
-        <span class="user-uid">UID: {{roleId}}</span>
+      <div class="hb-mark">
+        <span class="hb-mark-dot"></span>
+        <span class="hb-mark-text">WAVES</span>
       </div>
     </div>
-    {{/if}}
 
-    <div class="head-title">
-      <div class="brand">DAILY NOTE</div>
-      <div class="title-main">实时便笺</div>
-      <div class="season-info-sub {{if !hasSignIn}}warn{{/if}}">
-        <span>今日签到</span>
-        <span class="season-time">{{if hasSignIn}}已领取{{else}}未领取{{/if}}</span>
+    <!-- 顶部状态药丸 -->
+    <div class="status-row">
+      <div class="status-pill {{if hasSignIn}}sp-ok{{else}}sp-warn{{/if}}">
+        <span class="s-dot">{{if hasSignIn}}✓{{else}}!{{/if}}</span>
+        <span>{{if hasSignIn}}签到已完成{{else}}签到未完成{{/if}}</span>
       </div>
+      {{if livenessData}}
+      <div class="status-pill {{if livenessData.isFull}}sp-ok{{else}}sp-warn{{/if}}">
+        <span class="s-dot">{{if livenessData.isFull}}✓{{else}}!{{/if}}</span>
+        <span>{{if livenessData.isFull}}活跃度已满{{else}}活跃度未满{{/if}}</span>
+      </div>
+      {{/if}}
+    </div>
+
+    <!-- 章节标题 -->
+    <div class="section-head">
+      <div class="section-title">
+        每日状态
+        <span class="section-sub">REAL · TIME · STATUS</span>
+      </div>
+    </div>
+
+    <!-- 主指标列：体力 / 储能 / 活跃度 -->
+    <div class="main-stats">
+      {{if energyData}}
+      <div class="m-stat">
+        <img class="m-icon" src="{{pluResPath}}dailyNote/imgs/energy.webp" />
+        <div class="m-info">
+          <div class="m-label">
+            结晶波片
+            {{if energyData.refreshTimeStr}}
+            <span class="refill-time">预计回满 <b>{{energyData.refreshTimeStr}}</b></span>
+            {{else if energyData.isFull}}
+            <span class="refill-time full">已全部恢复</span>
+            {{/if}}
+          </div>
+          <div class="m-num">
+            <b class="{{if energyData.isFull}}is-full{{/if}}">{{energyData.cur}}</b>
+            <span class="m-max">/{{energyData.total}}</span>
+          </div>
+          <div class="m-bar"><div class="m-bar-fill" style="width: {{energyData.pct}}"></div></div>
+        </div>
+      </div>
+      {{/if}}
+
+      {{if storeEnergyData}}
+      <div class="m-stat">
+        <img class="m-icon" src="{{pluResPath}}dailyNote/imgs/storeEnergy.webp" />
+        <div class="m-info">
+          <div class="m-label">结晶单质</div>
+          <div class="m-num">
+            <b class="{{if storeEnergyData.isFull}}is-full{{/if}}">{{storeEnergyData.cur}}</b>
+            <span class="m-max">/{{storeEnergyData.total}}</span>
+          </div>
+          <div class="m-bar"><div class="m-bar-fill" style="width: {{storeEnergyData.pct}}"></div></div>
+        </div>
+      </div>
+      {{/if}}
+
+      {{if livenessData}}
+      <div class="m-stat">
+        <img class="m-icon" src="{{pluResPath}}dailyNote/imgs/liveness.webp" />
+        <div class="m-info">
+          <div class="m-label">活跃度</div>
+          <div class="m-num">
+            <b class="{{if livenessData.isFull}}is-full{{/if}}">{{livenessData.cur}}</b>
+            <span class="m-max">/{{livenessData.total}}</span>
+          </div>
+          <div class="m-bar"><div class="m-bar-fill" style="width: {{livenessData.pct}}"></div></div>
+        </div>
+      </div>
+      {{/if}}
     </div>
   </div>
 
-      <div class="content-wrapper">
-
-        <div class="left-column">
-
-          <div class="data-card waveplate-card">
-            <div class="card-bg-icon">
-              <img src="{{pluResPath}}dailyNote/imgs/energy.webp" />
-            </div>
-            <div class="card-info">
-            <div class="card-title">
-              结晶波片
-              {{if energyData.refreshTimeStr}}
-              <span class="refill-time">预计回满 {{energyData.refreshTimeStr}}</span>
-              {{else}}
-              <span class="refill-time" style="color: var(--color-success)">已全部恢复</span>
-              {{/if}}
-            </div>
-              <div class="card-num">
-                <strong
-                  style="color: {{if energyData.refreshTimeStr}}var(--accent-gold){{else}}var(--color-success){{/if}};"
-                  >{{energyData.cur}}</strong
-                >/{{energyData.total}}
-              </div>
-
-            </div>
-          </div>
-
-
-          <div class="data-card solvent-card">
-            <div class="card-bg-icon">
-              <img src="{{pluResPath}}dailyNote/imgs/storeEnergy.webp" />
-            </div>
-            <div class="card-info">
-              <div class="card-title">结晶单质</div>
-              <div class="card-num">
-                <strong style="color: var(--accent-gold)">{{storeEnergyData.cur}}</strong
-                >/{{storeEnergyData.total}}
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-
-        <div class="list-card">
-          <div class="list-item">
-            <img class="item-icon" src="{{pluResPath}}dailyNote/imgs/liveness.webp" />
-            <div class="item-content">
-              <div class="item-title">活跃度</div>
-              <div class="item-val">
-                <span class="cur">{{livenessData.cur}}</span>
-                <span class="max">/{{livenessData.total}}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="list-item">
-            <img class="item-icon" src="{{pluResPath}}dailyNote/imgs/weekly.webp" />
-            <div class="item-content">
-              <div class="item-title">战歌重奏</div>
-              <div class="item-val">
-                <span class="cur">{{weeklyData.cur}}</span>
-                <span class="max">/{{weeklyData.total}}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="list-item">
-            <img class="item-icon" src="{{pluResPath}}dailyNote/imgs/tower.webp" />
-            <div class="item-content">
-              <div class="item-title">逆境深塔</div>
-              <div class="item-val">
-                <span class="cur">{{towerData.cur}}</span>
-                <span class="max">/{{towerData.total}}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="list-item">
-            <img class="item-icon" src="{{pluResPath}}dailyNote/imgs/rouge.webp" />
-            <div class="item-content">
-              <div class="item-title">千道门扉的异想</div>
-              <div class="item-val">
-                <span class="cur">{{weeklyRougeData.cur}}</span>
-                <span class="max">/{{weeklyRougeData.total}}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="list-item">
-            <img class="item-icon" src="{{pluResPath}}dailyNote/imgs/shenhai.webp" />
-            <div class="item-content">
-              <div class="item-title">冥歌海墟</div>
-              <div class="item-val">
-                <span class="cur">{{slashTowerData.cur}}</span>
-                <span class="max">/{{slashTowerData.total}}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+  <!-- 底部铭牌 + 副指标横条 -->
+  <footer class="bottom-bar">
+    <div class="user-tag">
+      <div class="avatar-wrap">
+        {{if userAvatar}}
+        <img class="qq-avatar" src="{{userAvatar}}" alt="avatar" />
+        {{/if}}
       </div>
+      <div class="user-info">
+        <div class="role-name">{{roleName || '漂泊者'}}</div>
+        <div class="uid-line">UID:&nbsp;{{roleId}}</div>
+      </div>
+    </div>
 
-
-  </div>
+    <div class="sub-stats">
+      {{if weeklyData}}
+      <div class="sub-stat">
+        <div class="s-num">
+          <b class="{{if weeklyData.isFull}}is-full{{/if}}">{{weeklyData.cur}}</b>
+          <span class="s-max">/{{weeklyData.total}}</span>
+        </div>
+        <div class="s-label">战歌重奏</div>
+      </div>
+      {{/if}}
+      {{if towerData}}
+      <div class="sub-stat">
+        <div class="s-num">
+          <b class="{{if towerData.isFull}}is-full{{/if}}">{{towerData.cur}}</b>
+          <span class="s-max">/{{towerData.total}}</span>
+        </div>
+        <div class="s-label">逆境深塔</div>
+      </div>
+      {{/if}}
+      {{if weeklyRougeData}}
+      <div class="sub-stat">
+        <div class="s-num">
+          <b class="{{if weeklyRougeData.isFull}}is-full{{/if}}">{{weeklyRougeData.cur}}</b>
+          <span class="s-max">/{{weeklyRougeData.total}}</span>
+        </div>
+        <div class="s-label">千道门扉</div>
+      </div>
+      {{/if}}
+      {{if slashTowerData}}
+      <div class="sub-stat">
+        <div class="s-num">
+          <b class="{{if slashTowerData.isFull}}is-full{{/if}}">{{slashTowerData.cur}}</b>
+          <span class="s-max">/{{slashTowerData.total}}</span>
+        </div>
+        <div class="s-label">冥歌海墟</div>
+      </div>
+      {{/if}}
+    </div>
+  </footer>
 </div>
 {{/block}}

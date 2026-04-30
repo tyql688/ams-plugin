@@ -3,8 +3,10 @@ import moment from "moment"
 import WavesApi from "../lib/api/waves.js"
 import { GAMES } from "../lib/constants.js"
 import { User } from "../lib/db/index.js"
+import { wavesResMap } from "../lib/path.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
+import { randomFiles } from "../lib/utils.js"
 
 export class DailyNote extends AmsPlugin {
   constructor() {
@@ -124,6 +126,7 @@ export class DailyNote extends AmsPlugin {
       currTime: now.format("YYYY-MM-DD HH:mm:ss"),
       roleId: user.gameUid,
       roleName: data.roleName || "漂泊者",
+      pileImage: randomFiles(wavesResMap.rolePile),
     }
   }
 }
