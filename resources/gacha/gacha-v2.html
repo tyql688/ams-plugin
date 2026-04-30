@@ -1,70 +1,73 @@
-{{extend defaultLayout}} {{block 'css'}}
+{{extend defaultLayout}}
+{{block 'css'}}
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/gacha/gacha-v2.css" />
-{{/block}} {{block 'main'}}
-<div class="gacha-container glass-panel">
-  <div class="glow-top"></div>
+{{/block}}
 
-  <!-- Brand Header -->
-  <div class="header">
-    {{if userAvatar}}
-    <div class="user-profile">
-      <div class="user-avatar-box">
-        <img class="user-avatar" src="{{userAvatar}}" />
-        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+{{block 'main'}}
+<div class="gacha-panel">
+  <!-- 顶部 -->
+  <header class="topbar">
+    <div class="user-block">
+      <div class="avatar">
+        {{if userAvatar}}<img src="{{userAvatar}}" alt="" />{{/if}}
       </div>
-      <div class="user-meta">
-        <span class="user-uid">UID: {{data.playerId}}</span>
+      <div class="user-text">
+        <div class="role-name">{{roleName}}</div>
+        <div class="uid-row">UID&nbsp;<b>{{data.playerId}}</b></div>
       </div>
     </div>
-    {{/if}}
 
-    <div class="head-title">
-      <div class="brand">SIGNAL SEARCH LOG</div>
-      <div class="title-main">唤取历史回顾</div>
+    <div class="title-block">
+      <div class="brand-en">SIGNAL · SEARCH · LOG</div>
+      <div class="brand-cn">唤取历史回顾</div>
     </div>
-  </div>
+  </header>
 
+  <!-- 卡池区 -->
   <div class="main-content">
     {{each data.pools poolData poolName}}
-    <div class="pool-section">
-      <div class="pool-header-v2">
+    <section class="pool-section">
+      <div class="pool-header">
         <div class="pool-info">
           <div class="pool-title">{{poolData.info.name || poolName}}</div>
-          <div class="pool-subtitle">历史五星回顾</div>
+          <div class="pool-subtitle">FIVE-STAR HISTORY</div>
         </div>
         <div class="pool-stats-grid">
           {{if poolData.info.total}}
-          <div class="stat-pill">总计 <span>{{poolData.info.total}}</span></div>
-          {{/if}} {{if poolData.info.no5Star}}
-          <div class="stat-pill">垫抽 <span>{{poolData.info.no5Star}}</span></div>
-          {{/if}} {{if poolData.info.fiveStar}}
-          <div class="stat-pill">五星 <span>{{poolData.info.fiveStar}}</span></div>
-          {{/if}} {{if poolData.info.avg5Star}}
-          <div class="stat-pill">均出 <span>{{poolData.info.avg5Star}}</span></div>
-          {{/if}} {{if poolData.info.minPit && poolData.info.minPit > 0}}
-          <div class="stat-pill">不歪率 <span>{{poolData.info.minPit}}%</span></div>
-          {{/if}} {{if poolData.info.avgUP}}
-          <div class="stat-pill">UP均 <span>{{poolData.info.avgUP}}</span></div>
-          {{/if}} {{if poolData.info.bestLuck}}
-          <div class="stat-pill">最欧 <span>{{poolData.info.bestLuck}}</span></div>
-          {{/if}} {{if poolData.info.worstLuck}}
-          <div class="stat-pill">最非 <span>{{poolData.info.worstLuck}}</span></div>
+          <div class="stat-pill"><span class="sp-cap">总计</span><b class="sp-val">{{poolData.info.total}}</b></div>
+          {{/if}}
+          {{if poolData.info.no5Star}}
+          <div class="stat-pill"><span class="sp-cap">垫抽</span><b class="sp-val">{{poolData.info.no5Star}}</b></div>
+          {{/if}}
+          {{if poolData.info.fiveStar}}
+          <div class="stat-pill"><span class="sp-cap">五星</span><b class="sp-val">{{poolData.info.fiveStar}}</b></div>
+          {{/if}}
+          {{if poolData.info.avg5Star}}
+          <div class="stat-pill"><span class="sp-cap">均出</span><b class="sp-val">{{poolData.info.avg5Star}}</b></div>
+          {{/if}}
+          {{if poolData.info.minPit && poolData.info.minPit > 0}}
+          <div class="stat-pill"><span class="sp-cap">不歪率</span><b class="sp-val">{{poolData.info.minPit}}%</b></div>
+          {{/if}}
+          {{if poolData.info.avgUP}}
+          <div class="stat-pill"><span class="sp-cap">UP均</span><b class="sp-val">{{poolData.info.avgUP}}</b></div>
+          {{/if}}
+          {{if poolData.info.bestLuck}}
+          <div class="stat-pill"><span class="sp-cap">最欧</span><b class="sp-val">{{poolData.info.bestLuck}}</b></div>
+          {{/if}}
+          {{if poolData.info.worstLuck}}
+          <div class="stat-pill"><span class="sp-cap">最非</span><b class="sp-val">{{poolData.info.worstLuck}}</b></div>
           {{/if}}
         </div>
       </div>
 
-      <div class="gacha-list-v2">
+      <div class="gacha-list">
         {{each poolData.logs log logIdx}}
-        <div class="gacha-item-v2 {{log.isUp ? 'up' : 'wai'}}">
+        <div class="gacha-item {{log.isUp ? 'up' : 'wai'}}">
           <div class="item-date">
-            <div class="dot-v2 {{logIdx === 0 ? 'first' : ''}}"></div>
+            <div class="dot {{logIdx === 0 ? 'first' : ''}}"></div>
             <div class="date-text">
-              {{if logIdx === 0 || poolData.logs[logIdx-1].date !== log.date}} {{log.date}} {{/if}}
+              {{if logIdx === 0 || poolData.logs[logIdx-1].date !== log.date}}{{log.date}}{{/if}}
             </div>
-          </div>
-
-          <div class="item-name-box">
-            <div class="item-name">{{log.name}}</div>
           </div>
 
           <div class="item-icon-box">
@@ -77,13 +80,16 @@
             {{/if}}
           </div>
 
+          <div class="item-name-box">
+            <div class="item-name">{{log.name}}</div>
+          </div>
+
           <div class="item-progress">
-            {{set max = 80}}
             <div class="progress-bar-bg">
               <div class="progress-fill-wrap">
                 <div
                   class="progress-bar-fill {{log.times <= 10 ? 'gold' : (log.times < 45 ? 'good' : (log.times < 65 ? 'normal' : 'bad'))}}"
-                  style="width: {{log.times / max * 100}}%"
+                  style="width: {{log.times / 80 * 100}}%"
                 ></div>
                 <span class="count-num">{{log.times}}</span>
               </div>
@@ -92,7 +98,7 @@
         </div>
         {{/each}}
       </div>
-    </div>
+    </section>
     {{/each}}
   </div>
 </div>

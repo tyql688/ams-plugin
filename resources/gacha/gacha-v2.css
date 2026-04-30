@@ -1,250 +1,411 @@
+/* ==================== 抽卡分析 · 暗色星空风 ==================== */
+
 body {
   width: 900px;
+  padding: 0;
+  margin: 0;
+  background: #03060c;
 }
 
-.gacha-container {
+#container {
   width: 900px;
+  gap: 0;
+  padding: 0;
+  background: none !important;
+}
+
+.gacha-panel {
+  position: relative;
+  width: 900px;
+  margin: 0;
+  padding: 22px 30px 36px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 26px;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 16, 0.4) 0%, rgba(5, 8, 16, 0.55) 60%, rgba(5, 8, 16, 0.7) 100%),
+    url("../common/imgs/bg_archive.webp") center/cover no-repeat,
+    #03060c;
+  background-blend-mode: normal, normal, normal;
+  border: 1px solid rgba(120, 160, 220, 0.16);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+
+  --d-text: #f0f4fa;
+  --d-text-2: #c2cdda;
+  --d-text-3: #8093a8;
+  --d-text-4: #5e6f82;
+  --d-gold: #f4c45a;
+  --d-emerald: #6cdba6;
+  --d-purple: #b29bff;
+  --d-rose: #ff7a96;
+  --d-orange: #ffb14a;
+  --d-card: rgba(8, 12, 22, 0.7);
 }
 
-/* === Header === */
-.header {
+/* ==================== Topbar ==================== */
+.topbar {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  border-bottom: 1px solid var(--paper-border);
-  padding-bottom: 18px;
+  align-items: center;
+  padding: 4px 4px 16px;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.22);
 }
 
-.head-title {
+.topbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 96px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--d-gold), transparent);
+  box-shadow: 0 0 4px rgba(244, 196, 90, 0.5);
+}
+
+.user-block {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #0a0e1a;
+  border: 1.5px solid rgba(244, 196, 90, 0.6);
+  padding: 1.5px;
+  flex-shrink: 0;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.user-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-text .role-name {
+  font-family: var(--font-game);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--d-text);
+  letter-spacing: 1.5px;
+  line-height: 1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.uid-row {
+  font-family: var(--font-game);
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  color: var(--d-text-3);
+}
+
+.uid-row b {
+  font-family: var(--font-number);
+  font-weight: 800;
+  color: var(--d-text);
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-left: 3px;
+}
+
+.title-block {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  text-align: right;
+  gap: 5px;
 }
 
-.brand {
+.brand-en {
+  font-family: var(--font-number);
   font-size: 10px;
   letter-spacing: 6px;
-  color: var(--paper-accent);
+  font-weight: 800;
+  color: var(--d-gold);
+  opacity: 0.92;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.brand-cn {
+  font-family: var(--font-game);
+  font-size: 30px;
   font-weight: 700;
-  margin-bottom: 4px;
-  text-transform: uppercase;
+  color: var(--d-text);
+  letter-spacing: 4px;
+  line-height: 1;
+  text-shadow:
+    0 1px 8px rgba(244, 196, 90, 0.18),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0.4px rgba(244, 196, 90, 0.3);
 }
 
-.title-main {
-  font-family: var(--font-art);
-  font-size: 48px;
-  color: var(--paper-text);
-  line-height: 1.1;
-}
-
-/* === Pool Section === */
-.pool-section {
-  background: var(--paper-card);
-  border-radius: 20px;
-  border: 1px solid var(--paper-border);
-  padding: 24px;
+/* ==================== 主体 ==================== */
+.main-content {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 26px;
 }
 
-.pool-header-v2 {
+/* 卡池组 */
+.pool-section {
+  background: rgba(8, 12, 22, 0.6);
+  border: 1px solid rgba(244, 196, 90, 0.18);
+  border-radius: 12px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+/* 卡池标题 + 统计 */
+.pool-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding-bottom: 15px;
-  border-bottom: 1px solid var(--paper-divider);
+  gap: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.16);
+}
+
+.pool-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .pool-title {
-  font-family: var(--font-art);
-  font-size: 32px;
-  color: var(--paper-text);
+  font-family: var(--font-game);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--d-text);
+  letter-spacing: 2.5px;
   line-height: 1;
+  text-shadow:
+    0 1px 8px rgba(244, 196, 90, 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.7);
 }
 
 .pool-subtitle {
-  font-size: 14px;
-  color: var(--paper-accent);
-  opacity: 0.8;
-  margin-top: 4px;
-  letter-spacing: 2px;
+  font-family: var(--font-number);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--d-gold);
+  letter-spacing: 4px;
+  opacity: 0.85;
 }
 
 .pool-stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  width: 400px;
+  gap: 6px;
+  width: 420px;
 }
 
 .stat-pill {
-  background: rgba(44, 36, 24, 0.04);
-  border: 1px solid var(--paper-border);
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 12px;
+  background: rgba(8, 12, 22, 0.85);
+  border: 1px solid rgba(244, 196, 90, 0.22);
+  padding: 5px 10px;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  color: var(--paper-text);
-  opacity: 0.6;
-  transition: all 0.3s;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-.stat-pill:hover {
-  background: rgba(44, 36, 24, 0.08);
-  border-color: var(--paper-accent);
+.stat-pill .sp-cap {
+  font-family: var(--font-game);
+  font-size: 11px;
+  color: var(--d-text-3);
+  letter-spacing: 1px;
+  font-weight: 600;
 }
 
-.stat-pill span {
-  color: var(--paper-text);
-  font-size: 16px;
-  font-weight: 800;
+.stat-pill .sp-val {
   font-family: var(--font-number);
-  opacity: 1;
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--d-gold);
+  line-height: 1;
+  letter-spacing: -0.2px;
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.35);
 }
 
-/* === Gacha List === */
-.gacha-list-v2 {
+/* ==================== 抽卡列表 ==================== */
+.gacha-list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0;
 }
 
-.gacha-item-v2 {
+.gacha-item {
   display: flex;
   align-items: center;
-  height: 48px;
-  background: rgba(44, 36, 24, 0.02);
-  transition: all 0.2s;
-  padding: 0 15px;
+  height: 52px;
+  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.015);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.gacha-item-v2:hover {
-  background: rgba(44, 36, 24, 0.05);
+.gacha-item:last-child {
+  border-bottom: none;
 }
 
-/* Timeline Date */
+/* 时间线日期 */
 .item-date {
   width: 140px;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
   position: relative;
 }
 
-.dot-v2 {
-  width: 6px;
-  height: 6px;
-  background: var(--paper-divider);
+.dot {
+  width: 7px;
+  height: 7px;
+  background: var(--d-gold);
   border-radius: 50%;
   position: relative;
   z-index: 2;
+  box-shadow: 0 0 8px rgba(244, 196, 90, 0.5);
+  flex-shrink: 0;
 }
 
-.dot-v2::before {
+.dot::before {
   content: "";
   position: absolute;
-  top: -48px;
-  left: 2.5px;
+  top: -52px;
+  left: 3px;
   width: 1px;
-  height: 48px;
+  height: 52px;
   background: linear-gradient(
     to bottom,
     transparent,
-    var(--paper-divider) 50%,
-    var(--paper-divider)
+    rgba(244, 196, 90, 0.25) 40%,
+    rgba(244, 196, 90, 0.25)
   );
   z-index: 1;
 }
 
-.dot-v2.first::before {
+.dot.first::before {
   display: none;
 }
 
 .date-text {
   font-family: var(--font-number);
   font-size: 14px;
-  color: var(--paper-text);
+  font-weight: 700;
+  color: var(--d-text-2);
+  letter-spacing: 0.3px;
 }
 
-/* Icon Box */
+/* Icon */
 .item-icon-box {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 8px;
-  margin: 0 15px;
+  margin: 0 14px;
   position: relative;
-  border: 1px solid var(--paper-border);
-  background: var(--paper-card);
+  border: 1px solid rgba(244, 196, 90, 0.35);
+  background: rgba(0, 0, 0, 0.45);
   overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 3px 8px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+}
+
+.gacha-item.up .item-icon-box {
+  border-color: rgba(244, 196, 90, 0.7);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 0 10px rgba(244, 196, 90, 0.3),
+    0 3px 8px rgba(0, 0, 0, 0.5);
 }
 
 .icon-inner {
   width: 100%;
   height: 100%;
   background-size: cover;
-  background-position: center;
+  background-position: center 12%;
 }
 
 .up-badge {
   position: absolute;
   top: 0;
   right: 0;
-  background: #ffc107;
-  color: #000;
+  background: var(--d-gold);
+  color: #1a1108;
+  font-family: var(--font-number);
   font-size: 9px;
   font-weight: 900;
-  padding: 0 4px;
+  padding: 1px 5px;
   border-radius: 0 0 0 4px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 0 6px rgba(244, 196, 90, 0.6);
 }
 
-/* Name Box */
+/* 名称 */
 .item-name-box {
-  width: 120px;
+  width: 130px;
   text-align: right;
-  padding-right: 15px;
+  padding-right: 16px;
 }
 
 .item-name {
+  font-family: var(--font-game);
   font-size: 15px;
   font-weight: 700;
-  color: var(--paper-text);
+  color: var(--d-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-.gacha-item-v2.up .item-name {
-  color: #ffc107;
+.gacha-item.up .item-name {
+  color: var(--d-gold);
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.4);
 }
 
-.gacha-item-v2.wai .item-name {
-  color: #94a3b8;
+.gacha-item.wai .item-name {
+  color: var(--d-text-3);
 }
 
-/* Progress Bar */
+/* 进度条 */
 .item-progress {
   flex: 1;
-  padding-left: 20px;
+  padding-left: 18px;
 }
 
 .progress-bar-bg {
   width: 100%;
-  height: 24px;
-  background: rgba(44, 36, 24, 0.08);
-  border-radius: 0;
+  height: 26px;
+  background: rgba(8, 12, 22, 0.8);
+  border-radius: 4px;
   overflow: hidden;
-  border: 1px solid var(--paper-border);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   position: relative;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .progress-fill-wrap {
@@ -256,31 +417,59 @@ body {
 .progress-bar-fill {
   height: 100%;
   border-radius: 0;
-  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .progress-bar-fill.gold {
-  background: #f59e0b;
+  background: linear-gradient(90deg, var(--d-gold), rgba(244, 196, 90, 0.6));
+  box-shadow: 0 0 10px rgba(244, 196, 90, 0.45);
 }
+
 .progress-bar-fill.good {
-  background: #10b981;
+  background: linear-gradient(90deg, var(--d-emerald), rgba(108, 219, 166, 0.55));
+  box-shadow: 0 0 8px rgba(108, 219, 166, 0.35);
 }
+
 .progress-bar-fill.normal {
-  background: #6366f1;
+  background: linear-gradient(90deg, var(--d-purple), rgba(178, 155, 255, 0.55));
+  box-shadow: 0 0 8px rgba(178, 155, 255, 0.3);
 }
+
 .progress-bar-fill.bad {
-  background: #ef4444;
+  background: linear-gradient(90deg, var(--d-rose), rgba(255, 122, 150, 0.55));
+  box-shadow: 0 0 8px rgba(255, 122, 150, 0.3);
 }
 
 .count-num {
   position: absolute;
-  left: 10px;
+  left: 12px;
   top: 50%;
   transform: translateY(-50%);
   font-family: var(--font-number);
   font-weight: 900;
-  font-size: 12px;
+  font-size: 13px;
   color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.85),
+    0 0 6px rgba(0, 0, 0, 0.6);
   z-index: 3;
+  letter-spacing: 0.3px;
+}
+
+/* ==================== copyright ==================== */
+.copyright {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+  font-size: 8px !important;
+  padding: 4px 0 2px !important;
+  margin-top: -25px;
+  position: relative;
+  z-index: 5;
+}
+
+.copyright .highlight {
+  color: #ffffff !important;
+}
+
+.copyright .highlight .version {
+  color: #f4c45a !important;
 }

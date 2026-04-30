@@ -84,7 +84,10 @@ export class Gacha extends AmsPlugin {
       pools: pools,
     }
 
-    const img = await this.render("gacha/gacha-v2", { data: renderData })
+    const img = await this.render("gacha/gacha-v2", {
+      data: renderData,
+      roleName: user?.gameData?.roleName,
+    })
     if (img) {
       await e.reply(img)
     } else {
