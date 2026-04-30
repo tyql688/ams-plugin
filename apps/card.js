@@ -69,6 +69,7 @@ export class Card extends AmsPlugin {
     const img = await this.render("character/role-list", {
       roles: roleList,
       uid: wavesApi.wavesId,
+      roleName: wavesApi.dbUser?.gameData?.roleName,
       command: config.exampleCommond("角色名面板"),
     })
     return img ? e.reply(img) : e.reply("❌ 绘图失败")

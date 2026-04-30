@@ -152,6 +152,7 @@ export class Slash extends AmsPlugin {
       diffData: diffData,
       diffiname: diffiName,
       roleId: user.roleId || user.gameUid,
+      roleName: wavesApi.dbUser?.gameData?.roleName,
       seasonEndTime: seasonTime,
       showSeason: showSeason,
       homePageBG: diffData.homePageBG,

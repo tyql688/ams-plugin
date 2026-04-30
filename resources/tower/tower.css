@@ -1,296 +1,447 @@
-/* ==================== 攻略册风格 · 深塔页 ==================== */
-
+/* ==================== 容器 ==================== */
 body {
-  width: 900px;
+  width: 520px;
+  padding: 0;
+  margin: 0;
+  background: #03060c;
 }
 
-.tower-container {
-  width: 900px;
+#container {
+  width: 520px;
+  gap: 0;
+  padding: 0;
+}
+
+.tower-panel {
+  position: relative;
+  width: 520px;
+  min-height: 480px;
+  margin: 0;
+  padding: 18px 20px 36px;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 14px;
+  background:
+    /* 极淡遮罩，让 bg_ruins 更显眼 */
+    linear-gradient(180deg, rgba(5, 8, 16, 0.3) 0%, rgba(5, 8, 16, 0.45) 60%, rgba(5, 8, 16, 0.65) 100%),
+    /* halftone 颗粒 */
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0.8px, transparent 1.4px) 0 0/8px 8px,
+    /* 主背景：星空废墟 */
+    url("../common/imgs/bg_ruins.webp") center/cover no-repeat,
+    #050810;
+  background-blend-mode: normal, normal, normal, normal;
+  border: 1px solid rgba(140, 180, 240, 0.14);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+
+  --d-text: #f0f4fa;
+  --d-text-2: #b6c2d2;
+  --d-text-3: #6f8094;
+  --d-line: rgba(255, 255, 255, 0.1);
+  --d-gold: #f4c45a;
+  --d-gold-deep: #d49340;
+  --d-emerald: #6cdba6;
+  --d-rose: #ff7a96;
 }
 
-/* === Header === */
-.header {
+/* ==================== 顶部信息条 ==================== */
+.topbar {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 10px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--paper-border);
+  align-items: center;
+  padding: 4px 4px 14px;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.2);
 }
 
-.head-title {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  text-align: right;
-  margin-left: auto;
+.topbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--d-gold), transparent);
+  box-shadow: 0 0 4px rgba(244, 196, 90, 0.5);
 }
 
-.brand {
-  font-size: 10px;
-  letter-spacing: 6px;
-  color: var(--paper-accent);
-  font-weight: 700;
-  margin-bottom: 4px;
-  text-transform: uppercase;
-}
-
-.title-main {
-  font-family: var(--font-art);
-  font-size: 44px;
-  color: var(--paper-text);
-  background: none;
-  -webkit-background-clip: unset;
-  background-clip: unset;
-  -webkit-text-fill-color: unset;
-  line-height: 1.1;
-  margin-bottom: 8px;
-}
-
-.info-pill {
+/* 用户信息（左侧）*/
+.user-block {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 0;
-  border-radius: 0;
-  background: none;
-  border: none;
-  font-size: 13px;
-  color: var(--paper-text-sub);
-}
-
-.info-pill .season-label {
-  color: var(--paper-text-dim);
-}
-
-.info-pill .info-data {
-  font-family: var(--font-number);
-  color: var(--paper-accent);
-  font-size: 15px;
-  text-shadow: none;
-}
-
-
-/* === 总星数 === */
-.stars-info {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 40px;
-}
-
-.total-stars-card {
-  background: var(--paper-card);
-  padding: 10px 45px;
-  border-radius: 100px;
-  border: 1px solid var(--paper-border);
-  display: flex;
-  align-items: center;
-  gap: 25px;
-  box-shadow: 0 2px 12px rgba(44, 36, 24, 0.06);
-}
-
-.big-star {
-  width: 50px;
-  height: 50px;
-  filter: none;
-}
-
-.total-count {
-  font-size: 48px;
-  display: flex;
-  align-items: baseline;
   gap: 12px;
 }
 
-.total-count .current {
-  color: var(--paper-accent);
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #0a0e1a;
+  border: 1.5px solid rgba(244, 196, 90, 0.6);
+  padding: 1.5px;
+  flex-shrink: 0;
 }
 
-.total-count .divider {
-  color: var(--paper-text-dim);
-  font-size: 32px;
-  font-weight: 300;
+.avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 
-.total-count .max {
-  color: var(--paper-text-sub);
-  font-size: 36px;
-}
-
-/* === 区域 === */
-.area-group {
-  margin-bottom: 40px;
-}
-
-.area-group:last-child {
-  margin-bottom: 0;
-}
-
-.area-header {
+.user-text {
   display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.role-name {
+  font-family: var(--font-game);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--d-text);
+  letter-spacing: 1.2px;
+  line-height: 1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.uid-row {
+  font-family: var(--font-game);
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  color: var(--d-text-3);
+}
+
+.uid-row b {
+  font-family: var(--font-number);
+  font-weight: 800;
+  color: var(--d-text);
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin-left: 3px;
+}
+
+/* 标题块（右侧）*/
+.title-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.brand-en {
+  font-family: var(--font-number);
+  font-size: 9px;
+  letter-spacing: 6px;
+  font-weight: 800;
+  color: var(--d-gold);
+  opacity: 0.92;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.brand-cn {
+  font-family: var(--font-game);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--d-text);
+  letter-spacing: 3px;
+  line-height: 1;
+  text-shadow:
+    0 1px 8px rgba(244, 196, 90, 0.18),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0.4px rgba(244, 196, 90, 0.3);
+}
+
+.season {
+  font-family: var(--font-game);
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  color: var(--d-text-3);
+}
+
+.season b {
+  font-family: var(--font-number);
+  font-weight: 800;
+  color: var(--d-gold);
+  letter-spacing: 0.4px;
+  margin-left: 2px;
+}
+
+/* ==================== 总星数 pill（居中）==================== */
+.total-pill {
+  align-self: center;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 6px 24px;
+  border-radius: 999px;
+  background: rgba(8, 12, 22, 0.75);
+  border: 1px solid rgba(244, 196, 90, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-number);
+  line-height: 1;
+  margin: 4px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.total-pill .ico {
+  font-size: 18px;
+  color: var(--d-gold);
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.7);
+  margin-right: 4px;
+}
+
+.total-pill .cur {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--d-gold);
+  letter-spacing: -0.4px;
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.4);
+}
+
+.total-pill .slash {
+  font-size: 14px;
+  color: var(--d-text-3);
+  font-weight: 600;
+  margin: 0 1px;
+}
+
+.total-pill .max {
+  font-size: 14px;
+  color: var(--d-text-2);
+  font-weight: 700;
+}
+
+/* ==================== 区域分组 ==================== */
+.areas {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.area-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.area-head {
+  display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  padding: 0 5px;
+  padding: 0 4px 6px;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.18);
 }
 
-.area-name {
-  font-family: var(--font-art);
-  font-size: 28px;
-  color: var(--paper-text);
-}
-
-.area-name-box {
+.area-title {
   display: flex;
-  align-items: center;
-  flex: 1;
-}
-
-.area-line {
-  height: 1px;
-  background: var(--paper-divider);
-  flex: 1;
-  opacity: 1;
-  margin-left: 20px;
-}
-
-.area-star-badge {
-  background: rgba(184, 134, 11, 0.06);
-  padding: 8px 18px;
-  border-radius: 14px;
-  border: 1px solid var(--paper-divider);
-  display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 10px;
 }
 
-.mini-star {
-  width: 22px;
-  height: 22px;
+.a-name {
+  font-family: var(--font-game);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--d-text);
+  letter-spacing: 2px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-.area-star-badge .count {
-  font-size: 20px;
-  color: var(--paper-accent);
+.a-en {
+  font-family: var(--font-number);
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  color: var(--d-gold);
+  opacity: 0.7;
+  font-weight: 700;
 }
 
-/* === 楼层 === */
-.floors-grid {
+.area-stars {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-family: var(--font-number);
+  line-height: 1;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(20, 14, 6, 0.55);
+  border: 1px solid rgba(244, 196, 90, 0.3);
+}
+
+.area-stars .cur {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--d-gold);
+  letter-spacing: -0.3px;
+}
+
+.area-stars .div {
+  font-size: 11px;
+  color: var(--d-text-3);
+  font-weight: 600;
+  margin: 0 1px;
+}
+
+.area-stars .max {
+  font-size: 11px;
+  color: var(--d-text-2);
+  font-weight: 700;
+}
+
+.area-stars .ico {
+  margin-left: 4px;
+  font-size: 12px;
+  color: var(--d-gold);
+}
+
+/* ==================== 楼层卡 ==================== */
+.floors {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 6px;
 }
 
 .floor-item {
-  height: 140px;
   position: relative;
-  border-radius: 12px;
+  height: 88px;
+  border-radius: 6px;
   overflow: hidden;
-  border: 1px solid var(--paper-divider);
-  background: var(--paper-bg);
+  border: 1px solid rgba(244, 196, 90, 0.18);
+  background: rgba(8, 12, 22, 0.92);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .floor-bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background-size: cover;
   background-position: center;
-  z-index: 1;
-  opacity: 1;
-  mask-image: linear-gradient(90deg, transparent 0%, black 35%, black 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 35%, black 100%);
+  opacity: 0.7;
+}
+
+/* 左右深、中段稍亮：让 picUrl 中间区域可见，文字和头像两端有暗底支撑 */
+.floor-mask {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(8, 12, 22, 0.92) 0%,
+    rgba(8, 12, 22, 0.55) 35%,
+    rgba(8, 12, 22, 0.35) 60%,
+    rgba(8, 12, 22, 0.85) 100%
+  );
 }
 
 .floor-content {
   position: relative;
   z-index: 2;
   height: 100%;
-  padding: 0 40px;
+  padding: 0 14px 0 18px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(90deg, rgba(255, 253, 248, 0.97) 0%, rgba(255, 253, 248, 0.8) 25%, rgba(255, 253, 248, 0.1) 50%, transparent 100%);
 }
 
-.floor-number {
-  font-family: var(--font-art);
-  font-size: 32px;
-  color: var(--paper-text);
-  margin-bottom: 10px;
-  text-shadow: none;
-}
-
-.floor-stars-list {
+.floor-l {
   display: flex;
-  gap: 8px;
-}
-
-.floor-star-img {
-  width: 32px;
-  height: 32px;
-  filter: none;
-}
-
-.floor-star-img.active {
-  filter: drop-shadow(0 0 4px rgba(184, 134, 11, 0.4));
-  transform: scale(1.1);
-}
-
-.floor-star-img.inactive {
-  opacity: 0.2;
-  filter: grayscale(1);
-}
-
-.floor-team {
-  display: flex;
-  gap: 28px;
   align-items: center;
+  gap: 14px;
 }
 
-.role-avatar-hex {
-  width: 104px;
-  height: 104px;
-  background: var(--paper-divider);
+.floor-num {
+  font-family: var(--font-game);
+  font-size: 13px;
+  color: var(--d-text-2);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.floor-num b {
+  font-family: var(--font-number);
+  font-weight: 900;
+  color: var(--d-text);
+  font-size: 18px;
+  letter-spacing: 0;
+  margin: 0 2px;
+}
+
+.floor-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.fs {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.fs.on {
+  color: var(--d-gold);
+  text-shadow: 0 0 10px rgba(244, 196, 90, 0.7);
+}
+
+.fs.off {
+  color: rgba(255, 255, 255, 0.18);
+}
+
+.floor-r {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.role-av {
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  border: 2px solid var(--paper-border);
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(44, 36, 24, 0.1);
+  background: rgba(0, 0, 0, 0.55);
+  border: 1.5px solid rgba(244, 196, 90, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 0 8px rgba(244, 196, 90, 0.2);
 }
 
-.role-avatar-hex img {
+.role-av img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.no-lineup {
-  color: var(--paper-text-dim);
-  font-size: 16px;
-  letter-spacing: 2px;
-  opacity: 0.5;
-  border: 1px dashed var(--paper-border);
-  padding: 8px 20px;
-  border-radius: 8px;
+.no-team {
+  font-family: var(--font-game);
+  font-size: 11px;
+  color: var(--d-text-3);
+  letter-spacing: 1.5px;
+  opacity: 0.6;
 }
 
-/* === 空状态 === */
-.empty-state {
-  padding: 120px 0;
-  text-align: center;
+/* ==================== 全局 copyright ==================== */
+.copyright {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+  font-size: 7px !important;
+  padding: 4px 0 2px !important;
+  margin-top: -25px;
+  position: relative;
+  z-index: 5;
 }
 
-.empty-text {
-  font-family: var(--font-art);
-  font-size: 24px;
-  color: var(--paper-text-dim);
+.copyright .highlight {
+  color: #ffffff !important;
 }
 
+.copyright .highlight .version {
+  color: #f4c45a !important;
+}

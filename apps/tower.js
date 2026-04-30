@@ -84,6 +84,7 @@ export class Tower extends AmsPlugin {
       diffData: diffData,
       diffiname: `${key}区`,
       roleId: user.roleId,
+      roleName: wavesApi.dbUser?.gameData?.roleName,
       seasonEndTime: seasonTime,
       showSeason: !!seasonTime,
     }

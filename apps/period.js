@@ -42,7 +42,7 @@ export class Period extends AmsPlugin {
         periodNode: target,
         periodDetail: this._processData(detailRes.data),
         roleId: wavesApi.wavesId,
-        roleName: this.e.roleName || "漂泊者",
+        roleName: wavesApi.dbUser?.gameData?.roleName,
       }),
     )
   }

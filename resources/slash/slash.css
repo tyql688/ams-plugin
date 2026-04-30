@@ -1,366 +1,536 @@
+/* ==================== 容器 ==================== */
 body {
-  width: 900px;
+  width: 580px;
+  padding: 0;
+  margin: 0;
+  background: #03060c;
 }
 
-.slash-container {
-  width: 900px;
+#container {
+  width: 580px;
+  gap: 0;
+  padding: 0;
+}
+
+.slash-panel {
+  position: relative;
+  width: 580px;
+  min-height: 480px;
+  margin: 0;
+  padding: 18px 20px 36px;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 14px;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 16, 0.3) 0%, rgba(5, 8, 16, 0.45) 60%, rgba(5, 8, 16, 0.65) 100%),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0.8px, transparent 1.4px) 0 0/8px 8px,
+    url("../common/imgs/bg_ruins.webp") center/cover no-repeat,
+    #050810;
+  background-blend-mode: normal, normal, normal, normal;
+  border: 1px solid rgba(140, 180, 240, 0.14);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+
+  --d-text: #f0f4fa;
+  --d-text-2: #b6c2d2;
+  --d-text-3: #6f8094;
+  --d-line: rgba(255, 255, 255, 0.1);
+  --d-gold: #f4c45a;
+  --d-gold-deep: #d49340;
+  --d-emerald: #6cdba6;
+  --d-rose: #ff7a96;
+  --d-cyan: #7ec6ff;
 }
 
-/* === Header === */
-.header {
+/* ==================== 顶部信息条 ==================== */
+.topbar {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 10px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--paper-border);
+  align-items: center;
+  padding: 4px 4px 14px;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.2);
 }
 
-.head-title {
+.topbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--d-gold), transparent);
+  box-shadow: 0 0 4px rgba(244, 196, 90, 0.5);
+}
+
+.user-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #0a0e1a;
+  border: 1.5px solid rgba(244, 196, 90, 0.6);
+  padding: 1.5px;
+  flex-shrink: 0;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.user-text {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  text-align: right;
-  margin-left: auto;
+  gap: 3px;
 }
 
-.brand {
-  font-size: 10px;
-  letter-spacing: 6px;
-  color: var(--paper-accent);
-  font-weight: 800;
-  margin-bottom: 4px;
-  text-transform: uppercase;
-  opacity: 0.9;
-}
-
-.title-main {
-  font-family: var(--font-art);
-  font-size: 44px;
-  color: var(--paper-text);
-  font-weight: 700;
-  letter-spacing: 1px;
-  line-height: 1.1;
-  margin-bottom: 8px;
-}
-
-.info-pill {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 12px;
-  border-radius: 20px;
-  background: rgba(44, 36, 24, 0.06);
-  border: 1px solid var(--paper-border);
-  font-size: 14px;
-  color: var(--paper-text-sub);
-}
-
-.info-pill .info-data {
-  font-family: var(--font-number);
-  color: var(--paper-accent);
+.role-name {
+  font-family: var(--font-game);
   font-size: 16px;
+  font-weight: 700;
+  color: var(--d-text);
+  letter-spacing: 1.2px;
+  line-height: 1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-/* === 总评分 === */
-.score-info {
+.uid-row {
+  font-family: var(--font-game);
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  color: var(--d-text-3);
+}
+
+.uid-row b {
+  font-family: var(--font-number);
+  font-weight: 800;
+  color: var(--d-text);
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin-left: 3px;
+}
+
+.title-block {
   display: flex;
-  justify-content: center;
-  margin-bottom: 45px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
 }
 
-.total-score-card {
-  background: rgba(44, 36, 24, 0.04);
-  padding: 12px 50px;
-  border-radius: 100px;
-  border: 1px solid var(--paper-border);
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  box-shadow: 0 2px 12px rgba(44, 36, 24, 0.06);
+.brand-en {
+  font-family: var(--font-number);
+  font-size: 9px;
+  letter-spacing: 6px;
+  font-weight: 800;
+  color: var(--d-gold);
+  opacity: 0.92;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-.score-label {
-  font-family: var(--font-art);
+.brand-cn {
+  font-family: var(--font-game);
   font-size: 24px;
-  color: var(--paper-text-sub);
+  font-weight: 700;
+  color: var(--d-text);
+  letter-spacing: 3px;
+  line-height: 1;
+  text-shadow:
+    0 1px 8px rgba(244, 196, 90, 0.18),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0.4px rgba(244, 196, 90, 0.3);
 }
 
-.total-count {
-  font-size: 52px;
+.season {
+  font-family: var(--font-game);
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  color: var(--d-text-3);
+}
+
+.season b {
+  font-family: var(--font-number);
+  font-weight: 800;
+  color: var(--d-gold);
+  letter-spacing: 0.4px;
+  margin-left: 2px;
+}
+
+/* ==================== 总分 pill ==================== */
+.total-pill {
+  align-self: center;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 6px 22px;
+  border-radius: 999px;
+  background: rgba(8, 12, 22, 0.75);
+  border: 1px solid rgba(244, 196, 90, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-number);
+  line-height: 1;
+  margin: 4px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.total-pill .ico {
+  font-family: var(--font-game);
+  font-size: 11px;
+  color: var(--d-gold);
+  letter-spacing: 2px;
+  margin-right: 4px;
+  opacity: 0.85;
+}
+
+.total-pill .cur {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--d-gold);
+  letter-spacing: -0.4px;
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.4);
+}
+
+.total-pill .slash {
+  font-size: 14px;
+  color: var(--d-text-3);
+  font-weight: 600;
+  margin: 0 1px;
+}
+
+.total-pill .max {
+  font-size: 14px;
+  color: var(--d-text-2);
+  font-weight: 700;
+}
+
+/* ==================== 挑战分组 ==================== */
+.challenges {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.challenge-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.challenge-head {
   display: flex;
   align-items: baseline;
-  gap: 15px;
-}
-
-.total-count .current {
-  color: var(--paper-text);
-  text-shadow: none;
-}
-
-.total-count .divider {
-  color: var(--paper-text-dim);
-  font-size: 32px;
-}
-
-.total-count .max {
-  color: var(--paper-text-dim);
-  font-size: 36px;
-}
-
-/* === 挑战 === */
-.challenge-group {
-  margin-bottom: 40px;
-}
-
-.challenge-group:last-child {
-  margin-bottom: 0;
-}
-
-.challenge-header {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
+  padding: 0 4px 6px;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.18);
+  gap: 12px;
 }
 
-.challenge-name {
-  font-family: var(--font-art);
-  font-size: 30px;
-  color: var(--paper-text);
-}
-
-.challenge-line {
-  height: 1px;
-  background: linear-gradient(90deg, var(--paper-accent) 0%, transparent 100%);
-  width: 250px;
-  opacity: 0.3;
-  margin-top: 8px;
-}
-
-.challenge-rank-badge {
+.challenge-title {
   display: flex;
-  align-items: center;
-  gap: 15px;
-  background: rgba(44, 36, 24, 0.04);
-  padding: 10px 24px;
-  border-radius: 16px;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
 }
 
-.challenge-rank-badge .label {
-  font-size: 14px;
-  color: var(--paper-text-sub);
+.c-name {
+  font-family: var(--font-game);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--d-text);
+  letter-spacing: 2px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.challenge-rank-badge .rank-value {
-  font-size: 44px;
-  color: var(--grade-other);
-  font-weight: 800;
-  text-shadow: none;
+.c-en {
+  font-family: var(--font-number);
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  color: var(--d-gold);
+  opacity: 0.7;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
-.challenge-rank-badge .rank-value.color-sss,
-.challenge-rank-badge .rank-value.color-ss,
-.challenge-rank-badge .rank-value.color-s {
-  color: var(--grade-s);
-  text-shadow: none;
+.challenge-rank {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: rgba(20, 14, 6, 0.55);
+  border: 1px solid rgba(244, 196, 90, 0.3);
+  font-family: var(--font-number);
+  line-height: 1;
+  flex-shrink: 0;
 }
 
-.challenge-rank-badge .rank-value.color-a {
-  color: var(--grade-a);
-  text-shadow: none;
+.rank-letter {
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.3px;
 }
 
-.challenge-rank-badge .rank-value.color-b {
-  color: var(--grade-b);
-  text-shadow: none;
+.rank-score {
+  font-size: 13px;
+  color: var(--d-text-2);
+  font-weight: 700;
 }
 
-.challenge-rank-badge .rank-value.color-c {
-  color: var(--grade-c);
-  text-shadow: none;
+/* 评级配色 */
+.rank-s .rank-letter,
+.rank-ss .rank-letter,
+.rank-sss .rank-letter {
+  color: var(--d-gold);
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.6);
 }
 
-.challenge-rank-badge .score-value {
-  font-size: 20px;
-  color: var(--paper-accent);
-  padding-left: 10px;
-  border-left: 1px solid var(--paper-divider);
+.rank-a .rank-letter {
+  color: #c084fc;
 }
 
-/* === 阶段卡片 === */
-.halfs-grid {
+.rank-b .rank-letter {
+  color: var(--d-cyan);
+}
+
+.rank-c .rank-letter {
+  color: var(--d-emerald);
+}
+
+.rank-d .rank-letter {
+  color: var(--d-text-3);
+}
+
+/* ==================== 半场卡 ==================== */
+.halves {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 6px;
 }
 
 .half-item {
-  height: 180px;
-  background: var(--paper-card);
-  border: 1px solid var(--paper-border);
-  border-radius: 32px;
   position: relative;
+  height: 116px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: var(--paper-shadow);
+  border: 1px solid rgba(244, 196, 90, 0.18);
+  background: rgba(8, 12, 22, 0.92);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
 }
 
-.half-bg-banner {
+.half-bg {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 70%;
+  inset: 0;
   background-size: cover;
-  background-position: center left;
-  background-repeat: no-repeat;
-  mask-image: linear-gradient(to left, #000 20%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to left, #000 20%, transparent 100%);
-  opacity: 0.25;
-  filter: brightness(1.1) contrast(0.9);
-  z-index: 1;
+  background-position: center;
+  opacity: 0.5;
+}
+
+.half-mask {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(8, 12, 22, 0.92) 0%,
+    rgba(8, 12, 22, 0.55) 35%,
+    rgba(8, 12, 22, 0.35) 65%,
+    rgba(8, 12, 22, 0.85) 100%
+  );
 }
 
 .score-watermark {
   position: absolute;
-  left: 50px;
-  bottom: -20px;
-  font-size: 150px;
+  left: 18px;
+  bottom: -8px;
+  font-family: var(--font-number);
+  font-size: 96px;
   font-weight: 900;
-  color: rgba(44, 36, 24, 0.04);
-  pointer-events: none;
-  z-index: 0;
+  color: rgba(244, 196, 90, 0.07);
   line-height: 1;
-  text-shadow: none;
+  letter-spacing: -3px;
+  pointer-events: none;
+  z-index: 1;
+  text-shadow: 0 0 26px rgba(244, 196, 90, 0.1);
 }
 
-.half-main {
+.half-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   height: 100%;
-  display: flex;
+  padding: 0 28px;
+  display: grid;
+  grid-template-columns: 100px 1fr 108px;
+  gap: 14px;
   align-items: center;
-  padding: 0 50px;
-  gap: 40px;
+}
+
+/* ============ Zone 1: PHASE + SCORE ============ */
+.half-info-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .half-info-box {
-  width: 140px;
-  flex-shrink: 0;
-  border-right: 1px solid var(--paper-divider);
+  border-right: 1px solid rgba(244, 196, 90, 0.15);
+  padding-right: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
 }
 
 .phase-tag {
-  font-size: 13px;
-  color: var(--paper-text-dim);
-  font-weight: 700;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-}
-
-.phase-score .label {
-  display: block;
-  font-size: 11px;
-  color: var(--paper-text-sub);
-  opacity: 0.6;
-}
-
-.phase-score .value {
-  font-size: 36px;
-  color: var(--paper-text);
+  font-family: var(--font-number);
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  color: var(--d-gold);
   font-weight: 800;
-  text-shadow: none;
+  opacity: 0.9;
 }
 
+.phase-tag b {
+  font-size: 11px;
+  letter-spacing: 0;
+  margin: 0 2px;
+}
+
+.phase-score {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: var(--font-number);
+  line-height: 1;
+}
+
+.ps-label {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--d-text-3);
+  font-weight: 700;
+}
+
+.ps-value {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--d-text);
+  letter-spacing: -0.6px;
+  text-shadow:
+    0 0 12px rgba(244, 196, 90, 0.4),
+    0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* ============ Zone 2: 团队信息 ============ */
 .half-team-box {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  align-items: center;
+  min-width: 0;
 }
 
 .team-header {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: 6px;
 }
 
 .phase-team-icon {
-  width: 24px;
-  height: 24px;
-  filter: none;
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 4px rgba(244, 196, 90, 0.5));
 }
 
 .team-label {
-  font-size: 11px;
-  color: var(--paper-text-dim);
-  letter-spacing: 1.5px;
-  font-weight: 600;
+  font-family: var(--font-number);
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  font-weight: 800;
+  color: var(--d-gold);
+  opacity: 0.9;
 }
 
 .role-list {
   display: flex;
-  gap: 18px;
-}
-
-.role-avatar-wrapper.circle {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 2px solid var(--paper-border);
-  background: rgba(44, 36, 24, 0.04);
-  overflow: hidden;
-  padding: 0;
-}
-
-.role-avatar {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.half-buff-box-new {
-  width: 140px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 10px;
 }
 
-.buff-name-mini {
-  font-family: var(--font-art);
-  font-size: 14px;
-  color: var(--paper-text-sub);
-  text-align: center;
-  max-width: 120px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
+.role-av {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
   overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.25;
-  opacity: 0.8;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1.5px solid rgba(244, 196, 90, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 0 8px rgba(244, 196, 90, 0.2);
 }
 
+.role-av img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-team {
+  font-family: var(--font-number);
+  font-size: 9px;
+  color: var(--d-text-3);
+  letter-spacing: 2px;
+  opacity: 0.5;
+  padding: 5px 10px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* ============ Zone 3: Buff ============ */
+.half-buff-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border-left: 1px solid rgba(244, 196, 90, 0.15);
+  padding-left: 10px;
+  height: 100%;
+  justify-content: center;
+}
+
+/* 方形圆角卡 + 内嵌图标 + 底部 rarity 发光条 */
 .buff-rarity-frame {
   position: relative;
-  width: 90px;
-  height: 90px;
-  background: rgba(44, 36, 24, 0.04);
-  border: 1px solid var(--paper-border);
-  border-radius: 12px;
+  width: 56px;
+  height: 56px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(244, 196, 90, 0.3);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
 }
 
 .buff-icon-box {
@@ -371,18 +541,19 @@ body {
   justify-content: center;
 }
 
-.buff-img-new {
+.buff-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
+/* 底部 rarity 发光横条 */
 .buff-rarity-bar {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 5px;
+  height: 3px;
   z-index: 2;
 }
 
@@ -403,7 +574,7 @@ body {
 
 .buff-rarity-bar.rarity-4 {
   background: linear-gradient(to top, #9c27b0, transparent);
-  box-shadow: 0 -4px 12px #9c27b0;
+  box-shadow: 0 -4px 14px #9c27b0;
 }
 
 .buff-rarity-bar.rarity-5 {
@@ -411,15 +582,34 @@ body {
   box-shadow: 0 -4px 20px #ffd700;
 }
 
-.no-lineup {
-  color: var(--paper-text-dim);
-  font-size: 14px;
-  letter-spacing: 2px;
-  font-weight: 700;
-  opacity: 0.5;
+.buff-name {
+  font-family: var(--font-game);
+  font-size: 9px;
+  letter-spacing: 0.4px;
+  color: var(--d-text-2);
+  max-width: 96px;
+  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.empty-state {
-  padding: 100px 0;
-  text-align: center;
+/* ==================== 全局 copyright ==================== */
+.copyright {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+  font-size: 7px !important;
+  padding: 4px 0 2px !important;
+  margin-top: -25px;
+  position: relative;
+  z-index: 5;
+}
+
+.copyright .highlight {
+  color: #ffffff !important;
+}
+
+.copyright .highlight .version {
+  color: #f4c45a !important;
 }

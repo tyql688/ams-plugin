@@ -1,132 +1,119 @@
-{{extend defaultLayout}} {{block 'css'}}
-<link rel="stylesheet" href="{{_res_path}}/slash/slash.css" />
-{{/block}} {{block 'main'}}
-<div class="slash-container glass-panel">
-  <div class="glow-top"></div>
+{{extend defaultLayout}}
+{{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}slash/slash.css" />
+{{/block}}
 
-  <div class="header">
-    {{if userAvatar}}
-    <div class="user-profile">
-      <div class="user-avatar-box">
-        <img class="user-avatar" src="{{userAvatar}}" />
-        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+{{block 'main'}}
+<div class="slash-panel">
+  <header class="topbar">
+    <div class="user-block">
+      <div class="avatar">
+        {{if userAvatar}}<img src="{{userAvatar}}" alt="" />{{/if}}
       </div>
-      <div class="user-meta">
-        <span class="user-uid">UID: {{uid}}</span>
+      <div class="user-text">
+        <div class="role-name">{{roleName}}</div>
+        <div class="uid-row">UID&nbsp;<b>{{uid}}</b></div>
       </div>
     </div>
-    {{/if}}
 
-    <div class="head-title">
-      <div class="brand">Whimpering Wastes</div>
-      <div class="title-main">冥歌海墟</div>
+    <div class="title-block">
+      <div class="brand-en">WHIMPERING · WASTES</div>
+      <div class="brand-cn">冥海 · {{diffiname}}</div>
       {{if showSeason}}
-      <div class="info-pill">
-        <span class="season-label">本期结束还剩</span>
-        <span class="info-data">{{seasonEndTime}}</span>
-      </div>
+      <div class="season">本期剩余 <b>{{seasonEndTime}}</b></div>
       {{/if}}
     </div>
+  </header>
+
+  <!-- 总分 pill -->
+  <div class="total-pill">
+    <span class="ico">评分</span>
+    <b class="cur">{{diffData.allScore || 0}}</b>
+    {{if diffData.maxScore}}
+    <span class="slash">/</span>
+    <span class="max">{{diffData.maxScore}}</span>
+    {{/if}}
   </div>
 
-  <div class="summary">
-    {{if diffData}}
-    <div class="score-info">
-      <div class="total-score-card">
-        <div class="score-label">总评分</div>
-        <div class="total-count">
-          <span class="current">{{diffData.allScore || 0}}</span>
-          {{if diffData.maxScore}}
-          <span class="divider">/</span>
-          <span class="max">{{diffData.maxScore}}</span>
-          {{/if}}
+  <!-- 挑战分组 -->
+  <section class="challenges">
+    {{each diffData.challengeList challenge}}
+    <div class="challenge-block">
+      <div class="challenge-head">
+        <div class="challenge-title">
+          <span class="c-name">
+            {{if challenge.challengeId != 12}}{{challenge.challengeId}}层 ·
+            {{/if}}{{challenge.challengeName}}
+          </span>
+          <span class="c-en">CHALLENGE</span>
+        </div>
+        <div class="challenge-rank rank-{{challenge.rank ? challenge.rank.toLowerCase() : 'd'}}">
+          <span class="rank-letter">{{challenge.rank || '-'}}</span>
+          <span class="rank-score">{{challenge.score || 0}}</span>
         </div>
       </div>
-    </div>
 
-    <div class="challenges">
-      {{each diffData.challengeList challenge}}
-      <div class="challenge-group">
-        <div class="challenge-header">
-          <div class="challenge-name-box">
-            <span class="challenge-name"
-              >{{if challenge.challengeId != 12}}{{challenge.challengeId}}层 -
-              {{/if}}{{challenge.challengeName}}</span
-            >
-            <div class="challenge-line"></div>
-          </div>
-          <div class="challenge-rank-badge">
-            <span class="label">评级</span>
-            <span class="rank-value color-{{challenge.rank.toLowerCase()}}"
-              >{{challenge.rank}}</span
-            >
-            <span class="score-value">{{challenge.score}}</span>
-          </div>
-        </div>
+      <div class="halves">
+        {{if challenge.halfList}} {{each challenge.halfList half i}}
+        <div class="half-item">
+          {{if challenge.detailPageBG}}
+          <div class="half-bg" style="background-image: url('{{challenge.detailPageBG}}')"></div>
+          {{/if}}
+          <div class="half-mask"></div>
+          <div class="score-watermark">{{half.score || 0}}</div>
 
-        <div class="halfs-grid">
-          {{if challenge.halfList}} {{each challenge.halfList half i}}
-          <div class="half-item">
-            <div
-              class="half-bg-banner"
-              style="background-image: url('{{challenge.detailPageBG}}')"
-            ></div>
-            <div class="score-watermark">{{half.score}}</div>
-
-            <div class="half-main">
-              <div class="half-info-box">
-                <div class="phase-tag">PHASE {{i + 1}}</div>
-                <div class="phase-score">
-                  <span class="label">SCORE</span>
-                  <span class="value">{{half.score}}</span>
-                </div>
+          <div class="half-content">
+            <!-- 左：PHASE + SCORE -->
+            <div class="half-info-box">
+              <div class="phase-tag">PHASE&nbsp;<b>{{i + 1}}</b></div>
+              <div class="phase-score">
+                <span class="ps-label">SCORE</span>
+                <b class="ps-value">{{half.score || 0}}</b>
               </div>
+            </div>
 
-              <div class="half-team-box">
-                <div class="team-header">
-                  {{if challenge.teamIcon}}
-                  <img src="{{challenge.teamIcon}}" class="phase-team-icon" />
-                  {{/if}}
-                  <span class="team-label">CHALLENGE TEAM</span>
-                </div>
-                <div class="role-list">
-                  {{if half.roleList && half.roleList.length > 0}} {{each half.roleList role}}
-                  <div class="role-avatar-wrapper circle">
-                    <img
-                      src="{{wavesResMap.roleAvatar}}/{{role.roleId}}.png"
-                      class="role-avatar"
-                      onerror="this.src='{{role.iconUrl}}'; this.onerror=null;"
-                    />
-                  </div>
-                  {{/each}} {{else}}
-                  <div class="no-lineup">NO DATA</div>
-                  {{/if}}
-                </div>
+            <!-- 中：CHALLENGE TEAM + 阵容 -->
+            <div class="half-team-box">
+              <div class="team-header">
+                {{if challenge.teamIcon}}
+                <img src="{{challenge.teamIcon}}" class="phase-team-icon" />
+                {{/if}}
+                <span class="team-label">CHALLENGE TEAM</span>
               </div>
-
-              <div class="half-buff-box-new">
-                {{if half.buffIcon}}
-                <div class="buff-rarity-frame">
-                  <div class="buff-icon-box">
-                    <img src="{{half.buffIcon}}" class="buff-img-new" />
-                  </div>
-                  <div class="buff-rarity-bar rarity-{{half.buffQuality || 3}}"></div>
+              <div class="role-list">
+                {{if half.roleList && half.roleList.length > 0}}
+                {{each half.roleList role}}
+                <div class="role-av">
+                  <img
+                    src="{{wavesResMap.roleAvatar}}/{{role.roleId}}.png"
+                    onerror="this.src='{{role.iconUrl}}'; this.onerror=null;"
+                  />
                 </div>
-                <div class="buff-name-mini">{{half.buffName}}</div>
+                {{/each}}
+                {{else}}
+                <span class="no-team">NO DATA</span>
                 {{/if}}
               </div>
             </div>
+
+            <!-- 右：Buff 方框 + 底部 rarity 光条 + 名称 -->
+            {{if half.buffIcon}}
+            <div class="half-buff-box">
+              <div class="buff-rarity-frame">
+                <div class="buff-icon-box">
+                  <img src="{{half.buffIcon}}" class="buff-img" />
+                </div>
+                <div class="buff-rarity-bar rarity-{{half.buffQuality || 3}}"></div>
+              </div>
+              <div class="buff-name">{{half.buffName}}</div>
+            </div>
+            {{/if}}
           </div>
-          {{/each}} {{/if}}
         </div>
+        {{/each}} {{/if}}
       </div>
-      {{/each}}
     </div>
-    {{else}}
-    <div class="empty-state">
-      <div class="empty-text">暂无 {{diffiname}} 挑战数据</div>
-    </div>
-    {{/if}}
-  </div>
+    {{/each}}
+  </section>
 </div>
 {{/block}}

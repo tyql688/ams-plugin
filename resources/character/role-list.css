@@ -1,98 +1,192 @@
-:root {
-  --glass-border: rgba(56, 189, 248, 0.15);
-  --accent-cyan: #22d3ee;
-  --accent-purple: #a855f7;
-  --bg-card: rgba(13, 14, 20, 0.98);
-  --text-dim: rgba(255, 255, 255, 0.5);
-  --text-secondary: rgba(255, 255, 255, 0.8);
-}
-
+/* ==================== 容器 ==================== */
 body {
   width: 940px;
+  padding: 0;
+  margin: 0;
+  background: #03060c;
 }
 
-.container {
+#container {
   width: 940px;
-  padding: 20px;
-  background-image: url("../common/bg/bg.png");
+  gap: 0;
+  padding: 0;
+  background: none !important;
 }
 
-.role-list-container {
-  width: 100%;
-  --glass-border: var(--paper-divider);
-  --panel-padding: 34px 38px 26px;
-
+.archive-panel {
+  position: relative;
+  width: 940px;
+  min-height: 480px;
+  margin: 0;
+  padding: 22px 28px 36px;
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 22px;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 16, 0.35) 0%, rgba(5, 8, 16, 0.5) 60%, rgba(5, 8, 16, 0.7) 100%),
+    url("../common/imgs/bg_archive.webp") center/cover no-repeat,
+    #03060c;
+  background-blend-mode: normal, normal, normal;
+  border: 1px solid rgba(120, 160, 220, 0.16);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+
+  --d-text: #f0f4fa;
+  --d-text-2: #b6c2d2;
+  --d-text-3: #6f8094;
+  --d-gold: #f4c45a;
 }
 
-/* === Header === */
-.header {
+/* ==================== Topbar ==================== */
+.topbar {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--paper-divider);
+  padding: 4px 4px 16px;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.2);
 }
 
-.head-title {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  text-align: right;
-  margin-left: auto;
+.topbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--d-gold), transparent);
+  box-shadow: 0 0 4px rgba(244, 196, 90, 0.5);
 }
 
-.brand {
-  font-size: 12px;
-  letter-spacing: 4px;
-  color: var(--accent-cyan);
-  font-weight: 700;
-  margin-bottom: 4px;
-  text-transform: uppercase;
-  opacity: 0.88;
-}
-
-.title-main {
-  font-family: var(--font-art);
-  font-size: 44px;
-  background: linear-gradient(180deg, #fff 30%, rgba(34, 211, 238, 0.82) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  line-height: 1.1;
-  margin-bottom: 8px;
-  text-shadow: 0 0 20px rgba(34, 211, 238, 0.1);
-}
-
-.info-pill {
+.user-block {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 5px 13px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--glass-border);
-  font-size: 14px;
-  color: var(--text-secondary);
+  gap: 14px;
 }
 
-.info-pill .info-data {
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #0a0e1a;
+  border: 1.5px solid rgba(244, 196, 90, 0.6);
+  padding: 1.5px;
+  flex-shrink: 0;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.user-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-text .role-name {
+  font-family: var(--font-game);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--d-text);
+  letter-spacing: 1.5px;
+  line-height: 1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.uid-row {
+  font-family: var(--font-game);
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  color: var(--d-text-3);
+}
+
+.uid-row b {
   font-family: var(--font-number);
-  color: var(--accent-cyan);
+  font-weight: 800;
+  color: var(--d-text);
   font-size: 16px;
+  letter-spacing: 1px;
+  margin-left: 3px;
 }
 
-/* === Role Grid === */
+/* 标题块 */
+.title-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.brand-en {
+  font-family: var(--font-number);
+  font-size: 10px;
+  letter-spacing: 6px;
+  font-weight: 800;
+  color: var(--d-gold);
+  opacity: 0.92;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.brand-cn {
+  font-family: var(--font-game);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--d-text);
+  letter-spacing: 4px;
+  line-height: 1;
+  text-shadow:
+    0 1px 8px rgba(244, 196, 90, 0.18),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0.4px rgba(244, 196, 90, 0.3);
+}
+
+.count-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: rgba(8, 12, 22, 0.7);
+  border: 1px solid rgba(244, 196, 90, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 2px 8px rgba(0, 0, 0, 0.45);
+  margin-top: 2px;
+}
+
+.cp-label,
+.cp-suffix {
+  font-family: var(--font-game);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--d-text-3);
+}
+
+.cp-value {
+  font-family: var(--font-number);
+  font-weight: 900;
+  font-size: 18px;
+  color: var(--d-gold);
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.4);
+  letter-spacing: -0.2px;
+  line-height: 1;
+}
+
+/* ==================== 角色网格（保持原结构） ==================== */
 .role-grid {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  gap: 20px 10px;
-  margin-bottom: 30px;
+  gap: 22px 10px;
+  margin: 4px 0 18px;
 }
 
 .role-card {
@@ -102,15 +196,13 @@ body {
   padding: 0;
   background: transparent;
   border: none;
-  border-radius: 0;
-  overflow: visible;
 }
 
 .role-avatar-wrapper {
-  width: 70px;
-  height: 70px;
+  width: 76px;
+  height: 76px;
   position: relative;
-  margin-bottom: 6px;
+  margin-bottom: 7px;
   border-radius: 50%;
 }
 
@@ -120,54 +212,65 @@ body {
   border-radius: 50%;
   background-size: cover;
   background-position: center 15%;
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.18);
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 4px 10px rgba(0, 0, 0, 0.55);
 }
 
 .role-card.star-5 .role-img {
-  border-color: var(--accent-gold);
-  box-shadow: 0 0 5px rgba(250, 204, 21, 0.2);
+  border-color: var(--d-gold);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(244, 196, 90, 0.35),
+    0 4px 10px rgba(0, 0, 0, 0.55);
 }
 
 .role-card.star-4 .role-img {
-  border-color: var(--accent-purple);
-  box-shadow: 0 0 5px rgba(168, 85, 247, 0.2);
+  border-color: #b29bff;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(178, 155, 255, 0.3),
+    0 4px 10px rgba(0, 0, 0, 0.55);
 }
 
 .role-info-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 5px;
   width: 100%;
 }
 
-.role-name {
+.role-display-name {
+  font-family: var(--font-game);
   font-size: 13px;
-  font-weight: bold;
-  color: var(--text-primary);
+  font-weight: 700;
+  color: var(--d-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 55px;
+  max-width: 60px;
   text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+  letter-spacing: 0.4px;
 }
 
 .cons-tag {
-  min-width: 16px;
-  height: 16px;
-  padding: 0 4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-number);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   color: #fff;
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -212,26 +315,43 @@ body {
   box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
 }
 
+/* ==================== 底部提示 ==================== */
 .footer-tip {
+  position: relative;
+  z-index: 2;
   text-align: center;
-  color: var(--text-dim);
-  font-size: 13px;
-  margin-top: 20px;
-  opacity: 0.6;
-}
-
-.footer-tip::before {
-  content: "💡";
-  margin-right: 6px;
-  filter: grayscale(1);
+  font-family: var(--font-game);
+  color: var(--d-text-3);
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  opacity: 0.75;
 }
 
 .footer-tip .cmd {
-  color: var(--accent-cyan);
-  font-weight: bold;
-  margin: 0 3px;
-  background: rgba(34, 211, 238, 0.12);
-  border: 1px solid rgba(34, 211, 238, 0.16);
-  padding: 0 5px;
+  color: var(--d-gold);
+  font-weight: 700;
+  margin: 0 4px;
+  background: rgba(244, 196, 90, 0.1);
+  border: 1px solid rgba(244, 196, 90, 0.25);
+  padding: 1px 7px;
   border-radius: 4px;
+}
+
+/* ==================== copyright ==================== */
+.copyright {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+  font-size: 8px !important;
+  padding: 4px 0 2px !important;
+  margin-top: -25px;
+  position: relative;
+  z-index: 5;
+}
+
+.copyright .highlight {
+  color: #ffffff !important;
+}
+
+.copyright .highlight .version {
+  color: #f4c45a !important;
 }

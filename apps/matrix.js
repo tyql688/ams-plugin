@@ -106,6 +106,7 @@ export class Matrix extends AmsPlugin {
     const renderData = {
       uid: user.gameUid,
       roleId: user.roleId,
+      roleName: wavesApi.dbUser?.gameData?.roleName,
       modeList,
       seasonEndTime,
       showSeason,

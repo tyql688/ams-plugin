@@ -62,6 +62,22 @@ export class DailyNote extends AmsPlugin {
       await this.getAvatarUrl()
 
       const data = this.processDailyData(res.data, user)
+
+      // roleName: 接口为主，没有再用 db 缓存；接口给了新值才回写 db
+      const cached = wavesApi.dbUser?.gameData?.roleName
+      data.roleName = data.roleName || cached
+
+      if (wavesApi.dbUser && data.roleName && data.roleName !== cached) {
+        const fresh = await User.getByUid(wavesApi.dbUser.userId, wavesApi.dbUser.gameUid)
+        const gameData = { ...(fresh?.gameData || {}), roleName: data.roleName }
+        await User.updateSilent(
+          wavesApi.dbUser.userId,
+          wavesApi.dbUser.gameUid,
+          wavesApi.dbUser.gameId,
+          { gameData },
+        )
+      }
+
       const img = await this.render("dailyNote/dailyNote.html", data)
       if (img) msgList.push(img)
     }
@@ -125,7 +141,6 @@ export class DailyNote extends AmsPlugin {
       ...data,
       currTime: now.format("YYYY-MM-DD HH:mm:ss"),
       roleId: user.gameUid,
-      roleName: data.roleName || "漂泊者",
       pileImage: randomFiles(wavesResMap.rolePile),
     }
   }

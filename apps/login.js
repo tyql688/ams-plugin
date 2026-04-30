@@ -183,6 +183,14 @@ export class Login extends AmsPlugin {
         bat,
         status: 1,
       })
+
+      // 把接口返回的 roleName 缓存到 gameData，供 tower / slash 等模块复用
+      if (roleName) {
+        const existing = await db.User.getByUid(userId, String(roleId))
+        const gameData = { ...(existing?.gameData || {}), roleName }
+        await db.User.updateSilent(userId, String(roleId), gameId, { gameData })
+      }
+
       msg.push(`✅ 绑定成功：${roleName} (${roleId})`)
     }
 

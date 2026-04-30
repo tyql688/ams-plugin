@@ -1,110 +1,94 @@
-{{extend defaultLayout}} {{block 'css'}}
-<link rel="stylesheet" href="{{_res_path}}/tower/tower.css" />
-{{/block}} {{block 'main'}}
-<div class="tower-container glass-panel">
-  <div class="glow-top"></div>
+{{extend defaultLayout}}
+{{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}tower/tower.css" />
+{{/block}}
 
-  <div class="header">
-    {{if userAvatar}}
-    <div class="user-profile">
-      <div class="user-avatar-box">
-        <img class="user-avatar" src="{{userAvatar}}" />
-        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+{{block 'main'}}
+<div class="tower-panel">
+  <!-- 顶部：用户信息（左） + 标题（右）-->
+  <header class="topbar">
+    <div class="user-block">
+      <div class="avatar">
+        {{if userAvatar}}<img src="{{userAvatar}}" alt="" />{{/if}}
       </div>
-      <div class="user-meta">
-        <span class="user-uid">UID: {{uid}}</span>
+      <div class="user-text">
+        <div class="role-name">{{roleName}}</div>
+        <div class="uid-row">UID&nbsp;<b>{{uid}}</b></div>
       </div>
     </div>
-    {{/if}}
 
-    <div class="head-title">
-      <div class="brand">Tower of Adversity</div>
-      <div class="title-main">深塔 · {{diffiname}}</div>
+    <div class="title-block">
+      <div class="brand-en">TOWER · OF · ADVERSITY</div>
+      <div class="brand-cn">深塔 · {{diffiname}}</div>
       {{if showSeason}}
-      <div class="info-pill">
-        <span class="season-label">本期结束还剩</span>
-        <span class="info-data">{{seasonEndTime}}</span>
-      </div>
+      <div class="season">本期剩余 <b>{{seasonEndTime}}</b></div>
       {{/if}}
     </div>
+  </header>
+
+  <!-- 总星数 pill（居中）-->
+  <div class="total-pill">
+    <span class="ico">★</span>
+    <b class="cur">{{diffData.totalStar || 0}}</b>
+    <span class="slash">/</span>
+    <span class="max">{{diffData.totalMaxStar || 0}}</span>
   </div>
 
-  <div class="summary">
-    {{if diffData}}
-    <div class="stars-info">
-      <div class="total-stars-card">
-        <div class="star-icon-wrapper">
-          <img src="{{_res_path}}/tower/imgs/star.png" class="big-star" />
+  <!-- 区域分组 -->
+  <section class="areas">
+    {{each diffData.towerAreaList area}}
+    <div class="area-block">
+      <div class="area-head">
+        <div class="area-title">
+          <span class="a-name">{{area.areaName}}</span>
+          <span class="a-en">AREA</span>
         </div>
-        <div class="total-count">
-          <span class="current">{{diffData.totalStar || 0}}</span>
-          <span class="divider">/</span>
-          <span class="max">{{diffData.totalMaxStar || 0}}</span>
+        <div class="area-stars">
+          <span class="cur">{{area.star || 0}}</span>
+          <span class="div">/</span>
+          <span class="max">{{area.maxStar || 0}}</span>
+          <span class="ico">★</span>
         </div>
       </div>
-    </div>
 
-    <div class="areas">
-      {{each diffData.towerAreaList area}}
-      <div class="area-group">
-        <div class="area-header">
-          <div class="area-name-box">
-            <span class="area-name">{{area.areaName}}</span>
-            <div class="area-line"></div>
-          </div>
-          <div class="area-star-badge">
-            <img src="{{_res_path}}/tower/imgs/star.png" class="mini-star" />
-            <span class="count">{{area.star || 0}}/{{area.maxStar || 0}}</span>
-          </div>
-        </div>
+      <div class="floors">
+        {{if area.floorList}} {{each area.floorList floor}}
+        <div class="floor-item">
+          {{if floor.picUrl}}
+          <div class="floor-bg" style="background-image: url('{{floor.picUrl}}')"></div>
+          {{/if}}
+          <div class="floor-mask"></div>
 
-        <div class="floors-grid">
-          {{if area.floorList}} {{each area.floorList floor}}
-          <div class="floor-item">
-            <div
-              class="floor-bg"
-              style="background-image: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%), url('{{floor.picUrl}}')"
-            ></div>
-
-            <div class="floor-content">
-              <div class="floor-main-info">
-                <div class="floor-number">第 {{floor.floor}} 层</div>
-                <div class="floor-stars-list">
-                  {{set stars = floor.star || 0}} {{each [0, 1, 2] val}}
-                  <img
-                    src="{{_res_path}}/tower/imgs/star.png"
-                    class="floor-star-img {{val < stars ? 'active' : 'inactive'}}"
-                  />
-                  {{/each}}
-                </div>
-              </div>
-
-              <div class="floor-team">
-                {{if floor.roleList && floor.roleList.length > 0}} {{each floor.roleList role}}
-                <div class="team-role">
-                  <div class="role-avatar-hex">
-                    <img
-                      src="{{wavesResMap.roleAvatar}}/{{role.roleId}}.png"
-                      onerror="this.src='{{role.iconUrl}}'; this.onerror=null;"
-                    />
-                  </div>
-                </div>
-                {{/each}} {{else}}
-                <div class="no-lineup">暂无记录</div>
-                {{/if}}
+          <div class="floor-content">
+            <div class="floor-l">
+              <div class="floor-num">第&nbsp;<b>{{floor.floor}}</b>&nbsp;层</div>
+              <div class="floor-stars">
+                <span class="fs {{(floor.star || 0) >= 1 ? 'on' : 'off'}}">★</span>
+                <span class="fs {{(floor.star || 0) >= 2 ? 'on' : 'off'}}">★</span>
+                <span class="fs {{(floor.star || 0) >= 3 ? 'on' : 'off'}}">★</span>
               </div>
             </div>
+
+            <div class="floor-r">
+              {{if floor.roleList && floor.roleList.length > 0}}
+              {{each floor.roleList role}}
+              <div class="role-av">
+                <img
+                  src="{{wavesResMap.roleAvatar}}/{{role.roleId}}.png"
+                  onerror="this.src='{{role.iconUrl}}'; this.onerror=null;"
+                />
+              </div>
+              {{/each}}
+              {{else}}
+              <span class="no-team">— 暂无阵容 —</span>
+              {{/if}}
+            </div>
           </div>
-          {{/each}} {{/if}}
         </div>
+        {{/each}} {{/if}}
       </div>
-      {{/each}}
     </div>
-    {{else}}
-    <div class="empty-state">
-      <div class="empty-text">暂无 {{diffiname}} 挑战数据</div>
-    </div>
-    {{/if}}
-  </div>
+    {{/each}}
+  </section>
 </div>
 {{/block}}
