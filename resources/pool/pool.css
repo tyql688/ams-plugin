@@ -14,11 +14,12 @@ body {
   margin-top: 5px;
 }
 
+/* ==================== Header ==================== */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 35px;
+  margin-bottom: 24px;
   border-bottom: 1px solid var(--paper-border);
   padding-bottom: 18px;
 }
@@ -66,80 +67,111 @@ body {
   border-radius: 8px;
 }
 
-.table-header {
+/* ==================== List grid ====================
+   列：序号 | 头像 | 姓名(占用剩余) | UP次数 | 未复刻时间 */
+.table-header,
+.pool-item {
   display: grid;
-  grid-template-columns: 75px 1fr auto auto;
+  grid-template-columns: 28px 36px 1fr 70px 96px;
   align-items: center;
-  gap: 12px;
-  column-gap: 20px;
-  padding: 12px 10px;
-  background: rgba(44, 36, 24, 0.04);
-  border-radius: 12px;
-  margin-bottom: 8px;
-  font-size: 13px;
+  column-gap: 14px;
+}
+
+.table-header {
+  padding: 8px 14px;
+  font-size: 11px;
   font-weight: 700;
-  color: var(--paper-text);
+  color: var(--paper-text-sub);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0.6;
+  letter-spacing: 1.4px;
+  border-bottom: 1px solid var(--paper-border);
+  margin-bottom: 4px;
 }
 
-.header-avatar {
-  width: 70px;
+.head-rank {
+  text-align: center;
+  opacity: 0.7;
 }
 
-.header-name {
+.head-name {
   font-family: var(--font-art);
+  letter-spacing: 1px;
 }
 
-.header-count,
-.header-time {
+.head-count,
+.head-time {
   text-align: right;
 }
 
-.header-time {
-  min-width: 140px;
-}
-
+/* ==================== List body ==================== */
 .items-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }
 
 .pool-item {
-  display: grid;
-  grid-template-columns: 75px 1fr auto auto;
-  align-items: center;
-  gap: 12px;
-  column-gap: 20px;
-  background: var(--paper-card);
-  border-radius: 12px;
-  padding: 10px 10px;
-  border: 1px solid var(--paper-border);
+  position: relative;
+  padding: 7px 14px;
   border-bottom: 1px solid var(--paper-divider);
+  background: transparent;
+  border-radius: 0;
+  transition: none;
 }
 
 .pool-item:last-child {
-  border-bottom: 1px solid var(--paper-border);
+  border-bottom: none;
 }
 
-.pool-item.current-up {
-  /* 移除背景和边框，只保留文字颜色 */
+/* 行左侧装饰条（默认透明，current-up 显示金色） */
+.pool-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 2px;
+  background: transparent;
 }
 
+/* ==================== 序号 ==================== */
+.rank-num {
+  font-family: var(--font-number);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--paper-text-dim);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+}
+
+/* 前 3 名金/银/铜（仅非 current-up） */
+.pool-item.rank-1 .rank-num {
+  color: #c89b3c;
+  font-size: 14px;
+  text-shadow: 0 0 6px rgba(200, 155, 60, 0.25);
+}
+.pool-item.rank-2 .rank-num {
+  color: #9aa0a6;
+  font-size: 14px;
+}
+.pool-item.rank-3 .rank-num {
+  color: #b87333;
+  font-size: 14px;
+}
+
+/* ==================== 小头像 ==================== */
 .item-avatar {
-  width: 70px;
-  height: 70px;
-  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   overflow: hidden;
   background: rgba(44, 36, 24, 0.05);
-  border: 2px solid var(--paper-border);
+  border: 1.5px solid var(--paper-border);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 8px rgba(44, 36, 24, 0.05);
+  box-shadow: 0 1px 3px rgba(44, 36, 24, 0.06);
 }
 
 .item-avatar img {
@@ -148,8 +180,23 @@ body {
   object-fit: cover;
 }
 
-.item-info {
-  display: contents;
+/* 前 3 名头像描边轻微加重 */
+.pool-item.rank-1 .item-avatar {
+  border-color: #c89b3c;
+}
+.pool-item.rank-2 .item-avatar {
+  border-color: #9aa0a6;
+}
+.pool-item.rank-3 .item-avatar {
+  border-color: #b87333;
+}
+
+/* ==================== 姓名 + UP 标 ==================== */
+.name-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
 }
 
 .item-name {
@@ -157,35 +204,108 @@ body {
   font-size: 16px;
   color: var(--paper-text);
   font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.pool-item.current-up .item-name {
-  color: var(--accent-gold);
+.up-pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-number);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #fff;
+  background: linear-gradient(135deg, #d4a017 0%, #c4841d 100%);
+  padding: 2px 7px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(196, 132, 29, 0.35);
+  flex-shrink: 0;
 }
 
+/* ==================== UP 次数胶囊 ==================== */
 .up-count {
-  color: var(--paper-text);
-  font-weight: 700;
-  font-size: 16px;
   text-align: right;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 3px;
+  padding: 3px 10px;
+  background: rgba(184, 134, 11, 0.08);
+  border: 1px solid rgba(184, 134, 11, 0.18);
+  border-radius: 999px;
+  font-family: var(--font-number);
+  color: var(--paper-accent);
+  width: fit-content;
+  justify-self: end;
 }
 
-.pool-item.current-up .up-count {
-  color: var(--accent-gold);
+.up-count b {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--paper-text);
 }
 
+.up-count i {
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+/* ==================== 时间文本 ==================== */
 .time-text {
-  color: var(--paper-text);
+  color: var(--paper-text-sub);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
   text-align: right;
-  min-width: 140px;
+  font-family: var(--font-number);
+  font-variant-numeric: tabular-nums;
 }
 
 .time-text.current {
   color: var(--accent-gold);
 }
 
+/* ==================== Current-UP 整行强调 ==================== */
+.pool-item.current-up {
+  background: linear-gradient(
+    90deg,
+    rgba(196, 132, 29, 0.1) 0%,
+    rgba(196, 132, 29, 0.04) 60%,
+    transparent 100%
+  );
+}
+
+.pool-item.current-up::before {
+  background: linear-gradient(180deg, #d4a017 0%, #c4841d 100%);
+  box-shadow: 0 0 6px rgba(196, 132, 29, 0.4);
+}
+
+.pool-item.current-up .rank-num {
+  color: var(--accent-gold);
+}
+
+.pool-item.current-up .item-avatar {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 2px rgba(196, 132, 29, 0.15);
+}
+
+.pool-item.current-up .item-name {
+  color: var(--accent-gold);
+}
+
+.pool-item.current-up .up-count {
+  background: rgba(196, 132, 29, 0.16);
+  border-color: rgba(196, 132, 29, 0.4);
+}
+
+.pool-item.current-up .up-count b {
+  color: var(--accent-gold);
+}
+
+/* ==================== 版权文字 ==================== */
 .copyright {
   color: #a1a1aa !important;
   text-shadow: none !important;

@@ -18,14 +18,18 @@
   </div>
 
   <div class="table-header">
-    <div class="header-avatar"></div>
-    <span class="header-name">角色</span>
-    <span class="header-count">UP次数</span>
-    <span class="header-time">未复刻时间</span>
+    <div class="head-rank">#</div>
+    <div class="head-avatar"></div>
+    <div class="head-name">{{queryType}}</div>
+    <div class="head-count">UP次数</div>
+    <div class="head-time">未复刻</div>
   </div>
   <div class="items-list">
-    {{each items item}}
-    <div class="pool-item {{if item.isCurrentUp}}current-up{{/if}}">
+    {{each items item index}}
+    <div
+      class="pool-item {{if item.isCurrentUp}}current-up{{/if}} {{if index < 3 && !item.isCurrentUp}}rank-top rank-{{index + 1}}{{/if}}"
+    >
+      <div class="rank-num">{{index + 1}}</div>
       <div class="item-avatar">
         {{if queryType === '角色'}}
         <img
@@ -41,8 +45,11 @@
         />
         {{/if}}
       </div>
-      <span class="item-name">{{item.name}}</span>
-      <span class="up-count">{{item.upCount}}</span>
+      <div class="name-cell">
+        <span class="item-name">{{item.name}}</span>
+        {{if item.isCurrentUp}}<span class="up-pill">UP</span>{{/if}}
+      </div>
+      <span class="up-count"><b>{{item.upCount}}</b><i>次</i></span>
       <span class="time-text {{if item.isCurrentUp}}current{{/if}}">{{item.timeText}}</span>
     </div>
     {{/each}}
