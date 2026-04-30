@@ -1,24 +1,142 @@
+/* ==================== 帮助页 · 暗色星空风 ==================== */
+
 body {
   width: 1000px;
+  padding: 0;
+  margin: 0;
+  background: #03060c;
 }
 
-.container {
+#container {
+  position: relative;
   width: 1000px;
+  margin: 0;
+  padding: 0 0 30px;
+  gap: 0;
   display: flex;
   flex-direction: column;
-  gap: 30px;
-}
-
-.card {
-  background: var(--paper-card);
-  border: 1px solid var(--paper-border);
-  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 16, 0.4) 0%, rgba(5, 8, 16, 0.55) 60%, rgba(5, 8, 16, 0.7) 100%),
+    url("../common/imgs/bg_archive.webp") center/cover no-repeat,
+    #03060c;
+  background-blend-mode: normal, normal, normal;
+  border: 1px solid rgba(120, 160, 220, 0.16);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6);
   overflow: hidden;
-  box-shadow: var(--paper-shadow);
-  position: relative;
+
+  --d-text: #f0f4fa;
+  --d-text-2: #c2cdda;
+  --d-text-3: #8093a8;
+  --d-text-4: #5e6f82;
+  --d-gold: #f4c45a;
+  --d-card: rgba(8, 12, 22, 0.7);
 }
 
-.card::before {
+/* ==================== Header ==================== */
+.head-box {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 320px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.22);
+  overflow: hidden;
+}
+
+.head-box::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 96px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--d-gold), transparent);
+  box-shadow: 0 0 4px rgba(244, 196, 90, 0.5);
+  z-index: 6;
+}
+
+.head-bg {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: saturate(1.05);
+}
+
+.head-mask {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to top,
+      rgba(3, 6, 12, 0.95) 0%,
+      rgba(3, 6, 12, 0.6) 45%,
+      rgba(3, 6, 12, 0.15) 75%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to right,
+      rgba(3, 6, 12, 0.5) 0%,
+      transparent 60%
+    );
+}
+
+.head-content {
+  position: absolute;
+  bottom: 32px;
+  left: 40px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.head-title {
+  font-family: var(--font-game);
+  font-size: 50px;
+  font-weight: 900;
+  color: var(--d-text);
+  letter-spacing: 4px;
+  line-height: 1;
+  text-shadow:
+    0 1px 8px rgba(244, 196, 90, 0.18),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0.4px rgba(244, 196, 90, 0.3);
+}
+
+.head-desc {
+  font-family: var(--font-game);
+  font-size: 14px;
+  color: var(--d-text-2);
+  letter-spacing: 1.5px;
+  font-weight: 400;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* ==================== 内容容器 ==================== */
+.content-box {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 18px;
+}
+
+.group-box {
+  position: relative;
+  background: var(--d-card);
+  border: 1px solid rgba(244, 196, 90, 0.16);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* 顶部金色细线 */
+.group-box::before {
   content: "";
   position: absolute;
   top: 0;
@@ -28,199 +146,89 @@ body {
   background: linear-gradient(
     90deg,
     transparent,
-    var(--paper-border),
-    var(--paper-accent),
-    var(--paper-border),
+    rgba(244, 196, 90, 0.5),
     transparent
   );
-  opacity: 0.6;
 }
 
-.card::after {
-  display: none;
-}
-
-.card-title {
-  font-size: 14px;
-  font-weight: 800;
-  font-family: var(--font-art);
-  color: var(--paper-accent);
-  padding: 12px 16px;
-  background: rgba(44, 36, 24, 0.04);
-  border-bottom: 1px solid var(--paper-divider);
-  letter-spacing: 1.5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-shadow: none;
-  position: relative;
-  text-transform: uppercase;
-}
-
-.card-title::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: linear-gradient(180deg, var(--paper-accent) 0%, transparent 100%);
-  box-shadow: none;
-  opacity: 0.9;
-}
-
-.card-title::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--paper-accent) 20%, var(--paper-accent) 80%, transparent);
-  opacity: 0.2;
-}
-
-.title-uid {
-  font-size: 11px;
-  color: var(--paper-text-sub);
-  font-weight: normal;
-}
-
-.head-box {
-  width: 100%;
-  height: 320px;
-  position: relative;
-  background: var(--paper-bg);
-  margin-bottom: 12px;
-  box-shadow: 0 2px 10px rgba(44, 36, 24, 0.06);
-  border-bottom: 1px solid var(--paper-border);
-  overflow: hidden;
-}
-
-.head-bg {
-  width: 100%;
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.head-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to top,
-    rgba(245, 240, 232, 0.95) 0%,
-    rgba(245, 240, 232, 0.4) 60%,
-    transparent 100%
-  );
-}
-
-.head-content {
-  position: absolute;
-  bottom: 30px;
-  left: 40px;
-  z-index: 5;
-}
-
-.head-title {
-  font-size: 48px;
-  font-weight: 700;
-  font-family: var(--font-art);
-  color: var(--paper-text);
-  text-shadow: none;
-  margin-bottom: 8px;
-  letter-spacing: 2px;
-}
-
-.head-desc {
-  font-size: 16px;
-  color: var(--paper-text-sub);
-  text-shadow: none;
-  font-weight: 400;
-}
-
-.content-box {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 0 20px;
-}
-
-.group-box {
-  background: var(--paper-card);
-  border-radius: 12px;
-  border: 1px solid var(--paper-border);
-  overflow: hidden;
-  box-shadow: var(--paper-shadow);
-  position: relative;
-}
-
+/* ==================== 分组标题 ==================== */
 .group-title-bar {
-  min-height: 50px;
-  background: rgba(44, 36, 24, 0.04);
+  position: relative;
+  min-height: 56px;
+  background: rgba(244, 196, 90, 0.06);
   display: flex;
   align-items: center;
-  padding: 12px 20px;
-  border-left: 4px solid var(--paper-accent);
-  border-bottom: 1px solid var(--paper-divider);
+  padding: 14px 24px;
+  border-left: 4px solid var(--d-gold);
+  border-bottom: 1px solid rgba(244, 196, 90, 0.16);
 }
 
 .group-icon {
-  color: var(--paper-accent);
-  font-size: 14px;
-  margin-right: 10px;
+  color: var(--d-gold);
+  font-size: 16px;
+  margin-right: 12px;
   flex-shrink: 0;
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.5);
 }
 
 .group-name {
-  font-size: 18px;
-  font-weight: bold;
-  color: var(--paper-text);
+  font-family: var(--font-game);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--d-text);
+  letter-spacing: 2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .group-desc {
   margin-left: auto;
-  font-size: 13px;
-  color: var(--paper-text-dim);
+  font-family: var(--font-game);
+  font-size: 14px;
+  color: var(--d-text-3);
+  letter-spacing: 0.6px;
   flex-shrink: 0;
 }
 
+/* ==================== 命令卡片 ==================== */
 .cmd-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 12px;
-  padding: 20px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  padding: 10px 10px;
   justify-items: stretch;
   align-items: stretch;
 }
 
 .cmd-card {
   width: 100%;
-  min-height: 84px;
-  background: rgba(44, 36, 24, 0.03);
+  min-height: 82px;
+  background: rgba(0, 0, 0, 0.32);
   border-radius: 8px;
-  border: 1px solid var(--paper-divider);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   align-items: center;
-  padding: 12px;
-  gap: 12px;
+  padding: 8px 10px;
+  gap: 10px;
   box-sizing: border-box;
   overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .cmd-card.is-master {
-  background: rgba(184, 134, 11, 0.06);
-  border-color: rgba(184, 134, 11, 0.25);
+  background: rgba(244, 196, 90, 0.06);
+  border-color: rgba(244, 196, 90, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 0 8px rgba(244, 196, 90, 0.12);
 }
 
 .cmd-icon-box {
   width: 56px;
   height: 56px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cmd-icon {
@@ -228,6 +236,7 @@ body {
   height: 100%;
   object-fit: contain;
   display: block;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.6));
 }
 
 .cmd-info {
@@ -239,21 +248,51 @@ body {
 }
 
 .cmd-name {
-  font-size: 15px;
-  font-weight: bold;
-  color: var(--paper-text);
+  font-family: var(--font-game);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--d-text);
+  letter-spacing: 0.6px;
   margin-bottom: 4px;
-  line-height: 1.4;
+  line-height: 1.3;
   word-break: break-word;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+}
+
+.cmd-card.is-master .cmd-name {
+  color: var(--d-gold);
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.65),
+    0 0 6px rgba(244, 196, 90, 0.25);
 }
 
 .cmd-detail {
-  font-size: 12px;
-  color: var(--paper-text-dim);
+  font-size: 13px;
+  color: var(--d-text-2);
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* ==================== copyright ==================== */
+.copyright {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+  font-size: 8px !important;
+  padding: 4px 0 2px !important;
+  margin-top: -25px;
+  position: relative;
+  z-index: 5;
+}
+
+.copyright .highlight {
+  color: #ffffff !important;
+}
+
+.copyright .highlight .version {
+  color: #f4c45a !important;
 }
