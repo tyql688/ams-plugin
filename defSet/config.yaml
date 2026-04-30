@@ -5,6 +5,8 @@
 render:
   scale: 100 # 渲染精度 (50-200)
 
+gacha_show_all: false # 抽卡记录是否展示全部池子；false 仅展示 4 个主池（精准角色/武器、常驻角色/武器），true 展示新手/感恩等全部
+
 panel_version: 1 # 面板版本: 1 (窄版) 或 2 (宽版)
 
 yuantu_pile: true # 立绘原图开关

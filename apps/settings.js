@@ -79,6 +79,15 @@ export class Settings extends AmsPlugin {
         example: config.exampleCommond("设置面板版本1/2"),
       },
       {
+        key: "gacha_show_all",
+        app: "config",
+        name: "抽卡全部池子",
+        value: cfg.gacha_show_all,
+        type: "switch",
+        desc: "抽卡记录是否展示全部池子；关闭时仅展示精准/常驻角色与武器 4 个主池",
+        example: config.exampleCommond("设置抽卡全部池子开启/关闭"),
+      },
+      {
         key: "allow_login",
         app: "network",
         name: "网页登录",
@@ -151,6 +160,7 @@ export class Settings extends AmsPlugin {
       ["立绘原图", "yuantu_pile", "config", "switch"],
       ["背景原图", "yuantu_bg", "config", "switch"],
       ["面板版本", "panel_version", "config", "select"],
+      ["抽卡全部池子", "gacha_show_all", "config", "switch"],
       ["网页登录", "allow_login", "network", "switch"],
       ["网页端口", "server_port", "network", "input"],
       ["网页链接", "public_link", "network", "input"],

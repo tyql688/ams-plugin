@@ -50,10 +50,13 @@ export class Gacha extends AmsPlugin {
 
     await e.reply("🎨 正在生成抽卡分析图...")
 
+    const showAll = !!config.getConfig("config").gacha_show_all
+
     // 准备渲染数据
     // 聚合所有池子的五星记录，并格式化为 V2 需要的结构
     const pools = {}
     for (const [typeId, typeName] of Object.entries(GACHA_TYPES)) {
+      if (!showAll && Number(typeId) > 4) continue
       const stat = record.getStatData(typeName)
       if (stat && stat.pool && stat.pool.length > 0) {
         pools[typeName] = {
@@ -61,17 +64,7 @@ export class Gacha extends AmsPlugin {
             ...stat.info,
             name: typeName,
           },
-          // 转换 logs 格式以适配 v2.html 中的循环
-          logs: stat.pool.map((item, idx) => {
-            // 从 sortedLogs 中找回对应的日期 (通过 index 对应)
-            const logEntry = record.data.data[typeName]
-              .filter(i => i.qualityLevel === 5)
-              .sort((a, b) => new Date(b.time) - new Date(a.time))[idx]
-            return {
-              ...item,
-              date: logEntry ? logEntry.time.split(" ")[0] : "",
-            }
-          }),
+          logs: stat.pool,
         }
       }
     }

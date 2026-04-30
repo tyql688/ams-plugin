@@ -62,14 +62,9 @@
 
       <div class="gacha-list">
         {{each poolData.logs log logIdx}}
-        <div class="gacha-item {{log.isUp ? 'up' : 'wai'}}">
-          <div class="item-date">
-            <div class="dot {{logIdx === 0 ? 'first' : ''}}"></div>
-            <div class="date-text">
-              {{if logIdx === 0 || poolData.logs[logIdx-1].date !== log.date}}{{log.date}}{{/if}}
-            </div>
-          </div>
-
+        <div
+          class="gacha-item {{log.isUp ? 'up' : 'wai'}} {{log.times <= 10 ? 'gold' : (log.times < 45 ? 'good' : (log.times < 65 ? 'normal' : 'bad'))}}"
+        >
           <div class="item-icon-box">
             <div
               class="icon-inner"
@@ -78,23 +73,9 @@
             {{if log.isUp}}
             <div class="up-badge">UP</div>
             {{/if}}
+            <div class="times-badge">{{log.times}}</div>
           </div>
-
-          <div class="item-name-box">
-            <div class="item-name">{{log.name}}</div>
-          </div>
-
-          <div class="item-progress">
-            <div class="progress-bar-bg">
-              <div class="progress-fill-wrap">
-                <div
-                  class="progress-bar-fill {{log.times <= 10 ? 'gold' : (log.times < 45 ? 'good' : (log.times < 65 ? 'normal' : 'bad'))}}"
-                  style="width: {{log.times / 80 * 100}}%"
-                ></div>
-                <span class="count-num">{{log.times}}</span>
-              </div>
-            </div>
-          </div>
+          <div class="item-name">{{log.name}}</div>
         </div>
         {{/each}}
       </div>
