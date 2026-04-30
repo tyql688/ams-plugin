@@ -7,14 +7,13 @@
 body {
   margin: 0;
   font-family: var(--font-number), var(--font-normal), sans-serif;
-  background-color: var(--bg-body);
-  color: var(--color-text-main);
+  background-color: var(--d-bg-page);
+  color: var(--d-text);
   transform-origin: 0 0;
 }
 
 .container,
 #container {
-  color: var(--paper-text);
   position: relative;
   box-sizing: border-box;
   display: flex;
@@ -26,29 +25,34 @@ body {
   margin: 0 auto;
 }
 
+/* 暗色默认 copyright（暗色页直接走默认；anns/ 等 legacy 页本地覆盖回米白即可） */
 .copyright {
-  font-size: 14px;
-  color: var(--paper-text-dim);
-  padding: 15px 0 10px 0;
+  font-size: 8px;
+  color: #ffffff;
+  padding: 4px 0 2px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 4px;
-  text-shadow: none;
-  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  margin: -25px 0 0;
   line-height: 1.5;
+  position: relative;
+  z-index: 5;
 }
+
 .copyright .highlight {
-  color: var(--paper-text);
+  color: #ffffff;
   position: relative;
   display: flex;
   align-items: flex-start;
   font-weight: bold;
 }
+
 .copyright .highlight .version {
   vertical-align: super;
   font-size: 0.8em;
   margin-top: -0.3em;
-  color: var(--paper-accent);
+  color: var(--d-gold);
   padding: 0 2px;
 }

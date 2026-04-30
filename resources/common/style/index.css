@@ -147,7 +147,8 @@
   --d-border-ruins:   1px solid rgba(140, 180, 240, 0.14);
 }
 
-/* ==================== 通用容器（攻略册风格） ==================== */
+/* ==================== 通用容器（攻略册 legacy） ==================== */
+/* 仅 anns/ 还在依赖此默认值。新建暗色页请用 .dark-panel-archive / .dark-panel-ruins。 */
 .glass-panel {
   position: relative;
   overflow: hidden;
@@ -162,15 +163,62 @@
   isolation: isolate;
 }
 
-/* 纹理默认关闭 */
 .glass-panel::before,
 .glass-panel::after {
   display: none;
 }
 
-/* 流光默认关闭 */
 .glow-top {
   display: none;
+}
+
+/* ==================== 暗色星空风容器 ==================== */
+/* 文档/资料类页（wiki/calendar/gacha/help/period/pool/settings...）使用 archive */
+.dark-panel-archive {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 16, 0.4) 0%, rgba(5, 8, 16, 0.55) 60%, rgba(5, 8, 16, 0.7) 100%),
+    url("../imgs/bg_archive.webp") center/cover no-repeat,
+    var(--d-bg-page);
+  background-blend-mode: normal, normal, normal;
+  border: var(--d-border-archive);
+  box-shadow: var(--d-shadow-panel);
+  isolation: isolate;
+}
+
+/* 战斗/探索类页（tower/challenge/develop/explore/matrix/slash/dailyNote）使用 ruins */
+.dark-panel-ruins {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 16, 0.3) 0%, rgba(5, 8, 16, 0.45) 60%, rgba(5, 8, 16, 0.65) 100%),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0.8px, transparent 1.4px) 0 0/8px 8px,
+    url("../imgs/bg_ruins.webp") center/cover no-repeat,
+    var(--d-bg-deep);
+  background-blend-mode: normal, normal, normal, normal;
+  border: var(--d-border-ruins);
+  box-shadow: var(--d-shadow-panel);
+  isolation: isolate;
+}
+
+/* Header 底部金色细线（左 96px 高亮过渡） */
+.dark-header-line {
+  position: relative;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.22);
+}
+
+.dark-header-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 96px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--d-gold), transparent);
+  box-shadow: 0 0 4px rgba(244, 196, 90, 0.5);
 }
 
 /* ==================== 通用稀有度组件 (Rarity UI) ==================== */
