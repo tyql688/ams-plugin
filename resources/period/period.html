@@ -5,21 +5,16 @@
   <div class="glow-top"></div>
 
   <div class="header">
-    <!-- 左侧用户信息 -->
-    {{if userAvatar}}
-    <div class="user-profile">
-      <div class="user-avatar-box">
-        <img class="user-avatar" src="{{userAvatar}}" />
-        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+    <div class="user-block">
+      <div class="avatar">
+        {{if userAvatar}}<img src="{{userAvatar}}" />{{/if}}
       </div>
-      <div class="user-meta">
-        <div class="user-name">{{roleName}}</div>
-        <div class="user-uid">UID: {{roleId}}</div>
+      <div class="user-text">
+        <div class="role-name">{{roleName}}</div>
+        <div class="uid-row">UID&nbsp;<b>{{roleId}}</b></div>
       </div>
     </div>
-    {{/if}}
 
-    <!-- 右侧标题区域 -->
     <div class="head-title">
       <div class="brand">RESOURCE BRIEFING TERMINAL</div>
       <h1 class="title-main">资源简报</h1>
