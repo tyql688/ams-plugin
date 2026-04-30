@@ -75,33 +75,3 @@
   color: #d3bc8e;
 }
 
-/* 恢复用户铭牌暗色样式 */
-.user-meta {
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.35) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-left: none;
-  backdrop-filter: blur(8px);
-}
-
-.user-name {
-  color: #fff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-}
-
-.user-uid {
-  color: #fff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.user-name + .user-uid {
-  color: rgba(255, 255, 255, 0.7);
-  text-shadow: none;
-}
-
-.user-meta::after {
-  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
-}
-
-.user-avatar-box {
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
-}
