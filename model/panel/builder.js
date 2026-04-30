@@ -1,4 +1,5 @@
 import { Calculator, STAT_MAP } from "#waves.calc"
+import { Guide } from "#waves.data"
 import { DamageManager } from "#waves.damage"
 import DataLoader from "../../lib/core/data_loader.js"
 
@@ -9,6 +10,29 @@ import {
   SKILL_ID_MAP,
   SKILL_ORDER,
 } from "./const.js"
+
+// sortId → grade 后缀（金/紫/绿）
+const RECOMMEND_TIER_GRADE = { 1: "s", 2: "a", 3: "c" }
+const GRADE_RANK = { s: 0, a: 1, c: 2 }
+
+// 词条名 + 值 → recommendAttrList 中的属性 key（声骸主/副词条用）
+function _resolveRecommendKey(name, value) {
+  if (["生命", "攻击", "防御"].includes(name)) {
+    const isPercent = typeof value === "string" && value.endsWith("%")
+    const base = name === "生命" ? "hp" : name === "攻击" ? "atk" : "def"
+    return isPercent ? `${base}_percent` : base
+  }
+  return STAT_MAP[name] || null
+}
+
+// 角色属性面板用：返回所有可能命中的 key（生命/攻击/防御 同时考虑基础值和百分比）
+function _resolveAttrRecommendKeys(name) {
+  if (name === "生命") return ["hp", "hp_percent"]
+  if (name === "攻击") return ["atk", "atk_percent"]
+  if (name === "防御") return ["def", "def_percent"]
+  const key = STAT_MAP[name]
+  return key ? [key] : []
+}
 
 /**
  * 面板数据构建器 - 基于 RoleCard 构建模板所需的完整面板数据
@@ -91,7 +115,48 @@ export class PanelBuilder {
       characterDetail: DataLoader.loadCharacterDetail(charId),
       weaponInfo: DataLoader.getWeaponById(weaponId),
       weaponDetail: DataLoader.loadWeaponDetail(weaponId),
+      recommendTierMap: this._buildRecommendTierMap(charId),
     }
+  }
+
+  /**
+   * 基于 Guide.recommendAttrList 构建 attrKey → grade 的映射
+   * sortId 1/2/3 对应 金(s)/紫(a)/绿(c)，其余不着色
+   * @private
+   */
+  _buildRecommendTierMap(charId) {
+    const map = new Map()
+    const guide = new Guide(charId)
+    if (!guide.exists()) return map
+
+    for (const item of guide.getRecommendAttrList()) {
+      const grade = RECOMMEND_TIER_GRADE[item.sortId]
+      if (!grade) continue
+      for (const attr of item.attributeList || []) {
+        if (!map.has(attr)) map.set(attr, grade)
+      }
+    }
+    return map
+  }
+
+  _resolveRecommendGrade(name, value) {
+    const map = this.resources?.recommendTierMap
+    if (!map || map.size === 0) return undefined
+    const key = _resolveRecommendKey(name, value)
+    return key ? map.get(key) : undefined
+  }
+
+  // 角色属性面板：在多个候选 key 中取等级最高的（s > a > c）
+  _resolveAttrRecommendGrade(name) {
+    const map = this.resources?.recommendTierMap
+    if (!map || map.size === 0) return undefined
+    let best
+    for (const key of _resolveAttrRecommendKeys(name)) {
+      const grade = map.get(key)
+      if (!grade) continue
+      if (!best || GRADE_RANK[grade] < GRADE_RANK[best]) best = grade
+    }
+    return best
   }
 
   _buildBasicInfo() {
@@ -148,7 +213,7 @@ export class PanelBuilder {
         formatValue = Math.floor(value).toLocaleString()
       }
 
-      return { name, value: formatValue }
+      return { name, value: formatValue, valid: this._resolveAttrRecommendGrade(name) }
     })
   }
 
@@ -268,11 +333,13 @@ export class PanelBuilder {
         mainPropList: phantom.mainProps.map(prop => ({
           attributeName: prop.name,
           attributeValue: prop.value,
+          valid: this._resolveRecommendGrade(prop.name, prop.value),
         })),
         subPropList: phantom.subProps.map(prop => ({
           attributeName: prop.name,
           attributeValue: prop.value,
           isMax: isSubPropMax(prop.name, prop.value),
+          valid: this._resolveRecommendGrade(prop.name, prop.value),
         })),
       }
     })

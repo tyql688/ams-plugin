@@ -260,6 +260,26 @@ body {
   letter-spacing: 0.3px;
 }
 
+/* 角色属性推荐高亮：金/紫/绿 = sortId 1/2/3 */
+.attr-label.grade-s,
+.attr-label.grade-ss,
+.attr-label.grade-sss,
+.attr-val.grade-s,
+.attr-val.grade-ss,
+.attr-val.grade-sss {
+  color: #ffd700;
+}
+
+.attr-label.grade-a,
+.attr-val.grade-a {
+  color: #c084fc;
+}
+
+.attr-label.grade-c,
+.attr-val.grade-c {
+  color: #4ade80;
+}
+
 /* ==================== 右侧：武器卡片 ==================== */
 .weapon-card {
   height: 205px; /* 620 - 280(属性) - 115(技能) - 10(gap) - 10(gap) = 205 */
@@ -700,9 +720,46 @@ body {
   font-size: 12px;
 }
 
-.p-val.max-val {
-  color: var(--grade-ss);
+/* 声骸词条推荐高亮：金/紫/绿 = sortId 1/2/3。
+   p-val 选择器写成 .prop-row .p-val.grade-X 是为了胜过上面 .prop-row.main .p-val。
+   .prop-row .p-val.max-val 定义在最后，副词条满值用红色覆盖 grade（红色与金/紫/绿都不撞色）*/
+.p-name.grade-s,
+.p-name.grade-ss,
+.p-name.grade-sss,
+.prop-row .p-val.grade-s,
+.prop-row .p-val.grade-ss,
+.prop-row .p-val.grade-sss {
+  color: #ffd700;
 }
+
+.p-name.grade-s,
+.p-name.grade-ss,
+.p-name.grade-sss {
+  font-weight: 600;
+}
+
+.p-name.grade-a,
+.prop-row .p-val.grade-a {
+  color: #c084fc;
+}
+
+.p-name.grade-a {
+  font-weight: 600;
+}
+
+.p-name.grade-c,
+.prop-row .p-val.grade-c {
+  color: #4ade80;
+}
+
+.p-name.grade-c {
+  font-weight: 600;
+}
+
+.prop-row .p-val.max-val {
+  color: #ff6b6b;
+}
+
 /* ==================== 伤害统计 (Damage Stats - Two Columns) ==================== */
 .damage-section {
   display: flex;

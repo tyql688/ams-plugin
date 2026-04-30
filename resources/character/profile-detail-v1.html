@@ -163,8 +163,12 @@
         <div class="p-icon">
           <img src="{{wavesResMap.prop}}/{{mainProp.attributeName}}.webp" />
         </div>
-        <div class="p-name">{{mainProp.attributeName}}</div>
-        <div class="p-val">{{mainProp.attributeValue}}</div>
+        <div class="p-name {{if mainProp.valid}}grade-{{mainProp.valid}}{{/if}}">
+          {{mainProp.attributeName}}
+        </div>
+        <div class="p-val {{if mainProp.valid}}grade-{{mainProp.valid}}{{/if}}">
+          {{mainProp.attributeValue}}
+        </div>
       </div>
       {{/each}} {{/if}} {{if phantom.subPropList}} {{each phantom.subPropList subProp}} {{if
       subProp.attributeName}}
@@ -173,7 +177,11 @@
         <div class="p-name {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}">
           {{subProp.attributeName}}
         </div>
-        <div class="p-val {{if subProp.isMax}}max-val{{/if}}">{{subProp.attributeValue}}</div>
+        <div
+          class="p-val {{if subProp.valid}}grade-{{subProp.valid}}{{/if}} {{if subProp.isMax}}max-val{{/if}}"
+        >
+          {{subProp.attributeValue}}
+        </div>
       </div>
       {{/if}} {{/each}} {{/if}}
     </div>

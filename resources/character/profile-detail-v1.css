@@ -702,8 +702,25 @@ body {
   font-family: var(--font-number);
 }
 
-.p-val.max-val {
-  color: var(--grade-ss);
+/* 词条数值推荐高亮：金/紫/绿 = sortId 1/2/3。
+   选择器写成 .prop-row .p-val.grade-X 是为了胜过上面 .prop-row.main .p-val（同特异性靠源码顺序）。
+   max-val 规则定义在最后，副词条满值用红色覆盖 grade（红色与金/紫/绿都不撞色）*/
+.prop-row .p-val.grade-s,
+.prop-row .p-val.grade-ss,
+.prop-row .p-val.grade-sss {
+  color: #ffd700;
+}
+
+.prop-row .p-val.grade-a {
+  color: #c084fc;
+}
+
+.prop-row .p-val.grade-c {
+  color: #4ade80;
+}
+
+.prop-row .p-val.max-val {
+  color: #ff6b6b;
 }
 
 /* ==================== 伤害统计 (Damage Stats - Table Style) ==================== */
