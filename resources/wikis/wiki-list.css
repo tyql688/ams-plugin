@@ -1,63 +1,116 @@
-/* ==================== 页面全局样式 ==================== */
+/* ==================== Wiki 列表 · 暗色星空风 ==================== */
+
 body {
   width: 1000px;
-  padding: 40px 0;
+  padding: 0;
+  margin: 0;
+  background: #03060c;
 }
 
-.container {
+#container {
   width: 1000px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+  gap: 0;
+  padding: 0;
+  background: none !important;
 }
 
 .wiki-list-container {
+  position: relative;
   width: 1000px;
+  margin: 0;
+  padding: 30px 36px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 16, 0.4) 0%, rgba(5, 8, 16, 0.55) 60%, rgba(5, 8, 16, 0.7) 100%),
+    url("../common/imgs/bg_archive.webp") center/cover no-repeat,
+    #03060c;
+  background-blend-mode: normal, normal, normal;
+  border: 1px solid rgba(120, 160, 220, 0.16);
+  border-radius: 0;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+
+  --d-text: #f0f4fa;
+  --d-text-2: #c2cdda;
+  --d-text-3: #8093a8;
+  --d-text-4: #5e6f82;
+  --d-line: rgba(255, 255, 255, 0.1);
+  --d-gold: #f4c45a;
+  --d-card: rgba(8, 12, 22, 0.7);
 }
 
-/* ==================== 头部样式 ==================== */
+/* ==================== Header ==================== */
 .header {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 35px;
-  border-bottom: 1px solid var(--paper-border);
   padding-bottom: 18px;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.22);
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 96px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--d-gold), transparent);
+  box-shadow: 0 0 4px rgba(244, 196, 90, 0.5);
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .brand {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 6px;
-  color: var(--paper-accent);
+  color: var(--d-gold);
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 0;
+  opacity: 0.92;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .title-main {
-  font-family: var(--font-art);
-  font-size: 54px;
-  font-weight: 800;
-  color: var(--paper-text);
+  font-family: var(--font-game);
+  font-size: 50px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--d-text);
+  letter-spacing: 4px;
   background: none;
   -webkit-background-clip: unset;
   background-clip: unset;
   -webkit-text-fill-color: unset;
-  line-height: 1.1;
+  text-shadow:
+    0 1px 8px rgba(244, 196, 90, 0.18),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0.4px rgba(244, 196, 90, 0.3);
 }
 
 .count {
+  font-family: var(--font-number);
   font-size: 18px;
-  color: var(--paper-accent);
-  font-weight: 600;
+  color: var(--d-gold);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 10px rgba(244, 196, 90, 0.35);
 }
 
-/* ==================== 分组样式 ==================== */
+/* ==================== 分组 ==================== */
 .group-section {
-  margin-bottom: 40px;
-}
-
-.group-section:last-child {
+  position: relative;
+  z-index: 2;
   margin-bottom: 0;
 }
 
@@ -65,15 +118,18 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.16);
 }
 
 .label-text {
+  font-family: var(--font-game);
   font-size: 22px;
   font-weight: 700;
-  font-family: var(--font-art);
-  color: var(--label-color, var(--paper-accent));
-  letter-spacing: 1px;
+  color: var(--label-color, var(--d-gold));
+  letter-spacing: 2px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .group-section[class*="theme-"] .label-text {
@@ -85,68 +141,163 @@ body {
   height: 1px;
   background: linear-gradient(
     90deg,
-    var(--line-color, var(--paper-border)) 0%,
+    var(--line-color, rgba(244, 196, 90, 0.4)) 0%,
     transparent 100%
   );
 }
 
 .group-section[class*="theme-"] .label-line {
-  --line-color: var(--element-shadow);
+  --line-color: var(--element-primary);
 }
 
 /* ==================== 列表网格 ==================== */
 .list-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 15px;
+  gap: 12px;
 }
 
+/* 与 develop 的 mat-card / char-card 同款 quality-frame */
 .item-card {
-  background: var(--paper-card);
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid var(--paper-border);
+  position: relative;
   display: flex;
   flex-direction: column;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 12, 22, 0.7);
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
+/* rarity 底图：仅覆盖图标区，色带在图标区底部 */
+.item-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 26px;
+  background-position: bottom center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0.95;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 顶部暗化遮罩，icon 区上半暗、下半透出 rarity 色 */
+.item-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 26px;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 12, 22, 0.92) 0%,
+    rgba(8, 12, 22, 0.55) 50%,
+    rgba(8, 12, 22, 0.1) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.item-card.rarity-1::before { background-image: url("../common/imgs/quality/quality_1.webp"); }
+.item-card.rarity-2::before { background-image: url("../common/imgs/quality/quality_2.webp"); }
+.item-card.rarity-3::before { background-image: url("../common/imgs/quality/quality_3.webp"); }
+.item-card.rarity-4::before { background-image: url("../common/imgs/quality/quality_4.webp"); }
+.item-card.rarity-5::before { background-image: url("../common/imgs/quality/quality_5.webp"); }
+
+.item-card.rarity-5 {
+  border-color: rgba(244, 196, 90, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 10px rgba(244, 196, 90, 0.22);
+}
+.item-card.rarity-4 { border-color: rgba(178, 155, 255, 0.5); }
+.item-card.rarity-3 { border-color: rgba(108, 185, 255, 0.45); }
+.item-card.rarity-2 { border-color: rgba(124, 217, 152, 0.42); }
+.item-card.rarity-1 { border-color: rgba(159, 177, 194, 0.35); }
+
+/* 图标区域（HTML 里的 .item-icon-wrapper.rarity-item 都覆盖掉） */
 .item-icon-wrapper {
+  position: relative;
+  z-index: 2;
   aspect-ratio: 1/1;
-  /* 基础样式继承自 .rarity-item */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+  border: none !important;
 }
 
 .item-icon {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  width: 86%;
+  height: 86%;
+  object-fit: cover;
+  border-radius: 4px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
 }
 
+/* 旧的底部彩条隐藏，新风格用底栏代替 */
+.rarity-glow {
+  display: none !important;
+}
+
+/* 底部名字栏 */
 .item-info {
-  padding: 10px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 26px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  min-height: 40px;
+  padding: 0 6px;
+  background: rgba(6, 9, 17, 0.92);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-sizing: border-box;
+  min-height: 0;
 }
 
 .item-name {
-  font-size: 15px;
+  font-family: var(--font-game);
+  font-size: 12px;
   font-weight: 700;
   text-align: center;
+  letter-spacing: 0.4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--paper-text);
+  color: var(--d-text);
   line-height: 1.2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
 }
 
-/* ==================== 稀有度颜色边框 ==================== */
-.item-card.rarity-5 {
-  border-bottom: 2px solid var(--rarity-5);
+.item-card.rarity-5 .item-name { color: #f4c45a; }
+.item-card.rarity-4 .item-name { color: #d6c8ff; }
+.item-card.rarity-3 .item-name { color: #b6dcff; }
+.item-card.rarity-2 .item-name { color: #c0eecf; }
+
+/* ==================== copyright ==================== */
+.copyright {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+  font-size: 8px !important;
+  padding: 4px 0 2px !important;
+  margin-top: -25px;
+  position: relative;
+  z-index: 5;
 }
-.item-card.rarity-4 {
-  border-bottom: 2px solid var(--rarity-4);
+
+.copyright .highlight {
+  color: #ffffff !important;
 }
-.item-card.rarity-3 {
-  border-bottom: 2px solid var(--rarity-3);
+
+.copyright .highlight .version {
+  color: #f4c45a !important;
 }

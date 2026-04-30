@@ -62,7 +62,7 @@ export class Wiki extends AmsPlugin {
         talents: this._formatTalents(roleData),
       }
 
-      const img = await this.render("wikis/wiki-role", renderData)
+      const img = await this.render("wikis/wiki-role", renderData, { scale: 50 })
       if (img) {
         return e.reply(img)
       } else {
@@ -103,7 +103,7 @@ export class Wiki extends AmsPlugin {
         chains: this._formatChains(roleData),
       }
 
-      const img = await this.render("wikis/wiki-role", renderData)
+      const img = await this.render("wikis/wiki-role", renderData, { scale: 50 })
       if (img) {
         return e.reply(img)
       } else {
@@ -256,7 +256,7 @@ export class Wiki extends AmsPlugin {
     }
 
     const template = mode === "group" ? "wikis/wiki-group" : "wikis/wiki-list"
-    const img = await this.render(template, renderData)
+    const img = await this.render(template, renderData, { scale: 50 })
     if (img) {
       return e.reply(img)
     } else {
@@ -286,7 +286,7 @@ export class Wiki extends AmsPlugin {
         },
       }
 
-      const img = await this.render("wikis/wiki-weapon", renderData)
+      const img = await this.render("wikis/wiki-weapon", renderData, { scale: 50 })
       if (img) return e.reply(img)
       return e.reply("❌ 绘图失败")
     } catch (err) {
@@ -325,7 +325,7 @@ export class Wiki extends AmsPlugin {
         },
       }
 
-      const img = await this.render("wikis/wiki-echo", renderData)
+      const img = await this.render("wikis/wiki-echo", renderData, { scale: 50 })
       if (img) return e.reply(img)
       return e.reply("❌ 绘图失败")
     } catch (err) {
@@ -412,12 +412,14 @@ export class Wiki extends AmsPlugin {
       })
     }
 
-    // Highlighting: 只高亮带百分比的数值或带有单位的数值，避免误伤普通 ID 编号
+    // 先转义原文的 < / >，再插入 <br>，否则换行标签会被当作普通字符吞掉
+    // 接口数据常常是一整段无换行长文本，按句号 "。" 拆段
     return formatted
+      .replace(/&lt;|</g, "&lt;")
+      .replace(/&gt;|>/g, "&gt;")
       .replace(/\\n/g, "<br>")
       .replace(/\n/g, "<br>")
-      .replace(/<|&lt;/g, "&lt;")
-      .replace(/>|&gt;/g, "&gt;")
+      .replace(/。(?!<br>|$)/g, "。<br>")
       .replace(/(\d+\.?\d*%?)/g, "<nobr>$1</nobr>")
   }
 
@@ -430,7 +432,11 @@ export class Wiki extends AmsPlugin {
 
     return damages.map(param => ({
       name: param.name || "",
-      values: param.damage || [],
+      values: (param.damage || []).map(v => {
+        if (typeof v !== "string") return v
+        // 多段伤害 "X+Y" / "X*N+Y" 没有空格，给 +/* 后面塞 <wbr> 让定宽列能自然换行
+        return v.replace(/([+*])/g, "$1<wbr>")
+      }),
     }))
   }
 

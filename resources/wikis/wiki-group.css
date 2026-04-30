@@ -1,60 +1,123 @@
+/* ==================== Wiki 声骸套装 · 暗色星空风 ==================== */
+
 body {
   width: 1000px;
-  padding: 40px 0;
+  padding: 0;
+  margin: 0;
+  background: #03060c;
+}
+
+#container {
+  width: 1000px;
+  gap: 0;
+  padding: 0;
+  background: none !important;
 }
 
 .wiki-group-container {
+  position: relative;
   width: 1000px;
+  margin: 0;
+  padding: 30px 36px 40px;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 28px;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 16, 0.4) 0%, rgba(5, 8, 16, 0.55) 60%, rgba(5, 8, 16, 0.7) 100%),
+    url("../common/imgs/bg_archive.webp") center/cover no-repeat,
+    #03060c;
+  background-blend-mode: normal, normal, normal;
+  border: 1px solid rgba(120, 160, 220, 0.16);
+  border-radius: 0;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+
+  --d-text: #f0f4fa;
+  --d-text-2: #c2cdda;
+  --d-text-3: #8093a8;
+  --d-text-4: #5e6f82;
+  --d-line: rgba(255, 255, 255, 0.1);
+  --d-gold: #f4c45a;
+  --d-card: rgba(8, 12, 22, 0.7);
 }
 
 /* ==================== Header ==================== */
 .header {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  border-bottom: 1px solid var(--paper-border);
   padding-bottom: 18px;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.22);
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 96px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--d-gold), transparent);
+  box-shadow: 0 0 4px rgba(244, 196, 90, 0.5);
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .brand {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 6px;
-  color: var(--paper-accent);
+  color: var(--d-gold);
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 0;
+  opacity: 0.92;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
 .title-main {
-  font-family: var(--font-art);
-  font-size: 48px;
-  color: var(--paper-text);
+  font-family: var(--font-game);
+  font-size: 46px;
+  font-weight: 900;
+  color: var(--d-text);
+  letter-spacing: 4px;
   background: none;
   -webkit-background-clip: unset;
   background-clip: unset;
   -webkit-text-fill-color: unset;
   line-height: 1.1;
+  text-shadow:
+    0 1px 8px rgba(244, 196, 90, 0.18),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0.4px rgba(244, 196, 90, 0.3);
 }
 
 .count {
+  font-family: var(--font-number);
   font-size: 16px;
-  color: var(--paper-text-sub);
-  opacity: 0.8;
+  color: var(--d-gold);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 10px rgba(244, 196, 90, 0.35);
 }
 
 /* ==================== 套装列表 ==================== */
 .sets-list {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  gap: 14px;
 }
 
-/* ==================== Theme Colors ==================== */
+/* 主题色映射 */
 .set-card {
-  --accent-theme: var(--accent-gold);
+  --accent-theme: var(--d-gold);
 }
 
 .set-card.theme-glacio,
@@ -70,19 +133,22 @@ body {
 }
 
 .set-card.theme-default {
-  --accent-theme: #475569;
+  --accent-theme: #8093a8;
 }
 
 .set-card {
-  background: var(--paper-card);
-  border: 1px solid var(--paper-border);
-  border-radius: 12px;
-  padding: 15px;
+  background: var(--d-card);
+  border: 1px solid rgba(244, 196, 90, 0.16);
+  border-radius: 10px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   position: relative;
   overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.45);
 }
 
 .set-card::before {
@@ -90,52 +156,64 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 4px;
+  width: 3px;
   height: 100%;
   background: var(--accent-theme);
-  opacity: 0.6;
+  box-shadow: 0 0 8px var(--accent-theme);
+  opacity: 0.85;
 }
 
 .set-header {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
 .set-icon-box {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: 8px;
   padding: 4px;
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(244, 196, 90, 0.25);
+  flex-shrink: 0;
+}
+
+.set-icon-box.rarity-5 {
+  background: radial-gradient(circle, rgba(244, 196, 90, 0.18) 0%, rgba(8, 12, 22, 0.7) 100%) !important;
+  border-color: rgba(244, 196, 90, 0.45);
 }
 
 .set-icon {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 0 4px rgba(244, 196, 90, 0.3));
 }
 
 .set-name {
-  font-family: var(--font-art);
-  font-size: 20px;
-  color: var(--paper-text);
-  font-weight: 700;
+  font-family: var(--font-game);
+  font-size: 19px;
+  color: var(--d-text);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .set-id {
   margin-left: auto;
   font-family: var(--font-number);
-  font-size: 14px;
-  color: var(--paper-text-dim);
-  opacity: 0.5;
+  font-size: 12px;
+  color: var(--d-text-4);
+  opacity: 0.7;
 }
 
-/* ==================== 属性条目 ==================== */
+/* ==================== 效果条目 ==================== */
 .set-effects {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-left: 5px;
+  gap: 7px;
+  padding-left: 4px;
 }
 
 .effect-item {
@@ -146,24 +224,47 @@ body {
 
 .effect-pieces {
   background: var(--accent-theme);
-  color: #000;
-  padding: 1px 6px;
+  color: #0a0e1a;
+  padding: 2px 7px;
   border-radius: 3px;
+  font-family: var(--font-game);
   font-size: 10px;
   font-weight: 900;
   min-width: 42px;
   text-align: center;
   flex-shrink: 0;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 6px var(--accent-theme);
 }
 
 .effect-content {
   font-size: 12px;
-  color: var(--paper-text-sub);
-  line-height: 1.4;
+  color: var(--d-text-2);
+  line-height: 1.45;
   flex: 1;
 }
 
 .set-card .effect-content nobr {
   color: var(--accent-theme);
-  font-weight: 700;
+  font-weight: 800;
+  text-shadow: 0 0 5px var(--accent-theme);
+}
+
+/* ==================== copyright ==================== */
+.copyright {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+  font-size: 8px !important;
+  padding: 4px 0 2px !important;
+  margin-top: -25px;
+  position: relative;
+  z-index: 5;
+}
+
+.copyright .highlight {
+  color: #ffffff !important;
+}
+
+.copyright .highlight .version {
+  color: #f4c45a !important;
 }
