@@ -11,12 +11,6 @@
     url("../font/HYWH-65W.ttf") format("truetype");
 }
 @font-face {
-  font-family: "NZBZ";
-  src:
-    url("../font/NZBZ.woff") format("woff"),
-    url("../font/NZBZ.ttf") format("truetype");
-}
-@font-face {
   font-family: "LXGWWenKai";
   src:
     url("../font/LXGWWenKai-Medium.woff") format("woff"),
@@ -407,54 +401,5 @@
 .tag-reson.reson-6 {
   color: var(--chain-6);
   border-color: var(--chain-6);
-}
-
-/* === 声骸品质颜色 (Intensity) === */
-.theme-echo-0 {
-  --element-primary: var(--chain-1);
-  --element-bg: rgba(90, 114, 71, 0.08);
-  --element-shadow: rgba(90, 114, 71, 0.2);
-}
-.theme-echo-1 {
-  --element-primary: var(--chain-2);
-  --element-bg: rgba(33, 150, 243, 0.08);
-  --element-shadow: rgba(33, 150, 243, 0.2);
-}
-.theme-echo-2 {
-  --element-primary: var(--chain-3);
-  --element-bg: rgba(156, 39, 176, 0.08);
-  --element-shadow: rgba(156, 39, 176, 0.2);
-}
-.theme-echo-3 {
-  --element-primary: var(--chain-4);
-  --element-bg: rgba(196, 132, 29, 0.08);
-  --element-shadow: rgba(196, 132, 29, 0.2);
-}
-
-/* === 武器类型主题 (Weapon Type) === */
-.theme-weapon-1 {
-  --element-primary: var(--color-glacio);
-  --element-bg: rgba(26, 138, 158, 0.08);
-  --element-shadow: rgba(26, 138, 158, 0.2);
-}
-.theme-weapon-2 {
-  --element-primary: var(--chain-5);
-  --element-bg: rgba(179, 58, 42, 0.08);
-  --element-shadow: rgba(179, 58, 42, 0.2);
-}
-.theme-weapon-3 {
-  --element-primary: var(--chain-4);
-  --element-bg: rgba(196, 132, 29, 0.08);
-  --element-shadow: rgba(196, 132, 29, 0.2);
-}
-.theme-weapon-4 {
-  --element-primary: var(--chain-1);
-  --element-bg: rgba(90, 114, 71, 0.08);
-  --element-shadow: rgba(90, 114, 71, 0.2);
-}
-.theme-weapon-5 {
-  --element-primary: var(--chain-3);
-  --element-bg: rgba(156, 39, 176, 0.08);
-  --element-shadow: rgba(156, 39, 176, 0.2);
 }
 
