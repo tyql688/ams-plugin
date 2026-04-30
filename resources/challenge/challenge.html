@@ -1,55 +1,50 @@
-{{extend defaultLayout}} {{block 'css'}}
+{{extend defaultLayout}}
+{{block 'css'}}
 <link rel="stylesheet" href="{{_res_path}}/challenge/challenge.css" />
-{{/block}} {{block 'main'}}
+{{/block}}
 
-<div class="challenge-container glass-panel">
-  <div class="glow-top"></div>
-
-  <div class="header">
-    {{if userAvatar}}
-    <div class="user-profile">
-      <div class="user-avatar-box">
-        <img class="user-avatar" src="{{userAvatar}}" />
-        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+{{block 'main'}}
+<div class="challenge-panel">
+  <!-- 顶部 -->
+  <header class="topbar">
+    <div class="user-block">
+      <div class="avatar">
+        {{if userAvatar}}<img src="{{userAvatar}}" alt="" />{{/if}}
       </div>
-      <div class="user-meta">
-        <span class="user-uid">UID: {{uid}}</span>
+      <div class="user-text">
+        <div class="role-name">{{roleName}}</div>
+        <div class="uid-row">UID&nbsp;<b>{{uid}}</b></div>
       </div>
     </div>
-    {{/if}}
 
-    <div class="head-title">
-      <div class="brand">TACTICAL HOLOGRAM</div>
-      <div class="title-main">战术全息</div>
+    <div class="title-block">
+      <div class="brand-en">TACTICAL · HOLOGRAM</div>
+      <div class="brand-cn">战术全息</div>
     </div>
-  </div>
+  </header>
 
-  <!-- 参考 Slash 风格的总览卡片 -->
-  <div class="summary-wrapper">
-    <div class="sl-summary-card">
-      <div class="sl-label">战术全息总览</div>
-      <div class="sl-values">
-        <div class="sl-item highlight big-left">
-          <span class="val">{{fullClearCount}}</span>
-          <span class="sub">PERFECT</span>
-        </div>
-        <div class="sl-divider"></div>
-        <div class="sl-item">
-          <span class="val">{{totalBosses}}</span>
-          <span class="sub">BOSS</span>
-        </div>
-      </div>
+  <!-- 总览 pill -->
+  <div class="summary-pill">
+    <span class="sl-label">总览</span>
+    <div class="sl-item highlight big-left">
+      <b class="val">{{fullClearCount}}</b>
+      <span class="sub">PERFECT</span>
+    </div>
+    <div class="sl-divider"></div>
+    <div class="sl-item">
+      <b class="val">{{totalBosses}}</b>
+      <span class="sub">BOSS</span>
     </div>
   </div>
 
+  <!-- Boss 卡片列表 -->
   <div class="boss-list">
     {{each bossList boss}}
     <div class="boss-card {{if boss.isFullyCleared}}cleared{{/if}}">
       <div class="boss-card-bg" style="background-image: url('{{boss.bossIconUrl}}')"></div>
+      <div class="boss-mask"></div>
 
-      <!-- 卡片内容：采用绝对定位布局 -->
       <div class="boss-content">
-        <!-- 左上：Boss 名字与等级 -->
         <div class="pos-top-left">
           <div class="boss-name">{{boss.bossName}}</div>
           <div class="boss-tag {{if boss.isFullyCleared}}max{{else}}normal{{/if}}">
@@ -57,17 +52,16 @@
           </div>
         </div>
 
-        {{if boss.maxDifficulty > 0}} {{set fileterdDiffs = boss.challenges.filter(c => c.difficulty
-        === boss.maxDifficulty)}} {{if fileterdDiffs.length > 0}} {{set bestRecord =
-        fileterdDiffs[0]}}
+        {{if boss.maxDifficulty > 0}}
+        {{set fileterdDiffs = boss.challenges.filter(c => c.difficulty === boss.maxDifficulty)}}
+        {{if fileterdDiffs.length > 0}}
+        {{set bestRecord = fileterdDiffs[0]}}
 
-        <!-- 左下：超大时间 -->
         <div class="pos-bottom-left">
           <div class="time-label">BEST RECORD</div>
           <div class="big-time">{{bestRecord.passTime}}<span class="unit">s</span></div>
         </div>
 
-        <!-- 右下：角色列表 -->
         <div class="pos-bottom-right">
           <div class="team-group">
             {{each bestRecord.roles role}}
@@ -80,7 +74,8 @@
             {{/each}}
           </div>
         </div>
-        {{/if}} {{else}}
+        {{/if}}
+        {{else}}
         <div class="pos-center-empty">NO RECORD</div>
         {{/if}}
       </div>
