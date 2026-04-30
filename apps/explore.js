@@ -48,6 +48,7 @@ export class Explore extends AmsPlugin {
       uid: user.gameUid,
       exploreList: exploreData.exploreList,
       roleId: user.roleId,
+      roleName: wavesApi.dbUser?.gameData?.roleName,
     }
 
     // 获取头像

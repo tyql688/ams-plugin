@@ -1,60 +1,53 @@
-{{extend defaultLayout}} {{block 'css'}}
+{{extend defaultLayout}}
+{{block 'css'}}
 <link rel="stylesheet" href="{{_res_path}}/develop/index.css" />
-{{/block}} {{block 'main'}}
-<div class="develop-container glass-panel">
-  <div class="glow-top"></div>
+{{/block}}
 
-  <div class="develop-header">
-    <div class="user-profile">
-      <div class="user-avatar-box">
-        <img class="user-avatar" src="{{userAvatar}}" />
-        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+{{block 'main'}}
+<div class="develop-panel">
+  <header class="topbar">
+    <div class="user-block">
+      <div class="avatar">
+        {{if userAvatar}}<img src="{{userAvatar}}" alt="" />{{/if}}
       </div>
-      <div class="user-meta">
-        <span class="user-uid">UID: {{uid}}</span>
+      <div class="user-text">
+        <div class="role-name">{{roleName}}</div>
+        <div class="uid-row">UID&nbsp;<b>{{uid}}</b></div>
       </div>
     </div>
-    <div class="header-title">
-      <div class="brand">Character Development Plan</div>
-      <div class="title-main">角色养成计算</div>
+
+    <div class="title-block">
+      <div class="brand-en">DEVELOPMENT · PLAN</div>
+      <div class="brand-cn">角色养成计算</div>
     </div>
-  </div>
+  </header>
 
   {{each costList cost}}
   <div class="role-section theme-element-{{onlineRoleMap[cost.roleId].attributeId}}">
     <div class="role-header">
-      <div class="role-portrait">
-        <div class="rarity-frame rarity-{{onlineRoleMap[cost.roleId].starLevel}}">
+      <div class="char-card rarity-{{onlineRoleMap[cost.roleId].starLevel}}">
+        <div class="char-icon-wrapper">
           <img src="{{wavesResMap.roleAvatar}}/{{cost.roleId}}.webp" />
-          <div class="rarity-glow rarity-{{onlineRoleMap[cost.roleId].starLevel}}"></div>
         </div>
-        <div class="role-meta">
-          <div class="role-name">{{onlineRoleMap[cost.roleId].roleName}}</div>
-          <div class="lvl-tag">
-            Lv.{{contentMap[cost.roleId].roleStartLevel}} → {{contentMap[cost.roleId].roleEndLevel}}
-          </div>
+        <div class="char-info">
+          <span class="char-name">{{onlineRoleMap[cost.roleId].roleName}}</span>
         </div>
+      </div>
+      <div class="lvl-tag">
+        Lv.{{contentMap[cost.roleId].roleStartLevel}} → {{contentMap[cost.roleId].roleEndLevel}}
       </div>
 
       {{if contentMap[cost.roleId].weaponId}}
-      <div class="weapon-portrait">
-        <div
-          class="rarity-frame rarity-{{onlineWeaponMap[contentMap[cost.roleId].weaponId].weaponStarLevel}}"
-        >
+      <div class="char-card rarity-{{onlineWeaponMap[contentMap[cost.roleId].weaponId].weaponStarLevel}}">
+        <div class="char-icon-wrapper">
           <img src="{{wavesResMap.weapon}}/{{contentMap[cost.roleId].weaponId}}.webp" />
-          <div
-            class="rarity-glow rarity-{{onlineWeaponMap[contentMap[cost.roleId].weaponId].weaponStarLevel}}"
-          ></div>
         </div>
-        <div class="weapon-meta">
-          <div class="weapon-name">
-            {{onlineWeaponMap[contentMap[cost.roleId].weaponId].weaponName}}
-          </div>
-          <div class="lvl-tag">
-            Lv.{{contentMap[cost.roleId].weaponStartLevel}} →
-            {{contentMap[cost.roleId].weaponEndLevel}}
-          </div>
+        <div class="char-info">
+          <span class="char-name">{{onlineWeaponMap[contentMap[cost.roleId].weaponId].weaponName}}</span>
         </div>
+      </div>
+      <div class="lvl-tag">
+        Lv.{{contentMap[cost.roleId].weaponStartLevel}} → {{contentMap[cost.roleId].weaponEndLevel}}
       </div>
       {{/if}}
     </div>
@@ -150,8 +143,8 @@
   {{/each}} {{if preview && preview.allCost && preview.allCost.length > 0 && costList.length > 1}}
   <div class="total-summary">
     <div class="summary-header">
-      <div class="brand">Total Materials Summary</div>
-      <div class="title-main">全部养成材料汇总</div>
+      <div class="brand-en">TOTAL · MATERIALS</div>
+      <div class="brand-cn">全部养成材料汇总</div>
     </div>
     <div class="mat-grid">
       {{each preview.allCost mat}}

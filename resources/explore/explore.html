@@ -1,27 +1,29 @@
-{{extend defaultLayout}} {{block 'css'}}
+{{extend defaultLayout}}
+{{block 'css'}}
 <link rel="stylesheet" href="{{pluResPath}}explore/explore.css" />
-{{/block}} {{block 'main'}}
-<div class="explore-container glass-panel">
-  <div class="glow-top"></div>
+{{/block}}
 
-  <div class="header">
-    {{if userAvatar}}
-    <div class="user-profile">
-      <div class="user-avatar-box">
-        <img class="user-avatar" src="{{userAvatar}}" />
-        <img class="avatar-frame-img" src="{{userAvatarFrame}}" />
+{{block 'main'}}
+<div class="explore-panel">
+  <!-- 顶部 -->
+  <header class="topbar">
+    <div class="user-block">
+      <div class="avatar">
+        {{if userAvatar}}<img src="{{userAvatar}}" alt="" />{{/if}}
       </div>
-      <div class="user-meta">
-        <span class="user-uid">UID: {{uid}}</span>
+      <div class="user-text">
+        <div class="role-name">{{roleName}}</div>
+        <div class="uid-row">UID&nbsp;<b>{{uid}}</b></div>
       </div>
     </div>
-    {{/if}}
-    <div class="head-title">
-      <div class="brand">World Exploration</div>
-      <div class="title-main">世界探索</div>
-    </div>
-  </div>
 
+    <div class="title-block">
+      <div class="brand-en">WORLD · EXPLORATION</div>
+      <div class="brand-cn">世界探索</div>
+    </div>
+  </header>
+
+  <!-- 国家列表 -->
   <div class="country-list">
     {{each exploreList countryInfo}}
     <div class="country-section">
@@ -31,11 +33,10 @@
       >
         <div class="country-mask"></div>
         <div class="country-info-box">
-          <div class="country-text">
-            <div class="country-name" style="color: #fff">{{countryInfo.country.countryName}}</div>
-            <div class="country-progress-val" style="color: #fff">
-              {{countryInfo.countryProgress}}%
-            </div>
+          <div class="country-name">{{countryInfo.country.countryName}}</div>
+          <div class="country-progress">
+            <span class="cp-cap">EXPLORE</span>
+            <b class="cp-val">{{countryInfo.countryProgress}}%</b>
           </div>
         </div>
       </div>

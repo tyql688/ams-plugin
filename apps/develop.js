@@ -161,6 +161,7 @@ export class Develop extends AmsPlugin {
       onlineRoleMap,
       onlineWeaponMap,
       uid: wavesApi.wavesId,
+      roleName: wavesApi.dbUser?.gameData?.roleName,
     })
 
     return img ? e.reply(img) : e.reply("❌ 渲染失败")
