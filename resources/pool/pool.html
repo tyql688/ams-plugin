@@ -1,22 +1,24 @@
-{{extend defaultLayout}} {{block 'title'}}卡池倒计时{{/block}} {{block 'css'}}
+{{extend defaultLayout}}
+{{block 'title'}}卡池倒计时{{/block}}
+{{block 'css'}}
 <link rel="stylesheet" type="text/css" href="{{_res_path}}pool/pool.css" />
-{{/block}} {{block 'main'}}
-<div class="pool-container glass-panel">
-  <div class="glow-top"></div>
+{{/block}}
 
-  <div class="header">
-    <div class="header-left">
-      <div class="brand">AMS POOL STATS</div>
-      <div class="title">{{title || '卡池倒计时'}}</div>
+{{block 'main'}}
+<div class="pool-panel">
+  <!-- 顶部 -->
+  <header class="topbar">
+    <div class="title-block">
+      <div class="brand-en">POOL · COUNTDOWN</div>
+      <div class="brand-cn">{{title || '卡池倒计时'}}</div>
     </div>
-    <div class="header-right">
-      <div class="type-badge">
-        <span class="type-label">{{queryType}}</span>
-        <span class="star-label">{{star}}星</span>
-      </div>
+    <div class="type-badge">
+      <span class="type-label">{{queryType}}</span>
+      <span class="star-label">{{star}}★</span>
     </div>
-  </div>
+  </header>
 
+  <!-- 列表 -->
   <div class="table-header">
     <div class="head-rank">#</div>
     <div class="head-avatar"></div>

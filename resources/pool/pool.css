@@ -1,91 +1,153 @@
+/* ==================== 卡池倒计时 · 暗色星空风（紧凑版） ==================== */
+
 body {
-  width: 600px;
+  width: 350px;
+  padding: 0;
+  margin: 0;
+  background: #03060c;
 }
 
 #container {
-  width: 600px;
+  width: 350px;
+  gap: 0;
+  padding: 0;
+  background: none !important;
+}
+
+.pool-panel {
+  position: relative;
+  width: 350px;
+  margin: 0;
+  padding: 12px 14px 20px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 12px;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 16, 0.4) 0%, rgba(5, 8, 16, 0.55) 60%, rgba(5, 8, 16, 0.7) 100%),
+    url("../common/imgs/bg_archive.webp") center/cover no-repeat,
+    #03060c;
+  background-blend-mode: normal, normal, normal;
+  border: 1px solid rgba(120, 160, 220, 0.16);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+
+  --d-text: #f0f4fa;
+  --d-text-2: #c2cdda;
+  --d-text-3: #8093a8;
+  --d-text-4: #5e6f82;
+  --d-gold: #f4c45a;
+  --d-gold-deep: #d49340;
+  --d-silver: #c0cad6;
+  --d-bronze: #cf8a55;
+  --d-card: rgba(8, 12, 22, 0.7);
 }
 
-.pool-container {
-  width: 100%;
-  margin-top: 5px;
-}
-
-/* ==================== Header ==================== */
-.header {
+/* ==================== Topbar ==================== */
+.topbar {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 24px;
-  border-bottom: 1px solid var(--paper-border);
-  padding-bottom: 18px;
+  align-items: center;
+  padding: 2px 4px 12px;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.22);
 }
 
-.brand {
+.topbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--d-gold), transparent);
+  box-shadow: 0 0 4px rgba(244, 196, 90, 0.5);
+}
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-en {
+  font-family: var(--font-number);
   font-size: 10px;
-  letter-spacing: 6px;
-  color: var(--paper-accent);
+  letter-spacing: 5px;
   font-weight: 800;
-  margin-bottom: 12px;
+  color: var(--d-gold);
   opacity: 0.9;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-.title {
-  font-family: var(--font-art);
-  font-size: 44px;
-  color: var(--paper-text);
+.brand-cn {
+  font-family: var(--font-game);
+  font-size: 20px;
   font-weight: 700;
-  letter-spacing: 1px;
+  color: var(--d-text);
+  letter-spacing: 2px;
+  line-height: 1;
+  text-shadow:
+    0 1px 8px rgba(244, 196, 90, 0.18),
+    0 2px 6px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0.4px rgba(244, 196, 90, 0.3);
+}
+
+.brand-en {
+  font-size: 9px;
+  letter-spacing: 4px;
 }
 
 .type-badge {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  background: rgba(44, 36, 24, 0.06);
-  padding: 10px 20px;
-  border-radius: 12px;
-  border: 1px solid var(--paper-border);
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(8, 12, 22, 0.7);
+  border: 1px solid rgba(244, 196, 90, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 2px 8px rgba(0, 0, 0, 0.45);
 }
 
 .type-label {
-  font-family: var(--font-art);
-  font-size: 16px;
-  color: var(--paper-text);
+  font-family: var(--font-game);
+  font-size: 12px;
   font-weight: 700;
+  color: var(--d-text);
+  letter-spacing: 0.8px;
 }
 
 .star-label {
-  font-size: 16px;
-  color: var(--accent-gold);
-  font-weight: 700;
-  padding: 4px 10px;
-  background: rgba(250, 204, 21, 0.15);
-  border-radius: 8px;
+  font-family: var(--font-number);
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--d-gold);
+  letter-spacing: 0.4px;
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.5);
 }
 
-/* ==================== List grid ====================
-   列：序号 | 头像 | 姓名(占用剩余) | UP次数 | 未复刻时间 */
+/* ==================== 列表 ==================== */
 .table-header,
 .pool-item {
+  position: relative;
+  z-index: 2;
   display: grid;
-  grid-template-columns: 28px 36px 1fr 70px 96px;
+  grid-template-columns: 18px 26px 1fr 48px 60px;
   align-items: center;
-  column-gap: 14px;
+  column-gap: 8px;
 }
 
 .table-header {
-  padding: 8px 14px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--paper-text-sub);
-  text-transform: uppercase;
+  padding: 4px 8px;
+  font-family: var(--font-number);
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--d-text-3);
   letter-spacing: 1.4px;
-  border-bottom: 1px solid var(--paper-border);
-  margin-bottom: 4px;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(244, 196, 90, 0.16);
 }
 
 .head-rank {
@@ -94,8 +156,8 @@ body {
 }
 
 .head-name {
-  font-family: var(--font-art);
-  letter-spacing: 1px;
+  font-family: var(--font-game);
+  letter-spacing: 0.6px;
 }
 
 .head-count,
@@ -103,26 +165,25 @@ body {
   text-align: right;
 }
 
-/* ==================== List body ==================== */
+/* 列表行 */
 .items-list {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
 }
 
 .pool-item {
   position: relative;
-  padding: 7px 14px;
-  border-bottom: 1px solid var(--paper-divider);
-  background: transparent;
-  border-radius: 0;
-  transition: none;
+  height: 30px;
+  padding: 0 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .pool-item:last-child {
   border-bottom: none;
 }
 
-/* 行左侧装饰条（默认透明，current-up 显示金色） */
 .pool-item::before {
   content: "";
   position: absolute;
@@ -139,39 +200,42 @@ body {
   font-family: var(--font-number);
   font-size: 13px;
   font-weight: 800;
-  color: var(--paper-text-dim);
+  color: var(--d-text-4);
   text-align: center;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.5px;
 }
 
-/* 前 3 名金/银/铜（仅非 current-up） */
 .pool-item.rank-1 .rank-num {
-  color: #c89b3c;
+  color: var(--d-gold);
   font-size: 14px;
-  text-shadow: 0 0 6px rgba(200, 155, 60, 0.25);
-}
-.pool-item.rank-2 .rank-num {
-  color: #9aa0a6;
-  font-size: 14px;
-}
-.pool-item.rank-3 .rank-num {
-  color: #b87333;
-  font-size: 14px;
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.45);
 }
 
-/* ==================== 小头像 ==================== */
+.pool-item.rank-2 .rank-num {
+  color: var(--d-silver);
+  font-size: 14px;
+  text-shadow: 0 0 6px rgba(192, 202, 214, 0.3);
+}
+
+.pool-item.rank-3 .rank-num {
+  color: var(--d-bronze);
+  font-size: 14px;
+  text-shadow: 0 0 6px rgba(207, 138, 85, 0.3);
+}
+
+/* ==================== 头像 ==================== */
 .item-avatar {
-  width: 36px;
-  height: 36px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   overflow: hidden;
-  background: rgba(44, 36, 24, 0.05);
-  border: 1.5px solid var(--paper-border);
+  background: rgba(0, 0, 0, 0.45);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 3px rgba(44, 36, 24, 0.06);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
 }
 
 .item-avatar img {
@@ -180,142 +244,156 @@ body {
   object-fit: cover;
 }
 
-/* 前 3 名头像描边轻微加重 */
 .pool-item.rank-1 .item-avatar {
-  border-color: #c89b3c;
-}
-.pool-item.rank-2 .item-avatar {
-  border-color: #9aa0a6;
-}
-.pool-item.rank-3 .item-avatar {
-  border-color: #b87333;
+  border-color: var(--d-gold);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 0 8px rgba(244, 196, 90, 0.35);
 }
 
-/* ==================== 姓名 + UP 标 ==================== */
+.pool-item.rank-2 .item-avatar {
+  border-color: var(--d-silver);
+}
+
+.pool-item.rank-3 .item-avatar {
+  border-color: var(--d-bronze);
+}
+
+/* ==================== 名字 + UP pill ==================== */
 .name-cell {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   min-width: 0;
 }
 
 .item-name {
-  font-family: var(--font-art);
-  font-size: 16px;
-  color: var(--paper-text);
+  font-family: var(--font-game);
+  font-size: 13px;
+  color: var(--d-text);
   font-weight: 700;
+  letter-spacing: 0.4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .up-pill {
   display: inline-flex;
   align-items: center;
   font-family: var(--font-number);
-  font-size: 10px;
-  font-weight: 800;
+  font-size: 9px;
+  font-weight: 900;
   letter-spacing: 1px;
-  color: #fff;
-  background: linear-gradient(135deg, #d4a017 0%, #c4841d 100%);
-  padding: 2px 7px;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(196, 132, 29, 0.35);
+  color: #1a1108;
+  background: linear-gradient(135deg, #f4c45a 0%, #d49340 100%);
+  padding: 1px 6px;
+  border-radius: 3px;
+  box-shadow: 0 0 8px rgba(244, 196, 90, 0.5);
   flex-shrink: 0;
 }
 
-/* ==================== UP 次数胶囊 ==================== */
+/* ==================== UP 次数 ==================== */
 .up-count {
   text-align: right;
   display: inline-flex;
   align-items: baseline;
-  justify-content: flex-end;
-  gap: 3px;
-  padding: 3px 10px;
-  background: rgba(184, 134, 11, 0.08);
-  border: 1px solid rgba(184, 134, 11, 0.18);
+  justify-content: center;
+  gap: 2px;
+  padding: 1px 7px;
+  background: rgba(8, 12, 22, 0.7);
+  border: 1px solid rgba(244, 196, 90, 0.22);
   border-radius: 999px;
   font-family: var(--font-number);
-  color: var(--paper-accent);
   width: fit-content;
   justify-self: end;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .up-count b {
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--paper-text);
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--d-gold);
+  letter-spacing: -0.2px;
 }
 
 .up-count i {
   font-style: normal;
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 700;
-  opacity: 0.7;
+  color: var(--d-text-3);
+  letter-spacing: 0.5px;
 }
 
 /* ==================== 时间文本 ==================== */
 .time-text {
-  color: var(--paper-text-sub);
-  font-weight: 700;
-  font-size: 14px;
-  text-align: right;
   font-family: var(--font-number);
+  color: var(--d-text-2);
+  font-weight: 800;
+  font-size: 11px;
+  text-align: right;
   font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
 }
 
 .time-text.current {
-  color: var(--accent-gold);
+  color: var(--d-gold);
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.5);
 }
 
 /* ==================== Current-UP 整行强调 ==================== */
 .pool-item.current-up {
   background: linear-gradient(
     90deg,
-    rgba(196, 132, 29, 0.1) 0%,
-    rgba(196, 132, 29, 0.04) 60%,
+    rgba(244, 196, 90, 0.14) 0%,
+    rgba(244, 196, 90, 0.05) 60%,
     transparent 100%
   );
 }
 
 .pool-item.current-up::before {
-  background: linear-gradient(180deg, #d4a017 0%, #c4841d 100%);
-  box-shadow: 0 0 6px rgba(196, 132, 29, 0.4);
+  background: linear-gradient(180deg, var(--d-gold) 0%, var(--d-gold-deep) 100%);
+  box-shadow: 0 0 8px rgba(244, 196, 90, 0.55);
 }
 
 .pool-item.current-up .rank-num {
-  color: var(--accent-gold);
+  color: var(--d-gold);
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.5);
 }
 
 .pool-item.current-up .item-avatar {
-  border-color: var(--accent-gold);
-  box-shadow: 0 0 0 2px rgba(196, 132, 29, 0.15);
+  border-color: var(--d-gold);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 0 10px rgba(244, 196, 90, 0.45);
 }
 
 .pool-item.current-up .item-name {
-  color: var(--accent-gold);
+  color: var(--d-gold);
+  text-shadow: 0 0 8px rgba(244, 196, 90, 0.4);
 }
 
 .pool-item.current-up .up-count {
-  background: rgba(196, 132, 29, 0.16);
-  border-color: rgba(196, 132, 29, 0.4);
+  background: rgba(244, 196, 90, 0.18);
+  border-color: rgba(244, 196, 90, 0.5);
 }
 
-.pool-item.current-up .up-count b {
-  color: var(--accent-gold);
-}
-
-/* ==================== 版权文字 ==================== */
+/* ==================== copyright ==================== */
 .copyright {
-  color: #a1a1aa !important;
-  text-shadow: none !important;
-  font-size: 11px !important;
-  opacity: 0.8;
-  padding-top: 5px !important;
-  margin: 0 !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+  font-size: 8px !important;
+  padding: 4px 0 2px !important;
+  margin-top: -25px;
+  position: relative;
+  z-index: 5;
 }
 
 .copyright .highlight {
-  color: var(--paper-accent) !important;
-  opacity: 0.9;
+  color: #ffffff !important;
+}
+
+.copyright .highlight .version {
+  color: #f4c45a !important;
 }
