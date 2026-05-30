@@ -17,6 +17,15 @@
     url("../font/LXGWWenKai-Medium.ttf") format("truetype");
 }
 @font-face {
+  font-family: "NZBZ";
+  src:
+    url("../font/NZBZ.woff") format("woff"),
+    url("../font/NZBZ.ttf") format("truetype");
+  /* 单字重标题字声明覆盖 100-900，避免浏览器对 700/900 合成假粗 */
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
   font-family: "FangXinShu";
   src: url("../font/FangXinShu.ttf") format("truetype");
   font-display: swap;
@@ -27,7 +36,7 @@
   /* === 字体配置 === */
   --font-number: "Number", sans-serif;
   --font-normal: "YS", sans-serif;
-  --font-art: "LXGWWenKai", sans-serif;
+  --font-art: "NZBZ", "LXGWWenKai", sans-serif;
   --font-game: "FangXinShu", "LXGWWenKai", sans-serif;
 
   /* === 基础色（仅黑白灰，去攻略册米黄/金色） === */
