@@ -879,3 +879,213 @@ body {
   color: #4ade80;
   font-weight: 600;
 }
+
+/* ==================== 声骸评分（EchoScorer 接入）==================== */
+/* —— 整套总评：共鸣链上方的艺术字横幅 —— */
+/* 左侧叠层：把总评横幅摞在共鸣链上方，整体压在角色立绘左下角 */
+.pile-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  z-index: 5;
+}
+.pile-chains {
+  position: static; /* 覆盖原 absolute，改由 pile-overlay 排版 */
+  bottom: auto;
+  left: auto;
+}
+.echo-total-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  padding: 8px 18px 8px 16px;
+  background: linear-gradient(135deg, rgba(22, 24, 34, 0.92), rgba(13, 14, 20, 0.66));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  position: relative;
+  overflow: hidden;
+}
+/* 左侧按评级上色的竖条 */
+.echo-total-banner::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+.etb-grade {
+  /* 字母用 YS：NZBZ 的 S 字形近似 "5"，评级会被误读；skew + 渐变 + 发光保留艺术字感 */
+  font-family: "YS", var(--font-art), sans-serif;
+  font-size: 48px;
+  line-height: 0.9;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0;
+  padding: 0 8px 0 4px;
+  transform: skewX(-3deg);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.55));
+}
+.etb-divider {
+  width: 1px;
+  align-self: stretch;
+  margin: 8px 2px;
+  background: linear-gradient(transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+.etb-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.etb-label {
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: var(--text-dim);
+  font-weight: 700;
+}
+.etb-score-row {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+.etb-score {
+  font-family: var(--font-number);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+}
+.etb-max {
+  font-size: 14px;
+  color: var(--text-dim);
+  font-family: var(--font-number);
+}
+/* 各评级配色：金 SSS/SS/S，紫 A，蓝 B，绿 C，灰 D */
+.echo-total-banner[data-g="SSS"] .etb-grade,
+.echo-total-banner[data-g="SS"] .etb-grade,
+.echo-total-banner[data-g="S"] .etb-grade {
+  background-image: linear-gradient(160deg, #fff6c9 0%, #ffd700 45%, #f0a500 100%);
+}
+.echo-total-banner[data-g="SSS"]::before,
+.echo-total-banner[data-g="SS"]::before,
+.echo-total-banner[data-g="S"]::before {
+  background: #ffd700;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.7);
+}
+.echo-total-banner[data-g="A"] .etb-grade {
+  background-image: linear-gradient(160deg, #efdcff, #c084fc 50%, #9333ea);
+}
+.echo-total-banner[data-g="A"]::before {
+  background: #c084fc;
+  box-shadow: 0 0 14px rgba(192, 132, 252, 0.7);
+}
+.echo-total-banner[data-g="B"] .etb-grade {
+  background-image: linear-gradient(160deg, #d6e9ff, #60a5fa 50%, #2563eb);
+}
+.echo-total-banner[data-g="B"]::before {
+  background: #60a5fa;
+  box-shadow: 0 0 14px rgba(96, 165, 250, 0.6);
+}
+.echo-total-banner[data-g="C"] .etb-grade {
+  background-image: linear-gradient(160deg, #d4f7df, #4ade80 50%, #16a34a);
+}
+.echo-total-banner[data-g="C"]::before {
+  background: #4ade80;
+  box-shadow: 0 0 12px rgba(74, 222, 128, 0.6);
+}
+.echo-total-banner[data-g="D"] .etb-grade {
+  background-image: linear-gradient(160deg, #e5e7eb, #9ca3af 50%, #6b7280);
+}
+.echo-total-banner[data-g="D"]::before {
+  background: #9ca3af;
+}
+
+/* —— 每个声骸：cost 右侧的评级 + 分 —— */
+.echo-cost-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-top: 2px;
+}
+/* 评级框（与 +25 同款边框）；字母用 YS，数字用数字字体 */
+.echo-grade-inline {
+  font-family: "YS", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.echo-grade-inline b {
+  font-family: var(--font-number);
+  font-weight: 800;
+  font-size: 12px;
+  font-style: normal;
+  opacity: 0.95;
+}
+.echo-grade-inline[data-g="SSS"],
+.echo-grade-inline[data-g="SS"],
+.echo-grade-inline[data-g="S"] {
+  color: #ffd700;
+  border-color: rgba(255, 215, 0, 0.55);
+}
+.echo-grade-inline[data-g="A"] {
+  color: #c084fc;
+  border-color: rgba(192, 132, 252, 0.55);
+}
+.echo-grade-inline[data-g="B"] {
+  color: #60a5fa;
+  border-color: rgba(96, 165, 250, 0.5);
+}
+.echo-grade-inline[data-g="C"] {
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.5);
+}
+.echo-grade-inline[data-g="D"] {
+  color: #9ca3af;
+  border-color: rgba(156, 163, 175, 0.45);
+}
+
+/* 副词条价值档：core 核心(金) / good 有效(蓝) / low 低效(灰) / dead 无效(暗) */
+.prop-row .p-val.tier-core,
+.p-name.tier-core {
+  color: #ffd700;
+  font-weight: 600;
+}
+.prop-row .p-val.tier-good,
+.p-name.tier-good {
+  color: #7dd3fc;
+  font-weight: 600;
+}
+.prop-row .p-val.tier-low,
+.p-name.tier-low {
+  color: var(--text-dim);
+}
+.prop-row .p-val.tier-dead,
+.p-name.tier-dead {
+  color: rgba(255, 255, 255, 0.28);
+}
+.p-dot.tier-core {
+  background: #ffd700;
+}
+.p-dot.tier-good {
+  background: #7dd3fc;
+}
+/* 满 roll 仍标红，需放在 tier 之后以覆盖数值色 */
+.prop-row .p-val.max-val {
+  color: #ff6b6b;
+}

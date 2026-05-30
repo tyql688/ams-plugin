@@ -15,18 +15,34 @@
 
   <!-- Layer 2: Left Content -->
   <div class="left-column">
-    {{if data.chainList}}
-    <div class="pile-chains">
-      {{each data.chainList chain index}}
-      <div class="chain-icon-circle {{chain.unlocked?'on':'off'}}">
-        <div
-          class="icon-img"
-          style="background-image:url({{wavesResMap.roleChain}}/{{data.charId}}/{{chain.id}}.webp)"
-        ></div>
+    <div class="pile-overlay">
+      <!-- 声骸总评（艺术字，共鸣链上方）-->
+      {{if data.echoScore && data.echoScore.setGrade}}
+      <div class="echo-total-banner" data-g="{{data.echoScore.setGrade}}">
+        <div class="etb-grade">{{data.echoScore.setGrade}}</div>
+        <div class="etb-divider"></div>
+        <div class="etb-info">
+          <div class="etb-label">声骸总评</div>
+          <div class="etb-score-row">
+            <span class="etb-score">{{data.echoScore.setScore}}</span
+            ><span class="etb-max">/100</span>
+          </div>
+        </div>
       </div>
-      {{/each}}
+      {{/if}}
+      {{if data.chainList}}
+      <div class="pile-chains">
+        {{each data.chainList chain index}}
+        <div class="chain-icon-circle {{chain.unlocked?'on':'off'}}">
+          <div
+            class="icon-img"
+            style="background-image:url({{wavesResMap.roleChain}}/{{data.charId}}/{{chain.id}}.webp)"
+          ></div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
     </div>
-    {{/if}}
   </div>
 
   <div class="right-column">
@@ -154,7 +170,12 @@
         {{/if}}
         <div class="echo-name">{{phantom.name}}</div>
       </div>
-      <div class="echo-cost">Cost {{phantom.cost}}</div>
+      <div class="echo-cost-row">
+        <span class="echo-cost">Cost {{phantom.cost}}</span>
+        {{if phantom.echoGrade}}<span class="echo-grade-inline" data-g="{{phantom.echoGrade}}"
+          >{{phantom.echoGrade}}&nbsp;<b>{{phantom.echoScore}}</b></span
+        >{{/if}}
+      </div>
     </div>
 
     <div class="echo-props">
@@ -173,12 +194,12 @@
       {{/each}} {{/if}} {{if phantom.subPropList}} {{each phantom.subPropList subProp}} {{if
       subProp.attributeName}}
       <div class="prop-row sub">
-        <div class="p-dot"></div>
-        <div class="p-name {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}">
+        <div class="p-dot {{if subProp.tier}}tier-{{subProp.tier}}{{/if}}"></div>
+        <div class="p-name {{if subProp.tier}}tier-{{subProp.tier}}{{/if}}">
           {{subProp.attributeName}}
         </div>
         <div
-          class="p-val {{if subProp.valid}}grade-{{subProp.valid}}{{/if}} {{if subProp.isMax}}max-val{{/if}}"
+          class="p-val {{if subProp.tier}}tier-{{subProp.tier}}{{/if}} {{if subProp.isMax}}max-val{{/if}}"
         >
           {{subProp.attributeValue}}
         </div>

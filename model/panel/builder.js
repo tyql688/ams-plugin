@@ -1,6 +1,7 @@
 import { Calculator, STAT_MAP } from "#waves.calc"
 import { Guide } from "#waves.data"
 import { DamageManager } from "#waves.damage"
+import { EchoScorer } from "#waves.score"
 import DataLoader from "../../lib/core/data_loader.js"
 
 import {
@@ -312,16 +313,46 @@ export class PanelBuilder {
   }
 
   _buildPhantomData() {
+    const scored = this._scoreEchoes()
     return {
-      equipPhantomList: this._buildPhantomList(),
+      equipPhantomList: this._buildPhantomList(scored),
+      echoScore: scored
+        ? {
+            setScore: scored.setScore,
+            setGrade: scored.setGrade,
+            percentile: scored.percentile,
+            scaling: scored.scaling,
+            archetype: scored.archetype,
+          }
+        : null,
     }
   }
 
-  _buildPhantomList() {
+  /**
+   * 调用声骸评分器，失败时静默降级（不阻断面板渲染）
+   * @returns {import('#waves.score').ScoredCard | null}
+   * @private
+   */
+  _scoreEchoes() {
+    try {
+      if (!this.roleCard.phantoms) return null
+      return EchoScorer.scoreCharacter(this.roleCard.role.id, this.roleCard.phantoms)
+    } catch (error) {
+      logger.debug(`[ams] 声骸评分失败: ${error.message}`)
+      return null
+    }
+  }
+
+  _buildPhantomList(scored) {
     if (!this.roleCard.phantoms) return []
 
-    return this.roleCard.phantoms.map(phantom => {
+    return this.roleCard.phantoms.map((phantom, index) => {
       const echoInfo = DataLoader.getEchoById(phantom.id)
+      const se = scored?.echoes?.[index] || null
+      // 词条名+值 -> 评分器副词条结果（用于补充 rv/tier）
+      const subScoreByKey = new Map(
+        (se?.subProps || []).map(s => [`${s.name}|${s.value}`, s]),
+      )
 
       return {
         id: phantom.id,
@@ -330,17 +361,25 @@ export class PanelBuilder {
         level: phantom.level,
         cost: phantom.cost,
         quality: phantom.quality,
+        echoScore: se ? se.score : null,
+        echoGrade: se ? se.grade : null,
         mainPropList: phantom.mainProps.map(prop => ({
           attributeName: prop.name,
           attributeValue: prop.value,
           valid: this._resolveRecommendGrade(prop.name, prop.value),
         })),
-        subPropList: phantom.subProps.map(prop => ({
-          attributeName: prop.name,
-          attributeValue: prop.value,
-          isMax: isSubPropMax(prop.name, prop.value),
-          valid: this._resolveRecommendGrade(prop.name, prop.value),
-        })),
+        subPropList: phantom.subProps.map(prop => {
+          const num = parseFloat(String(prop.value).replace("%", ""))
+          const ss = subScoreByKey.get(`${prop.name}|${num}`)
+          return {
+            attributeName: prop.name,
+            attributeValue: prop.value,
+            isMax: isSubPropMax(prop.name, prop.value),
+            valid: this._resolveRecommendGrade(prop.name, prop.value),
+            rv: ss ? ss.rv : null,
+            tier: ss ? ss.tier : null,
+          }
+        }),
       }
     })
   }
