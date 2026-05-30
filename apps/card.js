@@ -120,12 +120,7 @@ export class Card extends AmsPlugin {
 
     const { customBg, customPile } = this.getCustomAssets(roleId)
 
-    // 获取面板版本配置
-    const panelVersion = _.get(config.getConfig("config"), "panel_version", 1)
-    const templatePath =
-      panelVersion === 2 ? "character/profile-detail-v2" : "character/profile-detail-v1"
-
-    const img = await this.render(templatePath, {
+    const img = await this.render("character/profile-detail", {
       data: panelData,
       uid: wavesApi.wavesId,
       elem: ELE_NAME_MAP[panelData.attributeId],

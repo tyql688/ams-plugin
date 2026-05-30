@@ -69,16 +69,6 @@ export class Settings extends AmsPlugin {
         example: config.exampleCommond("设置签到开关开启/关闭"),
       },
       {
-        key: "panel_version",
-        app: "config",
-        name: "面板版本",
-        value: cfg.panel_version,
-        type: "select",
-        options: [1, 2],
-        desc: "选择角色属性面板的渲染版本，V1为窄版，V2为宽版",
-        example: config.exampleCommond("设置面板版本1/2"),
-      },
-      {
         key: "gacha_show_all",
         app: "config",
         name: "抽卡全部池子",
@@ -159,7 +149,6 @@ export class Settings extends AmsPlugin {
       ["签到开关", "signin_switch", "config", "switch"],
       ["立绘原图", "yuantu_pile", "config", "switch"],
       ["背景原图", "yuantu_bg", "config", "switch"],
-      ["面板版本", "panel_version", "config", "select"],
       ["抽卡全部池子", "gacha_show_all", "config", "switch"],
       ["网页登录", "allow_login", "network", "switch"],
       ["网页端口", "server_port", "network", "input"],
@@ -173,12 +162,7 @@ export class Settings extends AmsPlugin {
         let value = msg.replace(name, "").trim()
         let isChanged = false
 
-        if (type === "select" || key === "panel_version") {
-          if (["1", "2"].includes(value)) {
-            config.setSingleConfig(app, key, parseInt(value))
-            isChanged = true
-          }
-        } else if (type === "input") {
+        if (type === "input") {
           if (!value) {
             await e.reply(`❌ 请输入 [${name}] 的值`)
             return true
