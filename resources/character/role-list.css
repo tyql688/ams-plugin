@@ -338,20 +338,4 @@ body {
 }
 
 /* ==================== copyright ==================== */
-.copyright {
-  color: #ffffff !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
-  font-size: 8px !important;
-  padding: 4px 0 2px !important;
-  margin-top: -25px;
-  position: relative;
-  z-index: 5;
-}
-
-.copyright .highlight {
-  color: #ffffff !important;
-}
-
-.copyright .highlight .version {
-  color: #f4c45a !important;
-}
+/* 颜色 + 间距走统一 footer（common/layout 的 .copyright） */

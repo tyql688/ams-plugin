@@ -245,6 +245,8 @@ body {
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   width: 100%;
+  /* 底部留白，给统一 footer 叠放空间，避免紧贴底部卡片 */
+  margin-bottom: 28px;
 }
 
 .weapon-card {

@@ -30,27 +30,27 @@
   --font-art: "LXGWWenKai", sans-serif;
   --font-game: "FangXinShu", "LXGWWenKai", sans-serif;
 
-  /* === 攻略册风格基础色 === */
-  --paper-bg: #f5f0e8;
-  --paper-card: #fffdf8;
-  --paper-text: #2c2418;
-  --paper-text-sub: #8c7e6a;
-  --paper-text-dim: #b5a898;
-  --paper-accent: #b8860b;
-  --paper-green: #5a7247;
-  --paper-border: #d4c8b0;
-  --paper-divider: #e8e0d0;
-  --paper-shadow: 0 2px 20px rgba(44, 36, 24, 0.08);
+  /* === 基础色（仅黑白灰，去攻略册米黄/金色） === */
+  --base-bg: #ffffff;
+  --base-card: #ffffff;
+  --base-text: #1a1a1a;
+  --base-text-sub: #5f5f5f;
+  --base-text-dim: #8a8a8a;
+  --base-accent: #1a1a1a;
+  --base-green: #5f5f5f;
+  --base-border: #e6e6e6;
+  --base-divider: #f0f0f0;
+  --base-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
 
-  /* === 文本颜色（攻略册默认） === */
-  --text-primary: var(--paper-text);
-  --text-secondary: var(--paper-text-sub);
-  --text-dim: var(--paper-text-dim);
+  /* === 文本颜色（默认映射到基础色） === */
+  --text-primary: var(--base-text);
+  --text-secondary: var(--base-text-sub);
+  --text-dim: var(--base-text-dim);
   --text-dark: #000;
-  --color-text-main: var(--paper-text);
+  --color-text-main: var(--base-text);
 
   /* === 背景颜色 === */
-  --bg-body: var(--paper-bg);
+  --bg-body: var(--base-bg);
 
   /* === 强调色 === */
   --accent-blue: #7c6a4e;
@@ -58,7 +58,7 @@
   --accent-gold: #c4841d;
 
   /* === 元素主题色（默认值） === */
-  --element-primary: var(--paper-accent);
+  --element-primary: var(--base-accent);
   --element-bg: rgba(184, 134, 11, 0.08);
   --element-shadow: rgba(184, 134, 11, 0.2);
 
@@ -141,19 +141,19 @@
   --d-border-ruins:   1px solid rgba(140, 180, 240, 0.14);
 }
 
-/* ==================== 通用容器（攻略册 legacy） ==================== */
+/* ==================== 通用容器（浅色 legacy） ==================== */
 /* 仅 anns/ 还在依赖此默认值。新建暗色页请用 .dark-panel-archive / .dark-panel-ruins。 */
 .glass-panel {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  background: var(--panel-bg, var(--paper-card));
+  background: var(--panel-bg, var(--base-card));
   border: var(--panel-border, none);
   border-radius: var(--panel-radius, 0);
   padding: var(--panel-padding, 50px 55px 35px);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  box-shadow: var(--panel-shadow, var(--paper-shadow));
+  box-shadow: var(--panel-shadow, var(--base-shadow));
   isolation: isolate;
 }
 
@@ -223,23 +223,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--paper-divider);
+  background: var(--base-divider);
 }
 
 .rarity-frame.rarity-5 {
-  background: radial-gradient(circle, rgba(184, 134, 11, 0.15) 0%, var(--paper-divider) 100%);
+  background: radial-gradient(circle, rgba(184, 134, 11, 0.15) 0%, var(--base-divider) 100%);
 }
 .rarity-frame.rarity-4 {
-  background: radial-gradient(circle, rgba(156, 39, 176, 0.15) 0%, var(--paper-divider) 100%);
+  background: radial-gradient(circle, rgba(156, 39, 176, 0.15) 0%, var(--base-divider) 100%);
 }
 .rarity-frame.rarity-3 {
-  background: radial-gradient(circle, rgba(33, 150, 243, 0.15) 0%, var(--paper-divider) 100%);
+  background: radial-gradient(circle, rgba(33, 150, 243, 0.15) 0%, var(--base-divider) 100%);
 }
 .rarity-frame.rarity-2 {
-  background: radial-gradient(circle, rgba(90, 114, 71, 0.15) 0%, var(--paper-divider) 100%);
+  background: radial-gradient(circle, rgba(90, 114, 71, 0.15) 0%, var(--base-divider) 100%);
 }
 .rarity-frame.rarity-1 {
-  background: radial-gradient(circle, rgba(158, 158, 158, 0.15) 0%, var(--paper-divider) 100%);
+  background: radial-gradient(circle, rgba(158, 158, 158, 0.15) 0%, var(--base-divider) 100%);
 }
 
 /* Bottom Rarity Bar */

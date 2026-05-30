@@ -2,21 +2,22 @@
 
 body {
   width: 980px;
+  background: #ffffff;
 }
 
 #container {
   width: 980px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 12px;
 }
 
 .news-glass-card {
   width: 100%;
-  --panel-bg: var(--paper-card);
-  --panel-border-color: var(--paper-border);
-  --panel-shadow: var(--paper-shadow);
-  --panel-padding: 30px 20px 20px;
+  --panel-bg: var(--base-card);
+  --panel-border-color: var(--base-border);
+  --panel-shadow: var(--base-shadow);
+  --panel-padding: 30px 20px 28px;
   --glow-color: transparent;
   margin-top: 5px;
 }
@@ -25,15 +26,15 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 45px;
+  margin-bottom: 24px;
   padding-bottom: 18px;
-  border-bottom: 1px solid var(--paper-border);
+  border-bottom: 1px solid var(--base-border);
 }
 
 .brand {
   font-size: 10px;
   letter-spacing: 6px;
-  color: var(--paper-accent);
+  color: var(--base-accent);
   font-weight: 700;
   margin-bottom: 12px;
   text-transform: uppercase;
@@ -42,29 +43,29 @@ body {
 .title {
   font-family: var(--font-art);
   font-size: 44px;
-  color: var(--paper-text);
+  color: var(--base-text);
   font-weight: 700;
   letter-spacing: 1px;
 }
 
 .time-box {
   text-align: right;
-  background: var(--paper-card);
+  background: var(--base-card);
   padding: 12px 24px;
   border-radius: 20px;
-  border: 1px solid var(--paper-border);
+  border: 1px solid var(--base-border);
 }
 
 .date-label {
   font-size: 10px;
-  color: var(--paper-text-dim);
+  color: var(--base-text-dim);
   letter-spacing: 2px;
   margin-bottom: 4px;
 }
 
 .date-value {
   font-size: 20px;
-  color: var(--paper-text);
+  color: var(--base-text);
   font-weight: 700;
 }
 
@@ -73,16 +74,16 @@ body {
   flex-direction: row;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 35px;
+  margin-bottom: 0;
 }
 
 .column {
   flex: 1;
   min-width: 0;
-  background: var(--paper-bg);
+  background: #f6f6f9;
   border-radius: 28px;
   padding: 18px;
-  border: 1px solid var(--paper-divider);
+  border: 1px solid var(--base-divider);
 }
 
 .col-header {
@@ -91,14 +92,14 @@ body {
   font-family: var(--font-art);
   font-size: 20px;
   font-weight: 700;
-  color: var(--paper-text);
+  color: var(--base-text);
   margin-bottom: 22px;
   gap: 12px;
 }
 
 .col-header .en {
   font-size: 11px;
-  color: var(--paper-text-dim);
+  color: var(--base-text-dim);
   font-weight: 400;
   letter-spacing: 1px;
 }
@@ -106,7 +107,7 @@ body {
 .col-header .line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, var(--paper-accent), transparent);
+  background: linear-gradient(90deg, var(--base-accent), transparent);
   opacity: 0.25;
 }
 
@@ -117,11 +118,11 @@ body {
 }
 
 .news-item {
-  background: var(--paper-card);
+  background: var(--base-card);
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid var(--paper-border);
-  box-shadow: 0 1px 8px rgba(44, 36, 24, 0.05);
+  border: 1px solid var(--base-border);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
 }
 
 .item-cover {
@@ -135,9 +136,9 @@ body {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: rgba(44, 36, 24, 0.6);
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: none;
-  color: #fffdf8;
+  color: #ffffff;
   font-size: 10px;
   padding: 4px 10px;
   border-radius: 8px;
@@ -151,7 +152,7 @@ body {
 .item-title {
   font-size: 14px;
   line-height: 1.5;
-  color: var(--paper-text);
+  color: var(--base-text);
   font-weight: 600;
   height: 3em;
   overflow: hidden;
@@ -169,39 +170,27 @@ body {
 
 .item-time {
   font-size: 11px;
-  color: var(--paper-text-dim);
+  color: var(--base-text-dim);
   font-weight: 500;
 }
 
 .footer-hint {
   text-align: center;
   font-size: 11px;
-  color: var(--paper-text-dim);
+  color: var(--base-text-dim);
   padding: 8px 18px;
-  margin: 10px auto 0;
-  background: var(--paper-card);
+  margin: 0 auto 28px;
+  background: #f6f6f9;
   border-radius: 100px;
   width: auto;
   display: table;
-  border: 1px solid var(--paper-divider);
+  border: 1px solid var(--base-border);
 }
 
 .footer-hint .highlight {
-  color: var(--paper-accent);
+  color: var(--base-accent);
   font-weight: 700;
   margin: 0 4px;
 }
 
-.copyright {
-  color: var(--paper-text-dim) !important;
-  text-shadow: none !important;
-  font-size: 11px !important;
-  opacity: 0.8;
-  padding-top: 5px !important;
-  margin: 0 !important;
-}
-
-.copyright .highlight {
-  color: var(--paper-accent) !important;
-  opacity: 0.9;
-}
+/* footer 走统一 footer（common/layout 的 .copyright，金色），本页不再自定义 */

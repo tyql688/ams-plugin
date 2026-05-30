@@ -766,6 +766,8 @@ body {
   flex-direction: column;
   gap: 10px;
   margin-top: 15px;
+  /* 底部留白，给统一 footer 叠放空间，避免紧贴伤害表 */
+  margin-bottom: 28px;
 }
 
 .damage-card {

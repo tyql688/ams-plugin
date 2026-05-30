@@ -25,16 +25,17 @@ body {
   margin: 0 auto;
 }
 
-/* 暗色默认 copyright（暗色页直接走默认；anns/ 等 legacy 页本地覆盖回米白即可） */
+/* 统一 footer：仅产品名（ams-plugin / TRSS-Yunzai）金色，其余中性灰，深浅背景通用 */
 .copyright {
-  font-size: 8px;
-  color: #ffffff;
+  font-size: 10px;
+  color: #8a8a8a;
   padding: 4px 0 2px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 4px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  /* 负边距让 footer 上移叠到面板背景图上，避免落到面板下方形成纯色条 */
   margin: -25px 0 0;
   line-height: 1.5;
   position: relative;
@@ -42,7 +43,7 @@ body {
 }
 
 .copyright .highlight {
-  color: #ffffff;
+  color: #b8860b;
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -53,6 +54,6 @@ body {
   vertical-align: super;
   font-size: 0.8em;
   margin-top: -0.3em;
-  color: var(--d-gold);
+  color: #8a8a8a;
   padding: 0 2px;
 }

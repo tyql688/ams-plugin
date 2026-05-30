@@ -17,6 +17,11 @@
     </div>
   </div>
 
+  <div class="footer-hint">
+    使用 【鸣潮公告 <span class="highlight">短ID</span>】 查看详细内容，例如：鸣潮公告
+    {{groupedData.ann[0]?.shortId || '4392'}}
+  </div>
+
   <div class="news-columns">
     <div class="column activity-col">
       <div class="col-header">
@@ -83,11 +88,6 @@
         {{/each}}
       </div>
     </div>
-  </div>
-
-  <div class="footer-hint">
-    使用 【#公告 <span class="highlight">短ID</span>】 查看详细内容，例如：#公告
-    {{groupedData.ann[0]?.shortId || '4392'}}
   </div>
 </div>
 {{/block}}
