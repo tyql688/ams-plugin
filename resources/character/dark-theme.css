@@ -61,3 +61,35 @@
   --color-havoc: #e649a6;
 }
 
+/* 按角色属性覆盖强调色（body 上的 theme-element-N，N=属性id） */
+.theme-element-1 {
+  --element-primary: var(--color-glacio);
+  --element-bg: rgba(34, 211, 238, 0.08);
+  --element-shadow: rgba(34, 211, 238, 0.2);
+}
+.theme-element-2 {
+  --element-primary: var(--color-fusion);
+  --element-bg: rgba(239, 68, 68, 0.08);
+  --element-shadow: rgba(239, 68, 68, 0.2);
+}
+.theme-element-3 {
+  --element-primary: var(--color-electro);
+  --element-bg: rgba(168, 85, 247, 0.08);
+  --element-shadow: rgba(168, 85, 247, 0.2);
+}
+.theme-element-4 {
+  --element-primary: var(--color-aero);
+  --element-bg: rgba(52, 211, 153, 0.08);
+  --element-shadow: rgba(52, 211, 153, 0.2);
+}
+.theme-element-5 {
+  --element-primary: var(--color-spectro);
+  --element-bg: rgba(250, 204, 21, 0.08);
+  --element-shadow: rgba(250, 204, 21, 0.2);
+}
+.theme-element-6 {
+  --element-primary: var(--color-havoc);
+  --element-bg: rgba(230, 73, 166, 0.08);
+  --element-shadow: rgba(230, 73, 166, 0.2);
+}
+
