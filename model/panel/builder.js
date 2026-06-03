@@ -13,8 +13,8 @@ import {
 } from "./const.js"
 
 // sortId → grade 后缀（金/紫/绿）
-const RECOMMEND_TIER_GRADE = { 1: "s", 2: "a", 3: "c" }
-const GRADE_RANK = { s: 0, a: 1, c: 2 }
+const RECOMMEND_TIER_GRADE = { 1: "s", 2: "a", 3: "b", 4: "c", 5: "d" }
+const GRADE_RANK = { s: 0, a: 1, b: 2, c: 3, d: 4 }
 
 // 词条名 + 值 → recommendAttrList 中的属性 key（声骸主/副词条用）
 function _resolveRecommendKey(name, value) {

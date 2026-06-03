@@ -201,11 +201,11 @@
       subProp.attributeName}}
       <div class="prop-row sub">
         <div class="p-dot {{if subProp.tier}}tier-{{subProp.tier}}{{/if}}"></div>
-        <div class="p-name {{if subProp.tier}}tier-{{subProp.tier}}{{/if}}">
+        <div class="p-name {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}">
           {{subProp.attributeName}}
         </div>
         <div
-          class="p-val {{if subProp.tier}}tier-{{subProp.tier}}{{/if}} {{if subProp.isMax}}max-val{{/if}}"
+          class="p-val {{if subProp.valid}}grade-{{subProp.valid}}{{/if}} {{if subProp.isMax}}max-val{{/if}}"
         >
           {{subProp.attributeValue}}
         </div>
