@@ -10,6 +10,10 @@ import { randomFiles } from "../lib/utils.js"
 import { PanelBuilder } from "../model/panel/builder.js"
 import { ELE_NAME_MAP } from "../model/panel/const.js"
 import { Waves2RoleCard } from "../model/roleCard.js"
+
+// 漂泊者(主角)通用别名：库街区角色数据未收录这些泛称，写死兜底
+const ROVER_ALIASES = ["主角", "漂泊者", "男主", "女主"]
+
 export class Card extends AmsPlugin {
   constructor() {
     super({
@@ -95,18 +99,26 @@ export class Card extends AmsPlugin {
     const wavesApi = await this.getWavesApi()
     if (!wavesApi) return
 
-    const roleId = await DataLoader.getRoleId(inputName)
+    let roleId = Number(await DataLoader.getRoleId(inputName))
+    // 主角泛称兜底：命中任一主角id即可，下方会重映射到持有的那个形态
+    if (!roleId && ROVER_ALIASES.includes(inputName)) roleId = ROVER_ID[0]
     if (!roleId) return e.reply(`❌ 未找到角色ID: ${inputName}`)
 
     // 检查是否持有该角色
     const ownedRoles = wavesApi.dbUser?.gameData?.roleList || []
-    const isRover = ROVER_ID.includes(Number(roleId))
+    const isRover = ROVER_ID.includes(roleId)
     const isOwned = isRover
       ? ROVER_ID.some(id => ownedRoles.includes(id))
-      : ownedRoles.includes(Number(roleId))
+      : ownedRoles.includes(roleId)
 
     if (!isOwned) {
       return e.reply(`请先发送 "${config.exampleCommond("面板")}" 后使用本功能查看角色详细面板`)
+    }
+
+    // 主角(漂泊者)只有一个形态：用户实际持有的那个。无论输入哪个属性名，
+    // 都改用持有的主角id去请求，避免请求未持有的形态导致接口返回空数据
+    if (isRover) {
+      roleId = ownedRoles.find(id => ROVER_ID.includes(id)) || roleId
     }
 
     let detail
@@ -114,18 +126,19 @@ export class Card extends AmsPlugin {
     let fromCache = false
 
     const apiResponse = await wavesApi.getRoleDetail(roleId)
-    if (apiResponse?.status) {
+    // 接口需 status 成功且含 role 明细才算有效（未持有的主角形态会返回空数据）
+    if (apiResponse?.status && apiResponse.data?.role) {
       detail = apiResponse.data
       dataTime = new Date()
-      // 落地角色面板原始数据（主角多形态归一为一个id，不阻塞渲染）
+      // 落库（不阻塞渲染）
       RolePanel.save(wavesApi.wavesId, roleId, detail).catch(err =>
         logger.error(`[ams] 保存角色面板失败: ${err.message}`),
       )
     } else {
-      // 实时获取失败，回退数据库缓存
+      // 实时获取失败/无效，回退数据库缓存（主角按任一形态匹配）
       const cached = await RolePanel.get(wavesApi.wavesId, roleId).catch(() => null)
       if (!cached?.detail) {
-        return e.reply(`❌ 获取角色数据失败: ${apiResponse?.msg || "未知错误"}`)
+        return e.reply(`❌ 获取角色数据失败: ${apiResponse?.msg || "暂无该角色面板数据"}`)
       }
       detail = cached.detail
       dataTime = cached.updatedAt
