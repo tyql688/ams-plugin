@@ -2,7 +2,7 @@ import { ROVER_ID } from "#waves.core"
 import _ from "lodash"
 import path from "path"
 import DataLoader from "../lib/core/data_loader.js"
-import { User } from "../lib/db/index.js"
+import { RolePanel, User } from "../lib/db/index.js"
 import { customBgPath, customPilePath, resourcePath, wavesResMap } from "../lib/path.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
@@ -109,14 +109,38 @@ export class Card extends AmsPlugin {
       return e.reply(`请先发送 "${config.exampleCommond("面板")}" 后使用本功能查看角色详细面板`)
     }
 
-    const apiResponse = await wavesApi.getRoleDetail(roleId)
-    if (!apiResponse?.status)
-      return e.reply(`❌ 获取角色数据失败: ${apiResponse?.msg || "未知错误"}`)
+    let detail
+    let dataTime
+    let fromCache = false
 
-    const roleCard = new Waves2RoleCard(apiResponse.data).toRoleCard()
+    const apiResponse = await wavesApi.getRoleDetail(roleId)
+    if (apiResponse?.status) {
+      detail = apiResponse.data
+      dataTime = new Date()
+      // 落地角色面板原始数据（主角多形态归一为一个id，不阻塞渲染）
+      RolePanel.save(wavesApi.wavesId, roleId, detail).catch(err =>
+        logger.error(`[ams] 保存角色面板失败: ${err.message}`),
+      )
+    } else {
+      // 实时获取失败，回退数据库缓存
+      const cached = await RolePanel.get(wavesApi.wavesId, roleId).catch(() => null)
+      if (!cached?.detail) {
+        return e.reply(`❌ 获取角色数据失败: ${apiResponse?.msg || "未知错误"}`)
+      }
+      detail = cached.detail
+      dataTime = cached.updatedAt
+      fromCache = true
+      logger.mark(`[ams] 角色面板回退数据库缓存: ${wavesApi.wavesId}/${roleId}`)
+    }
+
+    const roleCard = new Waves2RoleCard(detail).toRoleCard()
     logger.debug(`[ams] roleCard: ${JSON.stringify(roleCard)}`)
     const panelData = new PanelBuilder(roleCard).get()
     if (!panelData) return e.reply("❌ 面板数据构建失败")
+
+    // 更新时间显示数据实际刷新时间；命中缓存时标注来源
+    panelData.updateTime = dataTime.toLocaleString("zh-CN")
+    if (fromCache) panelData.dataSource = "数据库缓存"
 
     const { customBg, customPile } = this.getCustomAssets(roleId)
 

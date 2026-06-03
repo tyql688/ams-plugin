@@ -245,7 +245,6 @@ body {
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   width: 100%;
-  /* 底部留白，给统一 footer 叠放空间，避免紧贴底部卡片 */
   margin-bottom: 28px;
 }
 
@@ -723,6 +722,36 @@ body {
 
 .prop-row .p-val.max-val {
   color: #ff6b6b;
+}
+
+/* ==================== 页脚：数据来源 & 更新时间（属性面板下方，右对齐）==================== */
+.panel-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 0 2px;
+  font-size: 10px;
+  color: var(--text-dim);
+  font-family: var(--font-number);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+}
+
+.panel-footer .footer-source {
+  opacity: 0.75;
+}
+
+.panel-footer .footer-source::after {
+  content: "·";
+  margin-left: 6px;
+  opacity: 0.6;
+}
+
+.panel-footer .footer-time {
+  opacity: 0.9;
 }
 
 /* ==================== 伤害统计 (Damage Stats - Table Style) ==================== */
