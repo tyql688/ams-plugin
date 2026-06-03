@@ -899,6 +899,31 @@ body {
 .attr-val.grade-d {
   color: #eef2f8;
 }
+/* 角色自身属性的元素伤害行：用该元素主题色（覆盖推荐档/灰） */
+.attr-label.elem-c1,
+.attr-val.elem-c1 {
+  color: var(--color-glacio);
+}
+.attr-label.elem-c2,
+.attr-val.elem-c2 {
+  color: var(--color-fusion);
+}
+.attr-label.elem-c3,
+.attr-val.elem-c3 {
+  color: var(--color-electro);
+}
+.attr-label.elem-c4,
+.attr-val.elem-c4 {
+  color: var(--color-aero);
+}
+.attr-label.elem-c5,
+.attr-val.elem-c5 {
+  color: var(--color-spectro);
+}
+.attr-label.elem-c6,
+.attr-val.elem-c6 {
+  color: var(--color-havoc);
+}
 
 /* 声骸副词条有效高亮 */
 .p-name.grade-s,

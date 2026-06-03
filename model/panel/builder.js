@@ -188,7 +188,8 @@ export class PanelBuilder {
     const elementDmgKey = `${elementName}伤害加成`
 
     return ROLE_ATTRIBUTE_LIST_ORDER.map(attrName => {
-      const name = attrName.includes("{element}") ? elementDmgKey : attrName
+      const isElement = attrName.includes("{element}")
+      const name = isElement ? elementDmgKey : attrName
 
       // 在 STAT_MAP 中查找到对应的 StatType
       const type = STAT_MAP[name]
@@ -214,7 +215,7 @@ export class PanelBuilder {
         formatValue = Math.floor(value).toLocaleString()
       }
 
-      return { name, value: formatValue, valid: this._resolveAttrRecommendGrade(name) }
+      return { name, value: formatValue, valid: this._resolveAttrRecommendGrade(name), isElement }
     })
   }
 

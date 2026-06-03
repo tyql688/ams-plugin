@@ -85,10 +85,14 @@
           <div class="attr-icon">
             <img src="{{wavesResMap.prop}}/{{attribute.name}}.webp" alt="{{attribute.name}}" />
           </div>
-          <div class="attr-label {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}">
+          <div
+            class="attr-label {{if attribute.isElement}}elem-c{{data.attributeId}}{{/if}} {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}"
+          >
             {{attribute.name}}
           </div>
-          <div class="attr-val {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}">
+          <div
+            class="attr-val {{if attribute.isElement}}elem-c{{data.attributeId}}{{/if}} {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}"
+          >
             {{attribute.value}}
           </div>
         </div>
@@ -193,7 +197,7 @@
         <div class="p-name {{if mainProp.valid}}grade-{{mainProp.valid}}{{/if}}">
           {{mainProp.attributeName}}
         </div>
-        <div class="p-val {{if mainProp.valid}}grade-{{mainProp.valid}}{{/if}}">
+        <div class="p-val">
           {{mainProp.attributeValue}}
         </div>
       </div>
