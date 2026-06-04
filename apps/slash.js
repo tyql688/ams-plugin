@@ -21,13 +21,6 @@ export class Slash extends AmsPlugin {
   }
 
   async slash(e) {
-    // 1. 获取用户信息
-    const user = await this.getWavesUser()
-    if (!user) {
-      await e.reply(`❌ 您还未绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-      return false
-    }
-
     // 智能解析指令
     const match = e.msg.match(this.rule[0].reg)
     let targetFloors = []
@@ -38,8 +31,15 @@ export class Slash extends AmsPlugin {
     const keyword = match[2]
     const floorNum = match[3] ? parseInt(match[3]) : null
 
-    // 至少要有主命令、关键字或层数之一，否则不处理
-    if (!cmd && !keyword && !floorNum) {
+    // 必须包含主命令或难度关键字，避免纯数字误触发
+    if (!cmd && !keyword) {
+      return false
+    }
+
+    // 1. 获取用户信息
+    const user = await this.getWavesUser()
+    if (!user) {
+      await e.reply(`❌ 您还未绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
       return false
     }
 

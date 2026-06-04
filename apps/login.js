@@ -293,6 +293,11 @@ export class Login extends AmsPlugin {
       return await this.getUidList(e)
     }
 
+    // 非纯数字说明不是 UID
+    if (!/^\d+$/.test(uid)) {
+      return false
+    }
+
     const { userId } = this.getUserIdentity()
     const user = await db.User.getByUid(userId, uid)
 

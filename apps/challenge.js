@@ -10,7 +10,7 @@ export class Challenge extends AmsPlugin {
       priority: _.get(config.getConfig("priority"), "challenge", 110),
       rule: [
         {
-          reg: config.fixCommond("(战术)?全息(挑战)?.*"),
+          reg: config.fixCommond("(战术)?全息(挑战)?"),
           fnc: "challenge",
         },
       ],

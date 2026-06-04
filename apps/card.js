@@ -22,12 +22,12 @@ export class Card extends AmsPlugin {
       priority: _.get(config.getConfig("priority"), "card", 110),
       rule: [
         {
-          reg: config.fixCommond("(.+)面板"),
-          fnc: "characterPanel",
-        },
-        {
           reg: config.fixCommond("(刷新面板|面板|角色面板)$"),
           fnc: "roleList",
+        },
+        {
+          reg: config.fixCommond("(.+)面板"),
+          fnc: "characterPanel",
         },
       ],
     })
@@ -96,13 +96,14 @@ export class Card extends AmsPlugin {
     const inputName = match?.[1]?.trim()
     if (!inputName) return e.reply(`请输入角色名称，如：${config.exampleCommond("长离面板")}`)
 
-    const wavesApi = await this.getWavesApi()
-    if (!wavesApi) return
-
     let roleId = Number(await DataLoader.getRoleId(inputName))
     // 主角泛称兜底：命中任一主角id即可，下方会重映射到持有的那个形态
     if (!roleId && ROVER_ALIASES.includes(inputName)) roleId = ROVER_ID[0]
-    if (!roleId) return e.reply(`❌ 未找到角色ID: ${inputName}`)
+    // 未匹配到角色名时静默放行，避免日常聊天中"xx面板"误触发、抢答其他插件
+    if (!roleId) return false
+
+    const wavesApi = await this.getWavesApi()
+    if (!wavesApi) return
 
     // 检查是否持有该角色
     const ownedRoles = wavesApi.dbUser?.gameData?.roleList || []
