@@ -1,3 +1,4 @@
+import _ from "lodash"
 import moment from "moment"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
@@ -8,7 +9,7 @@ export class Calendar extends AmsPlugin {
     super({
       name: "ams-日历",
       event: "message",
-      priority: 100,
+      priority: _.get(config.getConfig("priority"), "calendar", 100),
       rule: [{ reg: config.fixCommond("日历"), fnc: "calendar" }],
     })
   }

@@ -8,7 +8,7 @@ export class Exchange extends AmsPlugin {
     super({
       name: "ams-兑换码",
       event: "message",
-      priority: _.get(config.getConfig("priority"), "exchange", 100),
+      priority: _.get(config.getConfig("priority"), "exchange", 110),
       rule: [
         {
           reg: config.fixCommond("(?:鸣潮)?(?:兑换码|礼包码)"),

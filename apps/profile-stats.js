@@ -9,7 +9,7 @@ export class ProfileStats extends AmsPlugin {
     super({
       name: "ams-练度统计",
       event: "message",
-      priority: _.get(config.getConfig("priority"), "card", 110),
+      priority: _.get(config.getConfig("priority"), "profile-stats", 110),
       rule: [
         {
           reg: config.fixCommond("(练度统计|练度)$"),

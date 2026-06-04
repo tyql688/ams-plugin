@@ -11,7 +11,7 @@ export class Gacha extends AmsPlugin {
     super({
       name: "ams-抽卡记录",
       event: "message",
-      priority: _.get(config.getConfig("priority"), "gacha", 100),
+      priority: _.get(config.getConfig("priority"), "gacha", 110),
       rule: [
         {
           reg: config.fixCommond("(?:抽卡|唤取)(?:记录|历史|分析)"),
