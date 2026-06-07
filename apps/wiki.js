@@ -62,7 +62,7 @@ export class Wiki extends AmsPlugin {
         talents: this._formatTalents(roleData),
       }
 
-      const img = await this.render("wikis/wiki-role", renderData, { scale: 50 })
+      const img = await this.render("wikis/wiki-role", renderData)
       if (img) {
         return e.reply(img)
       } else {
@@ -103,7 +103,7 @@ export class Wiki extends AmsPlugin {
         chains: this._formatChains(roleData),
       }
 
-      const img = await this.render("wikis/wiki-role", renderData, { scale: 50 })
+      const img = await this.render("wikis/wiki-role", renderData)
       if (img) {
         return e.reply(img)
       } else {
@@ -256,7 +256,7 @@ export class Wiki extends AmsPlugin {
     }
 
     const template = mode === "group" ? "wikis/wiki-group" : "wikis/wiki-list"
-    const img = await this.render(template, renderData, { scale: 50 })
+    const img = await this.render(template, renderData)
     if (img) {
       return e.reply(img)
     } else {
@@ -286,7 +286,7 @@ export class Wiki extends AmsPlugin {
         },
       }
 
-      const img = await this.render("wikis/wiki-weapon", renderData, { scale: 50 })
+      const img = await this.render("wikis/wiki-weapon", renderData)
       if (img) return e.reply(img)
       return e.reply("❌ 绘图失败")
     } catch (err) {
@@ -325,7 +325,7 @@ export class Wiki extends AmsPlugin {
         },
       }
 
-      const img = await this.render("wikis/wiki-echo", renderData, { scale: 50 })
+      const img = await this.render("wikis/wiki-echo", renderData)
       if (img) return e.reply(img)
       return e.reply("❌ 绘图失败")
     } catch (err) {
