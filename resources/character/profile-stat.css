@@ -22,7 +22,12 @@ body {
   flex-direction: column;
   gap: 18px;
   background:
-    linear-gradient(180deg, rgba(5, 8, 16, 0.4) 0%, rgba(5, 8, 16, 0.6) 60%, rgba(5, 8, 16, 0.8) 100%),
+    linear-gradient(
+      180deg,
+      rgba(5, 8, 16, 0.4) 0%,
+      rgba(5, 8, 16, 0.6) 60%,
+      rgba(5, 8, 16, 0.8) 100%
+    ),
     url("../common/imgs/bg_archive.webp") center/cover no-repeat,
     #03060c;
   border: 1px solid rgba(120, 160, 220, 0.16);
@@ -254,16 +259,16 @@ body {
 
 /* 星级底色（叠在 idx / name / weapon 单元格） */
 .td.star5 {
-  background: rgba(255, 212, 132, 0.16);
+  background: var(--rarity-5-soft);
 }
 .td-name.star5 .item-name {
-  color: #ffdf9b;
+  color: var(--rarity-5);
 }
 .td.star4 {
-  background: rgba(195, 134, 255, 0.16);
+  background: var(--rarity-4-soft);
 }
 .td-name.star4 .item-name {
-  color: #d8b6ff;
+  color: var(--rarity-4);
 }
 
 /* 角色名 + 头像 */
@@ -332,24 +337,17 @@ body {
   font-family: var(--font-number);
   font-size: 13px;
   font-weight: 800;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--chain-contrast, #0b1018);
+  background: var(--chain-color, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--chain-color, rgba(255, 255, 255, 0.08));
 }
 .cons.c-6 {
-  background: rgba(255, 212, 132, 0.85);
-  color: #2b2100;
-  border-color: transparent;
-  box-shadow: 0 0 8px rgba(255, 215, 0, 0.35);
-}
-.cons.c-5,
-.cons.c-4 {
-  background: rgba(195, 134, 255, 0.5);
-  border-color: transparent;
+  box-shadow: 0 0 8px var(--chain-shadow);
 }
 .cons.c-0 {
   background: rgba(255, 255, 255, 0.06);
-  color: var(--d-text-3);
+  color: var(--chain-color);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 /* 技能等级配色（0-5 档） */
@@ -409,32 +407,11 @@ body {
   font-family: var(--font-number);
   font-size: 11px;
   font-weight: 800;
-  color: #fff;
-  background: rgba(150, 150, 150, 0.9);
+  color: var(--refine-contrast, #0b1018);
+  background: var(--refine-color, var(--refine-0));
   padding: 0 4px;
   border-radius: 3px;
   line-height: 15px;
-}
-/* 武器谐振阶级(精炼)分色 1-5 */
-.weapon-top .reson.r-1 {
-  background: rgba(170, 170, 170, 0.85);
-  color: #1a1a1a;
-}
-.weapon-top .reson.r-2 {
-  background: #57c489;
-  color: #04130b;
-}
-.weapon-top .reson.r-3 {
-  background: #57a0ec;
-  color: #021019;
-}
-.weapon-top .reson.r-4 {
-  background: #b07cff;
-  color: #fff;
-}
-.weapon-top .reson.r-5 {
-  background: var(--d-gold);
-  color: #2b2100;
 }
 .weapon-top .w-lv {
   font-family: var(--font-number);
@@ -487,19 +464,19 @@ body {
 .g-SSS,
 .g-SS,
 .g-S {
-  color: #ffd700;
+  color: var(--grade-s);
 }
 .g-A {
-  color: #c084fc;
+  color: var(--grade-a);
 }
 .g-B {
-  color: #60a5fa;
+  color: var(--grade-b);
 }
 .g-C {
-  color: #4ade80;
+  color: var(--grade-c);
 }
 .g-D {
-  color: #9ca3af;
+  color: var(--grade-d);
 }
 
 /* ==================== 底部说明 ==================== */

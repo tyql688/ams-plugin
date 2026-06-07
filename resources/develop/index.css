@@ -23,19 +23,20 @@ body {
   flex-direction: column;
   gap: 12px;
   background:
-    linear-gradient(180deg, rgba(5, 8, 16, 0.3) 0%, rgba(5, 8, 16, 0.45) 60%, rgba(5, 8, 16, 0.65) 100%),
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0.8px, transparent 1.4px) 0 0/8px 8px,
+    linear-gradient(
+      180deg,
+      rgba(5, 8, 16, 0.3) 0%,
+      rgba(5, 8, 16, 0.45) 60%,
+      rgba(5, 8, 16, 0.65) 100%
+    ),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0.8px, transparent 1.4px) 0 0/8px
+      8px,
     url("../common/imgs/bg_ruins.webp") center/cover no-repeat,
     var(--d-bg-deep);
   background-blend-mode: normal, normal, normal, normal;
   border: var(--d-border-ruins);
   box-shadow: var(--d-shadow-panel);
   overflow: hidden;
-  --r-1: #9fb1c2;
-  --r-2: #7cd998;
-  --r-3: #6cb9ff;
-  --r-4: #b29bff;
-  --r-5: #f4c45a;
 }
 
 /* ==================== Topbar ==================== */
@@ -217,17 +218,19 @@ body {
   pointer-events: none;
 }
 
-.char-card.rarity-1::before { background-image: url("../common/imgs/quality/quality_1.webp"); }
-.char-card.rarity-2::before { background-image: url("../common/imgs/quality/quality_2.webp"); }
-.char-card.rarity-3::before { background-image: url("../common/imgs/quality/quality_3.webp"); }
-.char-card.rarity-4::before { background-image: url("../common/imgs/quality/quality_4.webp"); }
-.char-card.rarity-5::before { background-image: url("../common/imgs/quality/quality_5.webp"); }
+.char-card::before {
+  background-image: var(--rarity-bg-img);
+}
 
-.char-card.rarity-5 { border-color: rgba(244, 196, 90, 0.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 0 10px rgba(244,196,90,0.22); }
-.char-card.rarity-4 { border-color: rgba(178, 155, 255, 0.5); }
-.char-card.rarity-3 { border-color: rgba(108, 185, 255, 0.45); }
-.char-card.rarity-2 { border-color: rgba(124, 217, 152, 0.42); }
-.char-card.rarity-1 { border-color: rgba(159, 177, 194, 0.35); }
+.char-card {
+  border-color: var(--rarity-border, rgba(255, 255, 255, 0.08));
+}
+
+.char-card.rarity-5 {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 10px var(--rarity-soft);
+}
 
 .char-icon-wrapper {
   position: relative;
@@ -275,10 +278,9 @@ body {
   line-height: 1.2;
 }
 
-.char-card.rarity-5 .char-name { color: #f4c45a; }
-.char-card.rarity-4 .char-name { color: #d6c8ff; }
-.char-card.rarity-3 .char-name { color: #b6dcff; }
-.char-card.rarity-2 .char-name { color: #c0eecf; }
+.char-card .char-name {
+  color: var(--rarity-text, var(--d-text));
+}
 
 .lvl-tag {
   font-family: var(--font-number);
@@ -419,43 +421,18 @@ body {
   pointer-events: none;
 }
 
-.mat-card.rarity-1::before {
-  background-image: url("../common/imgs/quality/quality_1.webp");
+.mat-card::before {
+  background-image: var(--rarity-bg-img);
 }
-.mat-card.rarity-2::before {
-  background-image: url("../common/imgs/quality/quality_2.webp");
-}
-.mat-card.rarity-3::before {
-  background-image: url("../common/imgs/quality/quality_3.webp");
-}
-.mat-card.rarity-4::before {
-  background-image: url("../common/imgs/quality/quality_4.webp");
-}
-.mat-card.rarity-5::before {
-  background-image: url("../common/imgs/quality/quality_5.webp");
+
+.mat-card {
+  border-color: var(--rarity-border, rgba(255, 255, 255, 0.08));
 }
 
 .mat-card.rarity-5 {
-  border-color: rgba(244, 196, 90, 0.5);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0 10px rgba(244, 196, 90, 0.22);
-}
-
-.mat-card.rarity-4 {
-  border-color: rgba(178, 155, 255, 0.5);
-}
-
-.mat-card.rarity-3 {
-  border-color: rgba(108, 185, 255, 0.45);
-}
-
-.mat-card.rarity-2 {
-  border-color: rgba(124, 217, 152, 0.42);
-}
-
-.mat-card.rarity-1 {
-  border-color: rgba(159, 177, 194, 0.35);
+    0 0 10px var(--rarity-soft);
 }
 
 .mat-icon-wrapper {
@@ -534,24 +511,8 @@ body {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
 }
 
-.mat-card.rarity-5 .mat-name {
-  color: #f4c45a;
-}
-
-.mat-card.rarity-4 .mat-name {
-  color: #d6c8ff;
-}
-
-.mat-card.rarity-3 .mat-name {
-  color: #b6dcff;
-}
-
-.mat-card.rarity-2 .mat-name {
-  color: #c0eecf;
-}
-
-.mat-card.rarity-1 .mat-name {
-  color: var(--d-text-2);
+.mat-card .mat-name {
+  color: var(--rarity-text, var(--d-text));
 }
 
 /* ==================== 总览汇总 ==================== */

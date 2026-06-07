@@ -1,5 +1,4 @@
 {{extend defaultLayout}} {{block 'title'}}鸣潮角色面板{{/block}} {{block 'css'}}
-<link rel="stylesheet" type="text/css" href="{{_res_path}}/character/dark-theme.css" />
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/character/profile-detail.css" />
 {{/block}} {{block 'body-class'}}elem-{{elem}} theme-element-{{data.attributeId}}{{/block}} {{block
 'main'}}
@@ -52,7 +51,7 @@
       <div class="role-meta-row">
         <span class="meta-tag uid-tag">UID {{uid}}</span>
         <span class="meta-tag level-tag">Lv.{{data.level}}</span>
-        <span class="meta-tag cons-tag">{{data.chainUnlockNum}}命</span>
+        <span class="meta-tag cons-tag c-{{data.chainUnlockNum || 0}}">{{data.chainUnlockNum}}命</span>
       </div>
     </div>
 
@@ -123,17 +122,7 @@
       <div class="echo-title-row">
         <div class="echo-name" style="max-width: 100%">
           {{data.weapon.name}}
-          <span
-            style="
-              font-size: 10px;
-              background: rgba(255, 193, 7, 0.2);
-              color: #ffc107;
-              padding: 0 3px;
-              border-radius: 2px;
-              margin-left: 4px;
-            "
-            >精{{data.weapon.resonLevel}}</span
-          >
+          <span class="tag-reson reson-{{data.weapon.resonLevel}}">精{{data.weapon.resonLevel}}</span>
         </div>
       </div>
       <div class="echo-cost">Rarity {{data.weapon.rarity}}</div>

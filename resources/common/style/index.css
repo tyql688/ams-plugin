@@ -69,36 +69,78 @@
   /* === 元素主题色（默认值） === */
   --element-primary: var(--base-accent);
   --element-bg: rgba(184, 134, 11, 0.08);
+  --element-border: rgba(184, 134, 11, 0.22);
   --element-shadow: rgba(184, 134, 11, 0.2);
 
   /* === 评级等级 === */
-  --grade-c: #5a7247;
-  --grade-b: #417deb;
-  --grade-a: #9c27b0;
-  --grade-s: #ffd700;
-  --grade-ss: #ffd700;
-  --grade-sss: #ffd700;
-  --grade-other: #9e9e9e;
+  --grade-c: var(--rarity-2);
+  --grade-b: var(--rarity-3);
+  --grade-a: var(--rarity-4);
+  --grade-s: var(--rarity-5);
+  --grade-ss: var(--rarity-5);
+  --grade-sss: var(--rarity-5);
+  --grade-d: #eef2f8;
+  --grade-other: var(--rarity-1);
 
-  /* === 武器品质等级 === */
-  --rarity-1: #9e9e9e;
-  --rarity-2: #5a7247;
-  --rarity-3: #2196f3;
-  --rarity-4: #9c27b0;
-  --rarity-5: #b8860b;
+  /* === 品质 / 星级 === */
+  --rarity-1: #9fb1c2;
+  --rarity-2: #7cd998;
+  --rarity-3: #6cb9ff;
+  --rarity-4: #b29bff;
+  --rarity-5: #f4c45a;
+  --rarity-1-soft: rgba(159, 177, 194, 0.16);
+  --rarity-2-soft: rgba(124, 217, 152, 0.16);
+  --rarity-3-soft: rgba(108, 185, 255, 0.16);
+  --rarity-4-soft: rgba(178, 155, 255, 0.16);
+  --rarity-5-soft: rgba(244, 196, 90, 0.18);
+  --rarity-1-border: rgba(159, 177, 194, 0.35);
+  --rarity-2-border: rgba(124, 217, 152, 0.42);
+  --rarity-3-border: rgba(108, 185, 255, 0.45);
+  --rarity-4-border: rgba(178, 155, 255, 0.5);
+  --rarity-5-border: rgba(244, 196, 90, 0.5);
 
-  /* === 共鸣链颜色 === */
-  --chain-0: #9e9e9e;
-  --chain-1: #32eb7c;
-  --chain-2: #2196f3;
-  --chain-3: #9c27b0;
-  --chain-4: #ff9800;
-  --chain-5: #f44336;
-  --chain-6: #ffd700;
+  /* === 评级装饰色 === */
+  --grade-s-light: #fff6c9;
+  --grade-s-deep: #d49340;
+  --grade-s-border: rgba(244, 196, 90, 0.55);
+  --grade-s-shadow: rgba(244, 196, 90, 0.65);
+  --grade-a-light: #efdcff;
+  --grade-a-deep: #7e5bd4;
+  --grade-a-border: rgba(178, 155, 255, 0.55);
+  --grade-a-shadow: rgba(178, 155, 255, 0.62);
+  --grade-b-light: #d6e9ff;
+  --grade-b-deep: #2563eb;
+  --grade-b-border: rgba(108, 185, 255, 0.5);
+  --grade-b-shadow: rgba(108, 185, 255, 0.55);
+  --grade-c-light: #d4f7df;
+  --grade-c-deep: #16a34a;
+  --grade-c-border: rgba(124, 217, 152, 0.5);
+  --grade-c-shadow: rgba(124, 217, 152, 0.55);
+  --grade-d-light: #ffffff;
+  --grade-d-deep: #9fb1c2;
+  --grade-d-border: rgba(159, 177, 194, 0.45);
+  --grade-d-shadow: rgba(159, 177, 194, 0.42);
+
+  /* === 共鸣链 === */
+  --chain-0: #9fb1c2;
+  --chain-1: #6cdba6;
+  --chain-2: #6cb9ff;
+  --chain-3: #b29bff;
+  --chain-4: #ffb14a;
+  --chain-5: #ff7a96;
+  --chain-6: #f4c45a;
+
+  /* === 武器精炼 === */
+  --refine-0: #9fb1c2;
+  --refine-1: #9fb1c2;
+  --refine-2: #7cd998;
+  --refine-3: #6cb9ff;
+  --refine-4: #b29bff;
+  --refine-5: #f4c45a;
 
   /* === 武器属性值金色 === */
-  --weapon-prop-gold: #b8860b;
-  --weapon-prop-gold-shadow: rgba(184, 134, 11, 0.5);
+  --weapon-prop-gold: var(--rarity-5);
+  --weapon-prop-gold-shadow: rgba(244, 196, 90, 0.5);
 
   /* === 标准元素配色 === */
   --color-glacio: #22d3ee;
@@ -113,6 +155,12 @@
   --color-energy: #1a8a9e;
   --color-atk: #8c7e6a;
 
+  /* === 声骸强度 === */
+  --echo-intensity-0: #9fb1c2;
+  --echo-intensity-1: #6cdba6;
+  --echo-intensity-2: #b29bff;
+  --echo-intensity-3: #f4c45a;
+
   /* ===================================================================
    * 暗色星空风（Dark Starry-sky）调色板
    * 当前所有 ams-plugin 暗色页面统一使用此 token；新建页直接 var(--d-*)，
@@ -124,7 +172,7 @@
   --d-bg-deep: #050810; /* 面板兜底色（ruins 套用） */
 
   /* 文本层 */
-  --d-text:   #f0f4fa; /* 主文字 */
+  --d-text: #f0f4fa; /* 主文字 */
   --d-text-2: #c2cdda; /* 次文字（描述、说明） */
   --d-text-3: #8093a8; /* 暗文字（label、placeholder） */
   --d-text-4: #5e6f82; /* 极暗（结束态、弱化） */
@@ -134,20 +182,20 @@
   --d-line: rgba(255, 255, 255, 0.1);
 
   /* 强调 / 状态 */
-  --d-gold:      #f4c45a; /* 主金色（标题、accent） */
+  --d-gold: #f4c45a; /* 主金色（标题、accent） */
   --d-gold-deep: #d49340; /* 深金（hover/active） */
-  --d-emerald:   #6cdba6; /* 进行中 / 成功 */
-  --d-rose:      #ff7a96; /* 紧急 / 错误 */
-  --d-cyan:      #6cd1f4; /* 信息提示 */
-  --d-purple:    #b29bff; /* 4 星紫 / 共鸣链 */
-  --d-warn:      #ffb14a; /* 警告 / 倒计时 ≤3 天 */
-  --d-bronze:    #cf8a55; /* 倒数排名 / 铜 */
-  --d-silver:    #c0cad6; /* 倒数排名 / 银 */
+  --d-emerald: #6cdba6; /* 进行中 / 成功 */
+  --d-rose: #ff7a96; /* 紧急 / 错误 */
+  --d-cyan: #6cd1f4; /* 信息提示 */
+  --d-purple: #b29bff; /* 4 星紫 / 共鸣链 */
+  --d-warn: #ffb14a; /* 警告 / 倒计时 ≤3 天 */
+  --d-bronze: #cf8a55; /* 倒数排名 / 铜 */
+  --d-silver: #c0cad6; /* 倒数排名 / 银 */
 
   /* 容器装饰 */
-  --d-shadow-panel:   0 24px 50px rgba(0, 0, 0, 0.6);
+  --d-shadow-panel: 0 24px 50px rgba(0, 0, 0, 0.6);
   --d-border-archive: 1px solid rgba(120, 160, 220, 0.16);
-  --d-border-ruins:   1px solid rgba(140, 180, 240, 0.14);
+  --d-border-ruins: 1px solid rgba(140, 180, 240, 0.14);
 }
 
 /* ==================== 通用容器（浅色 legacy） ==================== */
@@ -182,7 +230,12 @@
   overflow: hidden;
   box-sizing: border-box;
   background:
-    linear-gradient(180deg, rgba(5, 8, 16, 0.4) 0%, rgba(5, 8, 16, 0.55) 60%, rgba(5, 8, 16, 0.7) 100%),
+    linear-gradient(
+      180deg,
+      rgba(5, 8, 16, 0.4) 0%,
+      rgba(5, 8, 16, 0.55) 60%,
+      rgba(5, 8, 16, 0.7) 100%
+    ),
     url("../imgs/bg_archive.webp") center/cover no-repeat,
     var(--d-bg-page);
   background-blend-mode: normal, normal, normal;
@@ -197,8 +250,14 @@
   overflow: hidden;
   box-sizing: border-box;
   background:
-    linear-gradient(180deg, rgba(5, 8, 16, 0.3) 0%, rgba(5, 8, 16, 0.45) 60%, rgba(5, 8, 16, 0.65) 100%),
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0.8px, transparent 1.4px) 0 0/8px 8px,
+    linear-gradient(
+      180deg,
+      rgba(5, 8, 16, 0.3) 0%,
+      rgba(5, 8, 16, 0.45) 60%,
+      rgba(5, 8, 16, 0.65) 100%
+    ),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0.8px, transparent 1.4px) 0 0/8px
+      8px,
     url("../imgs/bg_ruins.webp") center/cover no-repeat,
     var(--d-bg-deep);
   background-blend-mode: normal, normal, normal, normal;
@@ -225,6 +284,42 @@
 }
 
 /* ==================== 通用稀有度组件 (Rarity UI) ==================== */
+.rarity-1 {
+  --rarity-color: var(--rarity-1);
+  --rarity-soft: var(--rarity-1-soft);
+  --rarity-border: var(--rarity-1-border);
+  --rarity-text: var(--d-text-2);
+  --rarity-bg-img: url("../common/imgs/quality/quality_1.webp");
+}
+.rarity-2 {
+  --rarity-color: var(--rarity-2);
+  --rarity-soft: var(--rarity-2-soft);
+  --rarity-border: var(--rarity-2-border);
+  --rarity-text: #c0eecf;
+  --rarity-bg-img: url("../common/imgs/quality/quality_2.webp");
+}
+.rarity-3 {
+  --rarity-color: var(--rarity-3);
+  --rarity-soft: var(--rarity-3-soft);
+  --rarity-border: var(--rarity-3-border);
+  --rarity-text: #b6dcff;
+  --rarity-bg-img: url("../common/imgs/quality/quality_3.webp");
+}
+.rarity-4 {
+  --rarity-color: var(--rarity-4);
+  --rarity-soft: var(--rarity-4-soft);
+  --rarity-border: var(--rarity-4-border);
+  --rarity-text: #d6c8ff;
+  --rarity-bg-img: url("../common/imgs/quality/quality_4.webp");
+}
+.rarity-5 {
+  --rarity-color: var(--rarity-5);
+  --rarity-soft: var(--rarity-5-soft);
+  --rarity-border: var(--rarity-5-border);
+  --rarity-text: var(--rarity-5);
+  --rarity-bg-img: url("../common/imgs/quality/quality_5.webp");
+}
+
 .rarity-frame,
 .rarity-item {
   position: relative;
@@ -232,23 +327,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--base-divider);
-}
-
-.rarity-frame.rarity-5 {
-  background: radial-gradient(circle, rgba(184, 134, 11, 0.15) 0%, var(--base-divider) 100%);
-}
-.rarity-frame.rarity-4 {
-  background: radial-gradient(circle, rgba(156, 39, 176, 0.15) 0%, var(--base-divider) 100%);
-}
-.rarity-frame.rarity-3 {
-  background: radial-gradient(circle, rgba(33, 150, 243, 0.15) 0%, var(--base-divider) 100%);
-}
-.rarity-frame.rarity-2 {
-  background: radial-gradient(circle, rgba(90, 114, 71, 0.15) 0%, var(--base-divider) 100%);
-}
-.rarity-frame.rarity-1 {
-  background: radial-gradient(circle, rgba(158, 158, 158, 0.15) 0%, var(--base-divider) 100%);
+  background: radial-gradient(
+    circle,
+    var(--rarity-soft, rgba(159, 177, 194, 0.15)) 0%,
+    var(--base-divider) 100%
+  );
 }
 
 /* Bottom Rarity Bar */
@@ -260,30 +343,7 @@
   height: 3px;
   z-index: 2;
   border-radius: 0 0 2px 2px;
-}
-
-.rarity-glow.rarity-1 {
-  background: var(--rarity-1);
-  box-shadow: none;
-  opacity: 0.5;
-}
-.rarity-glow.rarity-2 {
-  background: var(--rarity-2);
-  box-shadow: none;
-  opacity: 0.6;
-}
-.rarity-glow.rarity-3 {
-  background: var(--rarity-3);
-  box-shadow: none;
-  opacity: 0.7;
-}
-.rarity-glow.rarity-4 {
-  background: var(--rarity-4);
-  box-shadow: none;
-  opacity: 0.8;
-}
-.rarity-glow.rarity-5 {
-  background: var(--rarity-5);
+  background: var(--rarity-color, var(--rarity-1));
   box-shadow: none;
   opacity: 0.9;
 }
@@ -293,122 +353,182 @@
 .theme-element-1 {
   --element-primary: var(--color-glacio);
   --element-bg: rgba(26, 138, 158, 0.08);
+  --element-border: rgba(26, 138, 158, 0.22);
   --element-shadow: rgba(26, 138, 158, 0.2);
 }
 .theme-fusion,
 .theme-element-2 {
   --element-primary: var(--color-fusion);
   --element-bg: rgba(197, 48, 48, 0.08);
+  --element-border: rgba(197, 48, 48, 0.22);
   --element-shadow: rgba(197, 48, 48, 0.2);
 }
 .theme-electro,
 .theme-element-3 {
   --element-primary: var(--color-electro);
   --element-bg: rgba(124, 58, 237, 0.08);
+  --element-border: rgba(124, 58, 237, 0.22);
   --element-shadow: rgba(124, 58, 237, 0.2);
 }
 .theme-aero,
 .theme-element-4 {
   --element-primary: var(--color-aero);
   --element-bg: rgba(45, 138, 110, 0.08);
+  --element-border: rgba(45, 138, 110, 0.22);
   --element-shadow: rgba(45, 138, 110, 0.2);
 }
 .theme-spectro,
 .theme-element-5 {
   --element-primary: var(--color-spectro);
   --element-bg: rgba(184, 134, 11, 0.08);
+  --element-border: rgba(184, 134, 11, 0.22);
   --element-shadow: rgba(184, 134, 11, 0.2);
 }
 .theme-havoc,
 .theme-element-6 {
   --element-primary: var(--color-havoc);
   --element-bg: rgba(184, 50, 128, 0.08);
+  --element-border: rgba(184, 50, 128, 0.22);
   --element-shadow: rgba(184, 50, 128, 0.2);
 }
 
 .theme-heal {
   --element-primary: var(--color-heal);
   --element-bg: rgba(45, 138, 110, 0.08);
+  --element-border: rgba(45, 138, 110, 0.22);
 }
 .theme-energy {
   --element-primary: var(--color-energy);
   --element-bg: rgba(26, 138, 158, 0.08);
+  --element-border: rgba(26, 138, 158, 0.22);
 }
 .theme-atk {
   --element-primary: var(--color-atk);
   --element-bg: rgba(140, 126, 106, 0.08);
+  --element-border: rgba(140, 126, 106, 0.22);
+}
+
+/* ==================== 声骸强度主题 ==================== */
+.theme-echo-0 {
+  --element-primary: var(--echo-intensity-0);
+  --element-bg: rgba(159, 177, 194, 0.1);
+  --element-border: rgba(159, 177, 194, 0.24);
+  --element-shadow: rgba(159, 177, 194, 0.32);
+}
+.theme-echo-1 {
+  --element-primary: var(--echo-intensity-1);
+  --element-bg: rgba(108, 219, 166, 0.1);
+  --element-border: rgba(108, 219, 166, 0.24);
+  --element-shadow: rgba(108, 219, 166, 0.32);
+}
+.theme-echo-2 {
+  --element-primary: var(--echo-intensity-2);
+  --element-bg: rgba(178, 155, 255, 0.1);
+  --element-border: rgba(178, 155, 255, 0.26);
+  --element-shadow: rgba(178, 155, 255, 0.34);
+}
+.theme-echo-3 {
+  --element-primary: var(--echo-intensity-3);
+  --element-bg: rgba(244, 196, 90, 0.1);
+  --element-border: rgba(244, 196, 90, 0.28);
+  --element-shadow: rgba(244, 196, 90, 0.36);
 }
 
 /* ==================== 共鸣链等级颜色样式 ==================== */
+.chain-0,
+.c-0 {
+  --chain-color: var(--chain-0);
+  --chain-contrast: #0b1018;
+  --chain-shadow: rgba(159, 177, 194, 0.25);
+}
+.chain-1,
+.c-1 {
+  --chain-color: var(--chain-1);
+  --chain-contrast: #04130b;
+  --chain-shadow: rgba(108, 219, 166, 0.28);
+}
+.chain-2,
+.c-2 {
+  --chain-color: var(--chain-2);
+  --chain-contrast: #04111c;
+  --chain-shadow: rgba(108, 185, 255, 0.28);
+}
+.chain-3,
+.c-3 {
+  --chain-color: var(--chain-3);
+  --chain-contrast: #ffffff;
+  --chain-shadow: rgba(178, 155, 255, 0.3);
+}
+.chain-4,
+.c-4 {
+  --chain-color: var(--chain-4);
+  --chain-contrast: #241300;
+  --chain-shadow: rgba(255, 177, 74, 0.3);
+}
+.chain-5,
+.c-5 {
+  --chain-color: var(--chain-5);
+  --chain-contrast: #ffffff;
+  --chain-shadow: rgba(255, 122, 150, 0.3);
+}
+.chain-6,
+.c-6 {
+  --chain-color: var(--chain-6);
+  --chain-contrast: #2b2100;
+  --chain-shadow: rgba(244, 196, 90, 0.36);
+}
+
 .role-chain {
   background: rgba(255, 253, 248, 0.8);
-  color: var(--chain-0);
+  color: var(--chain-color, var(--chain-0));
   padding: 2px 8px;
   font-weight: 700;
   border-radius: 4px;
-  border: 1px solid var(--chain-0);
-}
-.role-chain.chain-0 {
-  color: var(--chain-0);
-  border-color: var(--chain-0);
-}
-.role-chain.chain-1 {
-  color: var(--chain-1);
-  border-color: var(--chain-1);
-}
-.role-chain.chain-2 {
-  color: var(--chain-2);
-  border-color: var(--chain-2);
-}
-.role-chain.chain-3 {
-  color: var(--chain-3);
-  border-color: var(--chain-3);
-}
-.role-chain.chain-4 {
-  color: var(--chain-4);
-  border-color: var(--chain-4);
-}
-.role-chain.chain-5 {
-  color: var(--chain-5);
-  border-color: var(--chain-5);
-}
-.role-chain.chain-6 {
-  color: var(--chain-6);
-  border-color: var(--chain-6);
+  border: 1px solid var(--chain-color, var(--chain-0));
 }
 
 /* ==================== 武器精炼等级标签颜色 ==================== */
-.tag-reson {
-  background: rgba(255, 253, 248, 0.8);
-  color: var(--chain-0);
-  border: 1px solid var(--chain-0);
+.reson-0,
+.r-0 {
+  --refine-color: var(--refine-0);
+  --refine-contrast: #0b1018;
 }
-.tag-reson.reson-0 {
-  color: var(--chain-0);
-  border-color: var(--chain-0);
+.reson-1,
+.r-1 {
+  --refine-color: var(--refine-1);
+  --refine-contrast: #0b1018;
 }
-.tag-reson.reson-1 {
-  color: var(--chain-1);
-  border-color: var(--chain-1);
+.reson-2,
+.r-2 {
+  --refine-color: var(--refine-2);
+  --refine-contrast: #04130b;
 }
-.tag-reson.reson-2 {
-  color: var(--chain-2);
-  border-color: var(--chain-2);
+.reson-3,
+.r-3 {
+  --refine-color: var(--refine-3);
+  --refine-contrast: #04111c;
 }
-.tag-reson.reson-3 {
-  color: var(--chain-3);
-  border-color: var(--chain-3);
+.reson-4,
+.r-4 {
+  --refine-color: var(--refine-4);
+  --refine-contrast: #ffffff;
 }
-.tag-reson.reson-4 {
-  color: var(--chain-4);
-  border-color: var(--chain-4);
-}
-.tag-reson.reson-5 {
-  color: var(--chain-5);
-  border-color: var(--chain-5);
-}
-.tag-reson.reson-6 {
-  color: var(--chain-6);
-  border-color: var(--chain-6);
+.reson-5,
+.r-5 {
+  --refine-color: var(--refine-5);
+  --refine-contrast: #2b2100;
 }
 
+.tag-reson {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+  padding: 0 3px;
+  border-radius: 2px;
+  background: var(--refine-color, var(--refine-0));
+  border: 1px solid var(--refine-color, var(--refine-0));
+  color: var(--refine-contrast, #0b1018);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.3;
+}

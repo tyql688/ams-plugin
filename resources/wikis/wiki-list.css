@@ -22,7 +22,12 @@ body {
   flex-direction: column;
   gap: 30px;
   background:
-    linear-gradient(180deg, rgba(5, 8, 16, 0.4) 0%, rgba(5, 8, 16, 0.55) 60%, rgba(5, 8, 16, 0.7) 100%),
+    linear-gradient(
+      180deg,
+      rgba(5, 8, 16, 0.4) 0%,
+      rgba(5, 8, 16, 0.55) 60%,
+      rgba(5, 8, 16, 0.7) 100%
+    ),
     url("../common/imgs/bg_archive.webp") center/cover no-repeat,
     var(--d-bg-page);
   background-blend-mode: normal, normal, normal;
@@ -154,7 +159,7 @@ body {
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--rarity-border, rgba(255, 255, 255, 0.08));
   background: rgba(8, 12, 22, 0.7);
   overflow: hidden;
   box-shadow:
@@ -173,6 +178,7 @@ body {
   background-position: bottom center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  background-image: var(--rarity-bg-img);
   opacity: 0.95;
   z-index: 0;
   pointer-events: none;
@@ -196,22 +202,11 @@ body {
   pointer-events: none;
 }
 
-.item-card.rarity-1::before { background-image: url("../common/imgs/quality/quality_1.webp"); }
-.item-card.rarity-2::before { background-image: url("../common/imgs/quality/quality_2.webp"); }
-.item-card.rarity-3::before { background-image: url("../common/imgs/quality/quality_3.webp"); }
-.item-card.rarity-4::before { background-image: url("../common/imgs/quality/quality_4.webp"); }
-.item-card.rarity-5::before { background-image: url("../common/imgs/quality/quality_5.webp"); }
-
 .item-card.rarity-5 {
-  border-color: rgba(244, 196, 90, 0.5);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0 10px rgba(244, 196, 90, 0.22);
+    0 0 10px var(--rarity-soft);
 }
-.item-card.rarity-4 { border-color: rgba(178, 155, 255, 0.5); }
-.item-card.rarity-3 { border-color: rgba(108, 185, 255, 0.45); }
-.item-card.rarity-2 { border-color: rgba(124, 217, 152, 0.42); }
-.item-card.rarity-1 { border-color: rgba(159, 177, 194, 0.35); }
 
 /* 图标区域（HTML 里的 .item-icon-wrapper.rarity-item 都覆盖掉） */
 .item-icon-wrapper {
@@ -269,7 +264,6 @@ body {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
 }
 
-.item-card.rarity-5 .item-name { color: var(--d-gold); }
-.item-card.rarity-4 .item-name { color: #d6c8ff; }
-.item-card.rarity-3 .item-name { color: #b6dcff; }
-.item-card.rarity-2 .item-name { color: #c0eecf; }
+.item-card .item-name {
+  color: var(--rarity-text, var(--d-text));
+}
