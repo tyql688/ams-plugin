@@ -38,7 +38,7 @@ function buildAvatarStat(detail) {
   // 共鸣链解锁数
   const cons = roleCard.chains.filter(c => c.unlock).length
 
-  // 声骸评分 + 主套装图标（按 groupId 出现次数取最多的 1-2 个）
+  // 声骸评分 + 主套装图标：已激活套（件数≥最小 pieces 档）全显，满档优先、件数降序（配装上限 3 套）
   let echo = null
   try {
     const scored = EchoScorer.scoreCharacter(charId, roleCard.phantoms)
@@ -46,10 +46,19 @@ function buildAvatarStat(detail) {
     for (const p of roleCard.phantoms) {
       if (p.groupId) groupCount[p.groupId] = (groupCount[p.groupId] || 0) + 1
     }
+    const setPieces = gid => {
+      const ps = DataLoader.getEchoGroupById(gid)?.effects?.map(e => e.pieces).filter(Number.isFinite)
+      return ps?.length ? [Math.min(...ps), Math.max(...ps)] : [2, 5]
+    }
     const sets = Object.entries(groupCount)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 2)
-      .map(([gid]) => Number(gid))
+      .map(([gid, count]) => {
+        const [min, max] = setPieces(gid)
+        return { gid: Number(gid), count, active: count >= min, full: count >= max }
+      })
+      .filter(s => s.active)
+      .sort((a, b) => b.full - a.full || b.count - a.count)
+      .slice(0, 3)
+      .map(s => s.gid)
     echo = {
       score: scored?.setScore ?? null,
       grade: scored?.setGrade || "-",
