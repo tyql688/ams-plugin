@@ -1,6 +1,6 @@
 import { Calculator, STAT_MAP } from "#waves.calc"
 import { Guide } from "#waves.data"
-import { DamageManager } from "#waves.damage"
+import { calculateCoreDamage } from "#waves.dmgkit"
 import { EchoScorer } from "#waves.score"
 import DataLoader from "../../lib/core/data_loader.js"
 
@@ -80,12 +80,12 @@ export class PanelBuilder {
 
       logger.debug(`[ams] 计算站街属性: ${JSON.stringify(calculatedStats.getHistory(), null, 2)}`)
 
-      const damageListRaw = DamageManager.calculateAll(this.roleCard, calculatedStats)
+      const damageListRaw = calculateCoreDamage(this.roleCard.role.id, this.roleCard, calculatedStats)
       const damageList = damageListRaw.map(d => ({
         ...d,
         crit: Math.floor(d.crit).toLocaleString(),
         expected: Math.floor(d.expected).toLocaleString(),
-        isSingle: d.details && d.details.forceCrit,
+        isSingle: (d.calcType && d.calcType !== "Damage") || (d.trace?.crit?.forceCrit ?? false),
       }))
       logger.debug(`[ams] 伤害计算结果: ${JSON.stringify(damageList, null, 2)}`)
 
