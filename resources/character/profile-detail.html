@@ -3,7 +3,7 @@
 {{/block}} {{block 'body-class'}}elem-{{elem}} theme-element-{{data.attributeId}}{{/block}} {{block
 'main'}}
 <!-- TOP AREA: Character Art + Stats/Skills -->
-<div class="top-area">
+<div class="top-area {{if customPile}}has-custom-pile{{/if}}">
   <!-- Layer 1: Pile Background (Absolute) -->
   <div class="pile-card">
     <div
@@ -68,7 +68,6 @@
             ></div>
             <div class="circle-lv">{{skill.level}}</div>
           </div>
-          <!-- <div class="skill-name">{{skill.type}}</div> -->
         </div>
         {{/each}}
       </div>
@@ -112,7 +111,7 @@
 <div class="bottom-area">
   <!-- Slot 1: Weapon -->
   {{if data.weapon && data.weapon.name}}
-  <div class="echo-card weapon-card-style">
+  <div class="echo-card">
     <div class="echo-head">
       <div
         class="echo-icon"
@@ -193,7 +192,7 @@
       {{/each}} {{/if}} {{if phantom.subPropList}} {{each phantom.subPropList subProp}} {{if
       subProp.attributeName}}
       <div class="prop-row sub">
-        <div class="p-dot {{if subProp.tier}}tier-{{subProp.tier}}{{/if}}"></div>
+        <div class="p-dot {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}"></div>
         <div class="p-name {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}">
           {{subProp.attributeName}}
         </div>

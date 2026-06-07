@@ -12,51 +12,6 @@ body {
   background-image: url("../common/bg/bg.png");
 }
 
-/* ... Card styles ... */
-/* ... */
-
-/* ==================== 核心布局 ==================== */
-.main-content {
-  display: flex;
-  flex-direction: column; /* Changed to column to stack top (char+stats) and bottom (gears) */
-  gap: 15px;
-  position: relative; /* Context for absolute positioning (UID) */
-}
-
-/* UID Display - Top Right */
-/* UID Display - Subtle Pill Style */
-.uid-display {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-number);
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 700;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 4px 12px;
-  border-radius: 20px;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  pointer-events: none;
-  z-index: 10;
-  text-shadow: none;
-  letter-spacing: 0.5px;
-}
-.uid-display .label {
-  display: none; /* Hide label if present */
-}
-.uid-display .value {
-  color: inherit;
-}
-
-/* ... Card styles ... */
-
 /* Top Area: Character Art + Attributes + Skills */
 .top-area {
   display: flex;
@@ -64,6 +19,51 @@ body {
   height: auto;
   gap: 15px;
   position: relative; /* Context for absolute layers */
+  width: calc(100% + 30px);
+  margin: -15px -15px 0;
+  padding: 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 9%, rgba(255, 255, 255, 0.2), transparent 27%),
+    radial-gradient(circle at 74% 44%, var(--element-bg), transparent 36%),
+    linear-gradient(120deg, rgba(5, 10, 18, 0.28) 0%, rgba(6, 12, 21, 0.08) 44%, rgba(5, 9, 17, 0.78) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.04), 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.top-area::before,
+.top-area::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.top-area::before {
+  z-index: 1;
+  background:
+    linear-gradient(100deg, rgba(255, 255, 255, 0.06) 0%, transparent 30%),
+    linear-gradient(90deg, transparent 0%, rgba(3, 7, 13, 0.08) 42%, rgba(3, 7, 13, 0.48) 100%);
+}
+
+.top-area::after {
+  z-index: 3;
+  background:
+    linear-gradient(to bottom, transparent 68%, rgba(4, 7, 13, 0.78) 100%),
+    linear-gradient(to right, transparent 0%, transparent 50%, rgba(5, 9, 16, 0.2) 100%);
+}
+
+.top-area.has-custom-pile::before,
+.top-area:has(.role-pile.is-custom)::before {
+  background:
+    linear-gradient(100deg, rgba(255, 255, 255, 0.04) 0%, transparent 28%),
+    linear-gradient(90deg, transparent 0%, rgba(3, 7, 13, 0.03) 46%, rgba(3, 7, 13, 0.2) 100%);
+}
+
+.top-area.has-custom-pile::after,
+.top-area:has(.role-pile.is-custom)::after {
+  background: linear-gradient(to bottom, transparent 72%, rgba(4, 7, 13, 0.58) 100%);
 }
 
 /* Layer 1: Background Pile Card */
@@ -100,33 +100,33 @@ body {
 
 /* Custom Pile - Full Fill with Bottom Feathering */
 .role-pile.is-custom {
-  width: 680px; /* Full Body Width */
-  height: calc(100% + 15px); /* fill top padding */
-  left: -15px; /* offset container padding */
-  top: -15px; /* offset container padding */
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
   background-size: cover;
   background-position: top center;
   /* Feather bottom only */
-  -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
 }
 
 .left-column {
   flex: 1;
   position: relative;
   min-width: 0;
-  z-index: 2; /* Sit above background */
+  z-index: 4; /* Sit above background */
 }
 
 .right-column {
-  width: 280px;
+  width: 292px;
   display: flex;
   flex-direction: column;
-  gap: 2px; /* Tighten all gaps in right column */
-  margin-top: 20px; /* Moves entire column up */
-  padding-bottom: 30px; /* Leave space at bottom */
+  gap: 5px;
+  margin-top: 6px;
+  padding-bottom: 0;
   position: relative;
-  z-index: 2; /* Sit above background */
+  z-index: 4; /* Sit above background */
 }
 
 /* ==================== 角色信息头部 (Right Column Top) ==================== */
@@ -135,7 +135,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end; /* Right align everything */
-  margin-bottom: 0; /* No extra margin */
+  margin: 0 4px 0 0;
   z-index: 5;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
@@ -160,36 +160,36 @@ body {
 
 .meta-tag {
   background: rgba(0, 0, 0, 0.6);
-  color: #fff;
+  color: rgba(255, 255, 255, 0.9);
   padding: 4px 10px;
   border-radius: 4px;
   font-size: 14px; /* Reduced slightly for box look */
   font-weight: 700;
   font-family: var(--font-number);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: none;
 }
 
 .uid-tag {
-  background: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.86);
 }
 
 .level-tag {
   background: var(--element-primary);
-  color: #000; /* Contrast color for element bg */
-  padding: 4px 8px; /* Match meta-tag height */
+  color: #fff;
+  padding: 4px 8px;
 }
 
 .cons-tag {
-  background: var(--chain-color, rgba(0, 0, 0, 0.6));
-  color: var(--chain-contrast, var(--element-primary));
-  border: 1px solid var(--chain-color, var(--element-primary));
-  padding: 3px 9px; /* Adjust for border */
-  box-shadow: 0 0 5px var(--chain-shadow, var(--element-shadow));
+  background: var(--chain-color, var(--element-primary));
+  color: #fff;
+  border-color: var(--chain-color, var(--element-primary));
+  padding: 3px 9px;
 }
 
 .cons-tag.c-0 {
   background: rgba(0, 0, 0, 0.6);
-  color: var(--chain-color, var(--element-primary));
+  color: #fff;
 }
 
 /* ==================== 命座链 (Bottom Left) ==================== */
@@ -237,18 +237,6 @@ body {
   opacity: 0.4; /* Dim inactive */
 }
 
-/* Connect line hidden for horizontal or simplified */
-.chain-icon-circle::after {
-  display: none;
-}
-
-/* Clean up old UID */
-.uid-display {
-  display: none;
-}
-
-/* ==================== 底部：武器 (Miao-Plugin Style) ==================== */
-
 .bottom-area {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -257,89 +245,18 @@ body {
   margin-bottom: 28px;
 }
 
-.weapon-card {
-  height: 240px;
-  grid-column: span 1;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.weapon-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column; /* Stack content vertically inside card */
-  overflow: hidden;
-  gap: 0;
-  position: relative;
-}
-
-/* Weapon Image - Large Background */
-.weapon-left {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  z-index: 0;
-}
-
-.weapon-left .rarity-frame {
-  width: 100%;
-  height: 100%;
-  border-radius: 0;
-  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.2) 0%, rgba(13, 14, 18, 0.95) 100%);
-  margin: 0;
-}
-.weapon-left .rarity-glow {
-  opacity: 0.3;
-}
-
-.weapon-bg {
-  width: 100%;
-  height: 100%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  transform: scale(0.9) translateY(10px); /* Adjust positioning */
-}
-
-/* Weapon Info Overlay */
-.weapon-details {
-  position: relative;
-  z-index: 2;
-  padding: 10px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.6) 0%,
-    transparent 40%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
-}
-
-.weapon-head {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-}
-
-.weapon-name {
-  font-size: 16px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-  position: relative;
-  z-index: 5;
-}
-
 /* ==================== 右侧：技能 ==================== */
 .skills-card-wide {
-  height: 90px; /* Condensed height */
+  height: 58px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 0; /* Touch attributes */
+  margin-bottom: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .skills-list {
@@ -347,7 +264,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 5px;
+  padding: 0 2px;
   gap: 3px;
 }
 
@@ -362,14 +279,17 @@ body {
 }
 
 .skill-icon-circle {
-  width: 50px;
-  height: 50px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.24);
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.12), rgba(7, 10, 17, 0.68));
   padding: 2px;
   margin-bottom: 3px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.32),
+    0 0 10px var(--element-shadow);
   position: relative;
 }
 
@@ -388,73 +308,64 @@ body {
   bottom: -2px;
   right: -2px;
   background: var(--element-primary);
-  color: #000;
+  color: #fff;
   font-size: 10px;
   font-weight: 800;
   padding: 1px 5px;
   border-radius: 5px;
   line-height: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  box-shadow: none;
   z-index: 3;
   white-space: nowrap;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-}
-
-/* 技能类型文字 */
-.skill-name {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.8);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-  text-align: center;
-  margin-top: 1px;
-  font-weight: 500;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-  position: relative;
-  z-index: 1;
-  line-height: 1.2;
+  border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 /* ==================== 右侧：属性列表 ==================== */
 .attribute-card {
-  flex: 1; /* Fill remaining space in right column */
+  flex: none;
   height: auto; /* Dynamic height */
   display: flex;
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
-  /* Card Styling Removed - Layout Only */
-  background: transparent;
-  border-radius: 0;
-  box-shadow: none;
-  border: none;
+  background:
+    linear-gradient(110deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.01) 42%),
+    linear-gradient(160deg, rgba(7, 12, 21, 0.52), rgba(5, 8, 15, 0.28));
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 7px 18px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  margin-top: 0; /* Push down significantly */
+  margin-top: 0;
+  padding: 6px 0;
+  position: relative;
 }
 
 .attr-grid {
   display: flex; /* Changed from grid to flex column for better vertical control */
   flex-direction: column;
-  padding: 0; /* Remove padding as rows will have their own spacing */
+  padding: 0 8px;
   gap: 0;
-  overflow-y: auto;
+  overflow-y: visible;
   overflow-x: hidden;
   min-height: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .attr-row {
   display: flex;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 11px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
-  margin-bottom: 0px;
-  height: 28px; /* Further reduced for extra compactness */
-  border: none;
+  margin-bottom: 0;
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 2px;
 }
 
 .attr-row:last-child {
@@ -462,18 +373,23 @@ body {
 }
 
 .attr-row:nth-child(odd) {
-  background-image: url("../common/cont/prop_bar1.png");
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015)),
+    url("../common/cont/prop_bar1.png");
 }
 
 .attr-row:nth-child(even) {
-  background-image: url("../common/cont/prop_bar2.png");
+  background-image:
+    linear-gradient(90deg, rgba(3, 7, 13, 0.04), rgba(255, 255, 255, 0.025)),
+    url("../common/cont/prop_bar2.png");
 }
 
 .attr-icon {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   margin-right: 6px;
   flex-shrink: 0;
+  opacity: 0.95;
 }
 .attr-icon img {
   width: 100%;
@@ -482,52 +398,41 @@ body {
 
 .attr-label {
   font-size: 13px;
-  color: #b6bdc7;
+  color: #d2dae6;
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 500;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.82);
 }
 
 /* Attibute Values Aligned Right */
 .attr-val {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 800;
-  color: #b6bdc7;
+  color: #eef5ff;
   margin-left: auto;
   text-align: right;
   font-family: var(--font-number);
   letter-spacing: 0.3px;
-}
-
-.weapon-props-simple {
-  margin-top: auto; /* Push to bottom */
-  margin-bottom: 8px;
-  width: 100%;
-  gap: 4px;
-}
-
-.wp-item {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 3px 8px;
-}
-
-.weapon-desc {
-  display: none; /* Hide desc in compact mode if needed, or overlay it */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.86);
 }
 
 /* ==================== 声骸卡片 ==================== */
 .echo-card {
   width: 210px;
-  background: rgba(10, 12, 18, 0.88);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.04), transparent 40%),
+    linear-gradient(180deg, rgba(12, 16, 24, 0.9), rgba(7, 10, 16, 0.88));
   border-radius: 6px;
   overflow: visible;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 5px 16px rgba(0, 0, 0, 0.38);
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.13);
   position: relative;
   z-index: 1;
   height: 240px;
@@ -541,8 +446,10 @@ body {
   justify-content: center;
   padding-left: 12px;
   padding-right: 70px;
-  background: linear-gradient(135deg, var(--element-bg) 0%, transparent 80%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(135deg, var(--element-bg) 0%, rgba(255, 255, 255, 0.035) 46%, transparent 86%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(0, 0, 0, 0.08));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
   z-index: 1;
 }
 
@@ -560,25 +467,12 @@ body {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
-.echo-icon::after {
-  display: none;
-}
-
 .echo-title-row {
   display: flex;
   align-items: center;
   margin-bottom: 2px;
   position: relative;
   z-index: 2;
-}
-
-.echo-cost {
-  font-size: 12px;
-  color: var(--text-dim);
-  margin-top: 2px;
-  text-shadow: none;
-  font-weight: normal;
-  line-height: 1.2;
 }
 
 .group-icon-inline {
@@ -631,7 +525,7 @@ body {
 }
 
 .echo-props {
-  background: transparent; /* 移除深色背景块，保持通透感 */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 45%);
   padding: 8px 10px;
   flex: 1;
   display: flex;
@@ -653,7 +547,7 @@ body {
   height: 22px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .prop-row.main .p-icon {
@@ -699,21 +593,41 @@ body {
   flex-shrink: 0;
 }
 
+.p-dot.grade-s,
+.p-dot.grade-ss,
+.p-dot.grade-sss {
+  background: var(--grade-s);
+}
+
+.p-dot.grade-a {
+  background: var(--grade-a);
+}
+
+.p-dot.grade-b {
+  background: var(--grade-b);
+}
+
+.p-dot.grade-c {
+  background: var(--grade-c);
+}
+
+.p-dot.grade-d {
+  background: var(--grade-d);
+}
+
 .p-name {
   flex: 1;
-  color: #b6bdc7;
+  color: #c4ceda;
   font-size: 11px;
 }
 
 .p-val {
-  color: #b6bdc7;
+  color: #dce5f0;
   font-size: 12px;
   font-family: var(--font-number);
 }
 
-/* 词条数值推荐高亮：金/紫/绿 = sortId 1/2/3。
-   选择器写成 .prop-row .p-val.grade-X 是为了胜过上面 .prop-row.main .p-val（同特异性靠源码顺序）。
-   max-val 规则定义在最后，副词条满值用红色覆盖 grade（红色与金/紫/绿都不撞色）*/
+/* 词条数值推荐高亮 */
 .prop-row .p-val.grade-s,
 .prop-row .p-val.grade-ss,
 .prop-row .p-val.grade-sss {
@@ -774,20 +688,24 @@ body {
 .damage-container {
   grid-column: span 3;
   margin-top: 5px;
-  background: rgba(10, 10, 15, 0.7); /* Keep specific dark bg for contrast */
-  border-radius: 4px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.035), transparent 38%),
+    linear-gradient(180deg, rgba(8, 11, 17, 0.78), rgba(7, 8, 13, 0.72));
+  border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05); /* Match var(--glass-border) concept but specific opacity */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 5px 16px rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
 }
 
 .dmg-table-header {
   display: grid;
   grid-template-columns: 4fr 3fr 3fr; /* 伤害类型:暴击:期望 4:3:3 per LAYOUT_STANDARD.md fr */
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.03);
   padding: 8px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 14px;
   color: var(--text-secondary); /* Standard variable */
   font-weight: 700;
@@ -1147,34 +1065,4 @@ body {
 .echo-grade-inline[data-g="D"] {
   color: var(--grade-d);
   border-color: var(--grade-d-border);
-}
-
-/* 副词条价值档：core 核心(金) / good 有效(蓝) / low 低效(灰) / dead 无效(暗) */
-.prop-row .p-val.tier-core,
-.p-name.tier-core {
-  color: var(--grade-s);
-  font-weight: 600;
-}
-.prop-row .p-val.tier-good,
-.p-name.tier-good {
-  color: var(--rarity-3);
-  font-weight: 600;
-}
-.prop-row .p-val.tier-low,
-.p-name.tier-low {
-  color: var(--text-dim);
-}
-.prop-row .p-val.tier-dead,
-.p-name.tier-dead {
-  color: rgba(255, 255, 255, 0.28);
-}
-.p-dot.tier-core {
-  background: var(--grade-s);
-}
-.p-dot.tier-good {
-  background: var(--rarity-3);
-}
-/* 满 roll 仍标红，需放在 tier 之后以覆盖数值色 */
-.prop-row .p-val.max-val {
-  color: #ff6b6b;
 }
