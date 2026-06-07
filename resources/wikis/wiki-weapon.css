@@ -4,6 +4,9 @@ body {
   width: 1000px;
   padding: 0;
   margin: 0;
+  --element-primary: var(--weapon-prop-gold);
+  --element-border: rgba(244, 196, 90, 0.28);
+  --element-shadow: var(--weapon-prop-gold-shadow);
 }
 
 #container {
@@ -217,23 +220,25 @@ body {
 
 .item-name {
   font-family: var(--font-game);
-  font-size: 19px;
-  font-weight: 800;
-  color: var(--element-primary, var(--d-gold));
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--d-text);
   letter-spacing: 1.5px;
   text-shadow: 0 0 8px var(--element-shadow, rgba(244, 196, 90, 0.35));
 }
 
 .item-desc {
-  font-size: 15px;
-  color: var(--d-text-2);
-  line-height: 1.75;
+  font-size: 16px;
+  color: #d2dbe7;
+  line-height: 1.72;
+  font-weight: 500;
   text-align: justify;
+  word-break: break-word;
 }
 
 .item-desc nobr {
   color: var(--element-primary, var(--d-gold));
-  font-weight: 800;
+  font-weight: 900;
   padding: 0 2px;
   text-shadow: 0 0 6px var(--element-shadow, rgba(244, 196, 90, 0.35));
 }

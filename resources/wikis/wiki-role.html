@@ -27,16 +27,18 @@
     {{each talents talent}}
     <div class="talent-item">
       <div class="talent-top">
-        <div class="talent-icon-wrapper">
-          <div
-            class="talent-icon"
-            style="background-image:url({{wavesResMap.roleSkill}}/{{roleId}}/{{talent.id}}.webp)"
-          ></div>
-        </div>
         <div class="item-info">
-          <div class="item-head">
-            <span class="talent-type">{{talent.type}}</span>
-            <span class="item-name">{{talent.name}}</span>
+          <div class="item-head talent-head">
+            <div class="talent-icon-wrapper">
+              <div
+                class="talent-icon"
+                style="background-image:url({{wavesResMap.roleSkill}}/{{roleId}}/{{talent.id}}.webp)"
+              ></div>
+            </div>
+            <div class="talent-title-text">
+              <span class="talent-type">{{talent.type}}</span>
+              <span class="item-name">{{talent.name}}</span>
+            </div>
           </div>
           <div class="item-desc">{{@talent.desc}}</div>
         </div>

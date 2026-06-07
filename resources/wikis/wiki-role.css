@@ -225,6 +225,10 @@ body {
   box-sizing: border-box;
 }
 
+.talent-top {
+  align-items: flex-start;
+}
+
 .talent-icon-wrapper,
 .chain-icon-wrapper {
   flex-shrink: 0;
@@ -311,7 +315,33 @@ body {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
+}
+
+.talent-head {
+  gap: 14px;
+}
+
+.talent-head .talent-icon-wrapper {
+  width: 58px;
+  padding-top: 0;
+}
+
+.talent-head .talent-icon {
+  width: 56px;
+  height: 56px;
+}
+
+.talent-title-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.talent-title-text .talent-type {
+  width: fit-content;
+  margin-top: 0;
 }
 
 .item-name {
@@ -324,10 +354,12 @@ body {
 }
 
 .item-desc {
-  font-size: 14px;
-  color: var(--d-text-2);
-  line-height: 1.7;
+  font-size: 15px;
+  color: #d2dbe7;
+  line-height: 1.72;
+  font-weight: 500;
   text-align: justify;
+  word-break: break-word;
 }
 
 .item-desc br + br {
@@ -338,7 +370,7 @@ body {
 
 .item-desc nobr {
   color: var(--element-primary, var(--d-gold));
-  font-weight: 800;
+  font-weight: 900;
   padding: 0 2px;
   text-shadow: 0 0 6px var(--element-shadow, rgba(244, 196, 90, 0.35));
 }
@@ -382,7 +414,7 @@ body {
 .data-table .col-attr-name {
   text-align: left;
   padding-left: 22px;
-  color: var(--d-text-3);
+  color: var(--d-text-2);
   background: rgba(0, 0, 0, 0.25);
   font-weight: 700;
   font-size: 12px;
@@ -391,7 +423,7 @@ body {
 .data-table td {
   font-family: var(--font-number);
   color: var(--d-text);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 12px;
   letter-spacing: -0.2px;
 }
