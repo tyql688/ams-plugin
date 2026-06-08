@@ -14,7 +14,13 @@ export const GACHA_TYPES = {
   7: "新手自选唤取（感恩定向唤取）",
   8: "角色新旅唤取",
   9: "武器新旅唤取",
+  10: "角色联动唤取",
+  11: "武器联动唤取",
 }
+
+// 未开启 gacha_show_all 时默认展示的池子：限定/常驻 角色武器 + 联动
+// 其余（新手、新旅等一次性池子）默认隐藏
+export const DEFAULT_GACHA_TYPE_IDS = [1, 2, 3, 4, 10, 11]
 
 export const RESIDENT_LIST = [
   "凌阳",
@@ -176,7 +182,6 @@ export default class GachaRecord {
   }
 
   getLogKey(log) {
-    // Python 中忽略了 resourceType，所以我们也忽略它。
     return `${log.cardPoolType}|${log.resourceId}|${log.qualityLevel}|${log.name}|${log.count}|${log.time}`
   }
 

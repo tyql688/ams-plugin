@@ -5,7 +5,7 @@ import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
 import { formatDataTime } from "../lib/utils.js"
 import version from "../lib/version.js"
-import GachaRecord, { GACHA_TYPES } from "../model/gachaRecord.js"
+import GachaRecord, { GACHA_TYPES, DEFAULT_GACHA_TYPE_IDS } from "../model/gachaRecord.js"
 export class Gacha extends AmsPlugin {
   constructor() {
     super({
@@ -56,7 +56,7 @@ export class Gacha extends AmsPlugin {
     // 聚合所有池子的五星记录，并格式化为 V2 需要的结构
     const pools = {}
     for (const [typeId, typeName] of Object.entries(GACHA_TYPES)) {
-      if (!showAll && Number(typeId) > 4) continue
+      if (!showAll && !DEFAULT_GACHA_TYPE_IDS.includes(Number(typeId))) continue
       const stat = record.getStatData(typeName)
       if (stat && stat.pool && stat.pool.length > 0) {
         pools[typeName] = {
