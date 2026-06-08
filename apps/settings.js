@@ -2,6 +2,19 @@ import _ from "lodash"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
 
+// 展示给用户时隐藏代理隐私(账号/密码/主机)，仅保留协议与端口
+// http://user:pass@tunnel.docip.net:19692 -> http://****:****@****:19692
+const maskProxy = proxy => {
+  try {
+    const u = new URL(proxy)
+    const auth = u.username ? "****:****@" : ""
+    const port = u.port ? `:${u.port}` : ""
+    return `${u.protocol}//${auth}****${port}`
+  } catch {
+    return "****"
+  }
+}
+
 export class Settings extends AmsPlugin {
   constructor() {
     super({
@@ -108,7 +121,7 @@ export class Settings extends AmsPlugin {
         key: "proxy",
         app: "network",
         name: "网络代理",
-        value: netCfg.proxy || "未配置",
+        value: netCfg.proxy ? maskProxy(netCfg.proxy) : "未配置",
         type: "input",
         desc: "插件请求API时使用的代理地址，支持http/socks5",
         example: config.exampleCommond("设置网络代理http://127.0.0.1:7890"),

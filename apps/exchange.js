@@ -72,8 +72,7 @@ export class Exchange extends AmsPlugin {
 
       logger.debug(`[ams] fetching codes: ${url}`)
 
-      const res = await request.get(url)
-      const text = await res.text()
+      const text = await request.get(url, { responseType: "text" })
 
       if (!text.includes("=")) return []
 
