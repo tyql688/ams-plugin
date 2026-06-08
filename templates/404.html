@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>ams-plugin</title>
+    <link
+      rel="icon"
+      href="https://web-static.kurobbs.com/resource/prod/icon.ico"
+      type="image/x-icon"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --terminal-bg: #14161b;
+        --terminal-card: rgba(30, 34, 42, 0.82);
+        --accent: #ffcc00;
+        --text-main: #eef1f5;
+        --text-dim: #9aa3b2;
+        --border-color: #3a4150;
+        --font-mono: "JetBrains Mono", "Cascadia Code", "Fira Code", monospace;
+        --font-hud: "Orbitron", "JetBrains Mono", monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: var(--font-mono);
+        background-color: var(--terminal-bg);
+        color: var(--text-main);
+        overflow: hidden;
+      }
+
+      body {
+        background-image: url("https://prod-alicdn-community.kurobbs.com/forum/aedfaaaf7fe64e668af1505c0de5f09c20260116.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at center,
+          rgba(10, 14, 22, 0.22) 0%,
+          rgba(6, 8, 14, 0.68) 100%
+        );
+        z-index: 0;
+      }
+
+      .scanline {
+        position: fixed;
+        inset: 0;
+        background:
+          linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+          linear-gradient(
+            90deg,
+            rgba(255, 0, 0, 0.02),
+            rgba(0, 255, 0, 0.01),
+            rgba(0, 0, 255, 0.02)
+          );
+        background-size:
+          100% 4px,
+          3px 100%;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .hazard-bar {
+        height: 7px;
+        margin: 26px auto;
+        max-width: 180px;
+        background: repeating-linear-gradient(
+          -45deg,
+          var(--accent) 0 9px,
+          var(--terminal-bg) 9px 18px
+        );
+        opacity: 0.55;
+        clip-path: polygon(0 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
+        animation: hazard-scroll 0.8s linear infinite;
+      }
+
+      /* 25.46px = 18 × √2，斜纹一个周期的水平距离，保证无缝循环 */
+      @keyframes hazard-scroll {
+        to {
+          background-position: 25.46px 0;
+        }
+      }
+
+      .grid-bg {
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--border-color) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+        background-size: 40px 40px;
+        mask-image: radial-gradient(circle at center, black, transparent 85%);
+        opacity: 0.22;
+        z-index: 1;
+      }
+
+      .terminal-wrapper {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 16px;
+      }
+
+      .tactical-card {
+        width: 100%;
+        max-width: 440px;
+        background: var(--terminal-card);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        position: relative;
+        padding: 48px 40px;
+        text-align: center;
+        clip-path: polygon(
+          0 20px,
+          20px 0,
+          calc(100% - 20px) 0,
+          100% 20px,
+          100% calc(100% - 20px),
+          calc(100% - 20px) 100%,
+          20px 100%,
+          0 calc(100% - 20px)
+        );
+      }
+
+      .status-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-bottom: 24px;
+      }
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--accent);
+        border-radius: 50%;
+        box-shadow: 0 0 6px var(--accent);
+      }
+
+      .protocol-tag {
+        font-family: var(--font-hud);
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: 2px;
+        font-weight: 700;
+      }
+
+      .error-code {
+        font-family: var(--font-hud);
+        font-size: 5.5rem;
+        font-weight: 900;
+        line-height: 1;
+        color: #fff;
+        letter-spacing: 6px;
+        text-shadow: 0 0 18px rgba(255, 204, 0, 0.25);
+      }
+
+      .error-code span {
+        color: var(--accent);
+      }
+
+      .error-title {
+        font-size: 1.1rem;
+        font-weight: 800;
+        margin: 18px 0 6px;
+        color: #fff;
+      }
+
+      .error-message {
+        font-size: 12px;
+        color: var(--text-dim);
+        line-height: 1.6;
+      }
+
+      .home-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 16px;
+        background: var(--accent);
+        color: #000;
+        border: none;
+        font-family: var(--font-hud);
+        font-weight: 900;
+        font-size: 0.95rem;
+        letter-spacing: 2px;
+        text-decoration: none;
+        cursor: pointer;
+        clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
+        transition: filter 0.2s;
+      }
+
+      .home-btn:active {
+        filter: brightness(0.9);
+      }
+
+      .footer-meta {
+        font-family: var(--font-hud);
+        margin-top: 24px;
+        font-size: 10px;
+        letter-spacing: 1px;
+        color: var(--text-dim);
+        display: flex;
+        justify-content: space-between;
+      }
+
+      @media (max-width: 480px) {
+        .tactical-card {
+          padding: 38px 22px;
+          clip-path: polygon(
+            0 15px,
+            15px 0,
+            calc(100% - 15px) 0,
+            100% 15px,
+            100% calc(100% - 15px),
+            calc(100% - 15px) 100%,
+            15px 100%,
+            0 calc(100% - 15px)
+          );
+        }
+        .error-code {
+          font-size: 4.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scanline"></div>
+    <div class="grid-bg"></div>
+
+    <div class="terminal-wrapper">
+      <div class="tactical-card">
+        <div class="status-line">
+          <div class="status-dot"></div>
+          <span class="protocol-tag">AMS-PLUGIN</span>
+        </div>
+
+        <div class="error-code">4<span>0</span>4</div>
+        <h1 class="error-title">{{ title }}</h1>
+        <p class="error-message">{{ message }}</p>
+
+        <div class="hazard-bar"></div>
+
+        <a class="home-btn" href="https://github.com/tyql688/ams-plugin">返回项目主页</a>
+
+        <footer class="footer-meta">
+          <span>WUTHERING WAVES · 鸣潮</span>
+          <span>POWERED BY KUROBBS</span>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

@@ -16,16 +16,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://static.geetest.com/v4/gt4.js"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
       :root {
-        --terminal-bg: #0a0b0d;
-        --terminal-card: rgba(20, 22, 26, 0.9);
+        --terminal-bg: #14161b;
+        --terminal-card: rgba(30, 34, 42, 0.82);
         --accent: #ffcc00;
-        --accent-muted: rgba(255, 204, 0, 0.1);
-        --text-main: #e2e2e2;
-        --text-dim: #6b7280;
-        --border-color: #2a2d35;
+        --accent-muted: rgba(255, 204, 0, 0.12);
+        --text-main: #eef1f5;
+        --text-dim: #9aa3b2;
+        --border-color: #3a4150;
         --font-mono: "JetBrains Mono", "Cascadia Code", "Fira Code", monospace;
+        --font-hud: "Orbitron", "JetBrains Mono", monospace;
       }
 
       * {
@@ -57,8 +65,8 @@
         inset: 0;
         background: radial-gradient(
           circle at center,
-          rgba(0, 0, 0, 0.4) 0%,
-          rgba(0, 0, 0, 0.85) 100%
+          rgba(10, 14, 22, 0.22) 0%,
+          rgba(6, 8, 14, 0.68) 100%
         );
         z-index: 0;
       }
@@ -78,7 +86,27 @@
           100% 4px,
           3px 100%;
         pointer-events: none;
-        z-index: 100;
+        z-index: 2;
+      }
+
+      .hazard-bar {
+        height: 7px;
+        margin: 0 0 24px;
+        background: repeating-linear-gradient(
+          -45deg,
+          var(--accent) 0 9px,
+          var(--terminal-bg) 9px 18px
+        );
+        opacity: 0.55;
+        clip-path: polygon(0 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
+        animation: hazard-scroll 0.8s linear infinite;
+      }
+
+      /* 25.46px = 18 × √2，斜纹一个周期的水平距离，保证无缝循环 */
+      @keyframes hazard-scroll {
+        to {
+          background-position: 25.46px 0;
+        }
       }
 
       .grid-bg {
@@ -89,7 +117,7 @@
           linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
         background-size: 40px 40px;
         mask-image: radial-gradient(circle at center, black, transparent 85%);
-        opacity: 0.15;
+        opacity: 0.22;
         z-index: 1;
       }
 
@@ -126,17 +154,17 @@
       }
 
       .header-module {
-        margin-bottom: 30px;
+        margin-bottom: 18px;
         display: flex;
         align-items: center;
         gap: 16px;
         border-bottom: 1px solid var(--border-color);
-        padding-bottom: 20px;
+        padding-bottom: 18px;
       }
 
       .avatar-frame {
-        width: 52px;
-        height: 52px;
+        width: 60px;
+        height: 60px;
         position: relative;
         padding: 2px;
         background: rgba(255, 255, 255, 0.03);
@@ -147,7 +175,7 @@
       .avatar-frame img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover;
       }
 
       .avatar-frame::after {
@@ -155,8 +183,8 @@
         position: absolute;
         top: -1px;
         left: -1px;
-        width: 10px;
-        height: 10px;
+        width: 12px;
+        height: 12px;
         border-top: 2px solid var(--accent);
         border-left: 2px solid var(--accent);
       }
@@ -189,28 +217,31 @@
       }
 
       .protocol-tag {
-        font-size: 10px;
+        font-family: var(--font-hud);
+        font-size: 11px;
         color: var(--accent);
-        letter-spacing: 1px;
+        letter-spacing: 2px;
         font-weight: 700;
         white-space: nowrap;
       }
 
       .main-title {
-        font-size: 1.2rem;
+        font-size: 1.35rem;
         font-weight: 800;
         margin: 0;
         color: #fff;
+        letter-spacing: 2px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
 
       .sub-title {
-        font-size: 9px;
+        font-family: var(--font-hud);
+        font-size: 10px;
         color: var(--text-dim);
-        margin-top: 2px;
-        font-family: var(--font-mono);
+        margin-top: 4px;
+        letter-spacing: 1px;
       }
 
       .form-field {
@@ -218,12 +249,30 @@
       }
 
       .field-label {
-        font-size: 10px;
+        font-size: 11px;
         color: var(--text-dim);
         margin-bottom: 8px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         font-weight: 600;
+      }
+
+      .field-label .code {
+        font-family: var(--font-hud);
+        font-size: 10px;
+        letter-spacing: 1px;
+        color: var(--text-dim);
+      }
+
+      .field-label .code::before {
+        content: "[ ";
+        color: var(--accent);
+      }
+
+      .field-label .code::after {
+        content: " ]";
+        color: var(--accent);
       }
 
       .input-wrapper {
@@ -245,7 +294,7 @@
         padding: 14px;
         color: var(--accent);
         font-family: var(--font-mono);
-        font-size: 1rem;
+        font-size: 1.05rem;
         outline: none;
       }
 
@@ -263,7 +312,7 @@
         border: 1px solid var(--border-color);
         color: var(--text-main);
         padding: 0 12px;
-        font-size: 11px;
+        font-size: 12px;
         cursor: pointer;
         transition: all 0.2s;
         font-weight: 700;
@@ -281,9 +330,11 @@
         padding: 16px;
         background: var(--accent);
         color: #000;
-        border: none;
+        border: 1px solid var(--accent);
+        font-family: var(--font-hud);
         font-weight: 900;
-        font-size: 1rem;
+        font-size: 1.05rem;
+        letter-spacing: 4px;
         cursor: pointer;
         clip-path: polygon(0 0, 100% 0, 96% 100%, 0 100%);
         transition: all 0.2s;
@@ -300,14 +351,21 @@
       }
 
       .submit-btn:disabled {
-        background: #2a2d35;
-        color: #555;
+        background: repeating-linear-gradient(
+          -45deg,
+          #2a2d35 0 11px,
+          #20232a 11px 22px
+        );
+        color: var(--text-dim);
+        border: 1px solid var(--border-color);
         cursor: not-allowed;
       }
 
       .footer-meta {
+        font-family: var(--font-hud);
         margin-top: 25px;
-        font-size: 9px;
+        font-size: 10px;
+        letter-spacing: 1px;
         color: var(--text-dim);
         display: flex;
         justify-content: space-between;
@@ -329,7 +387,7 @@
         border: 1px solid var(--accent);
         padding: 12px 20px;
         margin-top: 8px;
-        font-size: 11px;
+        font-size: 12px;
         color: var(--accent);
         animation: slideUp 0.3s ease-out;
         text-align: center;
@@ -361,23 +419,23 @@
           );
         }
         .main-title {
-          font-size: 1.1rem;
+          font-size: 1.25rem;
         }
         .header-module {
           gap: 12px;
-          margin-bottom: 24px;
+          margin-bottom: 14px;
         }
         .avatar-frame {
-          width: 44px;
-          height: 44px;
+          width: 50px;
+          height: 50px;
         }
         input {
-          font-size: 0.95rem;
+          font-size: 1rem;
           padding: 12px;
         }
         #getCodeBtn {
           min-width: 90px;
-          font-size: 10px;
+          font-size: 11px;
         }
       }
 
@@ -434,23 +492,28 @@
       <div class="tactical-card">
         <header class="header-module">
           <div class="avatar-frame">
-            <img src="https://s2.loli.net/2026/01/24/9mdkxHtoE1cgDSL.webp" alt="AMS Icon" />
+            <img
+              src="https://prod-alicdn-community.kurobbs.com/avatar/20260202/bc77d9ff74144b16ae1e8ec8ec859c5920260202.png"
+              alt="AMS Icon"
+            />
           </div>
           <div class="header-info">
             <div class="header-top-line">
               <div class="status-dot"></div>
-              <span class="protocol-tag">爱弥斯 // AMS-PLUGIN</span>
+              <span class="protocol-tag">AMS-PLUGIN</span>
             </div>
-            <h1 class="main-title">库街区数据同步</h1>
-            <div class="sub-title">WUTHERING_WAVES // CONNECTION_READY</div>
+            <h1 class="main-title">库街区登录</h1>
+            <div class="sub-title">WUTHERING WAVES · 鸣潮</div>
           </div>
         </header>
+
+        <div class="hazard-bar"></div>
 
         <form id="terminalForm">
           <div class="form-field">
             <label class="field-label">
               <span>手机号</span>
-              <span>MOBILE_ID</span>
+              <span class="code">MOBILE</span>
             </label>
             <div class="input-wrapper">
               <input
@@ -466,7 +529,7 @@
           <div class="form-field">
             <label class="field-label">
               <span>共鸣验证码</span>
-              <span>AUTH_TOKEN</span>
+              <span class="code">AUTH CODE</span>
             </label>
             <div class="v-code-layout">
               <div class="input-wrapper" style="flex: 1">
@@ -482,21 +545,21 @@
             </div>
           </div>
 
-          <button type="submit" id="submitBtn" class="submit-btn" disabled>开启数据链路</button>
+          <button type="submit" id="submitBtn" class="submit-btn" disabled>登录</button>
         </form>
 
         <footer class="footer-meta">
           <span>UID: {{ userId }}</span>
-          <span>SECURED BY KUROBBS_TERMINAL</span>
+          <span>POWERED BY KUROBBS</span>
         </footer>
       </div>
     </div>
 
     <div id="success-overlay">
-      <h2 style="letter-spacing: 4px; color: var(--accent); font-size: 1.2rem">链路已建立</h2>
-      <p style="font-size: 11px; color: var(--text-dim); margin-top: 8px">同步共鸣数据中...</p>
+      <h2 style="letter-spacing: 4px; color: var(--accent); font-size: 1.4rem">登录成功</h2>
+      <p style="font-size: 12px; color: var(--text-dim); margin-top: 8px">正在同步数据...</p>
       <div class="loading-bar"></div>
-      <div style="margin-top: 15px; font-size: 14px; font-weight: 800" id="timer">03</div>
+      <div style="margin-top: 15px; font-size: 16px; font-weight: 800" id="timer">03</div>
     </div>
 
     <div id="toast-container"></div>
@@ -545,8 +608,8 @@
                   type: "POST",
                   headers: { devcode, source: "h5" },
                   data: { mobile: $phone.val(), geeTestData: JSON.stringify(res) },
-                  success: r => (r.success ? toast("验证码已注入链路") : toast(r.msg)),
-                  error: () => toast("链路连接失败"),
+                  success: r => (r.success ? toast("验证码已发送") : toast(r.msg)),
+                  error: () => toast("发送失败，请重试"),
                 })
               })
 
@@ -598,10 +661,10 @@
                   }
                 }, 1000)
               } else {
-                toast(res.msg || "链路拒绝访问")
+                toast(res.msg || "登录失败")
               }
             },
-            error: () => toast("核心通讯异常"),
+            error: () => toast("网络异常，请重试"),
           })
         })
       })
