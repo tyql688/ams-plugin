@@ -1,7 +1,7 @@
 # ams-plugin
 
 <p align="center">
-  <img src="ICON.webp" width="200" height="200" alt="ams-plugin icon">
+  <img src="ICON.png" width="200" height="200" alt="ams-plugin icon">
 </p>
 
 <p align="center">
