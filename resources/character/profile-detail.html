@@ -1,233 +1,181 @@
 {{extend defaultLayout}} {{block 'title'}}鸣潮角色面板{{/block}} {{block 'css'}}
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/character/profile-detail.css" />
-{{/block}} {{block 'body-class'}}elem-{{elem}} theme-element-{{data.attributeId}}{{/block}} {{block
-'main'}}
-<!-- TOP AREA: Character Art + Stats/Skills -->
-<div class="top-area {{if customPile}}has-custom-pile{{/if}}">
-  <!-- Layer 1: Pile Background (Absolute) -->
-  <div class="pile-card">
-    <div
-      class="role-pile {{if customPile}}is-custom{{/if}}"
-      style="background-image:url({{customPile || wavesResMap.rolePile + '/' + data.charId + '.webp'}})"
-    ></div>
-  </div>
+{{/block}} {{block 'body-class'}}elem-{{elem}} theme-element-{{data.attributeId}} res-root{{/block}}
+{{block 'main'}}
+<div class="acu">
+  <!-- ============ HERO ============ -->
+  <section class="acu-hero {{if customPile}}has-custom{{/if}}">
+    <!-- 立绘层 -->
+    <div class="hero-art {{if customPile}}is-custom{{/if}}" style="background-image:url({{customPile || wavesResMap.rolePile + '/' + data.charId + '.webp'}})"></div>
+    <div class="hero-scrim"></div>
+    <div class="hero-grid"></div>
 
-  <!-- Layer 2: Left Content -->
-  <div class="left-column">
-    <div class="pile-overlay">
-      <!-- 声骸总评（艺术字，共鸣链上方）-->
-      {{if data.echoScore && data.echoScore.setGrade}}
-      <div class="echo-total-banner" data-g="{{data.echoScore.setGrade}}">
-        <div class="etb-grade">{{data.echoScore.setGrade}}</div>
-        <div class="etb-divider"></div>
-        <div class="etb-info">
-          <div class="etb-label">声骸总评</div>
-          <div class="etb-score-row">
-            <span class="etb-score">{{data.echoScore.setScore}}</span>
+    <!-- 左缘规格条 -->
+    <div class="spec-rail">
+      <span class="rail-tag">WUTHERING WAVES</span>
+      <span class="rail-id">{{data.charId}}</span>
+      <span class="rail-elem">{{elem}}</span>
+    </div>
+
+    <!-- 右侧流式堆叠：铭牌 / 技能舱 / 属性读数 -->
+    <div class="hero-right">
+      <header class="hero-id">
+        <div class="id-name">{{data.name}}</div>
+        <div class="id-registers">
+          <span class="reg"><i>UID</i><b>{{uid}}</b></span>
+          <span class="reg reg-lv"><i>LV</i><b>{{data.level}}</b></span>
+          <span class="reg reg-cons c-{{data.chainUnlockNum || 0}}"><i>CHAIN</i><b>{{data.chainUnlockNum}}</b></span>
+        </div>
+      </header>
+
+      {{if data.skillList}}
+      <div class="skill-bay">
+        {{each data.skillList skill}}
+        <div class="skill-cell">
+          <div class="cell-frame">
+            <div class="icon-img" style="background-image:url({{wavesResMap.roleSkill}}/{{data.charId}}/{{skill.id}}.webp)"></div>
           </div>
+          <span class="cell-lv">{{skill.level}}</span>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+
+      {{if data.roleAttributeList && data.roleAttributeList.length > 0}}
+      <div class="status-panel">
+        <div class="sp-body">
+          {{each data.roleAttributeList attribute}}
+          <div class="sp-row {{if attribute.isElement}}is-elem elem-c{{data.attributeId}}{{/if}} {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}">
+            <img class="sp-icon" src="{{wavesResMap.prop}}/{{attribute.name}}.webp" alt="" />
+            <span class="sp-name">{{attribute.name}}</span>
+            <span class="sp-dots"></span>
+            <span class="sp-val">{{attribute.value}}</span>
+          </div>
+          {{/each}}
+        </div>
+        <div class="sp-foot">
+          <span>{{data.dataSource}}</span>
+          <span>{{data.updateTime}}</span>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+
+    <!-- 左下：核心评级 + 共鸣链 -->
+    <div class="hero-foot">
+      {{if data.echoScore && data.echoScore.setGrade}}
+      <div class="core-rating" data-g="{{data.echoScore.setGrade}}">
+        <div class="cr-grade">{{data.echoScore.setGrade}}</div>
+        <div class="cr-meta">
+          <span class="cr-label">声骸评分</span>
+          <span class="cr-score">{{data.echoScore.setScore}}</span>
         </div>
       </div>
       {{/if}}
       {{if data.chainList}}
-      <div class="pile-chains">
+      <div class="chain-rail">
         {{each data.chainList chain index}}
-        <div class="chain-icon-circle {{chain.unlocked?'on':'off'}}">
-          <div
-            class="icon-img"
-            style="background-image:url({{wavesResMap.roleChain}}/{{data.charId}}/{{chain.id}}.webp)"
-          ></div>
+        <div class="chain-node {{chain.unlocked?'on':'off'}}">
+          <div class="icon-img" style="background-image:url({{wavesResMap.roleChain}}/{{data.charId}}/{{chain.id}}.webp)"></div>
         </div>
         {{/each}}
       </div>
       {{/if}}
     </div>
-  </div>
+  </section>
 
-  <div class="right-column">
-    <!-- 1. Header: Name & Info -->
-    <div class="role-info-group right-aligned">
-      <div class="role-name">{{data.name}}</div>
-      <div class="role-meta-row">
-        <span class="meta-tag uid-tag">UID {{uid}}</span>
-        <span class="meta-tag level-tag">Lv.{{data.level}}</span>
-        <span class="meta-tag cons-tag c-{{data.chainUnlockNum || 0}}">{{data.chainUnlockNum}}命</span>
-      </div>
-    </div>
-
-    <!-- 2. Skills -->
-    {{if data.skillList}}
-    <div class="card skills-card-wide">
-      <div class="skills-list">
-        {{each data.skillList skill}}
-        <div class="skill-item-capsule">
-          <div class="skill-icon-circle">
-            <div
-              class="icon-img"
-              style="background-image:url({{wavesResMap.roleSkill}}/{{data.charId}}/{{skill.id}}.webp)"
-            ></div>
-            <div class="circle-lv">{{skill.level}}</div>
+  <!-- ============ 装备阵列 ============ -->
+  <div class="bay-head"><span class="bh-tab"></span><span class="bh-cn">声骸套装</span></div>
+  <section class="acu-array">
+    <!-- 武器 -->
+    {{if data.weapon && data.weapon.name}}
+    <div class="mod mod-weapon">
+      <div class="mod-top">
+        <div class="mod-icon" style="background-image:url({{wavesResMap.weapon}}/{{data.weapon.id}}.webp)"></div>
+        <div class="mod-titles">
+          <div class="mod-name">{{data.weapon.name}}</div>
+          <div class="mod-sub">
+            <span class="tag-reson">精{{data.weapon.resonLevel}}</span>
+            <span class="tag-lv">Lv.{{data.weapon.level}}</span>
           </div>
         </div>
-        {{/each}}
+      </div>
+      <div class="mod-body">
+        {{if data.weapon.mainPropList}} {{each data.weapon.mainPropList mainProp}}
+        <div class="pr pr-main">
+          <img class="pr-icon" src="{{wavesResMap.prop}}/{{mainProp.attributeName}}.webp" />
+          <span class="pr-name">{{mainProp.attributeName}}</span>
+          <span class="pr-val">{{mainProp.attributeValue}}</span>
+        </div>
+        {{/each}} {{/if}}
+        <div class="pr pr-effect">
+          <span class="pr-dot"></span>
+          <span class="pr-text">{{data.weapon.effect}}</span>
+        </div>
       </div>
     </div>
     {{/if}}
 
-    <!-- 3. Attributes -->
-    {{if data.roleAttributeList && data.roleAttributeList.length > 0}}
-    <div class="card attribute-card">
-      <div class="attr-grid">
-        {{each data.roleAttributeList attribute}}
-        <div class="attr-row">
-          <div class="attr-icon">
-            <img src="{{wavesResMap.prop}}/{{attribute.name}}.webp" alt="{{attribute.name}}" />
+    <!-- 声骸 ×5 -->
+    {{if data.equipPhantomList}} {{each data.equipPhantomList phantom}} {{if phantom && phantom.name}}
+    <div class="mod mod-echo">
+      <div class="mod-top">
+        <div class="mod-icon" style="background-image:url({{wavesResMap.echo}}/{{phantom.id}}.webp)">
+          <span class="icon-lv">+{{phantom.level}}</span>
+        </div>
+        <div class="mod-titles">
+          <div class="mod-name">
+            {{if phantom.groupId}}<span class="grp" style="background-image:url({{wavesResMap.group}}/{{phantom.groupId}}.webp)"></span>{{/if}}
+            {{phantom.name}}
           </div>
-          <div
-            class="attr-label {{if attribute.isElement}}elem-c{{data.attributeId}}{{/if}} {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}"
-          >
-            {{attribute.name}}
-          </div>
-          <div
-            class="attr-val {{if attribute.isElement}}elem-c{{data.attributeId}}{{/if}} {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}"
-          >
-            {{attribute.value}}
+          <div class="mod-sub">
+            <span class="tag-cost">COST {{phantom.cost}}</span>
+            {{if phantom.echoGrade}}<span class="tag-grade" data-g="{{phantom.echoGrade}}">{{phantom.echoGrade}} {{phantom.echoScore}}</span>{{/if}}
           </div>
         </div>
-        {{/each}}
+      </div>
+      <div class="mod-body">
+        {{if phantom.mainPropList}} {{each phantom.mainPropList mainProp}}
+        <div class="pr pr-main {{if mainProp.valid}}grade-{{mainProp.valid}}{{/if}}">
+          <img class="pr-icon" src="{{wavesResMap.prop}}/{{mainProp.attributeName}}.webp" />
+          <span class="pr-name">{{mainProp.attributeName}}</span>
+          <span class="pr-val">{{mainProp.attributeValue}}</span>
+        </div>
+        {{/each}} {{/if}} {{if phantom.subPropList}} {{each phantom.subPropList subProp}} {{if subProp.attributeName}}
+        <div class="pr pr-sub {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}">
+          <span class="pr-dot {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}"></span>
+          <span class="pr-name">{{subProp.attributeName}}</span>
+          <span class="pr-val {{if subProp.isMax}}is-max{{/if}}">{{subProp.attributeValue}}</span>
+        </div>
+        {{/if}} {{/each}} {{/if}}
       </div>
     </div>
-    {{/if}}
+    {{/if}} {{/each}} {{/if}}
+  </section>
 
-    <!-- FOOTER: 数据来源 & 更新时间（属性面板下方）-->
-    <div class="panel-footer">
-      <span class="footer-source">{{data.dataSource}}</span>
-      <span class="footer-time">更新于 {{data.updateTime}}</span>
-    </div>
-  </div>
-</div>
-
-<!-- BOTTOM AREA: Weapon + Echoes Grid (3 Columns) -->
-<div class="bottom-area">
-  <!-- Slot 1: Weapon -->
-  {{if data.weapon && data.weapon.name}}
-  <div class="echo-card">
-    <div class="echo-head">
-      <div
-        class="echo-icon"
-        style="background-image:url({{wavesResMap.weapon}}/{{data.weapon.id}}.webp)"
-      ></div>
-      <span class="echo-lv">Lv.{{data.weapon.level}}</span>
-      <div class="echo-title-row">
-        <div class="echo-name" style="max-width: 100%">
-          {{data.weapon.name}}
-          <span class="tag-reson reson-{{data.weapon.resonLevel}}">精{{data.weapon.resonLevel}}</span>
-        </div>
-      </div>
-      <div class="echo-cost">Rarity {{data.weapon.rarity}}</div>
-    </div>
-
-    <div class="echo-props">
-      {{if data.weapon.mainPropList}} {{each data.weapon.mainPropList mainProp}}
-      <div class="prop-row main">
-        <div class="p-icon">
-          <img src="{{wavesResMap.prop}}/{{mainProp.attributeName}}.webp" />
-        </div>
-        <div class="p-name">{{mainProp.attributeName}}</div>
-        <div class="p-val">{{mainProp.attributeValue}}</div>
-      </div>
-      {{/each}} {{/if}}
-      <div
-        class="prop-row sub"
-        style="height: auto; min-height: 20px; align-items: flex-start; margin-top: 4px"
-      >
-        <div class="p-dot" style="margin-top: 6px"></div>
-        <div class="p-name" style="white-space: normal; line-height: 1.2">
-          {{data.weapon.effect}}
-        </div>
-      </div>
-    </div>
-  </div>
-  {{/if}}
-
-  <!-- Slot 2-6: Echoes -->
-  {{if data.equipPhantomList}} {{each data.equipPhantomList phantom}} {{if phantom && phantom.name}}
-  <div class="echo-card">
-    <div class="echo-head">
-      <div
-        class="echo-icon"
-        style="background-image:url({{wavesResMap.echo}}/{{phantom.id}}.webp)"
-      ></div>
-      <span class="echo-lv">+{{phantom.level}}</span>
-      <div class="echo-title-row">
-        {{if phantom.groupId}}
-        <div
-          class="group-icon-inline"
-          style="background-image:url({{wavesResMap.group}}/{{phantom.groupId}}.webp)"
-        ></div>
-        {{/if}}
-        <div class="echo-name">{{phantom.name}}</div>
-      </div>
-      <div class="echo-cost-row">
-        <span class="echo-cost">Cost {{phantom.cost}}</span>
-        {{if phantom.echoGrade}}<span class="echo-grade-inline" data-g="{{phantom.echoGrade}}"
-          >{{phantom.echoGrade}}&nbsp;<b>{{phantom.echoScore}}</b></span
-        >{{/if}}
-      </div>
-    </div>
-
-    <div class="echo-props">
-      {{if phantom.mainPropList}} {{each phantom.mainPropList mainProp}}
-      <div class="prop-row main">
-        <div class="p-icon">
-          <img src="{{wavesResMap.prop}}/{{mainProp.attributeName}}.webp" />
-        </div>
-        <div class="p-name {{if mainProp.valid}}grade-{{mainProp.valid}}{{/if}}">
-          {{mainProp.attributeName}}
-        </div>
-        <div class="p-val">
-          {{mainProp.attributeValue}}
-        </div>
-      </div>
-      {{/each}} {{/if}} {{if phantom.subPropList}} {{each phantom.subPropList subProp}} {{if
-      subProp.attributeName}}
-      <div class="prop-row sub">
-        <div class="p-dot {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}"></div>
-        <div class="p-name {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}">
-          {{subProp.attributeName}}
-        </div>
-        <div
-          class="p-val {{if subProp.valid}}grade-{{subProp.valid}}{{/if}} {{if subProp.isMax}}max-val{{/if}}"
-        >
-          {{subProp.attributeValue}}
-        </div>
-      </div>
-      {{/if}} {{/each}} {{/if}}
-    </div>
-  </div>
-  {{/if}} {{/each}} {{/if}}
-
-  <!-- DAMAGE AREA -->
+  <!-- ============ 伤害输出 ============ -->
   {{if data.damageList && data.damageList.length > 0}}
-  <div class="damage-container">
-    <div class="dmg-table-header">
-      <div class="th-name">伤害类型</div>
-      <div class="th-val">暴击伤害</div>
-      <div class="th-val">期望伤害</div>
+  <div class="bay-head"><span class="bh-tab"></span><span class="bh-cn">伤害输出</span></div>
+  <section class="dmg">
+    <div class="dmg-head">
+      <span class="dh-name">伤害类型</span>
+      <span class="dh-val">暴击伤害</span>
+      <span class="dh-val">期望伤害</span>
     </div>
-    <div class="dmg-table-body">
+    <div class="dmg-body">
       {{each data.damageList dmg}}
-      <div class="dmg-table-row {{if dmg.isSingle}}is-single-val{{/if}}">
-        <div class="td-name">{{dmg.title}}</div>
+      <div class="dmg-row {{if dmg.isSingle}}single{{/if}}">
+        <span class="dr-name">{{dmg.title}}</span>
         {{if dmg.isSingle}}
-        <div class="td-val single">{{dmg.crit}}</div>
+        <span class="dr-val solo">{{dmg.crit}}</span>
         {{else}}
-        <div class="td-val crit">{{dmg.crit}}</div>
-        <div class="td-val expect">{{dmg.expected}}</div>
+        <span class="dr-val crit">{{dmg.crit}}</span>
+        <span class="dr-val exp">{{dmg.expected}}</span>
         {{/if}}
       </div>
       {{/each}}
     </div>
-  </div>
+  </section>
   {{/if}}
 </div>
 {{/block}}
