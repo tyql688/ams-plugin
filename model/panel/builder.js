@@ -2,7 +2,10 @@ import { Calculator, STAT_MAP } from "#waves.calc"
 import { Guide } from "#waves.data"
 import { calculateCoreDamage } from "#waves.dmgkit"
 import { EchoScorer } from "#waves.score"
+import fs from "fs"
+import path from "path"
 import DataLoader from "../../lib/core/data_loader.js"
+import { wavesDataMap } from "../../lib/path.js"
 
 import {
   ELE_ID_MAP,
@@ -55,6 +58,33 @@ export class PanelBuilder {
    */
   get() {
     return this.panelData
+  }
+
+  /**
+   * 理论满配极限面板：读静态 limit/{id}.json 的 card 构建面板数据（纯静态，不需用户账号/持有）。
+   * @param {number|string} roleId
+   * @returns {Object|null} panelData（缺数据/解析失败/缺 card → null）
+   */
+  static fromLimit(roleId) {
+    const file = path.join(wavesDataMap.limit, `${roleId}.json`)
+    if (!fs.existsSync(file)) return null
+    let d
+    try {
+      d = JSON.parse(fs.readFileSync(file, "utf8"))
+    } catch (err) {
+      logger.warn(`[ams] 极限面板数据解析失败 ${roleId}: ${err.message}`)
+      return null
+    }
+    if (!d.card) {
+      logger.warn(`[ams] 极限面板缺 card 字段 ${roleId}（需重跑 build-limit-panel）`)
+      return null
+    }
+    const panelData = new PanelBuilder(d.card).get()
+    if (!panelData) return null
+    // updateTime 取生成时戳（落在 json 字段，git pull 后仍是生成时间而非拉取时间）
+    panelData.updateTime = d.generatedAt ? new Date(d.generatedAt).toLocaleString("zh-CN") : ""
+    panelData.dataSource = "ams-plugin·极限面板"
+    return panelData
   }
 
   /**
@@ -321,7 +351,6 @@ export class PanelBuilder {
         ? {
             setScore: scored.setScore,
             setGrade: scored.setGrade,
-            percentile: scored.percentile,
             scaling: scored.scaling,
             archetype: scored.archetype,
           }

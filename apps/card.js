@@ -26,7 +26,8 @@ export class Card extends AmsPlugin {
           fnc: "roleList",
         },
         {
-          reg: config.fixCommond("(.+)面板"),
+          // 「X面板」普通面板 / 「X极限面板」理论满配极限面板（一条命令，惰性匹配捕获可选「极限」）
+          reg: config.fixCommond("(.+?)(极限)?面板"),
           fnc: "characterPanel",
         },
       ],
@@ -91,9 +92,10 @@ export class Card extends AmsPlugin {
   }
 
   async characterPanel(e) {
-    const regex = new RegExp(config.fixCommond("(.+)面板"))
+    const regex = new RegExp(config.fixCommond("(.+?)(极限)?面板"))
     const match = e.msg.match(regex)
     const inputName = match?.[1]?.trim()
+    const isLimit = !!match?.[2]
     if (!inputName) return e.reply(`请输入角色名称，如：${config.exampleCommond("长离面板")}`)
 
     let roleId = Number(await DataLoader.getRoleId(inputName))
@@ -101,6 +103,9 @@ export class Card extends AmsPlugin {
     if (!roleId && ROVER_ALIASES.includes(inputName)) roleId = ROVER_ID[0]
     // 未匹配到角色名时静默放行，避免日常聊天中"xx面板"误触发、抢答其他插件
     if (!roleId) return false
+
+    // 「X极限面板」分支：理论满配极限面板，静态数据、不需账号/持有
+    if (isLimit) return this.limitPanel(e, roleId, inputName)
 
     const wavesApi = await this.getWavesApi()
     if (!wavesApi) return
@@ -183,5 +188,22 @@ export class Card extends AmsPlugin {
       }
     }
     return true
+  }
+
+  // 理论满配极限面板：数据构建在 PanelBuilder.fromLimit（model 层，纯静态、不需账号/持有），这里只生图
+  async limitPanel(e, roleId, name) {
+    const panelData = PanelBuilder.fromLimit(roleId)
+    if (!panelData) {
+      return e.reply(`❌ ${name} 暂无极限面板数据（资源未更新或该角色无评分/伤害配置）`)
+    }
+    const { customBg, customPile } = this.getCustomAssets(roleId)
+    const img = await this.render("character/profile-detail", {
+      data: panelData,
+      uid: "理论满配",
+      elem: ELE_NAME_MAP[panelData.attributeId],
+      customBg,
+      customPile,
+    })
+    return img ? e.reply(img) : e.reply("❌ 极限面板绘图失败")
   }
 }
