@@ -1,4 +1,5 @@
 import { BaseData } from "#waves.data"
+import { EchoScorer } from "#waves.score"
 import _ from "lodash"
 import { AmsPlugin } from "../lib/plugin.js"
 import { updateResources } from "../lib/res.js"
@@ -21,13 +22,13 @@ export class admin extends AmsPlugin {
   }
 
   async updateRes(e) {
-    const isForce = e.msg.includes("强制")
     await e.reply("开始更新资源...")
 
-    const result = await updateResources(isForce, false)
+    const result = await updateResources(false)
 
     if (result.success) {
       BaseData.clearCache()
+      EchoScorer.clearCache?.()
       await e.reply(`✅ ${result.message}`)
     } else {
       await e.reply(`❌ ${result.message}`)
