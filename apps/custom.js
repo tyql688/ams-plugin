@@ -103,7 +103,7 @@ export class Custom extends AmsPlugin {
 
   /** 背景图管理 **/
   async uploadBg(e) {
-    const urls = await this.getImageUrl()
+    const urls = await this.getImageUrls()
     if (urls.length === 0) return e.reply("请发送图片或引用图片回复")
     const count = await this.saveImages(urls, customBgPath)
     return e.reply(count > 0 ? `✅ 成功上传 ${count} 张自定义背景图` : "❌ 图片已存在或上传失败")
@@ -143,7 +143,7 @@ export class Custom extends AmsPlugin {
     const name = e.msg.match(this.rule[3].reg)[1].trim()
     const id = DataLoader.getRoleId(name)
     if (!id) return e.reply(`❌ 未找到角色: ${name}`)
-    const urls = await this.getImageUrl()
+    const urls = await this.getImageUrls()
     if (urls.length === 0) return e.reply("请发送图片或引用图片回复")
     const count = await this.saveImages(urls, path.join(customPilePath, String(id)))
     return e.reply(

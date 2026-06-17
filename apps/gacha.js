@@ -1,5 +1,5 @@
 import _ from "lodash"
-import fs from "node:fs"
+import fs from "node:fs/promises"
 import { gachaPath } from "../lib/path.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
@@ -34,10 +34,8 @@ export class Gacha extends AmsPlugin {
   }
 
   async gachaLog(e) {
-    const user = await this.getWavesUser()
-    if (!user) {
-      return e.reply(`❌ 请先绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-    }
+    const user = await this.getWavesUser({ allowAt: true })
+    if (!user) return this.replyUnbound(true)
 
     const record = new GachaRecord(user.gameUid)
     const data = record.data
@@ -77,22 +75,15 @@ export class Gacha extends AmsPlugin {
       pools: pools,
     }
 
-    const img = await this.render("gacha/gacha-v2", {
+    return this.renderReply("gacha/gacha-v2", {
       data: renderData,
       roleName: user?.gameData?.roleName,
     })
-    if (img) {
-      await e.reply(img)
-    } else {
-      await e.reply("❌ 绘图失败")
-    }
   }
 
   async updateGachaLog(e) {
     const user = await this.getWavesUser()
-    if (!user) {
-      return e.reply(`❌ 请先绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-    }
+    if (!user) return this.replyUnbound()
 
     const uid = user.gameUid
     const record = new GachaRecord(uid)
@@ -187,15 +178,6 @@ export class Gacha extends AmsPlugin {
       "2.登录后,依次点击\`刷新记录\`,\`复制记录\`按钮",
     ].join("\n")
 
-    const pc = [
-      "PC获取方式",
-      "1.打开游戏抽卡界面，点开换取记录",
-      "2.在鸣潮安装的目录下进入目录：`Wuthering Waves\\Wuthering Waves Game\\Client\\Saved\\Logs`",
-      "3.找到文件`Client.log`并用记事本打开",
-      "4.搜索关键字：aki-gm-resources.aki-game",
-      "5.复制一整行链接",
-    ].join("\n")
-
     const android = [
       "安卓手机获取链接方式",
       "1.打开游戏抽卡界面",
@@ -214,7 +196,7 @@ export class Gacha extends AmsPlugin {
       "国际服域名：[gmserver-api.aki-game2.net]",
     ].join("\n")
 
-    const msg = [text, yun, pc, android, ios]
+    const msg = [text, yun, android, ios]
     // 制作转发消息
     const forwardMsg = await this.makeMsg(msg)
     return e.reply(forwardMsg)
@@ -248,9 +230,7 @@ export class Gacha extends AmsPlugin {
 
     // 检查是否绑定
     const user = await this.getWavesUser()
-    if (!user) {
-      return this.e.reply(`❌ 请先绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-    }
+    if (!user) return this.replyUnbound()
 
     // 构造本地临时文件路径
     const fileName = this.e.file.name || `${this.e.user_id}_${Date.now()}.json`
@@ -274,16 +254,16 @@ export class Gacha extends AmsPlugin {
     // 读取并解析
     let jsonData = {}
     try {
-      const content = fs.readFileSync(savePath, "utf8")
+      const content = await fs.readFile(savePath, "utf8")
       jsonData = JSON.parse(content)
     } catch (err) {
       // 尝试删除错误文件
-      await fs.unlink(savePath)
+      await fs.unlink(savePath).catch(() => {})
       return this.e.reply(`❌ 解析JSON文件失败: ${err.message}`)
     }
 
     // 删除临时文件
-    await fs.unlink(savePath)
+    await fs.unlink(savePath).catch(() => {})
 
     // 导入数据
     const record = new GachaRecord(user.gameUid)
@@ -297,9 +277,7 @@ export class Gacha extends AmsPlugin {
 
   async exportGachaLog(e) {
     const user = await this.getWavesUser()
-    if (!user) {
-      return e.reply(`❌ 请先绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-    }
+    if (!user) return this.replyUnbound()
 
     const record = new GachaRecord(user.gameUid)
     if (!record.data.data_time) {

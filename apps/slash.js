@@ -37,11 +37,8 @@ export class Slash extends AmsPlugin {
     }
 
     // 1. 获取用户信息
-    const user = await this.getWavesUser()
-    if (!user) {
-      await e.reply(`❌ 您还未绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-      return false
-    }
+    const user = await this.getWavesUser({ allowAt: true })
+    if (!user) return this.replyUnbound(true)
 
     if (floorNum) {
       if (floorNum < 1 || floorNum > 12) {
@@ -66,7 +63,7 @@ export class Slash extends AmsPlugin {
     }
 
     // 2. 获取 API
-    const wavesApi = await this.getWavesApi()
+    const wavesApi = await this.getWavesApi({ allowAt: true })
     if (!wavesApi) return false
 
     // 2.1 获取头像
@@ -160,11 +157,6 @@ export class Slash extends AmsPlugin {
       teamIcon: diffData.teamIcon,
     }
 
-    const img = await this.render("slash/slash", renderData)
-    if (img) {
-      await e.reply(img)
-    } else {
-      await e.reply("❌ 绘图失败")
-    }
+    return this.renderReply("slash/slash", renderData)
   }
 }

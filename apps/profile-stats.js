@@ -20,7 +20,7 @@ export class ProfileStats extends AmsPlugin {
   }
 
   async stat(e) {
-    const wavesApi = await this.getWavesApi()
+    const wavesApi = await this.getWavesApi({ allowAt: true })
     if (!wavesApi) return
 
     const rows = await RolePanel.getAllByUid(wavesApi.wavesId)
@@ -39,13 +39,12 @@ export class ProfileStats extends AmsPlugin {
 
     await this.getAvatarUrl()
 
-    const img = await this.render("character/profile-stat", {
+    return this.renderReply("character/profile-stat", {
       avatars,
       uid: wavesApi.wavesId,
       roleName: wavesApi.dbUser?.gameData?.roleName,
       updateTime,
       command: config.exampleCommond("角色名面板"),
     })
-    return img ? e.reply(img) : e.reply("❌ 绘图失败")
   }
 }

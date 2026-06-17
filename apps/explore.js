@@ -19,14 +19,11 @@ export class Explore extends AmsPlugin {
 
   async explore(e) {
     // 1. 获取用户信息
-    const user = await this.getWavesUser()
-    if (!user) {
-      await e.reply(`❌ 您还未绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-      return false
-    }
+    const user = await this.getWavesUser({ allowAt: true })
+    if (!user) return this.replyUnbound(true)
 
     // 2. 获取 API
-    const wavesApi = await this.getWavesApi()
+    const wavesApi = await this.getWavesApi({ allowAt: true })
     if (!wavesApi) return false
 
     // 3. 获取探索度数据
@@ -54,11 +51,6 @@ export class Explore extends AmsPlugin {
     // 获取头像
     await this.getAvatarUrl()
 
-    const img = await this.render("explore/explore", renderData)
-    if (img) {
-      await e.reply(img)
-    } else {
-      await e.reply("❌ 绘图失败")
-    }
+    return this.renderReply("explore/explore", renderData)
   }
 }

@@ -36,7 +36,7 @@ export class Develop extends AmsPlugin {
     if (developList.length === 0) return false
     if (developList.length > 2) return e.reply("❌ 暂不支持查询两个以上角色养成")
 
-    const wavesApi = await this.getWavesApi()
+    const wavesApi = await this.getWavesApi({ allowAt: true })
     if (!wavesApi) return
 
     // 1. 刷新计算器数据
@@ -154,7 +154,7 @@ export class Develop extends AmsPlugin {
     // 获取头像
     await this.getAvatarUrl()
 
-    const img = await this.render("develop/index", {
+    return this.renderReply("develop/index", {
       costList: costData.costList,
       preview: costData.preview,
       contentMap,
@@ -163,7 +163,5 @@ export class Develop extends AmsPlugin {
       uid: wavesApi.wavesId,
       roleName: wavesApi.dbUser?.gameData?.roleName,
     })
-
-    return img ? e.reply(img) : e.reply("❌ 渲染失败")
   }
 }

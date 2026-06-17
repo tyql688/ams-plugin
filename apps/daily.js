@@ -31,18 +31,15 @@ export class DailyNote extends AmsPlugin {
 
     // 1. 获取目标用户列表
     let userList = []
+    const { userId } = this.getQueryTarget(true)
     if (multiDaily) {
-      const { userId } = this.getUserIdentity()
       userList = await User.getAllValid(userId, GAMES.waves.id)
     } else {
-      const user = await this.getWavesUser()
+      const user = await User.getUseUser(userId, GAMES.waves.id)
       if (user) userList.push(user)
     }
 
-    if (_.isEmpty(userList)) {
-      this.e.reply(`请先绑定鸣潮账号，发送【${config.exampleCommond("登录")}】`)
-      return false
-    }
+    if (_.isEmpty(userList)) return this.replyUnbound(true)
 
     const msgList = []
 

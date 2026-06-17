@@ -14,7 +14,7 @@ export class Period extends AmsPlugin {
   }
 
   async getPeriod() {
-    const wavesApi = await this.getWavesApi()
+    const wavesApi = await this.getWavesApi({ allowAt: true })
     if (!wavesApi) return
 
     const periodParam = this.e.msg.replace(/^.*(星声|简报|资源简报|星声统计)/, "").trim()
@@ -37,14 +37,12 @@ export class Period extends AmsPlugin {
     if (!detailRes.status) return this.e.reply(`❌ 获取详情失败: ${detailRes.msg}`)
 
     await this.getAvatarUrl()
-    return this.e.reply(
-      await this.render("period/period.html", {
-        periodNode: target,
-        periodDetail: this._processData(detailRes.data),
-        roleId: wavesApi.wavesId,
-        roleName: wavesApi.dbUser?.gameData?.roleName,
-      }),
-    )
+    return this.renderReply("period/period.html", {
+      periodNode: target,
+      periodDetail: this._processData(detailRes.data),
+      roleId: wavesApi.wavesId,
+      roleName: wavesApi.dbUser?.gameData?.roleName,
+    })
   }
 
   _processData(data) {

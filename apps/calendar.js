@@ -15,7 +15,7 @@ export class Calendar extends AmsPlugin {
   }
 
   async calendar(e) {
-    const wavesApi = await this.getWavesApi(false)
+    const wavesApi = await this.getWavesApi({ checkToken: false })
     if (!wavesApi) return false
 
     const res = await wavesApi.getWikiHome()
@@ -47,14 +47,12 @@ export class Calendar extends AmsPlugin {
     ]
     modules.activity.data.unshift(...fixedEvents)
 
-    return e.reply(
-      await this.render("calendar/calendar", {
-        bannerUrl,
-        modules,
-        now: now.format("YYYY.MM.DD HH:mm"),
-        commonImgPath: `../../common/imgs/`,
-      }),
-    )
+    return this.renderReply("calendar/calendar", {
+      bannerUrl,
+      modules,
+      now: now.format("YYYY.MM.DD HH:mm"),
+      commonImgPath: `../../common/imgs/`,
+    })
   }
 
   getTimeState(dateRange) {

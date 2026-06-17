@@ -45,7 +45,7 @@ export class Sign extends AmsPlugin {
     }
 
     // 1. 获取所有有效账号
-    const { userId } = this.getUserIdentity()
+    const { userId } = this.getSender()
     const users = await User.getAllValid(userId, GAMES.waves.id)
 
     if (!users || users.length === 0) {
@@ -106,7 +106,7 @@ export class Sign extends AmsPlugin {
     const isEnable = e.msg.includes("开启")
 
     // 2. 获取用户数据（不需要验证Token，只需要操作数据库）
-    const wavesApi = await this.getWavesApi(false)
+    const wavesApi = await this.getWavesApi({ checkToken: false })
     if (!wavesApi) return false
 
     const user = wavesApi.dbUser

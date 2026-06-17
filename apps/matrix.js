@@ -26,14 +26,11 @@ export class Matrix extends AmsPlugin {
     else if (/奇点扩张$/.test(raw)) modeFilter = [1]
 
     // 2. 获取用户信息
-    const user = await this.getWavesUser()
-    if (!user) {
-      await e.reply(`❌ 您还未绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-      return false
-    }
+    const user = await this.getWavesUser({ allowAt: true })
+    if (!user) return this.replyUnbound(true)
 
     // 3. 获取 API
-    const wavesApi = await this.getWavesApi()
+    const wavesApi = await this.getWavesApi({ allowAt: true })
     if (!wavesApi) return false
 
     // 3.1 获取头像
@@ -113,11 +110,6 @@ export class Matrix extends AmsPlugin {
       partialNote: modeList.some(m => !m.hasTeams),
     }
 
-    const img = await this.render("matrix/matrix", renderData)
-    if (img) {
-      await e.reply(img)
-    } else {
-      await e.reply("❌ 绘图失败")
-    }
+    return this.renderReply("matrix/matrix", renderData)
   }
 }

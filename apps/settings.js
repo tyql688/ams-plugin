@@ -91,6 +91,15 @@ export class Settings extends AmsPlugin {
         example: config.exampleCommond("设置抽卡全部池子开启/关闭"),
       },
       {
+        key: "at_query",
+        app: "config",
+        name: "艾特查询",
+        value: cfg.at_query,
+        type: "switch",
+        desc: "开启后可 @ 他人查询其绑定的鸣潮数据（仅查询类命令；登录/签到/Token 等敏感命令始终只认本人）",
+        example: config.exampleCommond("设置艾特查询开启/关闭"),
+      },
+      {
         key: "allow_login",
         app: "network",
         name: "网页登录",
@@ -163,6 +172,7 @@ export class Settings extends AmsPlugin {
       ["立绘原图", "yuantu_pile", "config", "switch"],
       ["背景原图", "yuantu_bg", "config", "switch"],
       ["抽卡全部池子", "gacha_show_all", "config", "switch"],
+      ["艾特查询", "at_query", "config", "switch"],
       ["网页登录", "allow_login", "network", "switch"],
       ["网页端口", "server_port", "network", "input"],
       ["网页链接", "public_link", "network", "input"],

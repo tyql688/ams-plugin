@@ -20,14 +20,11 @@ export class Challenge extends AmsPlugin {
   async challenge(e) {
     try {
       // 1. 获取用户信息
-      const user = await this.getWavesUser()
-      if (!user) {
-        await e.reply(`❌ 您还未绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-        return false
-      }
+      const user = await this.getWavesUser({ allowAt: true })
+      if (!user) return this.replyUnbound(true)
 
       // 2. 获取 API
-      const wavesApi = await this.getWavesApi()
+      const wavesApi = await this.getWavesApi({ allowAt: true })
       if (!wavesApi) return false
 
       // 2.1 获取头像
@@ -123,12 +120,7 @@ export class Challenge extends AmsPlugin {
       }
 
       // 5. 渲染
-      const img = await this.render("challenge/challenge", renderData)
-      if (img) {
-        await e.reply(img)
-      } else {
-        await e.reply("❌ 绘图失败")
-      }
+      return this.renderReply("challenge/challenge", renderData)
     } catch (error) {
       logger.error(`[ams] 战术全息查询失败: ${error}`)
       await e.reply("❌ 战术全息查询失败，请稍后重试")

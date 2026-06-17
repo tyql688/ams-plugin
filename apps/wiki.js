@@ -62,12 +62,7 @@ export class Wiki extends AmsPlugin {
         talents: this._formatTalents(roleData),
       }
 
-      const img = await this.render("wikis/wiki-role", renderData)
-      if (img) {
-        return e.reply(img)
-      } else {
-        return e.reply("❌ 绘图失败")
-      }
+      return this.renderReply("wikis/wiki-role", renderData)
     } catch (error) {
       logger.error(`[ams] showTalent: ${error}`)
       return e.reply("❌ 查询技能天赋失败")
@@ -103,12 +98,7 @@ export class Wiki extends AmsPlugin {
         chains: this._formatChains(roleData),
       }
 
-      const img = await this.render("wikis/wiki-role", renderData)
-      if (img) {
-        return e.reply(img)
-      } else {
-        return e.reply("❌ 绘图失败")
-      }
+      return this.renderReply("wikis/wiki-role", renderData)
     } catch (error) {
       logger.error(`[ams] showChain: ${error}`)
       return e.reply("❌ 查询共鸣链失败")
@@ -256,12 +246,7 @@ export class Wiki extends AmsPlugin {
     }
 
     const template = mode === "group" ? "wikis/wiki-group" : "wikis/wiki-list"
-    const img = await this.render(template, renderData)
-    if (img) {
-      return e.reply(img)
-    } else {
-      return e.reply("❌ 绘图失败")
-    }
+    return this.renderReply(template, renderData)
   }
 
   async _renderWeapon(e, id) {
@@ -286,11 +271,9 @@ export class Wiki extends AmsPlugin {
         },
       }
 
-      const img = await this.render("wikis/wiki-weapon", renderData)
-      if (img) return e.reply(img)
-      return e.reply("❌ 绘图失败")
+      return this.renderReply("wikis/wiki-weapon", renderData)
     } catch (err) {
-      logger.error(err)
+      logger.error(`[ams] 渲染武器 wiki 失败: ${err}`)
       return e.reply("❌ 查询武器失败")
     }
   }
@@ -325,11 +308,9 @@ export class Wiki extends AmsPlugin {
         },
       }
 
-      const img = await this.render("wikis/wiki-echo", renderData)
-      if (img) return e.reply(img)
-      return e.reply("❌ 绘图失败")
+      return this.renderReply("wikis/wiki-echo", renderData)
     } catch (err) {
-      logger.error(err)
+      logger.error(`[ams] 渲染声骸 wiki 失败: ${err}`)
       return e.reply("❌ 查询声骸失败")
     }
   }

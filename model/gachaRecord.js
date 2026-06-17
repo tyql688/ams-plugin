@@ -57,7 +57,7 @@ export default class GachaRecord {
       try {
         return JSON.parse(fs.readFileSync(this.filePath, "utf-8"))
       } catch (e) {
-        logger.error(`[GachaRecord] load error: ${e}`)
+        logger.error(`[ams] 抽卡记录加载失败: ${e}`)
       }
     }
 
@@ -95,7 +95,7 @@ export default class GachaRecord {
 
       const res = await api.getGachaLog(typeId, recordId)
       if (res.code !== 0) {
-        logger.warn(`[GachaRecord] Fetch failed for ${typeName}: ${res.msg || res.message}`)
+        logger.warn(`[ams] 抽卡记录拉取失败 ${typeName}: ${res.msg || res.message}`)
         if (res.code === -1) return { code: -1, msg: "抽卡链接已失效" }
         continue
       }

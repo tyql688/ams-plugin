@@ -35,7 +35,7 @@ export class Card extends AmsPlugin {
   }
 
   async roleList(e) {
-    const wavesApi = await this.getWavesApi()
+    const wavesApi = await this.getWavesApi({ allowAt: true })
     if (!wavesApi) return
 
     const res = await wavesApi.getRoleData()
@@ -71,13 +71,12 @@ export class Card extends AmsPlugin {
     // 获取头像
     await this.getAvatarUrl()
 
-    const img = await this.render("character/role-list", {
+    return this.renderReply("character/role-list", {
       roles: roleList,
       uid: wavesApi.wavesId,
       roleName: wavesApi.dbUser?.gameData?.roleName,
       command: config.exampleCommond("角色名面板"),
     })
-    return img ? e.reply(img) : e.reply("❌ 绘图失败")
   }
 
   /**
@@ -107,7 +106,7 @@ export class Card extends AmsPlugin {
     // 「X极限面板」分支：理论满配极限面板，静态数据、不需账号/持有
     if (isLimit) return this.limitPanel(e, roleId, inputName)
 
-    const wavesApi = await this.getWavesApi()
+    const wavesApi = await this.getWavesApi({ allowAt: true })
     if (!wavesApi) return
 
     // 检查是否持有该角色
@@ -197,13 +196,12 @@ export class Card extends AmsPlugin {
       return e.reply(`❌ ${name} 暂无极限面板数据（资源未更新或该角色无评分/伤害配置）`)
     }
     const { customBg, customPile } = this.getCustomAssets(roleId)
-    const img = await this.render("character/profile-detail", {
+    return this.renderReply("character/profile-detail", {
       data: panelData,
       uid: "理论满配",
       elem: ELE_NAME_MAP[panelData.attributeId],
       customBg,
       customPile,
     })
-    return img ? e.reply(img) : e.reply("❌ 极限面板绘图失败")
   }
 }

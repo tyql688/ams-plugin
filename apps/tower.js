@@ -24,14 +24,11 @@ export class Tower extends AmsPlugin {
     let key = match && match[1] ? match[1].replace("区", "") : "深境"
 
     // 2. 获取用户信息
-    const user = await this.getWavesUser()
-    if (!user) {
-      await e.reply(`❌ 您还未绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
-      return false
-    }
+    const user = await this.getWavesUser({ allowAt: true })
+    if (!user) return this.replyUnbound(true)
 
     // 3. 获取 API
-    const wavesApi = await this.getWavesApi()
+    const wavesApi = await this.getWavesApi({ allowAt: true })
     if (!wavesApi) return false
 
     // 3.1 获取头像
@@ -89,11 +86,6 @@ export class Tower extends AmsPlugin {
       showSeason: !!seasonTime,
     }
 
-    const img = await this.render("tower/tower", renderData)
-    if (img) {
-      await e.reply(img)
-    } else {
-      await e.reply("❌ 绘图失败")
-    }
+    return this.renderReply("tower/tower", renderData)
   }
 }

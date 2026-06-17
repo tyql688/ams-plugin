@@ -163,7 +163,7 @@ export class Login extends AmsPlugin {
       return e.reply("❌ 未找到鸣潮角色，请先在 APP 中登录并创建角色")
     }
 
-    const { userId } = this.getUserIdentity()
+    const { userId } = this.getSender()
     let msg = []
 
     for (const role of allRoleList) {
@@ -205,7 +205,7 @@ export class Login extends AmsPlugin {
       return e.reply("❌ 为了您的账号安全，请私聊查看 Token")
     }
 
-    const { userId } = this.getUserIdentity()
+    const { userId } = this.getSender()
     const users = await db.User.getAllValid(userId)
 
     if (!users || users.length === 0) {
@@ -246,7 +246,7 @@ export class Login extends AmsPlugin {
   }
 
   async getUidList(e) {
-    const { userId } = this.getUserIdentity()
+    const { userId } = this.getSender()
     const users = await db.User.getAll(userId)
 
     if (!users || users.length === 0) {
@@ -289,8 +289,9 @@ export class Login extends AmsPlugin {
     // 去除开头的 uid/id/UID 以及空格
     const uid = input.replace(/^(uid|id|UID|ID)?\s*/i, "").trim()
 
+    // 无参：轮换到下一个账号（顺序不打乱）
     if (!uid) {
-      return await this.getUidList(e)
+      return await this.switchNext(e)
     }
 
     // 非纯数字说明不是 UID
@@ -298,21 +299,53 @@ export class Login extends AmsPlugin {
       return false
     }
 
-    const { userId } = this.getUserIdentity()
+    const { userId } = this.getSender()
     const user = await db.User.getByUid(userId, uid)
 
     if (!user) {
       return e.reply(`❌ 切换失败：UID ${uid} 未绑定或无效`)
     }
 
-    // 更新最后使用时间
+    // 把目标账号置最新 → 移到队首(其余保持相对顺序)
     await db.User.use(userId, user.gameUid, user.gameId)
 
-    const gameMap = {}
-    Object.values(GAMES).forEach(g => {
-      gameMap[g.id] = g.displayName
-    })
-    const gameName = gameMap[user.gameId] || "鸣潮"
-    return e.reply(`✅ 已成功切换【${gameName}】UID 为：${uid}`)
+    const gameName = Object.values(GAMES).find(g => g.id === user.gameId)?.displayName || "鸣潮"
+    const newList = await db.User.getAllValid(userId, user.gameId)
+    return e.reply(
+      `✅ 已切换【${gameName}】UID 为：${uid}\n\n当前账号顺序：\n${this._accountOrderText(newList)}`,
+    )
+  }
+
+  // 账号顺序文本：list 按 updatedAt 倒序(队首=当前)，▶ 标记当前
+  _accountOrderText(list) {
+    return list
+      .map((u, i) => {
+        const name = u.gameData?.roleName ? ` ${u.gameData.roleName}` : ""
+        return `${i === 0 ? "▶" : "　"} ${u.gameUid}${name}`
+      })
+      .join("\n")
+  }
+
+  // ams切换(无参)：把当前账号(队首)移到队尾、第二个成为当前 —— 左旋一位。
+  // 顺序统一以 updatedAt 倒序为准(与按 id 切换同一套顺序)：反复切换是 A→B→C→D→E→A 的稳定循环，顺序不打乱
+  async switchNext(e) {
+    const { userId } = this.getSender()
+    const gameId = GAMES.waves.id
+    const list = await db.User.getAllValid(userId, gameId) // updatedAt 倒序，list[0] 为当前
+
+    if (list.length === 0) {
+      return e.reply(`❌ 您还未绑定鸣潮账号\n请先使用：${config.exampleCommond("登录")}`)
+    }
+    if (list.length === 1) {
+      return e.reply(`ℹ️ 当前仅绑定一个账号（${list[0].gameUid}），无需切换`)
+    }
+
+    // 当前账号置最旧 → 移到队尾，原第二个成为当前；左旋后顺序即如下
+    await db.User.demote(userId, list[0].gameUid, gameId)
+
+    const newList = [...list.slice(1), list[0]]
+    return e.reply(
+      `✅ 已切换到 UID ${newList[0].gameUid}\n\n当前账号顺序：\n${this._accountOrderText(newList)}`,
+    )
   }
 }
