@@ -58,8 +58,8 @@ export class Exchange extends AmsPlugin {
   async getCodeList() {
     try {
       const now = new Date()
-      const yearStr = now.getYear()
-      const monthStr = now.getMonth()
+      const yearStr = now.getFullYear()
+      const monthStr = now.getMonth() + 1
       const dayStr = now.getDate()
       const hourStr = now.getHours()
       const minuteStr = now.getMinutes()
@@ -72,7 +72,15 @@ export class Exchange extends AmsPlugin {
 
       logger.debug(`[ams] fetching codes: ${url}`)
 
-      const text = await request.get(url, { responseType: "text" })
+      // 4399 CDN 会拦截无 Referer 的请求(返回 403)，必须带上 Referer 才放行
+      const text = await request.get(url, {
+        responseType: "text",
+        headers: {
+          Referer: "https://newsimg.5054399.com/",
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        },
+      })
 
       if (!text.includes("=")) return []
 
