@@ -5,6 +5,12 @@ import fetch from "node-fetch"
 import path from "path"
 import sharp from "sharp"
 import DataLoader from "../lib/core/data_loader.js"
+import {
+  findCustomPileFile,
+  getCustomPileAliasRoleId,
+  getCustomPileRoleIds,
+  listCustomPileFiles,
+} from "../lib/custom_pile.js"
 import { customBgPath, customPilePath } from "../lib/path.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
@@ -113,7 +119,7 @@ export class Custom extends AmsPlugin {
     const files = this.getSupportedFiles(customBgPath)
     if (files.length === 0) return e.reply("暂无自定义背景图")
 
-    let forwardMsg = files.map(f => {
+    const forwardMsg = files.map(f => {
       const fileName = path.parse(f).name
       return {
         user_id: Bot.uin,
@@ -139,13 +145,19 @@ export class Custom extends AmsPlugin {
   }
 
   /** 立绘管理 **/
+  getPileRoleId(name) {
+    return getCustomPileAliasRoleId(name) || DataLoader.getRoleId(name)
+  }
+
   async uploadPile(e) {
     const name = e.msg.match(this.rule[3].reg)[1].trim()
-    const id = DataLoader.getRoleId(name)
+    const id = this.getPileRoleId(name)
     if (!id) return e.reply(`❌ 未找到角色: ${name}`)
     const urls = await this.getImageUrls()
     if (urls.length === 0) return e.reply("请发送图片或引用图片回复")
-    const count = await this.saveImages(urls, path.join(customPilePath, String(id)))
+    // 新图片统一存入共享组首个目录；读取仍聚合全部成员目录，兼容已有文件。
+    const storageId = getCustomPileRoleIds(id)[0]
+    const count = await this.saveImages(urls, path.join(customPilePath, String(storageId)))
     return e.reply(
       count > 0 ? `✅ 成功上传 ${count} 张 ${name} 自定义立绘` : "❌ 图片已存在或上传失败",
     )
@@ -153,18 +165,16 @@ export class Custom extends AmsPlugin {
 
   async listPile(e) {
     const name = e.msg.match(this.rule[4].reg)[1].trim()
-    const roleId = DataLoader.getRoleId(name)
+    const roleId = this.getPileRoleId(name)
     if (!roleId) return e.reply(`❌ 未找到角色: ${name}`)
-    const charDir = path.join(customPilePath, String(roleId))
-    const files = this.getSupportedFiles(charDir)
+    const files = listCustomPileFiles(customPilePath, roleId)
     if (files.length === 0) return e.reply(`暂无 ${name} 的自定义立绘`)
 
-    let forwardMsg = files.map(f => {
-      const fileName = path.parse(f).name
+    const forwardMsg = files.map(f => {
       return {
         user_id: Bot.uin,
         nickname: Bot.nickname,
-        message: [`ID: ${fileName}`, segment.image(`file://${path.join(charDir, f)}`)],
+        message: [`ID: ${f.id}`, segment.image(f.url)],
       }
     })
     return e.reply(await Bot.makeForwardMsg(forwardMsg))
@@ -174,16 +184,14 @@ export class Custom extends AmsPlugin {
     const match = e.msg.match(/删除(.*)立绘(.+)/)
     const name = match[1].trim(),
       input = match[2].trim()
-    const roleId = DataLoader.getRoleId(name)
+    const roleId = this.getPileRoleId(name)
     if (!roleId) return e.reply(`❌ 未找到角色: ${name}`)
 
-    const charDir = path.join(customPilePath, String(roleId))
-    const files = this.getSupportedFiles(charDir)
-    const targetFile = files.find(f => f === input || path.parse(f).name === input)
+    const targetFile = findCustomPileFile(customPilePath, roleId, input)
 
     if (!targetFile) return e.reply(`❌ 未找到 ${name} 的图片: ${input}`)
 
-    fs.unlinkSync(path.join(charDir, targetFile))
+    for (const filePath of targetFile.paths) fs.unlinkSync(filePath)
     return e.reply(`✅ 已成功删除 ${name} 立绘: ${input}`)
   }
 
@@ -241,8 +249,14 @@ export class Custom extends AmsPlugin {
       text = `\nID: ${id}`
       if (!isBg) {
         const charId = imgPath.split("/").slice(-2, -1)[0]
-        const charName = DataLoader.getCharacterById(charId)?.name
-        if (charName) text += ` (${charName})`
+        const charNames = [
+          ...new Set(
+            getCustomPileRoleIds(charId)
+              .map(id => DataLoader.getCharacterById(id)?.name)
+              .filter(Boolean),
+          ),
+        ]
+        if (charNames.length > 0) text += ` (${charNames.join(" / ")})`
       }
     }
 

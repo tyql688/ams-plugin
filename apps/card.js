@@ -6,6 +6,7 @@ import { RolePanel, User } from "../lib/db/index.js"
 import { customBgPath, customPilePath, resourcePath, wavesResMap } from "../lib/path.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
+import { randomCustomPile } from "../lib/custom_pile.js"
 import { randomFiles } from "../lib/utils.js"
 import { PanelBuilder } from "../model/panel/builder.js"
 import { ELE_NAME_MAP } from "../model/panel/const.js"
@@ -83,11 +84,10 @@ export class Card extends AmsPlugin {
    * 获取自定义素材
    */
   getCustomAssets(charId) {
-    let res = {
+    return {
       customBg: randomFiles(customBgPath),
-      customPile: randomFiles(path.join(customPilePath, String(charId))),
+      customPile: randomCustomPile(customPilePath, charId),
     }
-    return res
   }
 
   async characterPanel(e) {
