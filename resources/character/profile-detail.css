@@ -7,31 +7,74 @@
   --res: var(--element-primary);
   --res-glow: var(--element-shadow);
   --accent2: #e7c98c; /* 次色：暖金，只做点缀 */
-  --ink: #eaf1f8;
-  --dim: #93a3b6;
-  --line: rgba(140, 160, 188, 0.16);
+  --ink: #f0eff8;
+  --dim: #aab2c5;
+  --line: rgba(255, 255, 255, 0.13);
   --mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
+  /* 星空着色与内层表面分开管理；默认使用中性暗色。 */
+  --sky-tint: transparent;
+  --sky-deep: 12, 15, 22;
+  /* 面板背景的基础渐透强度，顶部承托标题，底部透出星空。 */
+  --panel-alpha-top: 0.94;
+  --panel-alpha-bottom: 0.38;
+}
+
+/* 六属性共用黑色星空原图，分别设置星空与内层表面的色调。 */
+.elem-glacio { --sky-tint: #49cbea; --sky-deep: 10, 18, 26; }
+.elem-fusion { --sky-tint: #ef7266; --sky-deep: 24, 13, 19; }
+.elem-electro { --sky-tint: #a280f3; --sky-deep: 18, 13, 28; }
+.elem-aero { --sky-tint: #5dd6b1; --sky-deep: 10, 22, 22; }
+.elem-spectro { --sky-tint: #edc77e; --sky-deep: 24, 20, 16; }
+.elem-havoc { --sky-tint: #e577ba; --sky-deep: 24, 13, 25; }
+
+/* 主属性、装备、伤害表格各自从上向下渐透；文字、图标和边框保持实色。 */
+.status-panel,
+.mod,
+.dmg {
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--sky-deep), var(--panel-alpha-top)) 25%,
+    rgba(var(--sky-deep), var(--panel-alpha-bottom)) 80%
+  );
 }
 
 body {
   width: 680px;
 }
-/* 容器整块背景 = 紫森林图（不要黑底） */
+/* 原始纹理保持黑色；背景混合只给星空着色，不影响立绘、文字和图标。 */
 .container {
   width: 680px;
   padding: 0;
-  background: url("profile-detail-bg.webp") center/cover no-repeat, #15102a;
+  background-color: #101522;
+  background-image: linear-gradient(var(--sky-tint), var(--sky-tint)), url("profile-detail-bg-sparse-original.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: color, screen;
 }
 
 .acu {
   width: 680px;
   padding: 16px;
   box-sizing: border-box;
-  /* 仅叠元素辉光，其余透明透出容器的紫森林 */
+  /* 仅叠元素辉光，其余透明透出星光背景。 */
   background: radial-gradient(130% 85% at 78% 0%, var(--element-bg), transparent 58%);
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+/* 黑色背景使用原始星空与中性表面，保留属性文字颜色及三类面板的渐透效果。 */
+.res-root.panel-bg-black {
+  --sky-deep: 12, 15, 22;
+}
+.panel-bg-black .container {
+  background-color: #080b12;
+  background-image: url("profile-detail-bg-sparse-original.png");
+  background-blend-mode: normal;
+}
+.panel-bg-black .acu {
+  background: transparent;
 }
 
 /* ============ HERO ============ */
@@ -44,9 +87,9 @@ body {
   margin: -16px -16px 0;
   border: none;
   border-bottom: 1px solid var(--line);
-  /* 透明，让 .acu 的森林背景在上半透出 */
+  /* 透明，让星光背景在上半透出。 */
   background: transparent;
-  /* 暗角只压底部（过渡到声骸区），顶部不压，让紫背景透出 */
+  /* 底部暗角过渡到声骸区。 */
   box-shadow: inset 0 -45px 40px -20px rgba(0, 0, 0, 0.5);
 }
 .hero-art {
@@ -81,24 +124,15 @@ body {
   inset: 0;
   z-index: 2;
   background:
-    linear-gradient(95deg, rgba(7, 12, 20, 0.04) 0%, transparent 36%, rgba(7, 12, 20, 0.5) 100%),
-    linear-gradient(to bottom, transparent 64%, rgba(6, 10, 18, 0.82) 100%);
+    linear-gradient(95deg, transparent 36%, rgba(7, 12, 20, 0.32)),
+    linear-gradient(to bottom, transparent 68%, rgba(6, 10, 18, 0.68));
 }
 .acu-hero.has-custom .hero-scrim {
+  /* 轻遮罩承托右侧文字，底部渐暗衔接星空。 */
   background:
-    linear-gradient(95deg, transparent 0 42%, rgba(7, 12, 20, 0.46) 70%, rgba(7, 12, 20, 0.85) 100%),
-    linear-gradient(to bottom, transparent 56%, rgba(6, 10, 18, 0.88) 100%);
+    linear-gradient(95deg, transparent 0 42%, rgba(7, 12, 20, 0.20) 70%, rgba(7, 12, 20, 0.55) 100%),
+    linear-gradient(to bottom, transparent 64%, rgba(6, 10, 18, 0.72) 100%);
 }
-/* 静态扫描线（非 CRT，仅纹理） */
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(160, 180, 210, 0.03) 3px 4px);
-  -webkit-mask-image: radial-gradient(120% 100% at 60% 40%, #000 40%, transparent 82%);
-}
-
 /* 左缘规格条 */
 .spec-rail {
   position: absolute;
@@ -141,7 +175,7 @@ body {
   color: #fff;
   letter-spacing: 1px;
   margin: 3px 0 10px;
-  text-shadow: 0 0 22px var(--res-glow), 0 3px 10px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.7);
 }
 .id-registers { display: flex; gap: 8px; }
 .reg {
@@ -154,7 +188,7 @@ body {
   padding: 3px 11px;
 }
 .reg i { font-family: var(--mono); font-style: normal; font-size: 9px; letter-spacing: 1.5px; color: var(--dim); }
-.reg b { font-family: var(--font-number); font-size: 14px; color: var(--ink); font-weight: 700; }
+.reg b { font-family: var(--font-number); font-size: 14px; color: #c6cfdf; font-weight: 400; }
 .reg-lv b, .reg-cons b { color: var(--res); }
 .reg-cons.c-0 b { color: var(--dim); }
 
@@ -167,7 +201,7 @@ body {
   border-radius: 50%;
   background: radial-gradient(circle at 50% 38%, var(--element-bg), rgba(9, 16, 25, 0.85));
   border: 1.5px solid var(--line);
-  box-shadow: 0 0 12px var(--res-glow), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,10 +212,11 @@ body {
   right: -2px;
   bottom: -3px;
   font-family: var(--font-number);
-  font-size: 11px;
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 400;
   color: #fff;
-  background: var(--res);
+  background: #111322;
+  border: 1px solid var(--res);
   padding: 0 5px;
   line-height: 15px;
   border-radius: 8px;
@@ -251,27 +286,25 @@ body {
 .chain-node .icon-img { width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0.32; }
 .chain-node.on .icon-img { opacity: 1; }
 
-/* 右侧：属性面板（半透，立绘透出） */
+/* 属性面板使用更轻的渐透底色，让立绘透出；行内文字以轻阴影承托。 */
 .status-panel {
+  --panel-alpha-top: 0.56;
+  --panel-alpha-bottom: 0.32;
   align-self: stretch;
   width: 100%;
-  background: linear-gradient(180deg, rgba(12, 20, 31, 0.5), rgba(9, 15, 24, 0.38));
   border: 1px solid var(--line);
   border-radius: 14px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 .sp-body { padding: 11px 14px 8px; }
-.sp-row { display: flex; align-items: center; height: 25px; }
+.sp-row { display: flex; align-items: center; height: 25px; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9); }
 .sp-icon { width: 16px; height: 16px; margin-right: 8px; opacity: 0.95; flex-shrink: 0; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8)); }
-.sp-name { font-family: var(--font-normal); font-size: 12.5px; color: #c8d4e2; font-weight: 600; white-space: nowrap; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85); }
+.sp-name { font-family: var(--font-normal); font-size: 13.5px; font-weight: 400; white-space: nowrap; }
 .sp-dots { flex: 1; }
-.sp-val { font-family: var(--font-number); font-size: 15px; font-weight: 800; color: #f0f6fc; letter-spacing: 0.3px; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9); }
-.sp-row.is-elem .sp-name, .sp-row.is-elem .sp-val { color: var(--res); text-shadow: 0 0 10px var(--res-glow); }
-.sp-row.grade-s .sp-name, .sp-row.grade-ss .sp-name, .sp-row.grade-sss .sp-name,
-.sp-row.grade-s .sp-val, .sp-row.grade-ss .sp-val, .sp-row.grade-sss .sp-val { color: var(--grade-s); }
-.sp-row.grade-a .sp-name, .sp-row.grade-a .sp-val { color: var(--grade-a); }
-.sp-row.grade-b .sp-name, .sp-row.grade-b .sp-val { color: var(--grade-b); }
-.sp-row.grade-c .sp-name, .sp-row.grade-c .sp-val { color: var(--grade-c); }
+.sp-val { min-width: 76px; text-align: right; font-family: var(--font-number); font-size: 18px; font-weight: 400; font-variant-numeric: tabular-nums; letter-spacing: 0.3px; white-space: nowrap; }
+/* 名称与数值颜色由全局 .attr-row 管理，最高推荐档的数值略微放大。 */
+.sp-row.grade-s .sp-val, .sp-row.grade-ss .sp-val, .sp-row.grade-sss .sp-val { font-size: 19px; }
+.sp-row:nth-child(5), .sp-row.is-elem { border-top: 1px solid rgba(255, 255, 255, 0.08); }
 .sp-foot {
   display: flex;
   justify-content: space-between;
@@ -294,17 +327,17 @@ body {
 .mod {
   position: relative;
   height: 238px;
-  background: linear-gradient(180deg, rgba(16, 26, 40, 0.74), rgba(10, 17, 27, 0.72));
   border: 1px solid var(--line);
   border-radius: 13px;
   /* 不裁切，让声骸图标顶出上沿（破框立体） */
   display: flex;
   flex-direction: column;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.22);
 }
 .mod-top {
   position: relative;
   height: 60px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   padding: 0 66px 0 12px; /* 右侧留出突出的图标位 */
@@ -312,7 +345,7 @@ body {
   border-bottom: 1px solid var(--line);
   border-radius: 13px 13px 0 0;
 }
-/* 声骸图标：放大 + 顶出卡片上沿 + 重投影 → 破框立体 */
+/* 声骸图标顶出卡片上沿，保留轻投影。 */
 .mod-icon {
   position: absolute;
   top: -12px;
@@ -322,7 +355,7 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  filter: drop-shadow(0 4px 7px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 9px var(--res-glow));
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.45));
   z-index: 6;
 }
 /* 声骸强化等级：图标右下角标 */
@@ -374,74 +407,73 @@ body {
 .tag-grade[data-g="C"] { color: var(--grade-c) !important; border-color: var(--grade-c-border) !important; }
 .tag-grade[data-g="D"] { color: var(--grade-d) !important; border-color: var(--grade-d-border) !important; }
 
-.mod-body { flex: 1; padding: 9px 12px; display: flex; flex-direction: column; gap: 1px; }
-.pr { display: flex; align-items: center; height: 21px; }
+.mod-body { flex: 1; min-height: 0; padding: 8px 12px; display: flex; flex-direction: column; overflow: hidden; }
+.pr { display: flex; align-items: center; height: 20px; flex-shrink: 0; }
 .pr-main { border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 4px; margin-bottom: 4px; height: 24px; }
 .pr-icon { width: 14px; height: 14px; margin-right: 8px; flex-shrink: 0; }
-.pr-main .pr-name { color: #fff; font-weight: 700; font-size: 12.5px; }
-.pr-main .pr-val { color: #fff; font-weight: 800; font-size: 14px; font-family: var(--font-number); }
-.pr-name { flex: 1; font-family: var(--font-normal); font-size: 11.5px; color: #aebccd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pr-val { font-family: var(--font-number); font-size: 12.5px; color: #dce7f2; }
+/* 武器属性使用白色；声骸主、副词条接入全局 .attr-row 推荐配色。 */
+.mod-weapon .pr-main .pr-name, .mod-weapon .pr-main .pr-val { color: #fff; }
+.pr-name { flex: 1; font-family: var(--font-normal); font-size: 12.5px; font-weight: 400; color: #aebccd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pr-val { font-family: var(--font-number); font-size: 14px; font-weight: 400; color: #dce7f2; }
 .pr-dot { width: 5px; height: 5px; border-radius: 50%; margin-right: 8px; background: #6b7d92; flex-shrink: 0; }
-.pr-effect { height: auto; align-items: flex-start; margin-top: 4px; }
+.pr-effect { flex: 1; min-height: 0; height: auto; align-items: flex-start; margin-top: 4px; overflow: hidden; }
 .pr-effect .pr-dot { margin-top: 6px; }
-.pr-effect .pr-text { font-family: var(--font-normal); font-size: 11px; line-height: 1.35; color: #9fb1c4; white-space: normal; }
-
-/* 副词条名 + 值 一起按评级上色 */
-.pr-sub.grade-s .pr-name, .pr-sub.grade-ss .pr-name, .pr-sub.grade-sss .pr-name,
-.pr-sub.grade-s .pr-val, .pr-sub.grade-ss .pr-val, .pr-sub.grade-sss .pr-val { color: var(--grade-s); }
-.pr-sub.grade-a .pr-name, .pr-sub.grade-a .pr-val { color: var(--grade-a); }
-.pr-sub.grade-b .pr-name, .pr-sub.grade-b .pr-val { color: var(--grade-b); }
-.pr-sub.grade-c .pr-name, .pr-sub.grade-c .pr-val { color: var(--grade-c); }
-.pr-sub.grade-s .pr-name, .pr-sub.grade-ss .pr-name, .pr-sub.grade-sss .pr-name,
-.pr-sub.grade-a .pr-name, .pr-sub.grade-b .pr-name { font-weight: 600; }
-.pr-dot.grade-s, .pr-dot.grade-ss, .pr-dot.grade-sss { background: var(--grade-s); box-shadow: 0 0 6px var(--grade-s); }
-.pr-dot.grade-a { background: var(--grade-a); }
-.pr-dot.grade-b { background: var(--grade-b); }
-.pr-dot.grade-c { background: var(--grade-c); }
-/* 满级词条红色，置后以盖过评级色 */
-.pr-sub .pr-val.is-max { color: #ff6b6b; }
-.pr-main.grade-s .pr-name, .pr-main.grade-ss .pr-name, .pr-main.grade-sss .pr-name { color: var(--grade-s); }
-.pr-main.grade-a .pr-name { color: var(--grade-a); }
+.pr-effect .pr-text {
+  font-family: var(--font-normal);
+  font-size: 11.5px;
+  line-height: 16px;
+  color: #c4bfd2;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  max-height: 96px;
+  overflow: hidden;
+}
 
 /* ============ 伤害输出 ============ */
+/* 属性渐透底色承托读数，亮金强调暴击与单值结果。 */
 .dmg {
-  background: linear-gradient(180deg, rgba(15, 25, 39, 0.78), rgba(9, 15, 24, 0.74));
+  --damage-highlight: #ffd76a;
   border: 1px solid var(--line);
   border-radius: 13px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.22);
 }
 .dmg-head {
   display: grid;
   grid-template-columns: 4fr 3fr 3fr;
   padding: 9px 16px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.06);
   border-bottom: 1px solid var(--line);
-  font-family: var(--font-game);
-  font-size: 13px;
-  color: var(--dim);
+  font-family: var(--font-normal);
+  font-size: 15px;
+  line-height: 22px;
+  color: #fff;
   font-weight: 700;
 }
-.dh-name { text-align: right; padding-right: 36px; }
+/* 名称列右侧留出 8px 空隙，兼顾长技能名与数字列间距。 */
+.dh-name { text-align: right; padding-right: 8px; }
 .dh-val { text-align: center; }
 .dmg-body { padding: 4px 0; }
-.dmg-row { display: grid; grid-template-columns: 4fr 3fr 3fr; align-items: center; padding: 6px 16px; }
-.dmg-row:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+/* 22px 行框与上下各 7px 留白组成 36px 数据行，名称保持单行。 */
+.dmg-row { display: grid; grid-template-columns: 4fr 3fr 3fr; align-items: center; padding: 7px 16px; }
+.dmg-row:nth-child(even) { background: rgba(255, 255, 255, 0.03); }
 .dr-name {
   text-align: right;
-  padding-right: 36px;
+  padding-right: 8px;
   font-family: var(--font-normal);
-  font-size: 13px;
-  color: var(--ink);
+  font-size: 15px;
+  line-height: 22px;
+  color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.dr-name::before { content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--res); margin-right: 8px; box-shadow: 0 0 7px var(--res); }
-.dr-val { text-align: center; font-family: var(--font-number); font-weight: 700; font-size: 16px; color: #fff; }
-.dr-val.crit { color: #ffc545; }
-.dr-val.exp { color: #fff; }
-.dmg-row.single .dr-val.solo { grid-column: span 2; color: #ffc545; font-size: 18px; }
+.dr-name::before { content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--res); margin-right: 8px; }
+.dr-val { text-align: center; font-family: var(--font-number); font-weight: 400; font-size: 17px; line-height: 22px; color: #fff; }
+.dr-val.crit, .dr-val.solo { color: var(--damage-highlight); }
+.dmg-row.single .dr-val.solo { grid-column: span 2; }
 
-.copyright { color: var(--dim) !important; font-size: 11px; padding: 6px 0 2px; }
+/* 面板页脚的字号与间距适配成图，颜色由共用布局管理。 */
+.copyright { font-size: 11px; padding: 6px 0 2px; }

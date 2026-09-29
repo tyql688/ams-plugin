@@ -166,6 +166,7 @@ export class Card extends AmsPlugin {
       data: panelData,
       uid: wavesApi.wavesId,
       elem: ELE_NAME_MAP[panelData.attributeId],
+      panelBlackBg: config.getConfig("config").panel_black_bg,
       customBg,
       customPile,
     })
@@ -200,6 +201,7 @@ export class Card extends AmsPlugin {
       data: panelData,
       uid: "理论满配",
       elem: ELE_NAME_MAP[panelData.attributeId],
+      panelBlackBg: config.getConfig("config").panel_black_bg,
       customBg,
       customPile,
     })

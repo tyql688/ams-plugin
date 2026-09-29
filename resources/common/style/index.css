@@ -72,7 +72,8 @@
   --element-border: rgba(184, 134, 11, 0.22);
   --element-shadow: rgba(184, 134, 11, 0.2);
 
-  /* === 评级等级 === */
+  /* === 共享等级色板：S/SS/SSS 金，A 紫，B 蓝，C 绿，D 与其他白 === */
+  /* 评分等级与属性推荐顺序分别由数据决定，仅共用颜色。 */
   --grade-c: var(--rarity-2);
   --grade-b: var(--rarity-3);
   --grade-a: var(--rarity-4);
@@ -80,7 +81,14 @@
   --grade-ss: var(--rarity-5);
   --grade-sss: var(--rarity-5);
   --grade-d: #eef2f8;
-  --grade-other: var(--rarity-1);
+  --grade-other: var(--grade-d);
+
+  /* 副词条达到可取的最高档时，仅数值使用此强调色。 */
+  --attr-max: #ff6b6b;
+
+  /* === 页脚：正文与版本号白色，产品名亮金色 === */
+  --footer-text: #ffffff;
+  --footer-accent: #ffd76a;
 
   /* === 品质 / 星级 === */
   --rarity-1: #9fb1c2;
@@ -197,6 +205,25 @@
   --d-border-archive: 1px solid rgba(120, 160, 220, 0.16);
   --d-border-ruins: 1px solid rgba(140, 180, 240, 0.14);
 }
+
+/* ==================== 属性 / 声骸词条配色 ==================== */
+/* .attr-row 共用于面板属性、声骸主词条和副词条；名称、数值与圆点共享推荐色。
+ * 推荐顺序 1—5 对应 s/a/b/c/d（金/紫/蓝/绿/白）；第 5 档与未推荐属性都用白色，表示普通显示。
+ * 元素加成优先使用角色元素色；满档副词条只强调数值。数值为 0 时同样遵循此规则。
+ */
+.attr-row { --attr-color: var(--grade-other); }
+.attr-row.grade-s,
+.attr-row.grade-ss,
+.attr-row.grade-sss { --attr-color: var(--grade-s); }
+.attr-row.grade-a { --attr-color: var(--grade-a); }
+.attr-row.grade-b { --attr-color: var(--grade-b); }
+.attr-row.grade-c { --attr-color: var(--grade-c); }
+.attr-row.grade-d { --attr-color: var(--grade-d); }
+.attr-row.is-elem { --attr-color: var(--element-primary); }
+.attr-row .attr-name,
+.attr-row .attr-value { color: var(--attr-color); }
+.attr-row .attr-dot { background: var(--attr-color); }
+.attr-row .attr-value.is-max { color: var(--attr-max); }
 
 /* ==================== 通用容器（浅色 legacy） ==================== */
 /* 仅 anns/ 还在依赖此默认值。新建暗色页请用 .dark-panel-archive / .dark-panel-ruins。 */

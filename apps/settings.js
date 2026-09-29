@@ -91,6 +91,15 @@ export class Settings extends AmsPlugin {
         example: config.exampleCommond("设置抽卡全部池子开启/关闭"),
       },
       {
+        key: "panel_black_bg",
+        app: "config",
+        name: "黑色背景",
+        value: cfg.panel_black_bg,
+        type: "switch",
+        desc: "角色面板背景：开启为黑色疏星，关闭为属性疏星",
+        example: config.exampleCommond("设置黑色背景开启/关闭"),
+      },
+      {
         key: "at_query",
         app: "config",
         name: "艾特查询",
@@ -171,6 +180,7 @@ export class Settings extends AmsPlugin {
       ["签到开关", "signin_switch", "config", "switch"],
       ["立绘原图", "yuantu_pile", "config", "switch"],
       ["背景原图", "yuantu_bg", "config", "switch"],
+      ["黑色背景", "panel_black_bg", "config", "switch"],
       ["抽卡全部池子", "gacha_show_all", "config", "switch"],
       ["艾特查询", "at_query", "config", "switch"],
       ["网页登录", "allow_login", "network", "switch"],

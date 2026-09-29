@@ -15,7 +15,7 @@ import {
   SKILL_ORDER,
 } from "./const.js"
 
-// sortId → grade 后缀（金/紫/绿）
+// 推荐顺序 1—5 → grade 后缀 s/a/b/c/d（金/紫/蓝/绿/白）；未推荐同样以白色作为普通显示。
 const RECOMMEND_TIER_GRADE = { 1: "s", 2: "a", 3: "b", 4: "c", 5: "d" }
 const GRADE_RANK = { s: 0, a: 1, b: 2, c: 3, d: 4 }
 
@@ -152,7 +152,7 @@ export class PanelBuilder {
 
   /**
    * 基于 Guide.recommendAttrList 构建 attrKey → grade 的映射
-   * sortId 1/2/3 对应 金(s)/紫(a)/绿(c)，其余不着色
+   * sortId 1—5 对应金(s)/紫(a)/蓝(b)/绿(c)/白(d)，未匹配的属性同样使用白色。
    * @private
    */
   _buildRecommendTierMap(charId) {
@@ -177,7 +177,7 @@ export class PanelBuilder {
     return key ? map.get(key) : undefined
   }
 
-  // 角色属性面板：在多个候选 key 中取等级最高的（s > a > c）
+  // 角色属性面板：在多个候选 key 中取最高推荐档（s > a > b > c > d）。
   _resolveAttrRecommendGrade(name) {
     const map = this.resources?.recommendTierMap
     if (!map || map.size === 0) return undefined
@@ -376,6 +376,8 @@ export class PanelBuilder {
   _buildPhantomList(scored) {
     if (!this.roleCard.phantoms) return []
 
+    // 同属性的元素伤害主词条使用角色元素色，与上方属性面板一致。
+    const elementDmgName = `${ELE_ID_MAP[this.resources.characterInfo.element]}伤害加成`
     return this.roleCard.phantoms.map((phantom, index) => {
       const echoInfo = DataLoader.getEchoById(phantom.id)
       const se = scored?.echoes?.[index] || null
@@ -396,6 +398,7 @@ export class PanelBuilder {
         mainPropList: phantom.mainProps.map(prop => ({
           attributeName: prop.name,
           attributeValue: prop.value,
+          isElement: prop.name === elementDmgName,
           valid: this._resolveRecommendGrade(prop.name, prop.value),
         })),
         subPropList: phantom.subProps.map(prop => {

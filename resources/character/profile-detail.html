@@ -1,6 +1,6 @@
 {{extend defaultLayout}} {{block 'title'}}鸣潮角色面板{{/block}} {{block 'css'}}
 <link rel="stylesheet" type="text/css" href="{{_res_path}}/character/profile-detail.css" />
-{{/block}} {{block 'body-class'}}elem-{{elem}} theme-element-{{data.attributeId}} res-root{{/block}}
+{{/block}} {{block 'body-class'}}elem-{{elem}} theme-element-{{data.attributeId}} res-root{{if panelBlackBg}} panel-bg-black{{/if}}{{/block}}
 {{block 'main'}}
 <div class="acu">
   <!-- ============ HERO ============ -->
@@ -8,7 +8,6 @@
     <!-- 立绘层 -->
     <div class="hero-art {{if customPile}}is-custom{{/if}}" style="background-image:url({{customPile || wavesResMap.rolePile + '/' + data.charId + '.webp'}})"></div>
     <div class="hero-scrim"></div>
-    <div class="hero-grid"></div>
 
     <!-- 左缘规格条 -->
     <div class="spec-rail">
@@ -45,11 +44,11 @@
       <div class="status-panel">
         <div class="sp-body">
           {{each data.roleAttributeList attribute}}
-          <div class="sp-row {{if attribute.isElement}}is-elem elem-c{{data.attributeId}}{{/if}} {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}">
+          <div class="sp-row attr-row {{if attribute.isElement}}is-elem{{/if}} {{if attribute.valid}}grade-{{attribute.valid}}{{/if}}">
             <img class="sp-icon" src="{{wavesResMap.prop}}/{{attribute.name}}.webp" alt="" />
-            <span class="sp-name">{{attribute.name}}</span>
+            <span class="sp-name attr-name">{{attribute.name}}</span>
             <span class="sp-dots"></span>
-            <span class="sp-val">{{attribute.value}}</span>
+            <span class="sp-val attr-value">{{attribute.value}}</span>
           </div>
           {{/each}}
         </div>
@@ -136,16 +135,16 @@
       </div>
       <div class="mod-body">
         {{if phantom.mainPropList}} {{each phantom.mainPropList mainProp}}
-        <div class="pr pr-main {{if mainProp.valid}}grade-{{mainProp.valid}}{{/if}}">
+        <div class="pr pr-main attr-row {{if mainProp.isElement}}is-elem{{/if}} {{if mainProp.valid}}grade-{{mainProp.valid}}{{/if}}">
           <img class="pr-icon" src="{{wavesResMap.prop}}/{{mainProp.attributeName}}.webp" />
-          <span class="pr-name">{{mainProp.attributeName}}</span>
-          <span class="pr-val">{{mainProp.attributeValue}}</span>
+          <span class="pr-name attr-name">{{mainProp.attributeName}}</span>
+          <span class="pr-val attr-value">{{mainProp.attributeValue}}</span>
         </div>
         {{/each}} {{/if}} {{if phantom.subPropList}} {{each phantom.subPropList subProp}} {{if subProp.attributeName}}
-        <div class="pr pr-sub {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}">
-          <span class="pr-dot {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}"></span>
-          <span class="pr-name">{{subProp.attributeName}}</span>
-          <span class="pr-val {{if subProp.isMax}}is-max{{/if}}">{{subProp.attributeValue}}</span>
+        <div class="pr pr-sub attr-row {{if subProp.valid}}grade-{{subProp.valid}}{{/if}}">
+          <span class="pr-dot attr-dot"></span>
+          <span class="pr-name attr-name">{{subProp.attributeName}}</span>
+          <span class="pr-val attr-value {{if subProp.isMax}}is-max{{/if}}">{{subProp.attributeValue}}</span>
         </div>
         {{/if}} {{/each}} {{/if}}
       </div>

@@ -25,16 +25,16 @@ body {
   margin: 0 auto;
 }
 
-/* 统一 footer：仅产品名（ams-plugin / TRSS-Yunzai）金色，其余中性灰，深浅背景通用 */
+/* 页脚统一配色：正文与版本号白色，产品名亮金色；暗色细阴影衬托文字。 */
 .copyright {
   font-size: 10px;
-  color: #8a8a8a;
+  color: var(--footer-text);
   padding: 4px 0 2px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 4px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
   /* 负边距让 footer 上移叠到面板背景图上，避免落到面板下方形成纯色条 */
   margin: -25px 0 0;
   line-height: 1.5;
@@ -43,7 +43,7 @@ body {
 }
 
 .copyright .highlight {
-  color: #b8860b;
+  color: var(--footer-accent);
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -54,6 +54,6 @@ body {
   vertical-align: super;
   font-size: 0.8em;
   margin-top: -0.3em;
-  color: #8a8a8a;
+  color: var(--footer-text);
   padding: 0 2px;
 }
