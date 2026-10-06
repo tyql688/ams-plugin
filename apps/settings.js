@@ -55,6 +55,15 @@ export class Settings extends AmsPlugin {
 
     const settingsList = [
       {
+        key: "resource_auto_update",
+        app: "config",
+        name: "资源自动更新",
+        value: cfg.resource_auto_update,
+        type: "switch",
+        desc: "定时检查资源，有更新时重启整个机器人并通知主人",
+        example: config.exampleCommond("设置资源自动更新开启/关闭"),
+      },
+      {
         key: "auto_signin",
         app: "config",
         name: "自动签到",
@@ -175,6 +184,7 @@ export class Settings extends AmsPlugin {
 
     // 映射表: [名字, 字段名, 配置文件名, 类型]
     const map = [
+      ["资源自动更新", "resource_auto_update", "config", "switch"],
       ["自动签到", "auto_signin", "config", "switch"],
       ["公告推送", "anns_push", "config", "switch"],
       ["签到开关", "signin_switch", "config", "switch"],

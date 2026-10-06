@@ -25,6 +25,7 @@ anns_push_time: 0 0/10 * * * ? # 公告推送检测频率
 
 auto_signin: false # 自动签到开关
 anns_push: false # 公告推送开关
+resource_auto_update: true # 每 5 分钟同步资源，有改动时重启 Yunzai 并通知主人
 
 signin_switch: true # 签到功能：是否全局开启手动签到命令
 
