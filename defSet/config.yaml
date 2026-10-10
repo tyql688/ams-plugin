@@ -7,6 +7,8 @@ render:
 
 panel_black_bg: true # 普通与极限角色面板背景：true 黑色疏星，false 属性疏星；两种均保留表格渐透
 
+daily_simple: false # 体力样式：true 简洁大字版，false 立绘版
+
 gacha_show_all: false # 抽卡记录是否展示全部池子；false 仅展示 4 个主池（精准角色/武器、常驻角色/武器），true 展示新手/感恩等全部
 
 yuantu_pile: true # 立绘原图开关

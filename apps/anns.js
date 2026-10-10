@@ -185,7 +185,6 @@ export class Anns extends AmsPlugin {
     }
 
     const img = await puppeteer.screenshots("annsDetail", renderData)
-    // const img = await this.render("anns/anns-detail", renderData)
     if (isTask) return img
     if (img) await e.reply(img)
     return true

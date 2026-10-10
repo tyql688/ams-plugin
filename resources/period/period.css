@@ -10,7 +10,7 @@ body {
   width: 680px;
   gap: 0;
   padding: 0;
-  background: none !important;
+  background: none;
 }
 
 .period-container {

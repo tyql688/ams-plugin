@@ -1,13 +1,14 @@
 import { ROVER_ID } from "#waves.core"
 import _ from "lodash"
 import path from "path"
+import { pathToFileURL } from "url"
 import DataLoader from "../lib/core/data_loader.js"
 import { RolePanel, User } from "../lib/db/index.js"
 import { customBgPath, customPilePath, resourcePath, wavesResMap } from "../lib/path.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
 import { randomCustomPile } from "../lib/custom_pile.js"
-import { randomFiles } from "../lib/utils.js"
+import { randomCustomBg } from "../lib/custom_bg.js"
 import { PanelBuilder } from "../model/panel/builder.js"
 import { ELE_NAME_MAP } from "../model/panel/const.js"
 import { Waves2RoleCard } from "../model/roleCard.js"
@@ -83,9 +84,9 @@ export class Card extends AmsPlugin {
   /**
    * 获取自定义素材
    */
-  getCustomAssets(charId) {
+  getCustomAssets(charId, elem) {
     return {
-      customBg: randomFiles(customBgPath),
+      customBg: randomCustomBg(customBgPath, "character/profile-detail", elem),
       customPile: randomCustomPile(customPilePath, charId),
     }
   }
@@ -160,34 +161,7 @@ export class Card extends AmsPlugin {
     panelData.updateTime = dataTime.toLocaleString("zh-CN")
     if (fromCache) panelData.dataSource = "数据库缓存"
 
-    const { customBg, customPile } = this.getCustomAssets(roleId)
-
-    const img = await this.render("character/profile-detail", {
-      data: panelData,
-      uid: wavesApi.wavesId,
-      elem: ELE_NAME_MAP[panelData.attributeId],
-      panelBlackBg: config.getConfig("config").panel_black_bg,
-      customBg,
-      customPile,
-    })
-    const res = await (img ? e.reply(img) : e.reply("❌ 面板绘图失败"))
-    if (res && res.message_id) {
-      const messageIds = Array.isArray(res.message_id) ? res.message_id : [res.message_id]
-      for (const msgId of messageIds) {
-        // 存储立绘：优先自定义，否则存储默认
-        const pilePath =
-          customPile ||
-          `file://${path.join(wavesResMap.rolePile, `${roleId}.webp`).replace(/\\/g, "/")}`
-        await redis.set(`ams:original-picture:${msgId}`, pilePath, { EX: 3600 * 3 })
-
-        // 存储背景：优先自定义，否则存储默认
-        const bgPath =
-          customBg ||
-          `file://${path.join(resourcePath, "common", "bg", "bg.png").replace(/\\/g, "/")}`
-        await redis.set(`ams:original-background:${msgId}`, bgPath, { EX: 3600 * 3 })
-      }
-    }
-    return true
+    return this.sendPanel(panelData, wavesApi.wavesId)
   }
 
   // 理论满配极限面板：数据构建在 PanelBuilder.fromLimit（model 层，纯静态、不需账号/持有），这里只生图
@@ -196,14 +170,37 @@ export class Card extends AmsPlugin {
     if (!panelData) {
       return e.reply(`❌ ${name} 暂无极限面板数据（资源未更新或该角色无评分/伤害配置）`)
     }
-    const { customBg, customPile } = this.getCustomAssets(roleId)
-    return this.renderReply("character/profile-detail", {
+    return this.sendPanel(panelData, "理论满配")
+  }
+
+  async sendPanel(panelData, uid) {
+    const elem = ELE_NAME_MAP[panelData.attributeId]
+    const { customBg, customPile } = this.getCustomAssets(panelData.charId, elem)
+    const img = await this.render("character/profile-detail", {
       data: panelData,
-      uid: "理论满配",
-      elem: ELE_NAME_MAP[panelData.attributeId],
+      uid,
+      elem,
       panelBlackBg: config.getConfig("config").panel_black_bg,
       customBg,
       customPile,
     })
+    if (!img) return this.e.reply("❌ 面板绘图失败")
+
+    const res = await this.e.reply(img)
+    if (res?.message_id) {
+      const originals = {
+        "original-picture":
+          customPile || pathToFileURL(path.join(wavesResMap.rolePile, `${panelData.charId}.webp`)).href,
+        "original-background":
+          customBg ||
+          pathToFileURL(path.join(resourcePath, "character", "profile-detail-bg-sparse-original.png")).href,
+      }
+      for (const msgId of [res.message_id].flat()) {
+        for (const [type, url] of Object.entries(originals)) {
+          await redis.set(`ams:${type}:${msgId}`, url, { EX: 3600 * 3 })
+        }
+      }
+    }
+    return true
   }
 }

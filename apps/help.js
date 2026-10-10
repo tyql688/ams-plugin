@@ -60,7 +60,6 @@ export class Help extends AmsPlugin {
         groups: filteredGroups,
         // 所有图片使用绝对路径
         titleImage: `file://${path.join(helpPath, "imgs", helpConfig.images.title).replace(/\\/g, "/")}`,
-        customBg: `file://${path.join(helpPath, "imgs", helpConfig.images.bg).replace(/\\/g, "/")}`,
         defaultIcon: `file://${path.join(helpPath, "imgs", "default.png").replace(/\\/g, "/")}`,
       }
 

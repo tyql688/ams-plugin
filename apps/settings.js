@@ -51,7 +51,6 @@ export class Settings extends AmsPlugin {
   async showSettings(e) {
     const cfg = config.getConfig("config")
     const netCfg = config.getConfig("network")
-    const preCfg = config.getConfig("prefix")
 
     const settingsList = [
       {
@@ -98,6 +97,15 @@ export class Settings extends AmsPlugin {
         type: "switch",
         desc: "抽卡记录是否展示全部池子；关闭时仅展示精准/常驻角色与武器 4 个主池",
         example: config.exampleCommond("设置抽卡全部池子开启/关闭"),
+      },
+      {
+        key: "daily_simple",
+        app: "config",
+        name: "简版体力",
+        value: cfg.daily_simple,
+        type: "switch",
+        desc: "开启使用简洁大字版，关闭使用立绘版",
+        example: config.exampleCommond("设置简版体力开启/关闭"),
       },
       {
         key: "panel_black_bg",
@@ -191,6 +199,7 @@ export class Settings extends AmsPlugin {
       ["立绘原图", "yuantu_pile", "config", "switch"],
       ["背景原图", "yuantu_bg", "config", "switch"],
       ["黑色背景", "panel_black_bg", "config", "switch"],
+      ["简版体力", "daily_simple", "config", "switch"],
       ["抽卡全部池子", "gacha_show_all", "config", "switch"],
       ["艾特查询", "at_query", "config", "switch"],
       ["网页登录", "allow_login", "network", "switch"],
@@ -199,11 +208,9 @@ export class Settings extends AmsPlugin {
       ["网络代理", "proxy", "network", "input"],
     ]
 
-    for (let item of map) {
-      let [name, key, app, type] = item
+    for (const [name, key, app, type] of map) {
       if (msg.startsWith(name)) {
         let value = msg.replace(name, "").trim()
-        let isChanged = false
 
         if (type === "input") {
           if (!value) {
@@ -211,24 +218,20 @@ export class Settings extends AmsPlugin {
             return true
           }
           if (/^\d+$/.test(value)) {
-            config.setSingleConfig(app, key, parseInt(value))
-          } else {
-            config.setSingleConfig(app, key, value)
+            value = parseInt(value)
           }
-          isChanged = true
         } else if (type === "switch") {
           if (["开启", "打开", "on", "true", "1"].includes(value)) {
-            config.setSingleConfig(app, key, true)
-            isChanged = true
+            value = true
           } else if (["关闭", "断开", "off", "false", "0"].includes(value)) {
-            config.setSingleConfig(app, key, false)
-            isChanged = true
+            value = false
+          } else {
+            continue
           }
         }
 
-        if (isChanged) {
-          return await this.showSettings(e)
-        }
+        config.setSingleConfig(app, key, value)
+        return await this.showSettings(e)
       }
     }
 

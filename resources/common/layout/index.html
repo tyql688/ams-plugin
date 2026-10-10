@@ -12,7 +12,7 @@
   </head>
 
   <body {{@sys.scale}} class="{{block 'body-class'}}{{/block}}">
-    <div class="container" id="container" {{if customBg}}style="background-image:url({{customBg}})"{{/if}}>
+    <div class="container{{if customBg}} has-custom-bg{{/if}}" id="container" {{if customBg}}style='background-image:url("{{customBg}}")'{{/if}}>
       {{block 'main'}}{{/block}}
       <div class="copyright">{{@sys.copyright}}</div>
     </div>

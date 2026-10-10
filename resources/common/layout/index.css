@@ -25,6 +25,17 @@ body {
   margin: 0 auto;
 }
 
+#container.has-custom-bg {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+}
+
+#container.has-custom-bg > .page-background {
+  background: transparent;
+}
+
 /* 页脚统一配色：正文与版本号白色，产品名亮金色；暗色细阴影衬托文字。 */
 .copyright {
   font-size: 10px;

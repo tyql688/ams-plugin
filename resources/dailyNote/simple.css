@@ -1,0 +1,194 @@
+#container {
+  background: #e8e5df;
+  border-radius: 48px;
+  border: 2px solid #d6d2c8;
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.15);
+  color: #292b2c;
+  --footer-text: #4d554c;
+  --footer-accent: #826b32;
+}
+
+.note-header {
+  padding: 34px 44px 46px;
+  background: #353635;
+  color: #f9f8f3;
+}
+.role-name {
+  font-size: 34px;
+}
+.uid {
+  font-size: 26px;
+  color: #e0e2dc;
+}
+.sign-state {
+  color: #f0ead7;
+  font-size: 26px;
+}
+.state-mark {
+  background: transparent;
+  color: #e3d5a2;
+  border: 2px solid #b4ae93;
+}
+.note-paper {
+  background: #f7f6f1;
+  margin: -18px 14px 14px;
+  border: 2px solid #fff;
+  border-radius: 38px;
+  padding: 34px 34px 90px;
+  position: relative;
+}
+.energy-stat {
+  padding: 0 4px 30px;
+}
+.energy-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.energy-label .stat-name {
+  font-size: 40px;
+}
+.energy-label .recovery {
+  font-size: 30px;
+  color: #6a592f;
+  background: #eae5d4;
+  padding: 8px 16px;
+  border-radius: 12px;
+  text-align: right;
+}
+.energy-label .recovery b {
+  display: block;
+}
+.energy-value {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  margin: 12px 0 20px;
+}
+.energy-value .stat-icon {
+  width: 108px;
+  height: 116px;
+  filter: drop-shadow(0 6px 8px rgba(16, 80, 67, 0.12));
+}
+.energy-value .stat-value {
+  gap: 12px;
+}
+.energy-value strong {
+  font-size: 124px;
+  letter-spacing: -4px;
+  color: #826b32;
+}
+.energy-value .stat-limit {
+  font-size: 54px;
+  color: #4f544c;
+}
+.energy-stat .stat-meter {
+  height: 8px;
+  background: #dfddd5;
+}
+.energy-stat .stat-meter span {
+  background: #ad965c;
+}
+.resource-stats {
+  border-top: 2px solid #dfdfd6;
+}
+.resource-stat {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 4px;
+  border-bottom: 2px solid #dfdfd6;
+}
+.resource-stat .stat-icon {
+  width: 70px;
+  height: 78px;
+}
+.resource-label {
+  min-width: 0;
+  flex: 1;
+}
+.resource-stat .stat-name {
+  font-size: 38px;
+}
+.resource-state {
+  margin-top: 4px;
+  font-size: 30px;
+  color: #62685c;
+}
+.resource-state.pending {
+  color: #785338;
+}
+.resource-stat strong {
+  font-size: 68px;
+  color: #292f29;
+}
+.resource-stat .stat-limit {
+  font-size: 42px;
+  color: #545c4e;
+}
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  margin: 30px 0 18px;
+  font-size: 30px;
+  font-weight: 550;
+  color: #656e59;
+  letter-spacing: 1px;
+}
+.section-label span {
+  height: 2px;
+  background: #d8d9cc;
+  flex: 1;
+}
+.progress-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.progress-stat {
+  padding: 20px 20px 22px;
+  background: #eeeee6;
+  border-radius: 20px;
+  border: 2px solid #dddfd2;
+}
+.progress-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.progress-stat .stat-icon {
+  width: 48px;
+  height: 48px;
+  filter: brightness(0.55) sepia(0.45);
+  opacity: 0.9;
+}
+.progress-stat .stat-name {
+  font-size: 36px;
+  color: #343d30;
+}
+.progress-stat .stat-value {
+  padding-left: 4px;
+  gap: 8px;
+}
+.progress-stat strong {
+  font-size: 70px;
+  color: #30382d;
+}
+.progress-stat.full strong {
+  color: #826b32;
+}
+.progress-stat .stat-limit {
+  font-size: 42px;
+  color: #555e4e;
+}
+.copyright {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 38px;
+  margin: 0;
+  text-shadow: none;
+}

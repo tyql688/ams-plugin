@@ -1,226 +1,156 @@
-/* ==================== 帮助页 · 暗色星空风 ==================== */
-
 body {
-  width: 1000px;
+  width: 800px;
   padding: 0;
   margin: 0;
+  font-family: var(--font-normal);
 }
 
 #container {
   position: relative;
-  width: 1000px;
+  width: 800px;
   margin: 0;
-  padding: 0 0 30px;
+  padding: 0 0 16px;
   gap: 0;
-  display: flex;
-  flex-direction: column;
   background:
-    linear-gradient(180deg, rgba(5, 8, 16, 0.4) 0%, rgba(5, 8, 16, 0.55) 60%, rgba(5, 8, 16, 0.7) 100%),
     url("../common/imgs/bg_archive.webp") center/cover no-repeat,
     var(--d-bg-page);
-  background-blend-mode: normal, normal, normal;
   border: var(--d-border-archive);
-  box-shadow: var(--d-shadow-panel);
+  isolation: isolate;
   overflow: hidden;
 }
 
-/* ==================== Header ==================== */
-.head-box {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 320px;
-  margin-bottom: 24px;
-  border-bottom: 1px solid rgba(244, 196, 90, 0.22);
-  overflow: hidden;
-}
-
-.head-box::after {
+#container::before {
   content: "";
   position: absolute;
-  left: 0;
-  bottom: -1px;
-  width: 96px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--d-gold), transparent);
-  box-shadow: 0 0 4px rgba(244, 196, 90, 0.5);
-  z-index: 6;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(5, 8, 16, 0.12), rgba(5, 8, 16, 0.22));
 }
 
-.head-bg {
-  width: 100%;
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  filter: saturate(1.05);
+.head-box {
+  position: relative;
+  height: 240px;
+  margin-bottom: 16px;
+  overflow: hidden;
 }
 
+.head-art,
+.head-bg,
 .head-mask {
   position: absolute;
   inset: 0;
+}
+
+.head-art {
+  mask-image: linear-gradient(to top, transparent, rgba(0, 0, 0, 0.45) 35px, #000 90px);
+}
+
+.head-bg {
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.head-mask {
   background:
-    linear-gradient(
-      to top,
-      rgba(3, 6, 12, 0.95) 0%,
-      rgba(3, 6, 12, 0.6) 45%,
-      rgba(3, 6, 12, 0.15) 75%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to right,
-      rgba(3, 6, 12, 0.5) 0%,
-      transparent 60%
-    );
+    linear-gradient(to right, rgba(3, 6, 12, 0.86), rgba(3, 6, 12, 0.12)),
+    linear-gradient(to top, var(--d-bg-deep), transparent 80%);
 }
 
 .head-content {
-  position: absolute;
-  bottom: 32px;
-  left: 40px;
-  z-index: 5;
+  position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 24px 28px;
   gap: 8px;
 }
 
 .head-title {
-  font-family: var(--font-game);
-  font-size: 50px;
-  font-weight: 900;
+  font-size: 48px;
+  font-weight: 700;
   color: var(--d-text);
-  letter-spacing: 4px;
-  line-height: 1;
-  text-shadow:
-    0 1px 8px rgba(244, 196, 90, 0.18),
-    0 2px 6px rgba(0, 0, 0, 0.7);
-  -webkit-text-stroke: 0.4px rgba(244, 196, 90, 0.3);
+  line-height: 1.2;
 }
 
 .head-desc {
-  font-family: var(--font-game);
-  font-size: 14px;
+  font-size: 15px;
   color: var(--d-text-2);
-  letter-spacing: 1.5px;
-  font-weight: 400;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  line-height: 1.5;
 }
 
-/* ==================== 内容容器 ==================== */
 .content-box {
-  position: relative;
-  z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 0 18px;
+  gap: 16px;
+  padding: 0 16px;
 }
 
 .group-box {
-  position: relative;
-  background: var(--d-card);
-  border: 1px solid rgba(244, 196, 90, 0.16);
+  background: rgba(5, 8, 16, 0.35);
+  border: 1px solid var(--d-line);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 4px 14px rgba(0, 0, 0, 0.45);
 }
 
-/* 顶部金色细线 */
-.group-box::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(244, 196, 90, 0.5),
-    transparent
-  );
-}
-
-/* ==================== 分组标题 ==================== */
 .group-title-bar {
-  position: relative;
-  min-height: 56px;
-  background: rgba(244, 196, 90, 0.06);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  padding: 14px 24px;
-  border-left: 4px solid var(--d-gold);
-  border-bottom: 1px solid rgba(244, 196, 90, 0.16);
-}
-
-.group-icon {
-  color: var(--d-gold);
-  font-size: 16px;
-  margin-right: 12px;
-  flex-shrink: 0;
-  text-shadow: 0 0 8px rgba(244, 196, 90, 0.5);
+  gap: 6px 12px;
+  padding: 10px 14px;
+  background: rgba(244, 196, 90, 0.06);
+  border-inline-start: 3px solid var(--d-gold);
 }
 
 .group-name {
-  font-family: var(--font-game);
-  font-size: 22px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 700;
   color: var(--d-text);
-  letter-spacing: 2px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  line-height: 1.2;
 }
 
 .group-desc {
-  margin-left: auto;
-  font-family: var(--font-game);
   font-size: 14px;
-  color: var(--d-text-3);
-  letter-spacing: 0.6px;
-  flex-shrink: 0;
+  color: var(--d-text-2);
+  line-height: 1.5;
 }
 
-/* ==================== 命令卡片 ==================== */
+.group-badge {
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(244, 196, 90, 0.12);
+  color: var(--d-gold);
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
 .cmd-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
-  padding: 10px 10px;
-  justify-items: stretch;
-  align-items: stretch;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 12px;
+  padding: 2px 12px 6px;
 }
 
 .cmd-card {
-  width: 100%;
-  min-height: 82px;
-  background: rgba(0, 0, 0, 0.32);
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
-  align-items: center;
-  padding: 8px 10px;
-  gap: 10px;
-  box-sizing: border-box;
-  overflow: hidden;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 68px;
+  padding: 10px 0;
+  gap: 8px;
 }
 
-.cmd-card.is-master {
-  background: rgba(244, 196, 90, 0.06);
-  border-color: rgba(244, 196, 90, 0.32);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 0 8px rgba(244, 196, 90, 0.12);
+.cmd-card:nth-child(n + 4) {
+  border-top: 1px solid var(--d-line);
 }
 
 .cmd-icon-box {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .cmd-icon {
@@ -228,44 +158,35 @@ body {
   height: 100%;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.6));
 }
 
 .cmd-info {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .cmd-name {
-  font-family: var(--font-game);
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--d-text);
-  letter-spacing: 0.6px;
   margin-bottom: 4px;
-  line-height: 1.3;
-  word-break: break-word;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--d-text);
+  line-height: 1.35;
 }
 
 .cmd-card.is-master .cmd-name {
   color: var(--d-gold);
-  text-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.65),
-    0 0 6px rgba(244, 196, 90, 0.25);
 }
 
 .cmd-detail {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--d-text-2);
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.5;
+}
+
+.copyright {
+  margin: 16px 16px 0;
+  padding: 0;
+  font-family: var(--font-normal);
+  font-size: 11px;
 }

@@ -10,7 +10,7 @@ body {
   width: 940px;
   gap: 0;
   padding: 0;
-  background: none !important;
+  background: none;
 }
 
 .archive-panel {

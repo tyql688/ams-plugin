@@ -11,7 +11,7 @@ body {
   width: 440px;
   gap: 0;
   padding: 0;
-  background: none !important;
+  background: none;
 }
 
 .develop-panel {

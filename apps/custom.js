@@ -4,7 +4,9 @@ import _ from "lodash"
 import fetch from "node-fetch"
 import path from "path"
 import sharp from "sharp"
+import { fileURLToPath } from "url"
 import DataLoader from "../lib/core/data_loader.js"
+import { PANEL_BG_TYPES } from "../lib/custom_bg.js"
 import {
   findCustomPileFile,
   getCustomPileAliasRoleId,
@@ -14,6 +16,9 @@ import {
 import { customBgPath, customPilePath } from "../lib/path.js"
 import { AmsPlugin } from "../lib/plugin.js"
 import config from "../lib/settings.js"
+import { listImageFiles } from "../lib/utils.js"
+
+const BG_SCOPE = `(${Object.keys(PANEL_BG_TYPES).join("|")})?`
 
 export class Custom extends AmsPlugin {
   constructor() {
@@ -22,21 +27,6 @@ export class Custom extends AmsPlugin {
       event: "message",
       priority: _.get(config.getConfig("priority"), "custom", 110),
       rule: [
-        {
-          reg: config.fixCommond("上传背景图"),
-          fnc: "uploadBg",
-          permission: "master",
-        },
-        {
-          reg: config.fixCommond("背景图列表"),
-          fnc: "listBg",
-          permission: "master",
-        },
-        {
-          reg: config.fixCommond("删除背景图(.+)"),
-          fnc: "deleteBg",
-          permission: "master",
-        },
         {
           reg: config.fixCommond("上传(.*)立绘"),
           fnc: "uploadPile",
@@ -56,29 +46,25 @@ export class Custom extends AmsPlugin {
           reg: config.fixCommond("(背景)?原图$"),
           fnc: "getOriginalPicture",
         },
+        {
+          reg: config.fixCommond(`上传${BG_SCOPE}背景图`),
+          fnc: "uploadBg",
+          permission: "master",
+        },
+        {
+          reg: config.fixCommond(`${BG_SCOPE}背景图列表`),
+          fnc: "listBg",
+          permission: "master",
+        },
+        {
+          reg: config.fixCommond(`删除${BG_SCOPE}背景图(.+)`),
+          fnc: "deleteBg",
+          permission: "master",
+        },
       ],
     })
 
-    this.initDir()
-  }
-
-  initDir() {
-    ;[customBgPath, customPilePath].forEach(dir => {
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true })
-      }
-    })
-  }
-
-  /**
-   * 获取目录下支持的图片文件
-   */
-  getSupportedFiles(dir) {
-    if (!fs.existsSync(dir)) return []
-    return fs
-      .readdirSync(dir)
-      .filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f))
-      .sort()
+    fs.mkdirSync(customPilePath, { recursive: true })
   }
 
   async saveImages(imageUrls, saveDir) {
@@ -107,41 +93,38 @@ export class Custom extends AmsPlugin {
     return count
   }
 
-  /** 背景图管理 **/
+  getPanelBgTarget(e, fnc) {
+    const [, type = "通用", input] = e.msg.match(this.rule.find(rule => rule.fnc === fnc).reg)
+    return { type, dir: path.join(customBgPath, "panel", PANEL_BG_TYPES[type]), input: input?.trim() }
+  }
+
   async uploadBg(e) {
+    const { type, dir } = this.getPanelBgTarget(e, "uploadBg")
     const urls = await this.getImageUrls()
     if (urls.length === 0) return e.reply("请发送图片或引用图片回复")
-    const count = await this.saveImages(urls, customBgPath)
-    return e.reply(count > 0 ? `✅ 成功上传 ${count} 张自定义背景图` : "❌ 图片已存在或上传失败")
+    const count = await this.saveImages(urls, dir)
+    return e.reply(count > 0 ? `✅ 成功上传 ${count} 张${type}面板背景图` : "❌ 图片已存在或上传失败")
   }
 
   async listBg(e) {
-    const files = this.getSupportedFiles(customBgPath)
-    if (files.length === 0) return e.reply("暂无自定义背景图")
-
-    const forwardMsg = files.map(f => {
-      const fileName = path.parse(f).name
-      return {
-        user_id: Bot.uin,
-        nickname: Bot.nickname,
-        message: [`ID: ${fileName}`, segment.image(`file://${path.join(customBgPath, f)}`)],
-      }
-    })
+    const { type, dir } = this.getPanelBgTarget(e, "listBg")
+    const files = listImageFiles(dir).sort()
+    if (files.length === 0) return e.reply(`暂无${type}面板背景图`)
+    const forwardMsg = files.map(file => ({
+      user_id: Bot.uin,
+      nickname: Bot.nickname,
+      message: [`${type}面板背景\nID: ${path.parse(file).name}`, segment.image(path.join(dir, file))],
+    }))
     return e.reply(await Bot.makeForwardMsg(forwardMsg))
   }
 
   async deleteBg(e) {
-    let input = e.msg.match(/删除背景图(.+)/)?.[1]?.trim()
+    const { type, dir, input } = this.getPanelBgTarget(e, "deleteBg")
     if (!input) return e.reply("请输入要删除的图片 ID")
-
-    const files = this.getSupportedFiles(customBgPath)
-    // 匹配完整文件名 或 不带后缀的哈希 ID
-    const targetFile = files.find(f => f === input || path.parse(f).name === input)
-
-    if (!targetFile) return e.reply(`❌ 未找到 ID 为 ${input} 的图片`)
-
-    fs.unlinkSync(path.join(customBgPath, targetFile))
-    return e.reply(`✅ 已成功删除背景图: ${input}`)
+    const file = listImageFiles(dir).find(file => file === input || path.parse(file).name === input)
+    if (!file) return e.reply(`❌ 未找到${type}面板背景图: ${input}`)
+    fs.unlinkSync(path.join(dir, file))
+    return e.reply(`✅ 已删除${type}面板背景图: ${input}`)
   }
 
   /** 立绘管理 **/
@@ -150,7 +133,7 @@ export class Custom extends AmsPlugin {
   }
 
   async uploadPile(e) {
-    const name = e.msg.match(this.rule[3].reg)[1].trim()
+    const name = e.msg.match(this.rule[0].reg)[1].trim()
     const id = this.getPileRoleId(name)
     if (!id) return e.reply(`❌ 未找到角色: ${name}`)
     const urls = await this.getImageUrls()
@@ -164,7 +147,7 @@ export class Custom extends AmsPlugin {
   }
 
   async listPile(e) {
-    const name = e.msg.match(this.rule[4].reg)[1].trim()
+    const name = e.msg.match(this.rule[1].reg)[1].trim()
     const roleId = this.getPileRoleId(name)
     if (!roleId) return e.reply(`❌ 未找到角色: ${name}`)
     const files = listCustomPileFiles(customPilePath, roleId)
@@ -240,14 +223,18 @@ export class Custom extends AmsPlugin {
     const imgPath = await redis.get(key)
     if (!imgPath) return e.reply("❌ 未找到对应的原图，该消息可能已过期")
 
-    const realPath = imgPath.replace("file://", "")
+    const realPath = fileURLToPath(imgPath)
     if (!fs.existsSync(realPath)) return e.reply("❌ 原图文件已被删除或不存在")
 
     let text = ""
     if (imgPath.includes("/custom/")) {
-      const id = imgPath.split("/").pop().split(".")[0]
+      const id = path.parse(realPath).name
       text = `\nID: ${id}`
-      if (!isBg) {
+      if (isBg) {
+        const folder = path.basename(path.dirname(realPath))
+        const type = Object.keys(PANEL_BG_TYPES).find(type => PANEL_BG_TYPES[type] === folder)
+        if (type) text += ` (${type}面板背景)`
+      } else {
         const charId = imgPath.split("/").slice(-2, -1)[0]
         const charNames = [
           ...new Set(
@@ -261,7 +248,7 @@ export class Custom extends AmsPlugin {
     }
 
     try {
-      return e.reply([segment.image(imgPath), text])
+      return e.reply([segment.image(realPath), text])
     } catch (err) {
       return e.reply("❌ 原图发送失败")
     }

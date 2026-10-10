@@ -28,8 +28,8 @@ export class DailyNote extends AmsPlugin {
     const cfg = config.getConfig("config")
     const multiDaily = _.get(cfg, "multi_daily", false)
     const forwardLimit = _.get(cfg, "multi_daily_forward", 3)
+    const template = cfg.daily_simple ? "dailyNote/simple.html" : "dailyNote/dailyNote.html"
 
-    // 1. 获取目标用户列表
     let userList = []
     const { userId } = this.getQueryTarget(true)
     if (multiDaily) {
@@ -41,9 +41,9 @@ export class DailyNote extends AmsPlugin {
 
     if (_.isEmpty(userList)) return this.replyUnbound(true)
 
+    await this.getAvatarUrl()
     const msgList = []
 
-    // 2. 遍历查询
     for (const user of userList) {
       const wavesApi = new WavesApi(user.gameUid, user.token, {
         devCode: user.devCode,
@@ -55,9 +55,6 @@ export class DailyNote extends AmsPlugin {
         msgList.push(`账号[${user.gameUid}] 查询每日体力失败: ${res.msg}`)
         continue
       }
-      // 都随机头像框
-      await this.getAvatarUrl()
-
       const data = this.processDailyData(res.data, user)
 
       // roleName: 接口为主，没有再用 db 缓存；接口给了新值才回写 db
@@ -75,13 +72,12 @@ export class DailyNote extends AmsPlugin {
         )
       }
 
-      const img = await this.render("dailyNote/dailyNote.html", data)
+      const img = await this.render(template, data)
       if (img) msgList.push(img)
     }
 
     if (_.isEmpty(msgList)) return
 
-    // 3. 发送消息
     if (msgList.length >= forwardLimit) {
       const forwardMsg = await this.makeMsg(msgList)
       await this.reply(forwardMsg)
@@ -93,14 +89,12 @@ export class DailyNote extends AmsPlugin {
   processDailyData(data, user) {
     const now = moment()
 
-    // 辅助函数：处理进度和百分比
     const processItem = item => {
       if (!item) return null
-      // 确保数值存在且合法
       const cur = Number(item.cur) || 0
       const total = Number(item.total) || 1
       let pct = (cur / total) * 100
-      pct = Math.min(100, Math.max(0, pct)) // 限制在 0-100
+      pct = Math.min(100, Math.max(0, pct))
 
       return {
         ...item,
@@ -134,11 +128,25 @@ export class DailyNote extends AmsPlugin {
       }
     }
 
+    const getStats = items =>
+      items
+        .filter(([key]) => data[key])
+        .map(([key, label, icon]) => ({ key, label, icon, ...data[key] }))
+
     return {
       ...data,
-      currTime: now.format("YYYY-MM-DD HH:mm:ss"),
       roleId: user.gameUid,
       pileImage: randomFiles(wavesResMap.rolePile),
+      resourceStats: getStats([
+        ["storeEnergyData", "结晶单质", "storeEnergy"],
+        ["livenessData", "活跃度", "liveness"],
+      ]),
+      progressStats: getStats([
+        ["weeklyData", "战歌重奏", "weekly"],
+        ["towerData", "逆境深塔", "tower"],
+        ["weeklyRougeData", "千道门扉", "rouge"],
+        ["slashTowerData", "冥歌海墟", "shenhai"],
+      ]),
     }
   }
 }

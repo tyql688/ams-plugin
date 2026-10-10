@@ -1,5 +1,5 @@
 import fs from "fs"
-import { appPath } from "./lib/path.js"
+import { appPath, customBgPath } from "./lib/path.js"
 
 logger.info(logger.yellow("- 正在载入 ams-plugin"))
 
@@ -21,6 +21,9 @@ const resReady = await initResources()
 const apps = {}
 
 if (resReady) {
+  const { initCustomBgDirs } = await import("./lib/custom_bg.js")
+  initCustomBgDirs(customBgPath)
+
   try {
     const { default: db } = await import("./lib/db/index.js")
     await db.ready

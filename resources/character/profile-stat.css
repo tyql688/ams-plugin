@@ -9,7 +9,7 @@ body {
 #container {
   width: 840px;
   padding: 0;
-  background: none !important;
+  background: none;
 }
 
 .stat-panel {

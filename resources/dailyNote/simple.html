@@ -1,0 +1,81 @@
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" href="{{pluResPath}}dailyNote/common.css" />
+<link rel="stylesheet" href="{{pluResPath}}dailyNote/simple.css" />
+{{/block}} {{block 'main'}}
+<div class="daily-panel page-background">
+  <header class="note-header">
+    <div class="user-profile">
+      {{if userAvatar}}<img class="user-avatar" src="{{userAvatar}}" alt="" />{{/if}}
+      <div class="user-info">
+        <div class="role-name">{{roleName}}</div>
+        <div class="uid">UID: {{roleId}}</div>
+      </div>
+    </div>
+    <div class="sign-state {{if !hasSignIn}}pending{{/if}}">
+      <span class="state-mark">{{hasSignIn ? '✓' : '!'}}</span>
+      <span>{{hasSignIn ? '签到已完成' : '签到未完成'}}</span>
+    </div>
+  </header>
+
+  <main class="note-paper">
+    {{if energyData}}
+    <section class="energy-stat" data-stat="energyData">
+      <div class="energy-label">
+        <div class="stat-name">结晶波片</div>
+        {{if energyData.isFull}}
+        <div class="recovery">已全部恢复</div>
+        {{else if energyData.refreshTimeStr}}
+        <div class="recovery">预计回满 <b>{{energyData.refreshTimeStr}}</b></div>
+        {{/if}}
+      </div>
+      <div class="energy-value">
+        <img class="stat-icon" src="{{pluResPath}}dailyNote/imgs/energy.webp" alt="" />
+        <div class="stat-value">
+          <strong>{{energyData.cur}}</strong><span class="stat-limit">/{{energyData.total}}</span>
+        </div>
+      </div>
+      <div class="stat-meter"><span style="width: {{energyData.pct}}"></span></div>
+    </section>
+    {{/if}} {{if resourceStats.length}}
+    <div class="resource-stats">
+      {{each resourceStats stat}}
+      <section class="resource-stat" data-stat="{{stat.key}}">
+        <img class="stat-icon" src="{{pluResPath}}dailyNote/imgs/{{stat.icon}}.webp" alt="" />
+        <div class="resource-label">
+          <div class="stat-name">{{stat.label}}</div>
+          <div
+            class="resource-state {{if stat.key === 'livenessData' && !stat.isFull}}pending{{/if}}"
+          >
+            {{if stat.key === 'livenessData'}}
+            <span class="state-dot"></span>{{stat.isFull ? '活跃度已满' : '活跃度未满'}}
+            {{else}}{{stat.isFull ? '已达上限' : '未达上限'}}{{/if}}
+          </div>
+        </div>
+        <div class="stat-value">
+          <strong>{{stat.cur}}</strong><span class="stat-limit">/{{stat.total}}</span>
+        </div>
+      </section>
+      {{/each}}
+    </div>
+    {{/if}} {{if progressStats.length}}
+    <div class="section-label">其他进度<span></span></div>
+    <div class="progress-stats">
+      {{each progressStats stat}}
+      <section class="progress-stat {{if stat.isFull}}full{{/if}}" data-stat="{{stat.key}}">
+        <div class="progress-label">
+          <img
+            class="stat-icon"
+            src="{{pluResPath}}dailyNote/imgs/{{stat.icon}}.webp"
+            alt=""
+          /><span class="stat-name">{{stat.label}}</span>
+        </div>
+        <div class="stat-value">
+          <strong>{{stat.cur}}</strong><span class="stat-limit">/{{stat.total}}</span>
+        </div>
+      </section>
+      {{/each}}
+    </div>
+    {{/if}}
+  </main>
+</div>
+{{/block}}
